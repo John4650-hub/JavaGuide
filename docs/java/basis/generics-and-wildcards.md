@@ -1,20 +1,21 @@
----
-title: 泛型&通配符详解
-category: Java
-tag:
-  - Java基础
----
+I don't...
+title: pane & wildcard details
+Category:
+Tag:
 
-**泛型&通配符** 相关的面试题为我的[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了[《Java 面试指北》](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html)（点击链接即可查看详细介绍以及获取方法）中。
+- Java Foundation.
+  I don't...
 
-[《Java 面试指北》](hhttps://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html) 的部分内容展示如下，你可以将其看作是 [JavaGuide](https://javaguide.cn/#/) 的补充完善，两者可以配合使用。
+**Pretty & wildcard** The exclusive content of the interview, entitled My [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) (click on the link to see the details of the presentation and the method of accession), has been collated in [Java Interview North](https://javaguide.cn/zhuanlan/java-mian-shi-shi-zhi-bei.html) (click on the link to see the details and the method of acquisition).
 
-![](https://oss.javaguide.cn/xingqiu/image-20220304102536445.png)
+Part of [Java Interview Point North](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html) is presented below, which you can see as complementary to [JavaGuide](https://javaguide.cn/#/), which can be used in conjunction.
 
-[《Java 面试指北》](hhttps://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html)只是星球内部众多资料中的一个，星球还有很多其他优质资料比如[专属专栏](https://javaguide.cn/zhuanlan/)、Java 编程视频、PDF 资料。
+![Image](https://oss.javaguide.cn/xingqiu/image-20203004102536445.png)
 
-![](https://oss.javaguide.cn/xingqiu/image-20220211231206733.png)
+[Java Interview Point North](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html) is only one of many materials within the planet, with many other high-quality information such as [exclusive column](https://javaguide.cn/zhuanlan/), Java programming video, PDF information.
 
-<!-- @include: @planet.snippet.md -->
+![Image](https://oss.javaguide.cn/xingqiu/image-202221123126733.png)
 
-<!-- @include: @article-footer.snippet.md -->
+@include: @planet.snippet.md--
+
+@include: @article-fouter.snippet.md--

@@ -1,14 +1,16 @@
----
-title: 缓存基础常见面试题总结(付费)
-category: 数据库
-tag:
-  - Redis
----
+I don't...
+Title: Summary of Common Interviews on the Cache Base (Paid)\
+Category: Database\
+Tag:
 
-**缓存基础** 相关的面试题为我的 [知识星球](../../about-the-author/zhishixingqiu-two-years.md)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了[《Java 面试指北》](../../zhuanlan/java-mian-shi-zhi-bei.md)中。
+- Redis
 
-![](https://oss.javaguide.cn/javamianshizhibei/database-questions.png)
+I don't...
 
-<!-- @include: @planet.snippet.md -->
+**Cache Base** The exclusive content of the interview, entitled My [Knowledge Planet](....././about-the-author/zhishixingqiu-two-years.md) (click on the link to see the details of the presentation and how to join) has been collated in [Java Interview Point North](...../../zhuanlan/java-mian-shi-zhi-bei.md).
 
-<!-- @include: @article-footer.snippet.md -->
+![Database Questions](https://oss.javaguide.cn/javamianshizhibeei/database-questions.png)
+
+@include: @planet.snippet.md--
+
+@include: @article-footer.snippet.md--

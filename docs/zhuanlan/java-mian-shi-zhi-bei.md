@@ -1,83 +1,67 @@
----
-title: 《Java 面试指北》
-category: 知识星球
-star: 5
----
+I don't...
+title: Java Interview Point North
+Category: Knowledge Planet
+Star: 5
+I don't...
 
-我花费了三年的时间，写了一本针对 Java 面试的《Java 面试指北》，内容质量非常高，非常适合准备 Java 面试的朋友使用！
+It took me three years to write "Java Interview North" for the Java interview, and it was very good for the friends who were preparing for the Java interview!
 
-目前的成绩：累计阅读 **270w+** ，点赞 **3550+** ，评论 **1130+** （几乎每一条提问类型的评论我看到后都会用心回复）。
+Current achievements: cumulative reading **270k+**, commendation **3550+**, comment **1130+** (almost every type of question type of comment I see responds with heart).
 
-![《Java 面试指北》统计](https://oss.javaguide.cn/xingqiu/java-interview-guide-statistics.png)
+[Java Interview Point North Statistics](https://oss.javaguide.cn/xingqiu/java-interview-guide-statistics.png)
 
-## 介绍
+# Introduction
 
-**《Java 面试指北》** 是我的[知识星球](../about-the-author/zhishixingqiu-two-years.md)的一个内部小册，和 [JavaGuide 开源版](https://javaguide.cn/)的内容互补。相比于开源版本来说，《Java 面试指北》添加了下面这些内容（不仅仅是这些内容）：
+**Java Interview Point North** is an internal booklet of my [Knowledge Planet](../about-the-author/zhishixingqiu-two-years.md) and the content of [JavaGuide open-source version](https://javaguide.cn/). Compared to the open-source version, Java Interviews added the following (not just these):
 
-- 17+ 篇文章手把手教你如何准备面试，50+ 准备面试过程中的常见问题详细解读，让你更高效地准备 Java 面试。
-- 更全面的八股文面试题（系统设计、场景题、常见框架、分布式&微服务、高并发 ……）。
-- 优质面经精选（相比于牛客网或者其他网站的面经，《Java 面试指北》中整理的面经质量更高，并且，我会提供优质的参考资料）。
-- 技术面试题自测（高效准备技术八股文的技巧之一在于多多自测，查漏补缺）。
-- 练级攻略（有助于个人成长的经验分享）。
+- 17+ articles hands-on teach you how to prepare for interviews, 50+ detailed readings of common questions during interviews, making you more efficient in preparing for Java interviews.
+- More comprehensive eight-part interview topics (system design, scenarios, common frameworks, distributed & micro-services, high-synthesis...).
+- Quality face selection (i.e., higher quality of face preparation in Java Interviews, and I will provide high-quality reference material compared to the face of a cattle web or other websites).
+- Self-measurement of technical interviews (one of the techniques of efficient preparation of eight parts of the technical skills is self-measurement and the detection of omissions).
+- Practice in grade planning (lessons-sharing for personal growth).
 
-《Java 面试指北》 会根据每一年的面试情况对内容进行更新完善，保证内容质量的时效性。并且，只需要加入[知识星球](../about-the-author/zhishixingqiu-two-years.md)一次，即可永久获取《Java 面试指北》的访问权限，持续同步更新完善。
+The Java Interview will be updated and improved based on each year's interview to ensure the timeliness of the content. Furthermore, only one time to join [the Knowledge Planet](../about-the-author/zhishixingqiu-two-years.md) will allow permanent access to the Java Interview Point North, with continuous and synchronized updating.
 
-## 内容概览
+# Overview of Content
 
-![《Java 面试指北》内容概览](https://oss.javaguide.cn/javamianshizhibei/javamianshizhibei-content-overview.png)
+![Content Overview](https://oss.javaguide.cn/javamianshizhibei/javamianshizhibei-content-overview.png)
 
-### 面试准备篇
+# For the Interview
 
-在 **「面试准备篇」** ，我写了 17+ 篇文章手把手教你如何准备面试，50+ 准备面试过程中的常见问题详细解读。准备面试过程中常见的疑问这里都有解答，内容涵盖项目经验、简历编写、源码学习、算法准备、面试资源等等。
+In **"Preliminary Interview,"** I wrote 17+ articles hand-in-hand to teach you how to prepare for an interview, and 50+ for a detailed reading of common questions during an interview. Common questions about the preparation of interviews are answered here, covering project experience, curriculum vitae preparation, source learning, algorithm preparation, interview resources, etc.
 
-![《Java 面试指北》面试准备篇](https://oss.javaguide.cn/javamianshizhibei/preparation-for-interview.png)
+![Registration for Interview](https://oss.javaguide.cn/javamianshizhibei/registration-for-interview.png)
 
-另外，考虑到很多小伙伴缺少项目经历，我还推荐了很多小众但优质的实战项目，有视频也有开源项目，有业务系统，也有各种含金量比较高的轮子类项目。
+In addition, in view of the lack of project experience among many small partners, I have also recommended a number of small but high-quality field projects, videos, open-source projects, business systems, and various more gold-rich wheel-type projects.
 
-![《Java面试指北》-实战项目推荐](https://oss.javaguide.cn/javamianshizhibei/practical-project-recommendation.png)
+![Practical Project Recommendation](https://oss.javaguide.cn/javamianshizhibei/pracial-project-recommendation.png)
 
-### 技术面试题篇
+# Technical Interview
 
-**「技术面试题篇」** 的内容和 JavaGuide 开源版本互补，不仅仅包括最基本的 Java、常见框架等八股文，还包括系统设计、分布式、高并发等进阶内容。
+**The content of the Technical Interview** and JavaGuide open-source versions are complementary and include not only the most basic eight-part text, Java, common frameworks, etc., but also system design, distribution, high-symmetry, etc.
 
-![《Java 面试指北》技术面试题篇](https://oss.javaguide.cn/javamianshizhibei/technical-interview-questions.png)
+![Java Interview Point North Technical Interview Section](https://oss.javaguide.cn/javamianshizhibei/technical-interview-quests.png)
 
-### 面经篇
+# On the Face
 
-古人云:“**他山之石，可以攻玉**” 。善于学习借鉴别人的面试的成功经验或者失败的教训，可以让自己少走许多弯路。
+The ancient saying: "**The stone of his mountain can strike the jade.**" Learning from the successful or failed interviews of others can lead to fewer detours.
 
-**「面经篇」** 主要会分享一些高质量的 Java 后端面经，有校招的，也有社招的，有大厂的，也有中小厂的。
+**"Facebook"** mainly shares high-quality Java back-end stories, both school and social, large and small.
 
-如果你是非科班的同学，也能在这些文章中找到对应的非科班的同学写的面经。
+If you're in non-scientific classes, you can also find a copy of the other non-scientific students in these articles.
 
-![《Java 面试指北》面经篇](https://oss.javaguide.cn/javamianshizhibei/thinkimage-20220612185810480.png)
+![Think Image](https://oss.javaguide.cn/javamianshizhibei/thinkimage-202206128848.png)
 
-相比于牛客网或者其他网站的面经，《Java 面试指北》中整理的面经质量更高，并且，我会提供优质的参考资料。
+Java Interviews are of higher quality, and I will provide high-quality reference materials compared to the Facebooks on the cattle web or other websites.
 
-另外，[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)还有专门分享面经和面试题的专题，里面会分享很多优质的面经和面试题。
+In addition, [the Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) includes topics dedicated to the sharing of stories and interviews, in which a number of high-quality stories and interviews are shared.
 
-![星球面经专题](https://oss.javaguide.cn/javamianshizhibei/image-20220304120018731.png)
+![Themes of the Planet](https://oss.javaguide.cn/javamianshizhibei/image-2020304120018731.png)
 
-### 技术面试题自测篇
+## Technical Interview Self-Censor
 
-为了让小伙伴们自测以检查自己的掌握情况，我还推出了 **「技术面试题自测」** 系列。不过，目前只更新了 Java 和数据库的自测，正在持续更新中。
+I also launched a series of **"Technical Interview Self-Speculation"** to allow small partners to test their own knowledge. However, only Java and the self-measurement of the database are currently being updated and are being continuously updated.
 
-![《Java 面试指北》技术面试题自测篇](https://oss.javaguide.cn/javamianshizhibei/image-20220621095641897.png)
+![Technical Interview Self-Survey](https://oss.javaguide.cn/javamianshizhibei/image202261095641897.png)
 
-高效准备技术八股文的技巧之一在于多多自测，查漏补缺。
-
-### 练级攻略篇
-
-**「练级攻略篇」** 这个系列主要内容一些有助于个人成长的经验分享。
-
-![《Java 面试指北》练级攻略篇](https://oss.javaguide.cn/javamianshizhibei/training-strategy-articles.png)
-
-每一篇内容都非常干货，不少球友看了之后表示收获满满。不过，最重要的还是知行合一。
-
-### 工作篇
-
-**「工作篇」** 这个系列主要内容是分享有助于个人以及职场发展的内容以及在工作中经常会遇到的问题。
-
-![《Java 面试指北》工作篇](https://oss.javaguide.cn/javamianshizhibei/gongzuopian.png)
-
-<!-- @include: @planet2.snippet.md -->
+One of the techniques of efficient preparation of the

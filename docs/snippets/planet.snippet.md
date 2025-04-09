@@ -1,25 +1,25 @@
-[《Java 面试指北》](../zhuanlan/java-mian-shi-zhi-bei.md)（点击链接即可查看详细介绍）的部分内容展示如下，你可以将其看作是 [JavaGuide](https://javaguide.cn/#/) 的补充完善，两者可以配合使用。
+Part of the [Java Interview Point North](../zhuanlan/java-mian-shi-zhi-bei.md) (access details by clicking the link) is shown below, which you can see as a supplement to [JavaGuide](https://javaguide.cn/#/), which can be used in conjunction.
 
-![《Java 面试指北》内容概览](https://oss.javaguide.cn/xingqiu/image-20220304102536445.png)
+![Java Interview Point North](https://oss.javaguide.cn/xingqiu/image202203004042536445.png)
 
-为了帮助更多同学准备 Java 面试以及学习 Java ，我创建了一个纯粹的[Java 面试知识星球](../about-the-author/zhishixingqiu-two-years.md)。虽然收费只有培训班/训练营的百分之一，但是知识星球里的内容质量更高，提供的服务也更全面，非常适合准备 Java 面试和学习 Java 的同学。
+To help more students prepare for Java interviews and study Java, I created a pure [Java Interview Planet](../about-the-author/zhishixingqiu-two-years.md). Although the fee is only 1 percent of the training course/camp, the knowledge planet has a higher quality of content and a more comprehensive service, which is well suited for preparing Java students for interviews and learning Java.
 
-**欢迎准备 Java 面试以及学习 Java 的同学加入我的 [知识星球](../about-the-author/zhishixingqiu-two-years.md)，干货非常多，学习氛围也很不错！收费虽然是白菜价，但星球里的内容或许比你参加上万的培训班质量还要高。**
+**Welcome to my [Knowledge Planet] for the Java interview and Java study. Although the charge is minimal, the content on the planet may be of higher quality than the thousands of training courses you attend.**
 
-下面是星球提供的部分服务（点击下方图片即可获取知识星球的详细介绍）：
+The following are some of the services provided by the planet (a detailed description of the planet can be found by clicking on the picture below):
 
-[![星球服务](https://oss.javaguide.cn/xingqiu/xingqiufuwu.png)](../about-the-author/zhishixingqiu-two-years.md)
+![Star Service](https://oss.javaguide.cn/xingqiu/xingqiufuwu.png)
 
-**我有自己的原则，不割韭菜，用心做内容，真心希望帮助到你！**
+**I have my own principles: don't cut corners, do something with my heart, and truly want to help you!**
 
-如果你感兴趣的话，不妨花 3 分钟左右看看星球的详细介绍：[JavaGuide 知识星球详细介绍](../about-the-author/zhishixingqiu-two-years.md) 。
+If you are interested, you may wish to take about three minutes to look at the planet's detailed presentation: [JavaGuide Knowledge Planet](../about-the-author/zhishixingqiu-two-years.md).
 
-这里再送一张 **30** 元的星球专属优惠券，数量有限（价格即将上调。老用户续费半价 ，微信扫码即可续费）！
+Here's another **$30** exclusive planetary coupon, in limited quantity (price is about to increase). The old user's fee is half-priced.
 
-![知识星球30元优惠卷](https://oss.javaguide.cn/xingqiu/xingqiuyouhuijuan-30.jpg)
+![Coupon](https://oss.javaguide.cn/xingqiu/xingqiuhuijuan-30.jpg)
 
-进入星球之后，记得查看 **[星球使用指南](https://t.zsxq.com/0d18KSarv)** （一定要看！！！） 和 **[星球优质主题汇总](https://t.zsxq.com/12uSKgTIm)** ，干货多多！
+When you get to the planet, remember to look at **[guidelines for the use of the planet](https://t.zsxq.com/0d18KSarv)** (you must look!!!) and **[characterization of the quality of the planet](https://t.zsxq.com/12uSKgTIm)**, with a lot of valuable information!
 
-**无任何套路，无任何潜在收费项。用心做内容，不割韭菜！**
+**No options, no hidden charges. You do it with your heart; you don't cut corners!**
 
-不过， **一定要确定需要再进** 。并且， **三天之内觉得内容不满意可以全额退款** 。
+However, **it must be determined that further progress is required**. Moreover, **if the content is not satisfactory within three days, a full refund can be made**.

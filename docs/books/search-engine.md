@@ -1,33 +1,33 @@
----
-title: 搜索引擎必读经典书籍
-category: 计算机书籍
-icon: "search"
----
+I don't...
+Title: The search engine must read classic books\
+Category: Computer Books\
+icon: "search"\
+I don't...
 
-## Lucene
+Lucene
 
-Elasticsearch 在 Apache Lucene 的基础上开发而成，学习 ES 之前，建议简单了解一下 Lucene 的相关概念。
+Elasticsearch was developed on the basis of Apache Lucene, and before learning ES, it was suggested that the concept of Lucene be briefly understood.
 
-**[《Lucene 实战》](https://book.douban.com/subject/6440615/)** 是国内为数不多的中文版本讲 Lucene 的书籍，适合用来学习和了解 Lucene 相关的概念和常见操作。
+**[Lucene Fields](https://book.douban.com/subject/6440615/)** is a small number of Chinese-speaking Lucene books suitable for learning and understanding Lucene-related concepts and common practices.
 
-![《Lucene实战》-实战](https://oss.javaguide.cn/github/javaguide/books/vAJkdYEyol4e6Nr.png)
+![Lucene Fields - Fields](https://oss.javaguide.cn/github/javaguide/books/vAJkdYEyol4e6Nr.png)
 
-## Elasticsearch
+# Elasticsearch
 
-**[《一本书讲透 Elasticsearch：原理、进阶与工程实践》](https://book.douban.com/subject/36716996/)**
+**[One book speaks for itself: Principles, Progress and Engineering Practice](https://book.douban.com/subject/3671696/)**
 
-![](https://oss.javaguide.cn/github/javaguide/books/one-book-guide-to-elasticsearch.png)
+![One book speaks for itself](https://oss.javaguide.cn/github/javaguide/books/one-book-guide-to-elasticsearch.png)
 
-基于 8.x 版本编写，目前全网最新的 Elasticsearch 讲解书籍。内容覆盖 Elastic 官方认证的核心知识点，源自真实项目案例和企业级问题解答。
+Based on the 8.x version, the latest Elasticsearch lecture book is available online. The content covers the core knowledge points officially accredited by Elastic, derived from real project cases and enterprise-level questions.
 
-**[《Elasticsearch 核心技术与实战》](http://gk.link/a/10bcT "《Elasticsearch 核心技术与实战》")**
+**[Elasticsearch Core Technology and Fields](http://gk.link/a/10bcT "Elasticsearch Core Technology and Fields")**
 
-极客时间的这门课程基于 Elasticsearch 7.1 版本讲解，还算比较新。并且，作者是 eBay 资深技术专家，有 20 年的行业经验，课程质量有保障！
+The course, which is based on Elasticsearch version 7.1, is relatively new. The author is eBay, a senior technical expert with 20 years of industry experience, with guaranteed quality!
 
-![《Elasticsearch 核心技术与实战》-极客时间](https://oss.javaguide.cn/github/javaguide/csdn/20210420231125225.png)
+![Elasticsearch Core Technology and Field Wars -- Polar Time](https://oss.javaguide.cn/github/javaguide/csdn/202202012125225.png)
 
-**[《Elasticsearch 源码解析与优化实战》](https://book.douban.com/subject/30386800/)**
+**[Elasticsearch source code deconstruction and optimization in practice](https://book.douban.com/subject/303868000/)**
 
-![《Elasticsearch 源码解析与优化实战》-豆瓣](https://oss.javaguide.cn/p3-juejin/f856485931a945639d5c23aaed74fb38~tplv-k3u1fbpfcp-zoom-1.png)
+![Elasticsearch source code deconstruction and optimization -- bean petals](https://oss.javaguide.cn/p3-juejin/f856485931a945639d5c23aed74fb38~tplv-k3u1fbpfcp-zoom-1.png)
 
-如果你想进一步深入研究 Elasticsearch 原理的话，可以看看张超老师的这本书。这是市面上唯一一本写 Elasticsearch 源码的书。
+If you want to study Elasticsearch further, you can read Mr. Cheung's book. It's the only book on the market that writes about Elasticsearch source code.

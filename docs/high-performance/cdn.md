@@ -1,135 +1,63 @@
----
-title: CDN工作原理详解
-category: 高性能
-head:
-  - - meta
-    - name: keywords
-      content: CDN,内容分发网络
-  - - meta
-    - name: description
-      content: CDN 就是将静态资源分发到多个不同的地方以实现就近访问，进而加快静态资源的访问速度，减轻服务器以及带宽的负担。
----
+I don't...
+Title: CDN Working Details
+Category: High Performance
+Head:
 
-## 什么是 CDN ？
+- Meta.
+- Name: keywords
+  Content: CDN, content distribution network
+- Meta.
+- Name: description
+  Content: CDN is the distribution of static resources to many different places to achieve close access, thereby accelerating access to static resources and reducing the burden on servers and bandwidth.
+  I don't...
 
-**CDN** 全称是 Content Delivery Network/Content Distribution Network，翻译过的意思是 **内容分发网络** 。
+# What's a CDN?
 
-我们可以将内容分发网络拆开来看：
+**CDN** fully known as Content Delivery Network, translated to mean **Content Distribution Network**.
 
-- 内容：指的是静态资源比如图片、视频、文档、JS、CSS、HTML。
-- 分发网络：指的是将这些静态资源分发到位于多个不同的地理位置机房中的服务器上，这样，就可以实现静态资源的就近访问比如北京的用户直接访问北京机房的数据。
+We can untangle the content distribution network:
 
-所以，简单来说，**CDN 就是将静态资源分发到多个不同的地方以实现就近访问，进而加快静态资源的访问速度，减轻服务器以及带宽的负担。**
+- Content: refers to static resources such as pictures, videos, documents, JS, CSS, HTML.
+- Distribution networks: this refers to the distribution of these static resources to servers located in various geographic locations, so that close access to static resources, such as data from Beijing, can be achieved.
 
-类似于京东建立的庞大的仓储运输体系，京东物流在全国拥有非常多的仓库，仓储网络几乎覆盖全国所有区县。这样的话，用户下单的第一时间，商品就从距离用户最近的仓库，直接发往对应的配送站，再由京东小哥送到你家。
+So, in short, **CDN is the distribution of static resources to many different places to achieve immediate access, thereby accelerating access to static resources and reducing the burden on servers and bandwidth.**
 
-![京东仓配系统](https://oss.javaguide.cn/github/javaguide/high-performance/cdn/jingdong-wuliu-cangpei.png)
+Similar to the vast warehouse transport system established in Kyoto, Kyoto Logistics has a very large number of warehouses throughout the country, and the storage network covers almost all districts and regions of the country. In that case, when a user first places an order, the goods are sent directly from the nearest warehouse to the corresponding distribution station, and then to your home by Mr. Kyung Dong.
 
-你可以将 CDN 看作是服务上一层的特殊缓存服务，分布在全国各地，主要用来处理静态资源的请求。
+![Warehouse Transport System](https://oss.javaguide.cn/github/javaguide/high-perform/cdn/jingdong-wuliu-cangpei.png)
 
-![CDN 简易示意图](https://oss.javaguide.cn/github/javaguide/high-performance/cdn/cdn-101.png)
+You can see CDN as a special cache service at the top of the service, spread all over the country, mainly to deal with requests for static resources.
 
-我们经常拿全站加速和内容分发网络做对比，不要把两者搞混了！全站加速（不同云服务商叫法不同，腾讯云叫 ECDN、阿里云叫 DCDN）既可以加速静态资源又可以加速动态资源，内容分发网络（CDN）主要针对的是 **静态资源** 。
+![CDN Overview](https://oss.javaguide.cn/github/javaguide/high-perform/cdn/cdn-101.png)
 
-![阿里云文档：https://help.aliyun.com/document_detail/64836.html](https://oss.javaguide.cn/github/javaguide/high-performance/cdn/cdn-aliyun-dcdn.png)
+We've always compared full-stop speed and content distribution networks, so don't mix them up! The full-station acceleration (different cloud service providers call it ECDN, Aliyun calls it DCDN) can accelerate static and dynamic resources, while the content distribution network (CDN) is primarily aimed at **static resources**.
 
-绝大部分公司都会在项目开发中使用 CDN 服务，但很少会有自建 CDN 服务的公司。基于成本、稳定性和易用性考虑，建议直接选择专业的云厂商（比如阿里云、腾讯云、华为云、青云）或者 CDN 厂商（比如网宿、蓝汛）提供的开箱即用的 CDN 服务。
+[Aliyun Document](https://help.aliyun.com/document_detail/64836.html) ![Aliyun CDN](https://oss.javaguide.cn/github/javaguide/high-performance/cdn/cdn-aliyun-dcdn.png)
 
-很多朋友可能要问了：**既然是就近访问，为什么不直接将服务部署在多个不同的地方呢？**
+The vast majority of companies will use CDN services in project development, but few will have their own CDN services. On the basis of cost, stability, and ease of use, it is recommended that the open CDN service provided by a specialized cloud manufacturer (e.g., Aliyun, Telecommunication Cloud, Twilight Cloud, Green Cloud) or a CDN manufacturer (e.g., Internet Board, Blue Twilight) be directly selected.
 
-- 成本太高，需要部署多份相同的服务。
-- 静态资源通常占用空间比较大且经常会被访问到，如果直接使用服务器或者缓存来处理静态资源请求的话，对系统资源消耗非常大，可能会影响到系统其他服务的正常运行。
+Many friends may ask: **Since it's a close visit, why not simply deploy the service in a number of different places?**
 
-同一个服务在在多个不同的地方部署多份（比如同城灾备、异地灾备、同城多活、异地多活）是为了实现系统的高可用而不是就近访问。
+- Too costly to deploy many of the same services.
+- Static resources usually occupy a larger space and are frequently accessed, and the use of servers or caches to process static resource requests is very costly and may affect the proper functioning of other system services.
 
-## CDN 工作原理是什么？
+The same service is deployed in many different locations (e.g., co-cities, off-sites, live-in-cities, off-site) in order to achieve high availability of systems rather than close access.
 
-搞懂下面 3 个问题也就搞懂了 CDN 的工作原理：
+# CDN, What Does It Work For?
 
-1. 静态资源是如何被缓存到 CDN 节点中的？
-2. 如何找到最合适的 CDN 节点？
-3. 如何防止静态资源被盗用？
+The following three questions are understood, and the CDN works:
 
-### 静态资源是如何被缓存到 CDN 节点中的？
+1. How are static resources cached to the CDN node?
+1. How can the most appropriate CDN nodes be found?
+1. How can the misappropriation of static resources be prevented?
 
-你可以通过 **预热** 的方式将源站的资源同步到 CDN 的节点中。这样的话，用户首次请求资源可以直接从 CDN 节点中取，无需回源。这样可以降低源站压力，提升用户体验。
+# How Are Static Resources Cached to CDN Nodes?
 
-如果不预热的话，你访问的资源可能不在 CDN 节点中，这个时候 CDN 节点将请求源站获取资源，这个过程是大家经常说的 **回源**。
+You can sync the source station resources to the CDN node by **preheating**. In this way, a user can request resources for the first time directly from the CDN node without returning to the source. This reduces the pressure on the source station and enhances the user experience.
 
-> - 回源：当 CDN 节点上没有用户请求的资源或该资源的缓存已经过期时，CDN 节点需要从原始服务器获取最新的资源内容，这个过程就是回源。当用户请求发生回源的话，会导致该请求的响应速度比未使用 CDN 还慢，因为相比于未使用 CDN 还多了一层 CDN 的调用流程。
-> - 预热：预热是指在 CDN 上提前将内容缓存到 CDN 节点上。这样当用户在请求这些资源时，能够快速地从最近的 CDN 节点获取到而不需要回源，进而减少了对源站的访问压力，提高了访问速度。
+If you do not preheat, the resources you visit may not be in the CDN node, at which point the CDN node will request the source station to access the resources, a process that you often say **comes back.**
 
-![CDN 回源](https://oss.javaguide.cn/github/javaguide/high-performance/cdn/cdn-back-to-source.png)
+> - Return: When the resource requested by the user is not on the CDN node or the cache of the resource has expired, the CDN node needs to get up-to-date resource content from the original server, and this process is the source. When a user request is sent back, the response to the request is slower than the unused CDN because there is an extra layer of CDN call process than the unused CDN.
+> - Preheat: Preheat means the early cache of content on a CDN to the CDN node. This allows the user to quickly obtain these resources from the nearest CDN node without returning, thus reducing the pressure to access the source station and increasing the speed of access.
 
-如果资源有更新的话，你也可以对其 **刷新** ，删除 CDN 节点上缓存的旧资源，并强制 CDN 节点回源站获取最新资源。
-
-几乎所有云厂商提供的 CDN 服务都具备缓存的刷新和预热功能（下图是阿里云 CDN 服务提供的相应功能）：
-
-![CDN 缓存的刷新和预热](https://oss.javaguide.cn/github/javaguide/high-performance/cdn/cdn-refresh-warm-up.png)
-
-**命中率** 和 **回源率** 是衡量 CDN 服务质量两个重要指标。命中率越高越好，回源率越低越好。
-
-### 如何找到最合适的 CDN 节点？
-
-GSLB （Global Server Load Balance，全局负载均衡）是 CDN 的大脑，负责多个 CDN 节点之间相互协作，最常用的是基于 DNS 的 GSLB。
-
-CDN 会通过 GSLB 找到最合适的 CDN 节点，更具体点来说是下面这样的：
-
-1. 浏览器向 DNS 服务器发送域名请求；
-2. DNS 服务器向根据 CNAME( Canonical Name ) 别名记录向 GSLB 发送请求；
-3. GSLB 返回性能最好（通常距离请求地址最近）的 CDN 节点（边缘服务器，真正缓存内容的地方）的地址给浏览器；
-4. 浏览器直接访问指定的 CDN 节点。
-
-![CDN 原理示意图](https://oss.javaguide.cn/github/javaguide/high-performance/cdn/cdn-overview.png)
-
-为了方便理解，上图其实做了一点简化。GSLB 内部可以看作是 CDN 专用 DNS 服务器和负载均衡系统组合。CDN 专用 DNS 服务器会返回负载均衡系统 IP 地址给浏览器，浏览器使用 IP 地址请求负载均衡系统进而找到对应的 CDN 节点。
-
-**GSLB 是如何选择出最合适的 CDN 节点呢？** GSLB 会根据请求的 IP 地址、CDN 节点状态（比如负载情况、性能、响应时间、带宽）等指标来综合判断具体返回哪一个 CDN 节点的地址。
-
-### 如何防止资源被盗刷？
-
-如果我们的资源被其他用户或者网站非法盗刷的话，将会是一笔不小的开支。
-
-解决这个问题最常用最简单的办法设置 **Referer 防盗链**，具体来说就是根据 HTTP 请求的头信息里面的 Referer 字段对请求进行限制。我们可以通过 Referer 字段获取到当前请求页面的来源页面的网站地址，这样我们就能确定请求是否来自合法的网站。
-
-CDN 服务提供商几乎都提供了这种比较基础的防盗链机制。
-
-![腾讯云 CDN Referer 防盗链配置](https://oss.javaguide.cn/github/javaguide/high-performance/cdn/cnd-tencent-cloud-anti-theft.png)
-
-不过，如果站点的防盗链配置允许 Referer 为空的话，通过隐藏 Referer，可以直接绕开防盗链。
-
-通常情况下，我们会配合其他机制来确保静态资源被盗用，一种常用的机制是 **时间戳防盗链** 。相比之下，**时间戳防盗链** 的安全性更强一些。时间戳防盗链加密的 URL 具有时效性，过期之后就无法再被允许访问。
-
-时间戳防盗链的 URL 通常会有两个参数一个是签名字符串，一个是过期时间。签名字符串一般是通过对用户设定的加密字符串、请求路径、过期时间通过 MD5 哈希算法取哈希的方式获得。
-
-时间戳防盗链 URL 示例：
-
-```plain
-http://cdn.wangsu.com/4/123.mp3? wsSecret=79aead3bd7b5db4adeffb93a010298b5&wsTime=1601026312
-```
-
-- `wsSecret`：签名字符串。
-- `wsTime`: 过期时间。
-
-![](https://oss.javaguide.cn/github/javaguide/high-performance/cdn/timestamp-anti-theft.png)
-
-时间戳防盗链的实现也比较简单，并且可靠性较高，推荐使用。并且，绝大部分 CDN 服务提供商都提供了开箱即用的时间戳防盗链机制。
-
-![七牛云时间戳防盗链配置](https://oss.javaguide.cn/github/javaguide/high-performance/cdn/qiniuyun-timestamp-anti-theft.png)
-
-除了 Referer 防盗链和时间戳防盗链之外，你还可以 IP 黑白名单配置、IP 访问限频配置等机制来防盗刷。
-
-## 总结
-
-- CDN 就是将静态资源分发到多个不同的地方以实现就近访问，进而加快静态资源的访问速度，减轻服务器以及带宽的负担。
-- 基于成本、稳定性和易用性考虑，建议直接选择专业的云厂商（比如阿里云、腾讯云、华为云、青云）或者 CDN 厂商（比如网宿、蓝汛）提供的开箱即用的 CDN 服务。
-- GSLB （Global Server Load Balance，全局负载均衡）是 CDN 的大脑，负责多个 CDN 节点之间相互协作，最常用的是基于 DNS 的 GSLB。CDN 会通过 GSLB 找到最合适的 CDN 节点。
-- 为了防止静态资源被盗用，我们可以利用 **Referer 防盗链** + **时间戳防盗链** 。
-
-## 参考
-
-- 时间戳防盗链 - 七牛云 CDN：<https://developer.qiniu.com/fusion/kb/1670/timestamp-hotlinking-prevention>
-- CDN 是个啥玩意？一文说个明白：<https://mp.weixin.qq.com/s/Pp0C8ALUXsmYCUkM5QnkQw>
-- 《透视 HTTP 协议》- 37 | CDN：加速我们的网络服务：<http://gk.link/a/11yOG>
-
-<!-- @include: @article-footer.snippet.md -->
+!\[CDN Returns\](https://oss.javaguide.cn/github/javaguide/high-perform/cdn

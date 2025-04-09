@@ -1,13 +1,13 @@
----
-title: 降级&熔断详解(付费)
-category: 高可用
-icon: circuit
----
+I don't...
+Title: Decline & Melting Detail (pay)\
+Category: High availability\
+icon: circuit\
+I don't...
 
-**降级&熔断** 相关的面试题为我的[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了[《Java 面试指北》](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html)中。
+**Decline & Melting** The exclusive content of the interview, entitled My [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) (click on the link to see the details of the presentation and how to join) has been collated in [Java Interview North](https://javaguide.cn/zhuanlan/java-mian-shi-shi-zhi-bei.html).
 
-![](https://oss.javaguide.cn/xingqiu/mianshizhibei-gaobingfa.png)
+![Image](https://oss.javaguide.cn/xingqiu/mianshizhibei-gaobingfa.png)
 
-<!-- @include: @planet.snippet.md -->
+@include: @planet.snippet.md--
 
-<!-- @include: @article-footer.snippet.md -->
+@include: @article-footer.snippet.md--

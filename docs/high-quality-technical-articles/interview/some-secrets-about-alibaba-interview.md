@@ -1,119 +1,119 @@
----
-title: 阿里技术面试的一些秘密
-category: 技术文章精选集
-author: 龙叔
-tag:
-  - 面试
----
+I don't...
+title: Some of Ali's technical interview secrets\
+Category: Excerpts of Technical Articles\
+Uncle Lung.\
+Tag:
 
-> **推荐语**：详细介绍了求职者在面试中应该具备哪些能力才会有更大概率脱颖而出。
+- Interview.\
+  I don't...
+
+> **Recommended language**: details of the competencies that job seekers should have in their interviews in order to be more likely to emerge.
 >
-> **原文地址：** <https://mp.weixin.qq.com/s/M2M808PwQ2JcMqfLQfXQMw>
+> **Original address:** <https://mp.weixin.qq.com/s/M2M808PwQ2JcMqLQfXMw>
 
-最近我的工作稍微轻松些，就被安排去校招面试了
+I've been working a little easier lately, and I've been assigned to an interview.
 
-当时还是有些**激动**的，以前都是被面试的，现在我自己也成为一个面试别人的面试官
+I was a little excited. I was interviewed, and now I'm an interviewer.
 
-接下来就谈谈我的面试心得(谈谈阿里面试的秘籍)
+Let's talk about my interview.
 
-## 我是怎么筛选简历的？
+How did I screen my resume?
 
-面试之前都是要筛选简历，这个大家应该知道
+Before the interview, you'll have to screen your resume.
 
-阿里对待招聘非常负责任，面试官必须对每位同学的简历进行查看和筛选，如果不合适还需要写清楚理由
+Ali was very responsible for recruitment, and the interviewer had to examine and screen the curriculum vitae of each student, with clear justification if not appropriate.
 
-对于校招生来说，第一份工作非常重要，而且校招的面试机会也只有一次，一旦收到大家的简历意味着大家非常认可和喜爱阿里这家公司
+The first job is very important for school admissions, and there's only one interview at the school. Once you get your resume, it means you're very popular, and you love Ali.
 
-所以我们对每份简历都会认真看，大家可以非常放心，不会无缘无故挂掉大家的简历
+So we'll look at every résumé carefully, and you can rest assured that you don't hang your résumés for no reason.
 
-尽管我们报以非常负责任的态度，但有些同学们的简历实在是难以下看
+Despite our very responsible attitude, some of our classmates' résumés are hard to read.
 
-关于如何写简历，我之前写过类似的文章，这里就把之前的文章放这里让大家看看 [一份好的简历应该有哪些内容](https://mp.weixin.qq.com/s?__biz=MzI4MDYzNDc1Mg==&mid=2247484010&idx=1&sn=afbe90c8446f5f21631cae750431d3ee&scene=21#wechat_redirect)
+I've written similar articles on how to write résumés before, and I'm going to put them here for your attention. \[A good résumé should be available at https://mp.weixin.qq.com/s?biz=Mzi4MDYZNDc1Mg=&mid=2247484010&idx=1&sn=afbe90c8446f5f21631cae75043d3ee&@scene=21#wechat_reddirect]
 
-在筛选简历的时候会有以下信息非常重要，大家一定要认真写
+It's very important to have the following information when you screen your resume.
 
-- **项目经历**，具体写法可以看上面提到的文章
-- **个人含金量比较高的奖项**，比如 ACM 奖牌、计算机竞赛等
-- **个人技能** 这块会看，但是大多数简历写法都差不多，尽量写得**言简意赅**
-- **重要期刊论文发表、开源项目** 加分项
+- **Project history**, written as above.
+- **Prizes with a higher personal gold content** such as ACM medals, computer competitions, etc.
+- **Personal skills**: This one will read, but most CVs are similar, and as short as possible.
+- **Issues of major journal papers, open source projects** and sub-items.
 
-这些信息非常重要，我筛选简历的时候这些信息占整份简历的比重 4/5 左右
+This information is very important. It accounts for about 4/5 of the entire curriculum vitae.
 
-## 面试的时候我会注重哪些方面？
+# What do I focus on during interviews?
 
-### **表达要清楚**
+### **Say it clearly**
 
-这点是硬伤，在面试的时候有些同学半天说不清楚自己做的项目，我都在替你着急
+It's hard work. Some of my students didn't know what they were doing during the interview.
 
-描述项目有个简单的方法论，我自己总结的 大家看看适不适合自己
+There's a simple way to describe the project. I've summed it up.
 
-- 最好言简意赅的描述一下你的项目背景，让面试官很快知道项目干了啥(让面试官很快对项目感兴趣)
-- 说下项目用了哪些技术，做技术的用了哪些技术得说清楚，面试官会对你的技术比较感兴趣
-- 解决了什么问题，做项目肯定是为了解决问题，总不能为了做项目而做项目吧(解决问题的能力非常重要)
-- 遇到哪些难题，如何突破这些难题，项目遇到困难问题很正常，突破困难才是一次好的成长
-- 项目还有哪些完善的地方，不可能设计出完美的执行方案，有待改进说明你对项目认识深刻，思考深入
+- It's best to describe your project in a concise manner so that the interviewer will soon know what it is.
+- Tell me what technology is used and what technology is used.
+- So what's the problem?
+- The problems encountered, how to break them, the problems of the project are normal, and the difficulties are good growth.
+- Where the project is well developed, it is not possible to design a perfect implementation programme, which needs to be improved, to show that you are well aware of the project and think deeply.
 
-一场面试时间一般 60—80 分钟，好的表达有助于彼此之间了解更多的问题
+The average interview time is 60-80 minutes.
 
-### **基础知识要扎实**
+### **Basic knowledge to be solid**
 
-校招非常注重基础知识，所以这块问的问题比较多，我一般会结合你项目去问，看看同学对技术是停留在用的阶段还是有自己的深入思考
+The school entrance is very knowledge-oriented, so I'm asking a lot of questions in connection with your project to see if the students are at the stage of technology or have their own in-depth thinking.
 
-每个方向对基础知识要求不同，但有些基础知识是通用的
+Basic knowledge requirements vary in each direction, but some are common.
 
-比如**数据结构与算法**、**操作系统**、**计算机网络** 等
+For example, **data structure and algorithms**, **operating systems**, **computer networks**, etc.
 
-这些基础技术知识一定要掌握扎实，技术岗位都会或多或少去问这些基础
+These basic technical know-how must be solid, and the technical posts will ask more or less about the basics.
 
-### **动手能力很重要**
+### It's important
 
-action，action，action ，重要的事情说三遍，做技术的不可能光靠一张嘴，能落地才是最重要的
+Action, action, action, action.
 
-面试官除了问你基础知识和项目还会去考考你的动手能力，面试时间一般不会太长，根据岗位的不同一般会让同学们写一些算法题目
+In addition to asking you about your basics and projects, the interviewer will test your skills.
 
-阿里面试，不会给你出非常变态的算法题目
+Ali's interview won't give you a very sick algorithm.
 
-主要还是考察大家的动手能力、思考问题的能力、数据结构的应用能力
+It's about people's ability to do things, their ability to think about things, and their ability to apply data structures.
 
-在写代码的过程中，我也总结了自己的方法论：
+In writing the code, I summarized my methodology:
 
-- 上来不要先写，审题、问清楚题目意图，不要自以为是的去理解思路，工作中 沟通需求、明确需求、提出质疑和建议是非常好的习惯
-- 接下来说思路 思路错了写到一半再去改会非常浪费时间
-- 描述清楚之后，先写代码思路的步骤注释，一边写注释，脑子里迭代一遍自己的思路是否正确，是否是最优解
-- 最后，代码规范
+- Don't come up here first, read the subject, ask the question, understand the thought, and it's a very good habit to communicate needs, identify needs, question, and advise. It'll be a waste of time to start with.
+- After the description is clear, write a step note on code thinking. While writing a note, check whether it's right or not and whether it's the best thing to do.
+- Finally, code code.
 
-## 除了上面这些常规的方面
+# Except for the general aspects above
 
-其实，现在面试已经非常**卷**了，上面说的这些很多都是 **八股文**
+Actually, it's been a very long interview, and it's a lot of it.
 
-有些学生会拿到很多面试题目和答案，反复的去记忆，面试官问问题他就开始在脑子里面检索答案
+Some students get a lot of interviews and answers, and they go back and forth, and the interviewer asks questions, and he starts retrieving them in his head.
 
-我一般问几个问题就知道该学生是不是在背八股文了。
+I usually ask a few questions to know if the student is doing something wrong.
 
-对于背八股文的同学，我真的非常难过。
+I'm really sorry about the students.
 
-尽管你背的很好，但不能给你过啊，得对得起自己职责，得对公司负责啊！
+You can't pass your back, but you have to live up to your duties and be accountable to the company!
 
-背的在好，不如理解一个知识点，理解一个知识点会有助于你去理解很多其他的知识点，很多知识点连起来就是一个知识体系。
+Better to understand a point of knowledge; one point of knowledge will help you to understand many other points of knowledge, many of which are linked to a knowledge system.
 
-当面试官问你体系中的任何一个问题，都可以把这个体系讲给他听，不是**背诵** 。
+When the interviewer asks you any question in the system, you can tell him about it, not recite it.
 
-深入理解问题，我会比较关注。
+I'll take a closer look.
 
-我在面试过程中，会通过一个问题去问一串问题，慢慢就把整体体系串起来。
+I'm going to ask a list of questions through an interview, and I'm going to tie the whole system up.
 
-你的**比赛**和**论文**是你的亮点，这些东西是非常重要的加分项。
+Your **game** and **paper** are your bright spots; these are very important and very specific.
 
-我也会在面试中穿插一些**开放性题目**，都是思考题 考验一个同学思考问题的方式。
+I'm also going to put some **open-ended topics in the interview**, which are all thinking questions that test the way a fellow student thinks.
 
-## 最后
+Finally
 
-作为一个面试官，我很想对大家说，每个企业都非常渴望人才，都希望找到最适合企业发展的人
+As an interviewer, I'd like to tell you that every firm is eager for talent and wants to find the best people for business.
 
-面试的时候面试官会尽量去挖掘你的价值。
+The interview officer will try to find out your value during the interview.
 
-但是，面试时间有限，同学们一定要在有限的时间里展现出自己的**能力**和**无限的潜力** 。
+However, the duration of interviews is limited, and it is important that students demonstrate their **abilities** and **unlimited potential** in a limited period of time.
 
-最后，祝愿优秀的你能找到自己理想的工作！
+In conclusion, wish the best you can find your ideal job!
 
-<!-- @include: @article-footer.snippet.md -->
+@include: @article-fouter.snippet.md--

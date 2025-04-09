@@ -1,19 +1,19 @@
----
-title: 常见面试题自测(付费)
-category: 知识星球
-icon: security-fill
----
+I don't...
+Title: Common Interview Self-Measurement (Paying)\
+Category: Knowledge Planet\
+icon: security-fill\
+I don't...
 
-面试之前，强烈建议大家多拿常见的面试题来进行自测，检查一下自己的掌握情况，这是一种非常实用的备战技术面试的小技巧。
+Prior to the interviews, it was strongly recommended that more common interviews be self-measured and that you check your knowledge, which is a very practical technical interview technique.
 
-在 **[《Java 面试指北》](../zhuanlan/java-mian-shi-zhi-bei.md)** 的 **「技术面试题自测篇」** ，我总结了 Java 面试中最重要的知识点的最常见的面试题并按照面试提问的方式展现出来。
+In **"Technology Interview Self-Censorship"** [Java Interview Point North](../zhuanlan/java-mian-shi-zhi-bei.md), I summarized the most common interview topics for the most important knowledge points in Java interviews and presented them in the manner in which questions were interviewed.
 
-![](https://oss.javaguide.cn/xingqiu/image-20220628102643202.png)
+![Image](https://oss.javaguide.cn/xingqiu/image-2022062810432022.png)
 
-每一道用于自测的面试题我都会给出重要程度，方便大家在时间比较紧张的时候根据自身情况来选择性自测。并且，我还会给出提示，方便你回忆起对应的知识点。
+Every interview that is used for self-censorship gives me an important degree of significance, so that people can be selective when time is tight. And I'll give you a hint, so you can remember the corresponding point of knowledge.
 
-在面试中如果你实在没有头绪的话，一个好的面试官也是会给你提示的。
+If you don't have a clue in the interview, a good interviewer will give you a hint.
 
-![](https://oss.javaguide.cn/xingqiu/image-20220628102848236.png)
+![Image](https://oss.javaguide.cn/xingqiu/image20226282848236.png)
 
-<!-- @include: @planet.snippet.md -->
+@include: @planet.snippet.md--

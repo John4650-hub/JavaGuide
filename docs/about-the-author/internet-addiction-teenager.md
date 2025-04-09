@@ -1,152 +1,59 @@
----
-title: 我曾经也是网瘾少年
-category: 走近作者
-tag:
-  - 个人经历
----
+I don't...
+I used to be an Internet addict.\
+Category:\
+Tag:
 
-> 这篇文章写于 2021 年高考前夕。
+- Personal experience\
+  I don't...
 
-聊到高考，无数人都似乎有很多话说。今天就假借高考的名义，简单来聊聊我的高中求学经历吧！
+> This article was written on the eve of the 2021 High Examination. >
 
-说实话，我自己的高中求学经历真的还不算平淡，甚至有点魔幻，所以还是有很多话想要说的。
+When it comes to high examinations, it seems that countless people have a lot to say. Let's talk about my high school experience in the name of the High Test.
 
-这篇文章大概会从我的初中一直介绍到高中，每一部分我都不会花太多篇幅，就简单聊聊吧！
+To be honest, my high school experience is really not flat, even a bit magical, so there is a lot to say.
 
-**以下所有内容皆是事实，没有任何夸大的地方，稍微有一点点魔幻。**
+This article will probably be introduced from my junior high to high school, and I won't spend too much space on every part of it.
 
-## 刚开始接触电脑
+**All of the following are facts, nothing is exaggerated, a little magic.**
 
-最开始接触电脑是在我刚上五年级的时候，那时候家里没电脑，刚开始上网都是在黑网吧玩的。
+# Just starting to touch the computer
 
-黑网吧大概就是下面这样式儿的，一个没有窗户的房间里放了很多台老式电脑，非常拥挤。
+The first contact with the computer was when I was in fifth grade, when I had no computer at home, and the first time I had Internet access was at the black-net bar.
 
-![黑网吧](https://oss.javaguide.cn/about-the-author/internet-addiction-teenager/heiwangba.png)
+The black-net bar is probably like this, with many old computers in a room without windows and very crowded.
 
-在黑网吧上网的经历也是一波三折，经常会遇到警察来检查或者碰到大孩子骚扰。在黑网吧上网的一年多中，我一共两次碰到警察来检查，主要是看有没有未成年人（当时黑网吧里几乎全是未成年人），实际感觉像是要问黑网吧老板要点好处。碰到大孩子骚扰的次数就比较多，大孩子经常抢我电脑，还威胁我把身上所有的钱给他们。我当时一个人也比较怂，被打了几次之后，就尽量避开大孩子来玩的时间去黑网吧，身上也只带很少的钱。小时候的性格就比较独立，在外遇到事情我一般也不会给家里人说（因为说了也没什么用，家人给我的安全感很少）。
+![Black-net bar](https://oss.javaguide.cn/about-the-mouth/internet-addiation-teenager/heiwangba.png)
 
-我现在已经记不太清当时是被我哥还是我姐带进网吧的，好像是我姐。
+Access to the Internet at black-net cafes is also a one-and-a-half-way experience, where police often come to check and harass older children. In more than a year, I met the police twice to check on the Internet, mainly to see if there were any minors (almost all of whom were minors at that time), and it actually felt like asking the black-net owner for a favor. There's a lot of harassment with big kids who rob my computer and threaten to take all my money. When I was alone, I was beaten a few times, and I tried to avoid the time of the older children and went to the black-net cafes with little money. When I was a child, I was more independent, and I usually didn't tell my family what happened outside.
 
-起初的时候，自己就是玩玩流行蝴蝶剑、单机摩托之类的单机游戏。但是，也没有到沉迷的地步，只是觉得这东西确实挺好玩的，一玩就可以玩一下午，恋恋不舍。
+I can't remember whether my brother or my sister took me to the Internet cafe.
 
-![](https://oss.javaguide.cn/github/javaguide/books2a6021b9-e7a0-41c4-b69e-a652f7bc3e12-20200802173601289.png)
+At first, it was a single-machine game of pop butterflies and bikes. But it's not as if it's really fun, but it's a good one.
 
-## 小学毕业后开始有网瘾
+![Game](https://oss.javaguide.cn/github/javaguide/books2a6021b9-e7a0-41c4-b69e-a652f7bc3e12-20200802173601289.png)
 
-开始有网瘾是在小学毕业的时候，在我玩了一款叫做 **QQ 飞车** 的游戏之后（好像是六年级末就开始玩了）。我艹，当时真的被这游戏吸引了。**每天上课都幻想自己坐在车里面飘逸，没错，当时就觉得秋名山车神就是我啦！**
+# After primary school it's on the Internet
 
-我当时技术还是挺不错的，整个网吧玩这个游戏的貌似还没有可以打败我的（我们当时经常会开放切磋）。
+The Internet addiction started at the end of primary school, after I played a game called **QQ. Oh, shit. I was really attracted to the game.** Every day in class, I dreamt I was sitting in a car.
 
-QQ 飞车这款戏当时还挺火的，很多 90 后的小伙伴应该比较熟悉。
+I was pretty technical at the time, and the whole Internet cafe didn't seem to beat me.
 
-我记得，那时候上网还不要身份证，10 元办一张网卡就行了，网费也是一元一小时。我就经常不吃早饭，攒钱用来上网。只要口袋里有钱，我都会和我的小伙伴奔跑到网吧一起玩 QQ 飞车。青回啊！
+QQ, the show was pretty hot at the time, and a lot of after-90s little partners should be familiar.
 
-> 说到这，我情不自禁地打开自己的 Windows 电脑，下载了 Wegame ，然后下载了 QQ 飞车。
+I remember when I didn't need an I.D. on the Internet, 10 bucks for a card, and an hour for the Internet. I didn't always eat breakfast and saved money for the Internet. As long as there was money in my pocket, I'd run to the Internet cafe with my little friend. Qingbai!
 
-到了初二的时候，就没玩 QQ 飞车了。我的等级也永久定格在了 **120** 级，这个等级在当时那个升级难的一匹的年代，算的上非常高的等级了。
+Speaking of which, I couldn't help but turn on my Windows computer, download Wegame, and then download QQ.
 
-![](https://oss.javaguide.cn/javaguide/b488618c-3c25-4bc9-afd4-7324e27553bd-20200802175534614.png)
+By the second day, no more QQ. And I'm at **120** levels, which were very high in that difficult age.
 
-## 初二网瘾爆发
+![Level](https://oss.javaguide.cn/javaguide/b488618c-3c25-4bc9-afd4-7324e27553bd-2020080217534614.png)
 
-网瘾爆发是在上了初中之后。初二的时候，最为猖狂，自己当时真的是太痴迷于 **穿越火线** 这款游戏了，比 QQ 飞车还要更痴迷一些。每天上课都在想像自己拿起枪横扫地方阵营的场景，心完全不在学习上。
+# The first two web addictions
 
-我经常每天早上起早去玩别人包夜留下的机子，毕竟那时候上学也没什么钱嘛！我几乎每个周五晚上都会趁家人睡着之后，偷偷跑出去通宵。整个初二我通宵了无数次，我的眼睛就是这样近视的。
+The Internet addiction outbreak was after junior high. In the second year, the craziest, and I was really obsessed with **crossing the line of fire.** This game is a little more obsessed than QQ. Every day in class, I imagine myself taking up a gun to sweep the local camp, and I'm not learning at all.
 
-有网瘾真的很可怕，为了上网什么都敢做。当时我家住在顶楼的隔热层，我每次晚上偷偷出去上网，为了不被家里人发现，要从我的房间的窗户爬出去，穿过几栋楼，经过几间无人居住的顶楼隔热层之后再下楼。现在想想，还是比较危险的。而且，我天生比较怕黑。当时为了上网，每次穿过这么多没人居住的顶层隔热层都没怕过。你让我现在再去，我都不敢，实在是佩服当年的自己的啊！
+I used to go out in the morning and play with other people's leftovers. I didn't have any money for school. I sneaked out all night after my family was asleep almost every Friday night. I've been up all night all day, and that's how my eyes looked.
 
-![我家楼顶拍的雪景](https://oss.javaguide.cn/about-the-author/image-20230429114622340.png)
+Internet addiction is really scary. Do anything to get online. At that time, my house lived in the insulation layer of the penthouse, and every night I went out on the Internet and, in order not to be discovered by my family, I had to climb out of the window of my room, through several buildings, and then come downstairs after several uninhabited penthouse insulations. Now think, it's dangerous. Besides, I was born more afraid of the dark. In order to access the Internet, every time there were so many uninhabited insulations. You let me go now, I can't. I really admire myself.
 
-周五晚上通宵完之后，我会睡到中午，然后下午继续去网吧玩。到了周日，基本都是直接从早上 8 点玩到晚上 9 点 10 点。那时候精力是真旺盛，真的完全不会感觉比较累，反而乐在其中。
-
-我的最终军衔停留在了两个钻石，玩过的小伙伴应该清楚这在当时要玩多少把（现在升级比较简单）。
-
-![](https://oss.javaguide.cn/about-the-author/cf.png)
-
-ps: 回坑 CF 快一年了，目前的军衔是到了两颗星中校 3 了。
-
-那时候成绩挺差的。这样说吧！我当时在很普通的一个县级市的高中，全年级有 500 来人，我基本都是在 280 名左右。而且，整个初二我都没有学物理，上物理课就睡觉，考试就交白卷。
-
-为什么对物理这么抵触呢？这是因为开学不久的一次物理课，物理老师误会我在上课吃东西还狡辩，扇了我一巴掌。那时候心里一直记仇到大学，想着以后自己早晚有时间把这个物理老师暴打一顿。
-
-## 初三开启学习模式
-
-初三上学期的时候突然觉悟，像是开窍了一样，当时就突然意识到自己马上就要升高中了，要开始好好搞搞学习了。
-
-诶，其实也不算是开窍，主要还是为了让自己能在家附近上学，这样上网容易一些。因为当时我家就在我们当地的二中附近，附近有特别特别多的网吧，上网特别特别容易，加上我又能走读。
-
-像我初中在的那个学校，年级前 80 的话基本才有可能考得上二中。经过努力，初三上学期的第一次月考，我直接从 280 多名进步到了年级 50 多名，有机会考入二中。当时还因为进步太大，被当作 **进步之星** 在讲台上给整个年级做演讲，分享经验。这也是我第一次在这么多人面前讲话，挺紧张的，但是挺爽的，在暗恋对象面前赚足了面子。
-
-其实在初三的时候，我的网瘾还是很大。不过，我去玩游戏的前提都是自己把所有任务做完，并且上课听讲也相对比较认真的听。
-
-初三那会，我通宵的次数变少了一些，但会经常晚上趁着家人睡觉了，偷偷跑出去玩到凌晨 2 点多回来。
-
-当时，我们当地的高中有一个政策是每个学校的成绩比较优秀的学生可以参加 **高中提前招生考试** ，只要考上了就不用参加中考了。我当时也有幸参加了这次考试并成功进入了我们当地的二中。
-
-在我参加高中提前考试前的一个晚上，我半夜 12 点趁着妈妈睡着，跑去了网吧玩 CF 到凌晨 3 点多回来。就那一次我被抓了现行，到家之后发现妈妈就坐在客厅等我，训斥一顿后，我就保证以后不再晚上偷偷跑出去了。
-
-> 这里要说明一点：我的智商我自己有自知之明的，属于比较普通的水平吧！前进很大的主要原因是自己基础还行，特别是英语和物理。英语是因为自己喜欢，加上小学就学了很多初中的英语课程。物理的话就很奇怪，虽然初二也不怎么听物理课，也不会物理，但是到了初三之后自己就突然开窍了。真的！我现在都感觉很奇怪。然后，到了高中之后，我的英语和物理依然是我最好的两门课。大学的兼职，我出去做家教都是教的高中物理。
-
-## 高中从小班掉到平行班
-
-![出高考成绩后回高中母校拍摄](https://oss.javaguide.cn/about-the-author/internet-addiction-teenager/wodegaozhong.png)
-
-由于参加了高中提前招生考试，我提前 4 个月就来到了高中，进入了小班，开始学习高中的课程。
-
-上了高中的之后，我上课就偷偷看小说，神印王座、斗罗大陆、斗破苍穹很多小说都是当时看的。中午和晚上回家之后，就在家里玩几把 DNF。当时家里也买了电脑，姥爷给买的，是对自己顺利进入二中的奖励。到我卸载 DNF 的时候，已经练了 4 个满级的号，两个接近满级的号。
-
-当时我的空间专门有一个相册里面放的全是 DNF 的一些照片和截图，无比痴迷于练级和刷图。
-
-在高中待了不到一个月，我上体育课的时候不小心把腿摔断了，这也是我第一次感受到骨头断裂的头疼，实在是太难受了！
-
-于是，我就开始休学养病。直到高中正式开学一个月之后，我才去上学，也没有参加军训。
-
-由于我耽误了几个月的课程，因此没办法再进入小班，只能转到奥赛班。到了奥赛班之后，我继续把时间和经历都投入在游戏和小说上，于是我的成绩在奥赛班快接近倒数了。等到高二分班的时候，我成功被踢出奥赛班来到了最普通的平行班。
-
-**我成功把自己从学校最好的小班玩到奥赛班，然后再到平行班。有点魔幻吧！**
-
-## 高二开始奋起直追
-
-高中觉悟是在高二下学期的时候，当时是真的觉悟了，就突然觉得游戏不香了，觉得 DNF 也不好玩了，什么杀怪打装备不过是虚无，练了再多满级的 DNF 账号也屁用没有，没钱都是浮云。
-
-我妈妈当时还很诧异，还奇怪地问我：“怎么不玩游戏了？”（我妈属于不怎么管我玩游戏的，她觉得这东西还是要靠自觉）。
-
-于是，我便开始牟足劲学习，每天都沉迷学习无法自拔（豪不夸张），乐在其中。虽然晚自习上完回到家已经差不多 11 点了，但也并不感觉累，反而感觉很快乐，很充实。
-
-**我的付出也很快得到了回报，我顺利返回了奥赛班。** 当时，理科平行班大概有 7 个，每次考试都是平行班之间会单独排一个名次，小班和奥赛班不和我们一起排名次。后面的话，自己基本每次都能在平行班得第一，并且很多时候都是领先第二名 30 来分。由于成绩还算亮眼，高三上学期快结束的时候，我就向年级主任申请去了奥赛班。
-
-## 高考前的失眠
-
-> **失败之后，不要抱怨外界因素，自始至终实际都是自己的问题，自己不够强大！** 然后，高考前的失眠也是我自己问题，要怪只能怪自己，别的没有任何接口。
-
-我的高考经历其实还蛮坎坷的，毫不夸张的说，高考那今天可能是我到现在为止，经历的最难熬的时候，特别是在晚上。
-
-我在高考那几天晚上都经历了失眠，想睡都睡不着那种痛苦想必很多人或许都体验过。
-
-其实我在之前是从来没有过失眠的经历的。高考前夕，因为害怕自己睡不着，所以，我提前让妈妈去买了几瓶老师推荐的安神补脑液。我到现在还记得这个安神补脑液是敖东牌的。
-
-![](https://oss.javaguide.cn/about-the-author/internet-addiction-teenager/image-20220625194714247.png)
-
-高考那几天的失眠，我觉得可能和我喝了老师推荐的安神补脑液有关系，又或者是我自己太过于紧张了。因为那几天睡觉总会感觉有很多蚂蚁在身上爬一样，身上还起了一些小痘痘（有点像是过敏）。
-
-这里要格外说明一点，避免引起误导：**睡不着本身就是自身的问题，上述言论并没有责怪这个补脑液的意思。** 另外， 这款安神补脑液我去各个平台都查了一下，发现大家对他的评价都挺好，和我们老师当时推荐的理由差不多。如果大家需要改善睡眠的话，可以咨询相关医生之后尝试一下。
-
-高考也确实没发挥好，整个人在考场都是懵的状态。高考成绩出来之后，比我自己预估的还低了几十分，最后只上了一个双非一本。不过，好在专业选的好，吃了一些计算机专业的红利，大学期间也挺努力的。
-
-## 大学生活
-
-大学生活过的还是挺丰富的，我会偶尔通宵敲代码，也会偶尔半夜发疯跑出去和同学一起走走古城墙、去网吧锤一夜的 LOL。
-
-大学生活专门写过一篇文章介绍：[害，毕业三年了！](./my-college-life.md) 。
-
-## 总结
-
-整个初中我都属于有点网瘾少年的状态，不过初三的时候稍微克制一些。到了高二下学期的时候，自己才对游戏真的没有那么沉迷了。
-
-对游戏不那么沉迷，也是因为自己意识到游戏终究只是消遣，学习才是当时最重要的事情。而且，我的游戏技术又不厉害，又不能靠游戏吃饭，什么打怪升级到最后不过是电脑中的二进制数据罢了！
-
-**这玩意必须你自己意识到，不然，单纯靠父母监督真的很难改变！如果心不在学习上面的话，那同时是不可能学好的！**
-
-我真的很反对父母过于干涉孩子的生活，强烈谴责很多父母把自己孩子的网瘾归咎于网络游戏，把自己孩子的暴力归咎于影视媒体。
-
-**时刻把自己的孩子保护起来不是一件靠谱的事情，他终究要独自面对越来越多的诱惑。到了大学，很多被父母保护太好的孩子就直接废了。他们没有独立意识，没有抗拒诱惑的定力！**
+!\[Snowscape on top of my building\](

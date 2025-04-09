@@ -1,56 +1,54 @@
----
-title: 校招没有实习经历怎么办？
-category: 面试准备
-icon: experience
----
+I don't...
+What if they don't have an internship?
+Category: Preparation for Interview
+icon: example
+I don't...
 
-由于目前的面试太卷，对于犹豫是否要找实习的同学来说，个人建议不论是本科生还是研究生都应该在参加校招面试之前，争取一下不错的实习机会，尤其是大厂的实习机会，日常实习或者暑期实习都可以。当然，如果大厂实习面不上，中小厂实习也是可以接受的。
+As the current interview landscape is too competitive, it is recommended that undergraduate and graduate students, both of whom are reluctant to seek an internship, should pursue a good internship, especially in large companies, on a day-to-day or summer basis, before participating in a school interview. Of course, small- and medium-sized companies are acceptable if they do not have any.
 
-不过，现在的实习是真难找，今年有非常多的同学没有找到实习，有一部分甚至是 211/985 名校的同学。
+However, it is hard to find an internship, and this year a large number of students have not found one, some of them even from 211/985 universities.
 
-如果实在是找不到合适的实习的话，那也没办法，我们应该多花时间去把下面这三件事情给做好：
+If we can't find a suitable internship, we should spend more time doing the following three things:
 
-1. 补强项目经历
-2. 持续完善简历
-3. 准备技术面试
+1. Completion of project experience
+1. Continuous improvement of curriculum vitae
+1. Preparation for technical interviews
 
-## 补强项目经历
+# Complement Project Experience
 
-校招没有实习经历的话，找工作比较吃亏（没办法，太卷了），需要在项目经历部分多发力弥补一下。
+If there are no internships, the search for a job is a loss (no choice, too many applicants) and needs to be partly compensated for.
 
-建议你尽全力地去补强自己的项目经历，完善现有的项目或者去做更有亮点的项目，尽可能地通过项目经历去弥补一些。
+It is recommended that you make every effort to build on your project experience, refine existing projects, or undertake more visible ones, and to make up for them as much as possible.
 
-你面试中的重点就是你的项目经历涉及到的知识点，如果你的项目经历比较简单的话，面试官直接不知道问啥了。另外，你的项目经历中不涉及的知识点，但在技能介绍中提到的知识点也很大概率会被问到。像 Redis 这种基本是面试 Java 后端岗位必备的技能，我觉得大部分面试官应该都会问。
+The focus of your interview is the knowledge points of your project experience, and if your project experience is relatively simple, the interviewer has no direct idea what to ask. In addition, knowledge points not covered by your project experience, but those mentioned in the skills presentation, are also very likely to be asked. I think most interviewers would have asked.
 
-推荐阅读一下网站的这篇文章：[项目经验指南](https://javaguide.cn/interview-preparation/project-experience-guide.html)。
+This article is recommended for reading: [Project Experience Guide](https://javaguide.cn/interview-preparation/project-experience-guide.html).
 
-## **完善简历**
+# **Perfect Curriculum Vitae**
 
-一定一定一定要重视简历啊！建议至少花 2~3 天时间来专门完善自己的简历。并且，后续还要持续完善。
+I'm sure you'll have to pay attention to your resume! It is recommended that at least 2-3 days be devoted to improving your curriculum vitae. In addition, follow-up improvements should continue.
 
-对于面试官来说，筛选简历的时候会比较看重下面这些维度：
+For interviewers, the following dimensions are more important in the CV screening:
 
-1. **实习/工作经历**：看你是否有不错的实习经历，大厂且与面试岗位相关的实习/工作经历最佳。
-2. **获奖经历**：如果有含金量比较高（知名度较高的赛事比如 ACM、阿里云天池）的获奖经历的话，也是加分点，尤其是对于校招来说，这类求职者属于是很多大厂争抢的对象（但不是说获奖了就能进大厂，还是要面试表现还可以）。对于社招来说，获奖经历作用相对较小，通常会更看重过往的工作经历和项目经验。
-3. **项目经验**：项目经验对于面试来说非常重要，面试官会重点关注，同时也是有水平的面试提问的重点。
-4. **技能匹配度**：看你的技能是否满足岗位的需求。在投递简历之前，一定要确认一下自己的技能介绍中是否缺少一些你要投递的对应岗位的技能要求。
-5. **学历**：相对其他行业来说，程序员求职面试对于学历的包容度还是比较高的，只要你在其他方面有过人之出的话，也是可以弥补一下学历的缺陷的。你要知道，很多行业比如律师、金融，学历就是敲门砖，学历没达到要求，直接面试机会都没有。不过，由于现在面试越来越卷，一些大厂、国企和研究所也开始卡学历了，很多岗位都要求 211/985，甚至必须需要硕士学历。总之，学历很难改变，学校较差的话，就投递那些对学历没有明确要求的公司即可，努力提升自己的其他方面的硬实力。
+1. **Internship/Work Experience**: See if you have a good internship, preferably with a large company, and the best internship/work experience associated with the interview position.
+1. **Award-Winning Experience**: This is also a point of focus if there is a relatively high-value award (high-profile competitions such as ACM, etc.), particularly for school admissions. Such job seekers are the object of much competition (not to say that they can enter a large company or be interviewed based on performance). The award-winning experience plays a relatively small role in the context of social recruitment, often with greater emphasis on previous work and project experience.
+1. **Project Experience**: Project experience is very important for interviews, and interviewers will focus on it, as well as on horizontal interview questions.
+1. **Skill Matching**: See if your skills meet the needs of the position. Before submitting your curriculum vitae, it is important to confirm whether there is a lack of skill requirements in your skills profile for the corresponding position.
+1. **Education**: Programs' job interviews are more inclusive of academic qualifications than in other professions, and they can compensate for the shortcomings of academic qualifications if you have other strengths. You know, many fields like law, finance, and education are strict; if education doesn't meet the requirements, direct interviews don't take place. However, as more and more interviews are now being conducted, some major companies, state enterprises, and research institutes have also started to qualify, and many jobs require 211/985 or even a master's degree. In short, it is difficult to change academic qualifications, and if schools are not prestigious, it is advisable to apply to companies that do not have a clear requirement for academic qualifications in an effort to enhance your hard skills in other areas.
 
-对于大部分求职者来说，实习/工作经历、项目经验、技能匹配度更重要一些。不过，不排除一些公司会因为学历卡人。
+For most job seekers, internships/work experience, project experience, and skills matching are more important. However, it is not excluded that some companies may have their academic card holders.
 
-详细的程序员简历编写指南可以参考这篇文章：[程序员简历编写指南(重要)](https://javaguide.cn/interview-preparation/resume-guide.html)。
+The detailed curriculum vitae development guide for programmers can be consulted in this article: [Programmers' Curriculum Vitae Development Guide (Important)](https://javaguide.cn/interview-preparation/resume-guide.html).
 
-## **准备技术面试**
+# Ready for Technical Interview
 
-面试之前一定要提前准备一下常见的面试题也就是八股文：
+An interview must be prepared in advance of the usual interview, covering eight parts:
 
-- 自己面试中可能涉及哪些知识点、那些知识点是重点。
-- 面试中哪些问题会被经常问到、面试中自己该如何回答。(强烈不推荐死记硬背，第一：通过背这种方式你能记住多少？能记住多久？第二：背题的方式的学习很难坚持下去！)
+- Which points of knowledge may be involved in your interviews and which points of knowledge are the focus.
+- Which questions are frequently asked and how they should be answered. One: How much can you remember? How long can you retain it? Second, learning the wrong way is hard to keep! I'm not sure.
 
-Java 后端面试复习的重点请看这篇文章：[Java 后端的面试重点是什么?](https://javaguide.cn/interview-preparation/key-points-of-interview.html)。
+The focus of the Java back-end interview review is on the article: What is the focus of the [Java] back-end interview? (https://javaguide.cn/interview-registration/key-points-of-interview.html).
 
-不同类型的公司对于技能的要求侧重点是不同的比如腾讯、字节可能更重视计算机基础比如网络、操作系统这方面的内容。阿里、美团这种可能更重视你的项目经历、实战能力。
+The skill requirements of different types of companies may focus on different aspects, such as telecommunications, and may give more importance to computer infrastructure, such as networks and operating systems. Companies like Alibaba and American firms may place more weight on your project experience and operational capabilities.
 
-一定不要抱着一种思想，觉得八股文或者基础问题的考查意义不大。如果你抱着这种思想复习的话，那效果可能不会太好。实际上，个人认为还是很有意义的，八股文或者基础性的知识在日常开发中也会需要经常用到。例如，线程池这块的拒绝策略、核心参数配置什么的，如果你不了解，实际项目中使用线程池可能就用的不是很明白，容易出现问题。而且，其实这种基础性的问题是最容易准备的，像各种底层原理、系统设计、场景题以及深挖你的项目这类才是最难的！
-
-八股文资料首推我的 [《Java 面试指北》](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html) 和 [JavaGuide](https://javaguide.cn/home.html) 。里面不仅仅是原创八股文，还有很多对实际开发有帮助的干货。除了我的资料之外，你还可以去网上找一些其他的优质的文章、视频来看。
+It is important not

@@ -1,56 +1,57 @@
----
-title: 抄袭狗，你冬天睡觉脚必冷！！！
-category: 走近作者
-tag:
-  - 杂谈
----
+I don't...\
+Copy the dog.\
+Category:\
+Tag:
 
-抄袭狗真的太烦了。。。
+- Chasin'.\
+  I don't...
 
-听朋友说我的文章在知乎又被盗了，原封不动地被别人用来引流。
+It's really annoying to copy dogs.
 
-![](https://oss.javaguide.cn/p3-juejin/39f223bd8d8240b8b7328f7ab6edbc57~tplv-k3u1fbpfcp-zoom-1.png)
+My friends told me that my articles were being stolen and used as a diversion.
 
-而且！！！这还不是最气的。
+![Image](https://oss.javaguide.cn/p3-juejin/39f223bd8d8240b7328b7ab6edbc57~tplv-k3u1fbpfcp-zoom-1.png)
 
-这人还在文末注明的原出处还不是我的。。。
+And! That's not the worst.
 
-![](https://oss.javaguide.cn/p3-juejin/fa47e0752f4b4b57af424114bc6bc558~tplv-k3u1fbpfcp-zoom-1.png)
+And it is not mine that is the original, as indicated at the end.
 
-也就是说 CSDN 有另外一位抄袭狗盗了我的这篇文章并声明了原创，知乎抄袭狗又原封不动地搬运了这位 CSDN 抄袭狗的文章。
+![Image](https://oss.javaguide.cn/p3-juejin/fa47e0752f4b4b57af24114bc6bc558~tplv-k3u1fbpfcp-zoom-1.png)
 
-真可谓离谱他妈给离谱开门，离谱到家了。
+Which means another one of the CSDNs stole my article and made a statement about the originals, carrying the CSDN's article in its entirety.
 
-![](https://oss.javaguide.cn/p3-juejin/6f8d281579224b13ad235c28e1d7790e~tplv-k3u1fbpfcp-zoom-1.png)
+It's so fucking open. It's so home.
 
-我打开知乎抄袭狗注明的原出处链接，好家伙，一模一样的内容，还表明了原创。
+![Image](~tplv-k3u1fbpffffcp-zoom-1.png)
 
-![](https://oss.javaguide.cn/p3-juejin/6a6d7b206b6a43ec9b0055a8f47a30be~tplv-k3u1fbpfcp-zoom-1.png)
+I opened a link to the original from the dog, good guy, the exact same text, and the original.
 
-看了一下 CSDN 这位抄袭狗的文章，好家伙，把我高赞回答搬运了一个遍。。。真是很勤奋了。。。
+![Image](https://oss.javaguide.cn/p3-juejin/6a6d7b206b6a43ec9b0055a8f47a30be~tplv-k3u1fbpfcp-zoom-1.png)
 
-CSDN 我就不想多说了，就一大型文章垃圾场，都是各种不规范转载，各种收费下载的垃圾资源。这号称国内流量最大的技术网站贼恶心，吃香太难看，能不用就不要用吧！
+Read the CSDN article that copied the dog, and the good guy moved my reply all over. Really hard work.
 
-像我自己平时用 Google 搜索的时候，都是直接屏蔽掉 CSDN 这个站点的。只需要下载一个叫做 Personal Blocklist 的 Chrome 插件，然后将 blog.csdn.net 添加进黑名单就可以了。
+It's not like I'm going to have to say that one big piece of junk is a lot of junk that's been printed out at various costs. It's called the biggest domestic traffic in technology website. It's disgusting.
 
-![](https://oss.javaguide.cn/p3-juejin/be151d93cd024c6e911d1a694212d91c~tplv-k3u1fbpfcp-zoom-1.png)
+It's like when I'm searching with Google, it's directly blocking the site. All you have to do is download a Chrome plugin called Personal Blocklist, and then add blog.csdn.net to the blacklist.
 
-我的文章基本被盗完了，关键是我自己发没有什么流量，反而是盗我文章的那些人比我这个原作者流量还大。
+![Image](~tplv-k3u1fbpffcp-zoom-1.png)
 
-这是什么世道，是人性的扭曲还是道德的沦丧？
+The point is that I don't have any traffic, but the ones who stole my article are bigger than my original author.
 
-不过，也没啥，CSDN 这垃圾网站不去发文也无妨。
+What is this world, a distortion of humanity or a loss of morality?
 
-看看 CSDN 热榜上的文章都是一些什么垃圾，不是各种广告就是一些毫无质量的拼凑文。
+But it's nothing, so it doesn't matter if you don't write on this junk site.
 
-![](https://oss.javaguide.cn/p3-juejin/cd07efe86af74ea0a07d29236718ddc8~tplv-k3u1fbpfcp-zoom-1-20230717155426403.png)
+Look at the articles on the CSDN hot list, they're some kind of junk, all kinds of ads or some piece of shit with no quality.
 
-当然了，也有极少部分的高质量文章，比如涛哥、二哥、冰河、微观技术等博主的文章。
+![Image](https://oss.javaguide.cn/p3-juejin/cd07efe86af74ea0a07d29236718dc8~tplv-k3u1fbpfcp-zoom-1-20300717155426403.png)
 
-还有很多视频平台（比如抖音、哔哩哔哩）上面有很多博主直接把别人的原创拿来做个视频，用来引流或者吸粉。
+There are, of course, very few high-quality articles, such as those by bloggers such as Togo, Brother 2, Ice River, Microtech, etc.
 
-今天提到的这篇被盗的文章曾经就被一个培训机构拿去做成了视频用来引流。
+There's a lot of video platforms (e.g., tremors, beeps) where a lot of bloggers bring people's originals directly to make a video that can be used to lure or pollinate.
 
-![](https://oss.javaguide.cn/p3-juejin/9dda1e36ceff4cbb9b0bf9501b279be5~tplv-k3u1fbpfcp-zoom-1.png)
+The stolen article that was mentioned today was used by a training institution as a video to lure it.
 
-作为个体，咱也没啥办法，只能遇到一个举报一个。。。
+![Image](https://oss.javaguide.cn/p3-juejin/9dda1e36ceff4cbb9b0bf9501b279be5~tplv-k3u1fbpfcp-zoom-1.png)
+
+As an individual, we have no choice but to report one.

@@ -1,29 +1,29 @@
----
-title: Java 学习路线(最新版，4w+字)
-category: 面试准备
-icon: path
----
+I don't...
+Title: Java Learning Route (update, 4w+ words)\
+Category: Preparation for interview\
+icon: path\
+I don't...
 
-::: tip 重要说明
+::: Tip Key Notes
 
-本学习路线保持**年度系统性修订**，严格同步 Java 技术生态与招聘市场的最新动态，**确保内容时效性与前瞻性**。
+This course of study maintains **the annual systematic revision**, closely synchronizes with the latest developments in the Java technological ecology and recruitment market **to ensure timeliness and forward-looking content**.
 
 :::
 
-历时一个月精心打磨，笔者基于当下 Java 后端开发岗位招聘的最新要求，对既有学习路线进行了全面升级。本次升级涵盖技术栈增删、学习路径优化、配套学习资源更新等维度，力争构建出更符合 Java 开发者成长曲线的知识体系。
+Over a period of one month, the author has fully upgraded the existing study route, based on the latest requirements for recruitment for the current Java back-end development position. This upgrade covers the dimensions of technology incubation and removal, learning path optimization, and updating of associated learning resources, and seeks to build a knowledge system that is more in line with the Java Developer's growth curve.
 
-![Java 学习路线 PDF 概览](https://oss.javaguide.cn/github/javaguide/interview-preparation/java-road-map-pdf.png)
+[Java Learning Route PDF Overview](https://oss.javaguide.cn/github/javaguide/interview-preparation/java-road-map-pdf.png)
 
-这可能是你见过的最用心、最全面的 Java 后端学习路线。这份学习路线共包含 **4w+** 字，但你完全不用担心内容过多而学不完。我会根据学习难度，划分出适合找小厂工作必学的内容，以及适合逐步提升 Java 后端开发能力的学习路径。
+This is probably the most thoughtful and comprehensive Java back-end learning route you've ever seen. This course of study contains **4w+** words, but you have nothing to worry about. I'm going to divide up the elements that are suitable for small-scale work and the learning paths that are appropriate for the gradual development of Java's back end.
 
-![Java 学习路线图](https://oss.javaguide.cn/github/javaguide/interview-preparation/java-road-map.png)
+[Java Learning Road Map](https://oss.javaguide.cn/github/javaguide/interview-preparation/java-road-map.png)
 
-对于初学者，你可以按照这篇文章推荐的学习路线和资料进行系统性的学习；对于有经验的开发者，你可以根据这篇文章更一步地深入学习 Java 后端开发，提升个人竞争力。
+For beginners, you can learn systematically along the lines and materials recommended in this article; for experienced developers, you can learn in depth about Java back-end development and improve personal competitiveness.
 
-在看这份学习路线的过程中，建议搭配 [Java 面试重点总结(重要)](https://javaguide.cn/interview-preparation/key-points-of-interview.html)，可以让你在学习过程中更有目的性。
+In view of this course of study, it is suggested that a combination of [Java interview summary (important)](https://javaguide.cn/interview-preparation/key-points-of-interview.html) could make the learning process more purposeful.
 
-由于这份学习路线内容太多，因此我将其整理成了 PDF 版本（共 **61** 页），方便大家阅读。这份 PDF 有黑夜和白天两种阅读版本，满足大家的不同需求。
+Because of the content of this course, I have organized it into a PDF version (out of a total of **61** pages) which is easy for everyone to read. This PDF has two reading versions, night and day, to meet your different needs.
 
-这份学习路线的获取方法很简单：直接在公众号「**JavaGuide**」后台回复“**学习路线**”即可获取。
+The method of obtaining this course of study is simple: it can be accessed directly from the backstage of the public "**JavaGuide**" to "**Learning Route**".
 
-![JavaGuide 官方公众号](https://oss.javaguide.cn/github/javaguide/gongzhonghaoxuanchuan.png)
+![JavaGuide](https://oss.javaguide.cn/github/javaguide/gongzhonghaoxuanchuan.png)

@@ -1,27 +1,27 @@
-## 星球其他资源
+# Planet Other Resources
 
-[知识星球](../about-the-author/zhishixingqiu-two-years.md)除了提供了 **《Java 面试指北》** 、 **《Java 必读源码系列》**（目前已经整理了 Dubbo 2.6.x 、Netty 4.x、SpringBoot2.1 的源码）、 **《手写 RPC 框架》** 、**《Kafka 常见面试题/知识点总结》** 等多个专属小册，还有读书活动、学习打卡、简历修改、免费提问、海量 Java 优质面试资源以及各种不定时的福利。
+[Knowledge Planet](./about-the-author/zhishixingqiu-two-years.md) in addition to providing **Java Interview Point North**, **Java Essential Read Source Series** (the source code of Dubbo 2.6.x, Netty 4.x, Spring Boot 2.1), **Handwritten RPC Framework**, **Kafka Common Interview Questions/Knowledge Summary**, as well as reading activities, learning cards, curriculum vitae revisions, free questions, big Java high-quality interview resources, and various uncertain benefits.
 
-![知识星球专栏概览](https://oss.javaguide.cn/xingqiu/image-20220211231206733.png)
+![An overview of the Knowledge Planet column](https://oss.javaguide.cn/xingqiu/image-202221123126733.png)
 
-![星球 PDF 面试手册](https://oss.javaguide.cn/xingqiu/image-20220723120918434.png)
+![Star PDF Interview Manual]
 
-下面是星球提供的部分服务（点击下方图片即可获取知识星球的详细介绍）：
+The following are some of the services provided by the planet (a detailed description of the planet by clicking on a picture below):
 
-[![星球服务](https://oss.javaguide.cn/xingqiu/xingqiufuwu.png)](../about-the-author/zhishixingqiu-two-years.md)
+[![Star Service](https://oss.javaguide.cn/xingqiu/xingqiufuwu.png)](./about-the-author/zhishixingqiu-two-years.md)
 
-**我有自己的原则，不割韭菜，用心做内容，真心希望帮助到你！**
+**I have my own principles, don't cut corners, do something with my heart, and really want to help you!**
 
-如果你感兴趣的话，不妨花 3 分钟左右看看星球的详细介绍：[JavaGuide 知识星球详细介绍](../about-the-author/zhishixingqiu-two-years.md)。
+If you are interested, you may wish to take about three minutes to look at the planet's detailed presentation: [JavaGuide Knowledge Planet](./about-the-author/zhishixingqiu-two-years.md).
 
-## 星球限时优惠
+# Planet Time-Limited
 
-这里再送一张 **30** 元的星球专属优惠券，数量有限（价格即将上调。老用户续费半价 ，微信扫码即可续费）！
+Here's another **$30** exclusive planetary coupon, in a limited number (price is about to increase). The old user's fee is half-priced.
 
-![知识星球30元优惠卷](https://oss.javaguide.cn/xingqiu/xingqiuyouhuijuan-30.jpg)
+![Coupon Image](https://oss.javaguide.cn/xingqiu/xingqiuhuijuan-30.jpg)
 
-进入星球之后，记得查看 **[星球使用指南](https://t.zsxq.com/0d18KSarv)** （一定要看！！！） 和 **[星球优质主题汇总](https://www.yuque.com/snailclimb/rpkqw1/ncxpnfmlng08wlf1)** 。
+Upon entering the planet, remember to look at **[Guideline for the Use of the Planet](https://t.zsxq.com/0d18KSarv)** (must look!!!) and **[Characterized Collection of the Planet's High-Quality Themes](https://www.yuque.com/snailclimb/rpkkkw1/ncxpnnnfmmng08wlf1)**.
 
-**无任何套路，无任何潜在收费项。用心做内容，不割韭菜！**
+**No options, no potential charges. You do it with your heart, you don't cut corners!**
 
-不过， **一定要确定需要再进** 。并且， **三天之内觉得内容不满意可以全额退款** 。
+However, **it must be determined that further progress is required**. Moreover, **if the content is not satisfactory within three days, a full refund can be made**.

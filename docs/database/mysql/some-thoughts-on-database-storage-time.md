@@ -1,201 +1,58 @@
----
-title: MySQL日期类型选择建议
-category: 数据库
-tag:
-  - MySQL
-head:
-  - - meta
-    - name: keywords
-      content: MySQL 日期类型选择, MySQL 时间存储最佳实践, MySQL 时间存储效率, MySQL DATETIME 和 TIMESTAMP 区别, MySQL 时间戳存储, MySQL 数据库时间存储类型, MySQL 开发日期推荐, MySQL 字符串存储日期的缺点, MySQL 时区设置方法, MySQL 日期范围对比, 高性能 MySQL 日期存储, MySQL UNIX_TIMESTAMP 用法, 数值型时间戳优缺点, MySQL 时间存储性能优化, MySQL TIMESTAMP 时区转换, MySQL 时间格式转换, MySQL 时间存储空间对比, MySQL 时间类型选择建议, MySQL 日期类型性能分析, 数据库时间存储优化
----
+I don't...
+title: MySQL Date Type Selection
+Category: Database
+Tag:
 
-在日常的软件开发工作中，存储时间是一项基础且常见的需求。无论是记录数据的操作时间、金融交易的发生时间，还是行程的出发时间、用户的下单时间等等，时间信息与我们的业务逻辑和系统功能紧密相关。因此，正确选择和使用 MySQL 的日期时间类型至关重要，其恰当与否甚至可能对业务的准确性和系统的稳定性产生显著影响。
+- MySQL
+  Head:
+- Meta
+- Name: keywords
+  MySQL date-type selection, MySQL time-storage best practice, MySQL time-storage efficiency, MySQL DATETIME and TIMESTAMP difference, MySQL timestamp storage, MySQL timestamp storage type, MySQL development date recommendation, MySQL string storage date disadvantages, MySQL time-space setting method, MySQL date range comparison, High performance MySQL date storage, MySQL UNIX_TIMESTAMP use method, Numeric Time-plugging, MySQL time-storage optimization, MySQL time-storage conversion, MySQL time-storage format conversion, MySQL time-storage space comparison, MySQL choice of time type, MySQL date-type analysis, MySQL date-type analysis
+  I don't...
 
-本文旨在帮助开发者重新审视并深入理解 MySQL 中不同的时间存储方式，以便做出更合适项目业务场景的选择。
+Storage time is a basic and common requirement in day-to-day software development. Whether it is the time of operation to record data, the time of the financial transaction, the time of departure of the journey, the time of the user's next order, etc., time information is closely related to our business logic and system functions. Therefore, the correct choice and use of the date-time type of MySQL is crucial, and its appropriateness may even have a significant impact on the accuracy of operations and the stability of systems.
 
-## 不要用字符串存储日期
+This paper is intended to help developers re-examine and understand in depth the different time storage methods in MySQL in order to make a more suitable choice for project business scenarios.
 
-和许多数据库初学者一样，笔者在早期学习阶段也曾尝试使用字符串（如 VARCHAR）类型来存储日期和时间，甚至一度认为这是一种简单直观的方法。毕竟，'YYYY-MM-DD HH:MM:SS' 这样的格式看起来清晰易懂。
+# Do not store the date with a string
 
-但是，这是不正确的做法，主要会有下面两个问题：
+Like many database beginners, at an early learning stage, writers have tried to store dates and times using string types (e.g. VARCHAR) even as a simple intuitive approach. After all, 'YYYY-MM-DD HH:MM:SS' looks so clear and comprehensible.
 
-1. **空间效率**：与 MySQL 内建的日期时间类型相比，字符串通常需要占用更多的存储空间来表示相同的时间信息。
-2. **查询与计算效率低下**：
-   - **比较操作复杂且低效**：基于字符串的日期比较需要按照字典序逐字符进行，这不仅不直观（例如，'2024-05-01' 会小于 '2024-1-10'），而且效率远低于使用原生日期时间类型进行的数值或时间点比较。
-   - **计算功能受限**：无法直接利用数据库提供的丰富日期时间函数进行运算（例如，计算两个日期之间的间隔、对日期进行加减操作等），需要先转换格式，增加了复杂性。
-   - **索引性能不佳**：基于字符串的索引在处理范围查询（如查找特定时间段内的数据）时，其效率和灵活性通常不如原生日期时间类型的索引。
+However, this is an incorrect approach, and there are two main problems:
 
-## DATETIME 和 TIMESTAMP 选择
+1. **Space efficiency**: The string usually requires more storage space to denote the same time information than the date-type of the MySQL built-in.
+1. **Inefficiency of queries and calculations**:
+   - **Comparatively complex and inefficient**: Date comparisons based on strings need to be character-by-character, not only intuitive (e.g. '2024-05-01' is less than '2024-1-10'), but also far less efficient than numerical or point-to-point comparisons using date-of-birth type.
+   - **The computational function is limited**: It is not possible to operate directly from the rich date-time functions provided by the database (e.g. to calculate the interval between two dates, to add or subtract the date, etc.), which requires a first conversion of the format and adds complexity.
+   - **Poor index performance**: String-based indexes tend to be less efficient and more flexible than indices of the original date-time type when dealing with scope queries (e.g., finding data within a given time period).
 
-`DATETIME` 和 `TIMESTAMP` 是 MySQL 中两种非常常用的、用于存储包含日期和时间信息的数据类型。它们都可以存储精确到秒（MySQL 5.6.4+ 支持更高精度的小数秒）的时间值。那么，在实际应用中，我们应该如何在这两者之间做出选择呢？
+# DATETIME and TIMESTAMP Selection
 
-下面我们从几个关键维度对它们进行对比：
+`DATETIME` and `TIMESTAMP` are two of MySQL's very common data types used to store date and time information. They can store the time value of the time to the second (MySQL 5.6.4+ supports small seconds for higher accuracy). How, then, should we choose between them in practical application?
 
-### 时区信息
+We compare them from several critical dimensions:
 
-`DATETIME` 类型存储的是**字面量的日期和时间值**，它本身**不包含任何时区信息**。当你插入一个 `DATETIME` 值时，MySQL 存储的就是你提供的那个确切的时间，不会进行任何时区转换。
+Time zone information
 
-**这样就会有什么问题呢？** 如果你的应用需要支持多个时区，或者服务器、客户端的时区可能发生变化，那么使用 `DATETIME` 时，应用程序需要自行处理时区的转换和解释。如果处理不当（例如，假设所有存储的时间都属于同一个时区，但实际环境变化了），可能会导致时间显示或计算上的混乱。
+The `DATETIME` type is stored as the date and time value and it itself does not contain any time zone information. When you insert a `DATETIME` value, MySQL stores the exact time you provide, without any time zone conversion.
 
-**`TIMESTAMP` 和时区有关**。存储时，MySQL 会将当前会话时区下的时间值转换成 UTC（协调世界时）进行内部存储。当查询 `TIMESTAMP` 字段时，MySQL 又会将存储的 UTC 时间转换回当前会话所设置的时区来显示。
+**What's wrong with that?** If your application needs to support multiple time zones, or if the time zone of the server or client is subject to change, the application needs to process the conversion and interpretation of the time zone when using `DATETIME`. If mishandled (assuming, for example, that all storage time falls within the same time zone, but the actual environment changes), it may lead to confusion in time display or calculation.
 
-这意味着，对于同一条记录的 `TIMESTAMP` 字段，在不同的会话时区设置下查询，可能会看到不同的本地时间表示，但它们都对应着同一个绝对时间点（UTC 时间）。这对于需要全球化、多时区支持的应用来说非常有用。
+**`TIMESTAMP` relates to time zones.** When you store, MySQL converts the time value from the current session time zone to UTC for internal storage. When querying the `TIMESTAMP` field, MySQL converts stored UTC time back to the time zone set by the current session.
 
-下面实际演示一下！
+This means that for the `TIMESTAMP` fields recorded in the same article, searching in different session time zones may be seen at different local times, but they all correspond to the same absolute time point (UTC time). This is very useful for applications that require globalization and multi-temporal support.
 
-建表 SQL 语句：
+Here's a real demonstration!
+
+Form SQL statement:
 
 ```sql
 CREATE TABLE `time_zone_test` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `date_time` datetime DEFAULT NULL,
-  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+`date_time` DATETIME DEFAULT NULL,
+`timestamp` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
-插入一条数据（假设当前会话时区为系统默认，例如 UTC+0）:：
-
-```sql
-INSERT INTO time_zone_test(date_time,time_stamp) VALUES(NOW(),NOW());
-```
-
-查询数据（在同一时区会话下）：
-
-```sql
-SELECT date_time, time_stamp FROM time_zone_test;
-```
-
-结果：
-
-```plain
-+---------------------+---------------------+
-| date_time           | time_stamp          |
-+---------------------+---------------------+
-| 2020-01-11 09:53:32 | 2020-01-11 09:53:32 |
-+---------------------+---------------------+
-```
-
-现在，修改当前会话的时区为东八区 (UTC+8):
-
-```sql
-SET time_zone = '+8:00';
-```
-
-再次查询数据：
-
-```bash
-# TIMESTAMP 的值自动转换为 UTC+8 时间
-+---------------------+---------------------+
-| date_time           | time_stamp          |
-+---------------------+---------------------+
-| 2020-01-11 09:53:32 | 2020-01-11 17:53:32 |
-+---------------------+---------------------+
-```
-
-**扩展：MySQL 时区设置常用 SQL 命令**
-
-```sql
-# 查看当前会话时区
-SELECT @@session.time_zone;
-# 设置当前会话时区
-SET time_zone = 'Europe/Helsinki';
-SET time_zone = "+00:00";
-# 数据库全局时区设置
-SELECT @@global.time_zone;
-# 设置全局时区
-SET GLOBAL time_zone = '+8:00';
-SET GLOBAL time_zone = 'Europe/Helsinki';
-```
-
-### 占用空间
-
-下图是 MySQL 日期类型所占的存储空间（官方文档传送门：<https://dev.mysql.com/doc/refman/8.0/en/storage-requirements.html>）：
-
-![](https://oss.javaguide.cn/github/javaguide/FhRGUVHFK0ujRPNA75f6CuOXQHTE.jpeg)
-
-在 MySQL 5.6.4 之前，DateTime 和 TIMESTAMP 的存储空间是固定的，分别为 8 字节和 4 字节。但是从 MySQL 5.6.4 开始，它们的存储空间会根据毫秒精度的不同而变化，DateTime 的范围是 5~8 字节，TIMESTAMP 的范围是 4~7 字节。
-
-### 表示范围
-
-`TIMESTAMP` 表示的时间范围更小，只能到 2038 年：
-
-- `DATETIME`：'1000-01-01 00:00:00.000000' 到 '9999-12-31 23:59:59.999999'
-- `TIMESTAMP`：'1970-01-01 00:00:01.000000' UTC 到 '2038-01-19 03:14:07.999999' UTC
-
-### 性能
-
-由于 `TIMESTAMP` 在存储和检索时需要进行 UTC 与当前会话时区的转换，这个过程可能涉及到额外的计算开销，尤其是在需要调用操作系统底层接口获取或处理时区信息时。虽然现代数据库和操作系统对此进行了优化，但在某些极端高并发或对延迟极其敏感的场景下，`DATETIME` 因其不涉及时区转换，处理逻辑相对更简单直接，可能会表现出微弱的性能优势。
-
-为了获得可预测的行为并可能减少 `TIMESTAMP` 的转换开销，推荐的做法是在应用程序层面统一管理时区，或者在数据库连接/会话级别显式设置 `time_zone` 参数，而不是依赖服务器的默认或操作系统时区。
-
-## 数值时间戳是更好的选择吗？
-
-除了上述两种类型，实践中也常用整数类型（`INT` 或 `BIGINT`）来存储所谓的“Unix 时间戳”（即从 1970 年 1 月 1 日 00:00:00 UTC 起至目标时间的总秒数，或毫秒数）。
-
-这种存储方式的具有 `TIMESTAMP` 类型的所具有一些优点，并且使用它的进行日期排序以及对比等操作的效率会更高，跨系统也很方便，毕竟只是存放的数值。缺点也很明显，就是数据的可读性太差了，你无法直观的看到具体时间。
-
-时间戳的定义如下：
-
-> 时间戳的定义是从一个基准时间开始算起，这个基准时间是「1970-1-1 00:00:00 +0:00」，从这个时间开始，用整数表示，以秒计时，随着时间的流逝这个时间整数不断增加。这样一来，我只需要一个数值，就可以完美地表示时间了，而且这个数值是一个绝对数值，即无论的身处地球的任何角落，这个表示时间的时间戳，都是一样的，生成的数值都是一样的，并且没有时区的概念，所以在系统的中时间的传输中，都不需要进行额外的转换了，只有在显示给用户的时候，才转换为字符串格式的本地时间。
-
-数据库中实际操作：
-
-```sql
--- 将日期时间字符串转换为 Unix 时间戳 (秒)
-mysql> SELECT UNIX_TIMESTAMP('2020-01-11 09:53:32');
-+---------------------------------------+
-| UNIX_TIMESTAMP('2020-01-11 09:53:32') |
-+---------------------------------------+
-|                            1578707612 |
-+---------------------------------------+
-1 row in set (0.00 sec)
-
--- 将 Unix 时间戳 (秒) 转换为日期时间格式
-mysql> SELECT FROM_UNIXTIME(1578707612);
-+---------------------------+
-| FROM_UNIXTIME(1578707612) |
-+---------------------------+
-| 2020-01-11 09:53:32       |
-+---------------------------+
-1 row in set (0.01 sec)
-```
-
-## PostgreSQL 中没有 DATETIME
-
-由于有读者提到 PostgreSQL（PG） 的时间类型，因此这里拓展补充一下。PG 官方文档对时间类型的描述地址：<https://www.postgresql.org/docs/current/datatype-datetime.html>。
-
-![PostgreSQL 时间类型总结](https://oss.javaguide.cn/github/javaguide/mysql/pg-datetime-types.png)
-
-可以看到，PG 没有名为 `DATETIME` 的类型：
-
-- PG 的 `TIMESTAMP WITHOUT TIME ZONE`在功能上最接近 MySQL 的 `DATETIME`。它存储日期和时间，但不包含任何时区信息，存储的是字面值。
-- PG 的`TIMESTAMP WITH TIME ZONE` (或 `TIMESTAMPTZ`) 相当于 MySQL 的 `TIMESTAMP`。它在存储时会将输入值转换为 UTC，并在检索时根据当前会话的时区进行转换显示。
-
-对于绝大多数需要记录精确发生时间点的应用场景，`TIMESTAMPTZ`是 PostgreSQL 中最推荐、最健壮的选择，因为它能最好地处理时区复杂性。
-
-## 总结
-
-MySQL 中时间到底怎么存储才好？`DATETIME`?`TIMESTAMP`?还是数值时间戳？
-
-并没有一个银弹，很多程序员会觉得数值型时间戳是真的好，效率又高还各种兼容，但是很多人又觉得它表现的不够直观。
-
-《高性能 MySQL 》这本神书的作者就是推荐 TIMESTAMP，原因是数值表示时间不够直观。下面是原文：
-
-<img src="https://oss.javaguide.cn/github/javaguide/%E9%AB%98%E6%80%A7%E8%83%BDmysql-%E4%B8%8D%E6%8E%A8%E8%8D%90%E7%94%A8%E6%95%B0%E5%80%BC%E6%97%B6%E9%97%B4%E6%88%B3.jpg" style="zoom:50%;" />
-
-每种方式都有各自的优势，根据实际场景选择最合适的才是王道。下面再对这三种方式做一个简单的对比，以供大家实际开发中选择正确的存放时间的数据类型：
-
-| 类型         | 存储空间 | 日期格式                       | 日期范围                                                     | 是否带时区信息 |
-| ------------ | -------- | ------------------------------ | ------------------------------------------------------------ | -------------- |
-| DATETIME     | 5~8 字节 | YYYY-MM-DD hh:mm:ss[.fraction] | 1000-01-01 00:00:00[.000000] ～ 9999-12-31 23:59:59[.999999] | 否             |
-| TIMESTAMP    | 4~7 字节 | YYYY-MM-DD hh:mm:ss[.fraction] | 1970-01-01 00:00:01[.000000] ～ 2038-01-19 03:14:07[.999999] | 是             |
-| 数值型时间戳 | 4 字节   | 全数字如 1578707612            | 1970-01-01 00:00:01 之后的时间                               | 否             |
-
-**选择建议小结：**
-
-- `TIMESTAMP` 的核心优势在于其内建的时区处理能力。数据库负责 UTC 存储和基于会话时区的自动转换，简化了需要处理多时区应用的开发。如果应用需要处理多时区，或者希望数据库能自动管理时区转换，`TIMESTAMP` 是自然的选择（注意其时间范围限制，也就是 2038 年问题）。
-- 如果应用场景不涉及时区转换，或者希望应用程序完全控制时区逻辑，并且需要表示 2038 年之后的时间，`DATETIME` 是更稳妥的选择。
-- 如果极度关注比较性能，或者需要频繁跨系统传递时间数据，并且可以接受可读性的牺牲（或总是在应用层转换），数值时间戳是一个强大的选项。
-
-<!-- @include: @article-footer.snippet.md -->
+Insert data (assuming that the

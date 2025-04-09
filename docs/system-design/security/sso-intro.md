@@ -1,124 +1,99 @@
----
-title: SSO 单点登录详解
-category: 系统设计
-tag:
-  - 安全
----
+I don't...
+Title: SSO Single Point Login Details
+Category: System Design
+Tag:
 
-> 本文授权转载自：<https://ken.io/note/sso-design-implement> 作者：ken.io
+- Clear.
+  I don't...
 
-## SSO 介绍
+It is authorized to be reproduced from: <https://ken.io/note/sso-design-implement> by: ken.io
 
-### 什么是 SSO？
+# SSO Introduction
 
-SSO 英文全称 Single Sign On，单点登录。SSO 是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。
+# What's SSO?
 
-例如你登录网易账号中心（<https://reg.163.com/> ）之后访问以下站点都是登录状态。
+SSO's English full name is Single Sign-On, a single point login. SSO is a multi-application system in which users can access all mutually trusted applications only once.
 
-- 网易直播 [https://v.163.com](https://v.163.com/)
-- 网易博客 [https://blog.163.com](https://blog.163.com/)
-- 网易花田 [https://love.163.com](https://love.163.com/)
-- 网易考拉 [https://www.kaola.com](https://www.kaola.com/)
-- 网易 Lofter [http://www.lofter.com](http://www.lofter.com/)
+For example, you have access to all the following sites after you have access to the Internet Earning Centre (<https://reg.163.com/>).
 
-### SSO 有什么好处？
+- Live webcast [https://v.163.com](https://v.163.com/)
+- Online blog [https://blog163.com](https://blog163.com/)
+- Web-based florist [https://love.163.com](https://love.163.com/)
+- e-Cola [https://www.kaola.com](https://www.kaola.com/)
+- Lofter [http://www.lofter.com](http://www.lofter.com/)
 
-1. **用户角度** :用户能够做到一次登录多次使用，无需记录多套用户名和密码，省心。
-2. **系统管理员角度** : 管理员只需维护好一个统一的账号中心就可以了，方便。
-3. **新系统开发角度:** 新系统开发时只需直接对接统一的账号中心即可，简化开发流程，省时。
+What good is SSO?
 
-## SSO 设计与实现
+1. **User angle**: Users are able to log in multiple times without having to remember multiple usernames and passwords.
+1. **System Administrator angle**: Only one single account center can be maintained by the administrator, which is convenient.
+1. **New system development perspective**: New system development needs to be directly linked to a unified account center to simplify the development process and save time.
 
-本篇文章也主要是为了探讨如何设计&实现一个 SSO 系统
+# SSO Design and Realization
 
-以下为需要实现的核心功能：
+This article is also about how to design and achieve an SSO system.
 
-- 单点登录
-- 单点登出
-- 支持跨域单点登录
-- 支持跨域单点登出
+The following are the core functions to be achieved:
 
-### 核心应用与依赖
+- Single-point login.
+- One point out.
+- Support cross-domain unit login.
+- Support cross-domain logout.
 
-![单点登录（SSO）设计](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-system.png-kblb.png)
+## Core Application and Dependence
 
-| 应用/模块/对象    | 说明                                |
-| ----------------- | ----------------------------------- |
-| 前台站点          | 需要登录的站点                      |
-| SSO 站点-登录     | 提供登录的页面                      |
-| SSO 站点-登出     | 提供注销登录的入口                  |
-| SSO 服务-登录     | 提供登录服务                        |
-| SSO 服务-登录状态 | 提供登录状态校验/登录信息查询的服务 |
-| SSO 服务-登出     | 提供用户注销登录的服务              |
-| 数据库            | 存储用户账户信息                    |
-| 缓存              | 存储用户的登录信息，通常使用 Redis  |
+![Core Application and Dependence](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-system.png-kblb.png)
 
-### 用户登录状态的存储与校验
+| Application/Module/Object  | Description                                            |
+| -------------------------- | ------------------------------------------------------ |
+| SSO Site - Login           | Provides login pages                                   |
+| SSO Site - Login and Out   | Provides login and logout functionality                |
+| SSO Service - Login        | Handles login requests                                 |
+| SSO Service - Login Status | Provides login status check/login information query    |
+| SSO Service - Logout       | Handles logout requests                                |
+| Database                   | Storage of user account information                    |
+| Cache                      | Storage of user login information, usually using Redis |
 
-常见的 Web 框架对于 Session 的实现都是生成一个 SessionId 存储在浏览器 Cookie 中。然后将 Session 内容存储在服务器端内存中，这个 [ken.io](https://ken.io/) 在之前[Session 工作原理](https://ken.io/note/session-principle-skill)中也提到过。整体也是借鉴这个思路。
+Storage and verification of user login status.
 
-用户登录成功之后，生成 AuthToken 交给客户端保存。如果是浏览器，就保存在 Cookie 中。如果是手机 App 就保存在 App 本地缓存中。本篇主要探讨基于 Web 站点的 SSO。
+The common web framework uses a session ID that is stored in the browser cookie. This [ken.io](https://ken.io/) was also mentioned earlier (https://ken.io/note/session-principle-skill). It's the same idea.
 
-用户在浏览需要登录的页面时，客户端将 AuthToken 提交给 SSO 服务校验登录状态/获取用户登录信息
+Generate AuthToken to save to the client after user login is successful. If the browser saves it in a cookie. If it's an app, it's in the app's local cache. This article focuses on the SSO-based website.
 
-对于登录信息的存储，建议采用 Redis，使用 Redis 集群来存储登录信息，既可以保证高可用，又可以线性扩充。同时也可以让 SSO 服务满足负载均衡/可伸缩的需求。
+Users submit AuthToken to the SSO service to check login status/take user login information when browsing pages that require login.
 
-| 对象      | 说明                                                                                                               |
-| --------- | ------------------------------------------------------------------------------------------------------------------ |
-| AuthToken | 直接使用 UUID/GUID 即可，如果有验证 AuthToken 合法性需求，可以将 UserName+时间戳加密生成，服务端解密之后验证合法性 |
-| 登录信息  | 通常是将 UserId，UserName 缓存起来                                                                                 |
+For the storage of login information, it is recommended that Redis be used to store login information using Redis clusters, which would ensure both high availability and linear expansion. At the same time, SSO services can be used to meet load-balanced/scalable needs.
 
-### 用户登录/登录校验
+Note
 
-**登录时序图**
+| AuthToken         | Use UUID/GUID directly. If there is a need to validate AuthToken's legitimacy, you can encrypt Username + timestamp to create legal validity after the service decryption. |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Login Information | Usually Cache UpId, Username                                                                                                                                               |
 
-![SSO系统设计-登录时序图](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-login-sequence.png-kbrb.png)
+# User Login/Login Verification
 
-按照上图，用户登录后 AuthToken 保存在 Cookie 中。 domain=test.com
-浏览器会将 domain 设置成 .test.com，
+**Sequence Chart of Login**
 
-这样访问所有 \*.test.com 的 web 站点，都会将 AuthToken 携带到服务器端。
-然后通过 SSO 服务，完成对用户状态的校验/用户登录信息的获取
+![SO System Design - Login Scheduling](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-login-sequence.png-kbrb.png)
 
-**登录信息获取/登录状态校验**
+According to the above figure, AuthToken is saved in a cookie after user login. Domain=test.com. The browser will set the domain to .test.com.
 
-![SSO系统设计-登录信息获取/登录状态校验](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-logincheck-sequence.png-kbrb.png)
+This way, all websites of \\.test.com will carry AuthToken to the server. Then complete the verification/user login information through the SSO service.
 
-### 用户登出
+**Login Information Acquisition/Entry Status Verification**
 
-用户登出时要做的事情很简单：
+![SO System Design - Access to Login Information/Registration Status Validation](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-logincheck-security.png-kbrb.png)
 
-1. 服务端清除缓存（Redis）中的登录状态
-2. 客户端清除存储的 AuthToken
+# The User Logs Out
 
-**登出时序图**
+It's very simple what users do when they log out:
 
-![SSO系统设计-用户登出](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-logout-sequence.png-kbrb.png)
+1. Service-level clearance of login status in Redis.
+1. Client clears stored AuthToken.
 
-### 跨域登录、登出
+**Timescaled Out**
 
-前面提到过，核心思路是客户端存储 AuthToken，服务器端通过 Redis 存储登录信息。由于客户端是将 AuthToken 存储在 Cookie 中的。所以跨域要解决的问题，就是如何解决 Cookie 的跨域读写问题。
+![SO System Design - User Logout](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-logout-security.png-kbrb.png)
 
-解决跨域的核心思路就是：
+# Cross-Domain Login, Logout
 
-- 登录完成之后通过回调的方式，将 AuthToken 传递给主域名之外的站点，该站点自行将 AuthToken 保存在当前域下的 Cookie 中。
-- 登出完成之后通过回调的方式，调用非主域名站点的登出页面，完成设置 Cookie 中的 AuthToken 过期的操作。
-
-**跨域登录（主域名已登录）**
-
-![SSO系统设计-跨域登录（主域名已登录）](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-crossdomain-login-loggedin-sequence.png-kbrb.png)
-
-**跨域登录（主域名未登录）**
-
-![SSO系统设计-跨域登录（主域名未登录）](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-crossdomain-login-unlogin-sequence.png-kbrb.png)
-
-**跨域登出**
-
-![SSO系统设计-跨域登出](https://oss.javaguide.cn/github/javaguide/system-design/security/sso/sso-crossdomain-logout-sequence.png-kbrb.png)
-
-## 说明
-
-- 关于方案：这次设计方案更多是提供实现思路。如果涉及到 APP 用户登录等情况，在访问 SSO 服务时，增加对 APP 的签名验证就好了。当然，如果有无线网关，验证签名不是问题。
-- 关于时序图：时序图中并没有包含所有场景，只列举了核心/主要场景，另外对于一些不影响理解思路的消息能省就省了。
-
-<!-- @include: @article-footer.snippet.md -->
+As mentioned earlier, the core idea is to store AuthToken by the client and to store login information by the server via Redis. As the client is storing AuthToken

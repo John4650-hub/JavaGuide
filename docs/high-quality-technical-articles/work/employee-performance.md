@@ -1,132 +1,77 @@
----
-title: 聊聊大厂的绩效考核
-category: 技术文章精选集
-tag:
-  - 工作
----
+I don't...
+Title: Talk about the big factory's performance appraisal\
+Category: Excerpts of Technical Articles\
+Tag:
 
-> **内容概览**：
+- Work.\
+  I don't...
+
+> **Overview of content**:
 >
-> - 在大部分公司，绩效跟你的年终奖、职级晋升、薪水涨幅等等福利是直接相关的。
-> - 你的上级、上上级对你的绩效拥有绝对的话语权，这是潜规则，放到任何公司都是。成年人的世界，没有绝对的公平，绩效考核尤为明显。
-> - 提升绩效的打法：
->   - 短期打法：找出 1-2 件事，体现出你的独特价值（抓关键事件）。
->   - 长期打法：通过一步步信任的建立，成为团队的核心人员或者是老板的心腹，具备不可替代性。
+> - In most companies, performance is directly related to your end-of-year awards, promotions, salary increases, etc.
+
+- Your superiors have absolute authority over your performance. It's a sub-rule, placed in any company. There is no absolute equity in the world of adults, and performance appraisals are particularly evident.
+
+> - Action to improve performance:
+> - Short-term play: Find one or two things that reflect your unique value.
+> - Long-term: through step-by-step trust-building, become the core of the team or the heart of the boss, and it has no alternative.
 >
-> **原文地址**：<https://mp.weixin.qq.com/s/D1s8p7z8Sp60c-ndGyh2yQ>
+> **Original address**: <https://mp.weixin.qq.com/s/D1s8p7z8Sp60c-ndGyh2yQ>
 
-在新公司度过了一个完整的 Q3 季度，被打了绩效，也给下属打了绩效，感慨颇深。
+Having spent a full Q3 quarter in the new company, he was beaten and impressed by his subordinates.
 
-今天就好好聊聊**大厂打工人最最关心的「绩效考核」**，谈谈它背后的逻辑以及潜规则，摸清楚了它，你在大厂这片丛林里才能更好的生存下去。
+Let's talk today about the most important "performance test" for big factory workers, about the logic behind it, the sub-rules, and how you can figure it out.
 
-## 大厂的绩效到底有多重要？
+How important is the performance of a large plant?
 
-先从公司角度，谈谈为什么需要绩效考核？
+From a corporate point of view, why do you need a performance appraisal?
 
-有一个著名的管理者言论，即：企业战略的上三路和下三路。
+There is a well-known manager's statement that there is a three-way and a three-way way to business strategy.
 
-> 上三路是使命、愿景、价值观，下三路是组织、人才、KPI。下三路需要确保上三路能执行下去，否则便是空谈。那怎么才能达成呢？
+The first three are mission, vision, values, and the next three are organization, talent, KPI. The next three roads need to ensure that the previous three can be carried out; otherwise, there will be no talking. How do we do that?
 
-马老板在湖畔大学的课堂上，对底下众多 CEO 学员说，“只能靠 KPI。没有 KPI，一切都是空话，组织和公司是不会进步的”。
+In class at Lakeside University, Mr. Ma said to a lot of CEOs down there, "Only KPI. Without KPI, everything is empty, and organizations and companies will not advance.”
 
-所以，KPI 一般是用来承接企业战略的。身处大厂的打工者们，也能深深感受到：每个季度的 KPI 是如何从大 Boss、到 Boss、再到基层，一层层拆解下来的，最终让所有人朝着一个方向行动，这便是 KPI 对于公司的意义。
+So, KPI is usually used to take over business strategies. People who work in big factories feel that how every quarter KPI is disassembled from Big Boss to Boss to the grassroots level, ultimately allowing everyone to move in one direction, is what KPI means to the company.
 
-然鹅，并非每个员工都会站在 CEO 的高度去理解 KPI 的价值，大家更关注的是 KPI 对于我个人来说到底有什么意义？
+Wing Goose, not every employee will be at the CEO level to understand the value of KPI, and what is more important about KPI for me personally?
 
-在互联网大厂，每家公司都会设定一套绩效考核体系，字节用的是 OKR，阿里用的是 KPI，通常都是「271」 制度，即：
+In Internet giants, each company sets up a performance appraisal system using OKR, Ali using KPI, which is usually a "271" system:
 
-> 20% 的比例是 A+ 和 A，对应明星员工。
+> 20% is A+ and A, corresponding to star employees.
 >
-> 70% 的比例是 B，对应普通员工。
+> 70% is B, which corresponds to the average employee.
 >
-> 10% 的比例是 C 和 C-，对应需要绩效改进或者淘汰的员工。
+> 10% are C and D, corresponding to employees who need performance improvement or phase out.
 
-有了三六九等，然后才有了利益分配。
+It's only then that benefits are distributed.
 
-**在大厂，绩效结果跟奖金、晋升、薪水涨幅、股票授予是直接相关的。在内卷的今天，甚至可以直接划上等号。**
+**In large factories, performance results are directly related to bonuses, promotions, salary increases, and equity awards. It's on the inside today, even with the same number.**
 
-绩效好的员工，奖金必然多，一年可能调薪两次，晋升答辩时能 PK 掉绩效一般的人，职级低的人甚至可以晋升免试。
+For well-performing employees, the bonus is necessarily higher, with the possibility of a two-time change in salary per year, and promotion to a person with an average PK performance at the time of promotion, or even to a person with a lower grade.
 
-而绩效差的人，有可能一年白干，甚至走人（大厂的末尾淘汰是不成文的规定）。
+People with poor performance, on the other hand, are likely to dry up for a year or even leave (the end-of-a-plant phase-out is unwritten).
 
-总之，你能想到的直接利益都和「绩效」息息相关。所以，在大厂这片高手众多的丛林里，多琢磨下绩效背后的逻辑，既是生存之道，更是一技之长。
+In any case, the direct benefits that you can think of are linked to "performance." So, in the jungle, which is a vastly skilled plant, much of the logic behind performance is both survival and skill.
 
-## 你是怎么看待绩效的？
+What do you think of performance?
 
-凡是用来考核人的规则，大部分人在潜意识里都想去突破它，而不是被束缚。
+Most people, in their subconscious, want to break through the rules used to test people, rather than be shackled.
 
-至少在我刚工作的前几年，看着身边有些同事因为背个 C 黯然离开的时候，觉得绩效考核就是一个冷血的管理工具。
+At least in the first few years of my work, when some of my colleagues left because of a C back, it was a cold-blooded management tool.
 
-尤其遇到自己看不上的领导时，对于他给我打的绩效，其实也是很不屑的。
+Especially when it comes to the leadership he can't respect, it's not enough to see what he did to me.
 
-到今天，实在见过太多的反面案例了，自己也踩过一些坑，逐渐认识到：当初的想法除了让自己心里爽一点，好像起不到任何作用，甚至会让我的工作方式变形。
+So far, too many negative cases have been seen, and I've stepped on some pits and realized that the original idea, apart from making myself feel better, seemed to have nothing to do with it and even distorted my way of working.
 
-当思维方式变了，也就改变了我对绩效的态度，至少有两点我认为是打工人需要看清的。
+When thinking changes, it changes my attitude to performance; at least two things I think are for workers to see.
 
-**第一，你的上级、上上级对你的绩效拥有绝对的话语权，这是潜规则，放到任何公司都是。**
+**First, your superiors have absolute authority over your performance. It's a sub-rule.**
 
-大家可以去看看身边发展特别好的人，除了有很强的个人能力以外，几乎都是善于利用规则，而不是去挑战规则的人。
+It is possible to look at people who are particularly well developed around them; almost all of whom are good at using rules rather than challenging them, except for their strong personal abilities.
 
-当然，我并不是说你要一味地去跪舔你的领导，而是表达：工作中不要站在领导的对立面去做对抗，如果领导做法很过分，要么直接沟通去影响他，要么选择离开。
+Of course, I am not saying that you have to go down on your knees and lick your leadership, but to say that you should not stand on the opposite side of the leadership in your work to confront it, or if leadership is too far, either to communicate directly to influence him or to choose to leave.
 
-**第二，成年人的世界，没有绝对的公平，绩效考核尤为明显。**
+**Second, there is no absolute equity in the world of adults, and performance appraisals are particularly evident.**
 
-我所待过的团队，绩效考核还是相对公平的，虽然也存在受照顾的情况，但都是个例。
-
-另外就是，技术岗的绩效考核不同于销售或者运营岗，很容易指标化。
-
-需求吞吐量、BUG 数、线上事故... 的确有一大堆研发效能指标，但这些指标在绩效考核时是否会被参考？具体又该如何分配比重？本身就是一个扯不清楚的难题。
-
-最终决定你绩效结果的还是你领导的主观判断。你所见到的 360 环评，以及弄一些指标排序，这些都只是将绩效结果合理化的一种方式，并非关键所在。
-
-因此，多琢磨如何去影响你的领导？站在他的视角去审视他在绩效考核时到底关注哪些核心点？这才是至关重要的。
-
-上面讲了一堆潜规则，是不是意味着绩效考核是可以投机取巧，完全不看工作业绩呢，当然不是。
-
-“你的努力不一定会被看见”、“你的努力应该有的放矢”，大家先记住这两条。
-
-下面我再展开聊聊，大家最最关心的 A 和 C，它们背后的逻辑。
-
-## 绩效被打 A 和 C 的逻辑是什么？
-
-“铆足了劲拿不到 A，一不留神居然拿了个 C”，这是绝大多数打工人最真实的职场现状。
-
-A 和 C 属于绩效的两个极端，背后的逻辑类似，反着理解即可，下面我详细分析下 C。
-
-先从我身边人的情况说起，我所看到的案例绝大多数都属于：绩效被打了 C，完全没有任何预感，主管跟他沟通结果时，还是一脸懵逼，“为什么会给我打 C？一定是黑我呀！”。
-
-前阵子听公司一位大佬分享，用他的话说，这种人就是没有「角色认知」，他不知道他所处的角色和职级该做好哪些事？做成什么样才算「做好了」？被打 C 后自然觉得是在背锅。
-
-所以，务必确保你对于当前角色是认知到位的，这样才称得上进入了「工作状态」，否则你的一次松懈，一段不太好的表现，很可能导致 C 落在你的头上，岗位越高，摔得越重。
-
-有了角色认知，再说下对绩效的认知。
-
-第一，团队很优秀，是不是不用背 C？不是！大厂的 C 都是强制分配的，再优秀的团队也会有 C。所以团队越厉害，竞争越惨烈。
-
-第二，完成了 KPI，没有工作失误，是不是就万事大吉，不用背 C？不是，绩效是相对的，你必须清楚你在团队所处的位置，你在老板眼中的排序，慢慢练出这种嗅觉。
-
-懂了上面这些道理，很自然就能知道打 C 的逻辑，C 会集中在两类人上：
-
-> 1、工作表现称不上角色要求的人。
->
-> 2、在老板眼里排序靠后，就算离开，对团队影响也很小的人。
-
-要规避 C，有两种打法。
-
-第 1 种是短期打法：抓关键事件，能不能找出 1-2 件事，体现出你的独特价值（比如本身影响力很大的项目，或者是领导最重视的事），相当于让你的排序有了最基本的保障。
-
-这种打法，你不能等到评价时再去改变，一定是在前期就抓住机会，承担起最有挑战的任务，然后全力以赴，做好了拿 A，不弄砸也不至于背 C，就怕静水潜流，躺平了去工作。
-
-第 2 种是长期打法：通过一步步信任的建立，成为团队的核心人员或者是老板的心腹，具备不可替代性。
-
-上面两种打法都是大的思路，还有很多锦上添花的技巧，比如：加强主动汇报（抹平领导的信息差）、让关键干系人给你点赞（能影响到你领导做出绩效决策的人）。
-
-## 写在最后
-
-有人的地方就有江湖，有江湖就一定有规则，大厂平面看似平静，其实在绩效考核、晋升等利益点面前，都是一场厮杀。
-
-当大家攻山头的能力都很强时，**到底做成什么样才算做好了？**当你弄清楚了这个玄机，职场也就看透了。
-
-如果这篇文章让你有一点启发，来个点赞和在看呀！我是武哥，我们下期见！
-
-<!-- @include: @article-footer.snippet.md -->
+The team I was

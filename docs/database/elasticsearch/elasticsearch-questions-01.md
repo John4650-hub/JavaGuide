@@ -1,15 +1,17 @@
----
-title: Elasticsearch常见面试题总结(付费)
-category: 数据库
-tag:
-  - NoSQL
-  - Elasticsearch
----
+I don't...
+Title: Elasticsearch Summary of Common Interviews (paying)\
+Category: Database\
+Tag:
 
-**Elasticsearch** 相关的面试题为我的[知识星球](../../about-the-author/zhishixingqiu-two-years.md)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了[《Java 面试指北》](../../zhuanlan/java-mian-shi-zhi-bei.md)中。
+- NoSQL
+- Elasticsearch
 
-![](https://oss.javaguide.cn/javamianshizhibei/elasticsearch-questions.png)
+I don't...
 
-<!-- @include: @planet.snippet.md -->
+**Elasticsearch** The exclusive content of the interview, entitled My [Knowledge Planet] (..././about-the-author/zhishixingqiu-two-years.md) (access to details and ways of joining) has been compiled in [Java Interview Point North](.../././zhuanlan/java-mian-shi-zhi-bei.md).
 
-<!-- @include: @article-footer.snippet.md -->
+![Elasticsearch Questions](https://oss.javaguide.cn/javamianshizhibei/elasticsearch-questions.png)
+
+@include: @planet.snippet.md--
+
+@include: @article-footer.snippet.md--

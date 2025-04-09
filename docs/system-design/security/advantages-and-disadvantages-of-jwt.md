@@ -1,206 +1,63 @@
----
-title: JWT 身份认证优缺点分析
-category: 系统设计
-tag:
-  - 安全
----
+I don't...
+title: JWT Identification Proficiency Analysis
+Category: System design
+Tag:
+- Clear.
+I don't...
 
-校招面试中，遇到大部分的候选者认证登录这块用的都是 JWT。提问 JWT 的概念性问题以及使用 JWT 的原因，基本都能回答一些，但当问到 JWT 存在的一些问题和解决方案时，只有一小部分候选者回答的还可以。
+In the course of the school interview, JWT was used for most candidate accreditation. Asking questions about JWT's conceptual issues and the reasons for using JWT is almost all answerable, but when asked about some problems and solutions that exist in JWT, only a small number of candidates can answer.
 
-JWT 不是银弹，也有很多缺陷，很多时候并不是最优的选择。这篇文章，我们一起探讨一下 JWT 身份认证的优缺点以及常见问题的解决办法，来看看为什么很多人不再推荐使用 JWT 了。
+JWT is not a silver bullet; there are many flaws, and many times it's not the best option. In this article, let's look at the strengths and weaknesses of JWT identification and the solutions to common problems and see why many people no longer recommend JWT.
 
-关于 JWT 的基本概念介绍请看我写的这篇文章： [JWT 基本概念详解](https://javaguide.cn/system-design/security/jwt-intro.html)。
+For a basic concept presentation on JWT, please read this article: [JWT Basic Concepts](https://javaguide.cn/system-design/security/jwt-intro.html).
 
-## JWT 的优势
+# JWT's Advantage
 
-相比于 Session 认证的方式来说，使用 JWT 进行身份认证主要有下面 4 个优势。
+The use of JWT for authentication has four main advantages in comparison to the way in which session authentication is conducted.
 
-### 无状态
+# No state #
 
-JWT 自身包含了身份验证所需要的所有信息，因此，我们的服务器不需要存储 JWT 信息。这显然增加了系统的可用性和伸缩性，大大减轻了服务端的压力。
+JWT itself contains all the information required for authentication, so our server does not need to store JWT information. This clearly increases the availability and flexibility of the system and significantly reduces the pressure on the service side.
 
-不过，也正是由于 JWT 的无状态，也导致了它最大的缺点：**不可控！**
+But it's precisely because of JWT's state of non-existence that it also leads to its greatest weakness: **Uncontrollable!**
 
-就比如说，我们想要在 JWT 有效期内废弃一个 JWT 或者更改它的权限的话，并不会立即生效，通常需要等到有效期过后才可以。再比如说，当用户 Logout 的话，JWT 也还有效。除非，我们在后端增加额外的处理逻辑比如将失效的 JWT 存储起来，后端先验证 JWT 是否有效再进行处理。具体的解决办法，我们会在后面的内容中详细介绍到，这里只是简单提一下。
+For example, if we want to abandon a JWT or change its authority during the JWT period, it won't be effective immediately, usually after the validity period. For example, when the user logs out, JWT still works. Unless, at the back end, we add additional processing logic, such as storing invalid JWTs, and at the back end verify whether JWTs are effective before processing them. Concrete solutions, which we will elaborate on later, are simply mentioned here.
 
-### 有效避免了 CSRF 攻击
+The CSRF attack was effectively averted.
 
-**CSRF（Cross Site Request Forgery）** 一般被翻译为 **跨站请求伪造**，属于网络攻击领域范围。相比于 SQL 脚本注入、XSS 等安全攻击方式，CSRF 的知名度并没有它们高。但是，它的确是我们开发系统时必须要考虑的安全隐患。就连业内技术标杆 Google 的产品 Gmail 也曾在 2007 年的时候爆出过 CSRF 漏洞，这给 Gmail 的用户造成了很大的损失。
+**CSRF (Cross-Site Request Forgery)** is generally translated as **Cross-site request for forgery** and falls within the sphere of cyberattacks. CSRF visibility is not as high as SQL script injection, XSS, etc. But it is indeed a security hazard that we must take into account when developing systems. Gmail, a product of the industry’s technology pole Google, also had a CSRF loophole in 2007, which caused significant losses to Gmail users.
 
-**那么究竟什么是跨站请求伪造呢？** 简单来说就是用你的身份去做一些不好的事情（发送一些对你不友好的请求比如恶意转账）。
+**So what is a cross-site request for forgery?** In short, it is doing something bad in your capacity.
 
-举个简单的例子：小壮登录了某网上银行，他来到了网上银行的帖子区，看到一个帖子下面有一个链接写着“科学理财，年盈利率过万”，小壮好奇的点开了这个链接，结果发现自己的账户少了 10000 元。这是这么回事呢？原来黑客在链接中藏了一个请求，这个请求直接利用小壮的身份给银行发送了一个转账请求，也就是通过你的 Cookie 向银行发出请求。
-
-```html
-<a src="http://www.mybank.com/Transfer?bankId=11&money=10000"
-  >科学理财，年盈利率过万</a
->
-```
-
-CSRF 攻击需要依赖 Cookie ，Session 认证中 Cookie 中的 `SessionID` 是由浏览器发送到服务端的，只要发出请求，Cookie 就会被携带。借助这个特性，即使黑客无法获取你的 `SessionID`，只要让你误点攻击链接，就可以达到攻击效果。
-
-另外，并不是必须点击链接才可以达到攻击效果，很多时候，只要你打开了某个页面，CSRF 攻击就会发生。
+To give a simple example: John went to an online bank, he came to the post section of the online bank, and he saw a link under a post that said, “Scientific finance, with an annual profit rate of over 10,000,” which was opened by the curious point of the big, and found his account to be $1000 short. Is that what happened? Turns out the hacker had a request hidden in the link, which sent a transfer request to the bank directly using his identity, that is, through your Cookie.
 
 ```html
-<img src="http://www.mybank.com/Transfer?bankId=11&money=10000" />
+<a href="http://www.mybank.com/Transfer?bankId=11&money=10,000">Scientific finance with an annual profitability of over</a>
 ```
 
-**那为什么 JWT 不会存在这种问题呢？**
+CSRF attacks are dependent on Cookie; the `sessionID` in the session authentication of Cookie is sent to the service side by the browser, and Cookie will be carried on the request. By virtue of this characteristic, even if hackers are unable to access your `sessionID`, they can achieve the effect of an attack by mispointing the link.
 
-一般情况下我们使用 JWT 的话，在我们登录成功获得 JWT 之后，一般会选择存放在 localStorage 中。前端的每一个请求后续都会附带上这个 JWT，整个过程压根不会涉及到 Cookie。因此，即使你点击了非法链接发送了请求到服务端，这个非法请求也是不会携带 JWT 的，所以这个请求将是非法的。
+Besides, it's not necessary to click on the link to achieve the impact of the attack, and many times when you open a page, the CSRF attack happens.
 
-总结来说就一句话：**使用 JWT 进行身份验证不需要依赖 Cookie ，因此可以避免 CSRF 攻击。**
+```html
+<img src="http://www.mybank.com/Transfer?bankId=11&money=10,000"/>
+```
 
-不过，这样也会存在 XSS 攻击的风险。为了避免 XSS 攻击，你可以选择将 JWT 存储在标记为`httpOnly` 的 Cookie 中。但是，这样又导致了你必须自己提供 CSRF 保护，因此，实际项目中我们通常也不会这么做。
+**Then why doesn't JWT have such a problem?**
 
-常见的避免 XSS 攻击的方式是过滤掉请求中存在 XSS 攻击风险的可疑字符串。
+When we use JWT, we usually choose to store it in localStorage after we have successfully accessed JWT. Each request at the front end will be followed by this JWT, and the whole process will not involve Cookie at all. Therefore, even if you click an illegal link to send a request to the service, this illegal request will not carry JWT, so it will be illegal.
 
-在 Spring 项目中，我们一般是通过创建 XSS 过滤器来实现的。
+In conclusion, just one sentence: **The use of JWT for authentication does not need to rely on Cookie, so CSRF attacks can be avoided.**
+
+However, there is also a risk of an XSS attack. In order to avoid an XSS attack, you can choose to store JWT in Cookie, marked `httpOnly`. But that leads to the fact that you have to provide CSRF protection on your own, so we don't usually do that in actual projects.
+
+The common way to avoid an XSS attack is to filter out suspicious strings in the request where there is a risk of an XSS attack.
+
+In the Spring project, we usually do this by creating XSS filters.
 
 ```java
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class XSSFilter implements Filter {
+public class XSSFilter extends Filter {
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-      FilterChain chain) throws IOException, ServletException {
-        XSSRequestWrapper wrappedRequest =
-          new XSSRequestWrapper((HttpServletRequest) request);
-        chain.doFilter(wrappedRequest, response);
-    }
-
-    // other methods
-}
-```
-
-### 适合移动端应用
-
-使用 Session 进行身份认证的话，需要保存一份信息在服务器端，而且这种方式会依赖到 Cookie（需要 Cookie 保存 `SessionId`），所以不适合移动端。
-
-但是，使用 JWT 进行身份认证就不会存在这种问题，因为只要 JWT 可以被客户端存储就能够使用，而且 JWT 还可以跨语言使用。
-
-> 为什么使用 Session 进行身份认证的话不适合移动端 ？
->
-> 1. 状态管理: Session 基于服务器端的状态管理，而移动端应用通常是无状态的。移动设备的连接可能不稳定或中断，因此难以维护长期的会话状态。如果使用 Session 进行身份认证，移动应用需要频繁地与服务器进行会话维护，增加了网络开销和复杂性;
-> 2. 兼容性: 移动端应用通常会面向多个平台，如 iOS、Android 和 Web。每个平台对于 Session 的管理和存储方式可能不同，可能导致跨平台兼容性的问题;
-> 3. 安全性: 移动设备通常处于不受信任的网络环境，存在数据泄露和攻击的风险。将敏感的会话信息存储在移动设备上增加了被攻击的潜在风险。
-
-### 单点登录友好
-
-使用 Session 进行身份认证的话，实现单点登录，需要我们把用户的 Session 信息保存在一台电脑上，并且还会遇到常见的 Cookie 跨域的问题。但是，使用 JWT 进行认证的话， JWT 被保存在客户端，不会存在这些问题。
-
-## JWT 身份认证常见问题及解决办法
-
-### 注销登录等场景下 JWT 还有效
-
-与之类似的具体相关场景有：
-
-- 退出登录;
-- 修改密码;
-- 服务端修改了某个用户具有的权限或者角色；
-- 用户的帐户被封禁/删除；
-- 用户被服务端强制注销；
-- 用户被踢下线；
-- ……
-
-这个问题不存在于 Session 认证方式中，因为在 Session 认证方式中，遇到这种情况的话服务端删除对应的 Session 记录即可。但是，使用 JWT 认证的方式就不好解决了。我们也说过了，JWT 一旦派发出去，如果后端不增加其他逻辑的话，它在失效之前都是有效的。
-
-那我们如何解决这个问题呢？查阅了很多资料，我简单总结了下面 4 种方案：
-
-**1、将 JWT 存入数据库**
-
-将有效的 JWT 存入数据库中，更建议使用内存数据库比如 Redis。如果需要让某个 JWT 失效就直接从 Redis 中删除这个 JWT 即可。但是，这样会导致每次使用 JWT 都要先从 Redis 中查询 JWT 是否存在的步骤，而且违背了 JWT 的无状态原则。
-
-**2、黑名单机制**
-
-和上面的方式类似，使用内存数据库比如 Redis 维护一个黑名单，如果想让某个 JWT 失效的话就直接将这个 JWT 加入到 **黑名单** 即可。然后，每次使用 JWT 进行请求的话都会先判断这个 JWT 是否存在于黑名单中。
-
-前两种方案的核心在于将有效的 JWT 存储起来或者将指定的 JWT 拉入黑名单。
-
-虽然这两种方案都违背了 JWT 的无状态原则，但是一般实际项目中我们通常还是会使用这两种方案。
-
-**3、修改密钥 (Secret)** :
-
-我们为每个用户都创建一个专属密钥，如果我们想让某个 JWT 失效，我们直接修改对应用户的密钥即可。但是，这样相比于前两种引入内存数据库带来了危害更大：
-
-- 如果服务是分布式的，则每次发出新的 JWT 时都必须在多台机器同步密钥。为此，你需要将密钥存储在数据库或其他外部服务中，这样和 Session 认证就没太大区别了。
-- 如果用户同时在两个浏览器打开系统，或者在手机端也打开了系统，如果它从一个地方将账号退出，那么其他地方都要重新进行登录，这是不可取的。
-
-**4、保持令牌的有效期限短并经常轮换**
-
-很简单的一种方式。但是，会导致用户登录状态不会被持久记录，而且需要用户经常登录。
-
-另外，对于修改密码后 JWT 还有效问题的解决还是比较容易的。说一种我觉得比较好的方式：**使用用户的密码的哈希值对 JWT 进行签名。因此，如果密码更改，则任何先前的令牌将自动无法验证。**
-
-### JWT 的续签问题
-
-JWT 有效期一般都建议设置的不太长，那么 JWT 过期后如何认证，如何实现动态刷新 JWT，避免用户经常需要重新登录？
-
-我们先来看看在 Session 认证中一般的做法：**假如 Session 的有效期 30 分钟，如果 30 分钟内用户有访问，就把 Session 有效期延长 30 分钟。**
-
-JWT 认证的话，我们应该如何解决续签问题呢？查阅了很多资料，我简单总结了下面 4 种方案：
-
-**1、类似于 Session 认证中的做法（不推荐）**
-
-这种方案满足于大部分场景。假设服务端给的 JWT 有效期设置为 30 分钟，服务端每次进行校验时，如果发现 JWT 的有效期马上快过期了，服务端就重新生成 JWT 给客户端。客户端每次请求都检查新旧 JWT，如果不一致，则更新本地的 JWT。这种做法的问题是仅仅在快过期的时候请求才会更新 JWT ，对客户端不是很友好。
-
-**2、每次请求都返回新 JWT（不推荐）**
-
-这种方案的的思路很简单，但是，开销会比较大，尤其是在服务端要存储维护 JWT 的情况下。
-
-**3、JWT 有效期设置到半夜（不推荐）**
-
-这种方案是一种折衷的方案，保证了大部分用户白天可以正常登录，适用于对安全性要求不高的系统。
-
-**4、用户登录返回两个 JWT（推荐）**
-
-第一个是 accessJWT ，它的过期时间 JWT 本身的过期时间比如半个小时，另外一个是 refreshJWT 它的过期时间更长一点比如为 1 天。refreshJWT 只用来获取 accessJWT，不容易被泄露。
-
-客户端登录后，将 accessJWT 和 refreshJWT 保存在本地，每次访问将 accessJWT 传给服务端。服务端校验 accessJWT 的有效性，如果过期的话，就将 refreshJWT 传给服务端。如果有效，服务端就生成新的 accessJWT 给客户端。否则，客户端就重新登录即可。
-
-这种方案的不足是：
-
-- 需要客户端来配合；
-- 用户注销的时候需要同时保证两个 JWT 都无效；
-- 重新请求获取 JWT 的过程中会有短暂 JWT 不可用的情况（可以通过在客户端设置定时器，当 accessJWT 快过期的时候，提前去通过 refreshJWT 获取新的 accessJWT）;
-- 存在安全问题，只要拿到了未过期的 refreshJWT 就一直可以获取到 accessJWT。不过，由于 refreshJWT 只用来获取 accessJWT，不容易被泄露。
-
-### JWT 体积太大
-
-JWT 结构复杂（Header、Payload 和 Signature），包含了更多额外的信息，还需要进行 Base64Url 编码，这会使得 JWT 体积较大，增加了网络传输的开销。
-
-JWT 组成:
-
-![JWT 组成](https://oss.javaguide.cn/javaguide/system-design/jwt/jwt-composition.png)
-
-JWT 示例：
-
-```plain
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.
-SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-```
-
-解决办法：
-
-- 尽量减少 JWT Payload（载荷）中的信息，只保留必要的用户和权限信息。
-- 在传输 JWT 之前，使用压缩算法（如 GZIP）对 JWT 进行压缩以减少体积。
-- 在某些情况下，使用传统的 Token 可能更合适。传统的 Token 通常只是一个唯一标识符，对应的信息（例如用户 ID、Token 过期时间、权限信息）存储在服务端，通常会通过 Redis 保存。
-
-## 总结
-
-JWT 其中一个很重要的优势是无状态，但实际上，我们想要在实际项目中合理使用 JWT 做认证登录的话，也还是需要保存 JWT 信息。
-
-JWT 也不是银弹，也有很多缺陷，具体是选择 JWT 还是 Session 方案还是要看项目的具体需求。万万不可尬吹 JWT，而看不起其他身份认证方案。
-
-另外，不用 JWT 直接使用普通的 Token(随机生成的 ID，不包含具体的信息) 结合 Redis 来做身份认证也是可以的。
-
-## 参考
-
-- JWT 超详细分析：<https://learnku.com/articles/17883>
-- How to log out when using JWT：<https://medium.com/devgorilla/how-to-log-out-when-using-jwt-a8c7823e8a6>
-- CSRF protection with JSON Web JWTs：<https://medium.com/@agungsantoso/csrf-protection-with-json-web-JWTs-83e0f2fcbcc>
-- Invalidating JSON Web JWTs：<https://stackoverflow.com/questions/21978658/invalidating-json-web-JWTs>
-
-<!-- @include: @article-footer.snippet.md -->
+    @

@@ -1,32 +1,33 @@
----
-title: 贡献指南
-category: 走近项目
-icon: guide
----
+I don't...
+title: contribution guide
+Category: Closer project
+icon: side
+I don't...
 
-欢迎参与 JavaGuide 的维护工作，这是一件非常有意义的事情。详细信息请看：[JavaGuide 贡献指南](https://zhuanlan.zhihu.com/p/464832264) 。
+Welcome to JavaGuide's maintenance, which is a very interesting thing. For more information see: [JavaGuide contribution guide](https://zhuanlan.zhihu.com/p/46483264).
 
-你可以从下面几个方向来做贡献：
+You can contribute in the following directions:
 
-- 修改错别字，毕竟内容基本都是手敲，难免会有笔误。
-- 对原有内容进行修改完善，例如对某个面试问题的答案进行完善、对某篇文章的内容进行完善。
-- 新增内容，例如新增面试常问的问题、添加重要知识点的详解。
+- Correcting the wrong words; after all, it's basically hands-on.
+- Improvement of the original text, for example, in the answers to an interview and in the content of an article.
+- Adding new elements, such as more frequently asked questions from new interviews and more details of important knowledge points.
 
-目前的贡献奖励也比较丰富和完善，对于多次贡献的用户，有耳机、键盘等实物奖励以及现金奖励！
+The current contribution incentives are also rich and well-developed, with in-kind incentives such as headphones, keyboards, and cash incentives for multiple contributors!
 
-一定一定一定要注意 **排版规范**：
+I'm sure you have to be careful.
 
-- [中文文案排版指北 - GitHub](https://github.com/sparanoid/chinese-copywriting-guidelines)
-- [写给大家看的中文排版指南 - 知乎](https://zhuanlan.zhihu.com/p/20506092)
-- [中文文案排版细则 - Dawner](https://dawner.top/posts/chinese-copywriting-rules/)
-- [中文技术文档写作风格指南](https://github.com/yikeke/zh-style-guide/)
-- [中文排版需求](https://www.w3.org/TR/clreq/)
+(https://github.com/sparanoid/chinese-copyworking-guidelines)
 
-如果要提 issue/question 的话，强烈推荐阅读下面这些资料：
+- [The Chinese version of the guide for you - is available](https://zhuanlan.zhihu.com/p/20506092)
+- [Chinese Scrolling Rules - Dawn](https://dawner.top/posts/chinese-copywringing-rules/)
+- [Chinese technical document style guide](https://github.com/yike/zh-style-guide/)
+- [Chinese layout needs](https://www.w3.org/TR/clreq/)
 
-- [《提问的智慧》](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way)
-- [《如何向开源社区提问题》](https://github.com/seajs/seajs/issues/545)
-- [《如何有效地报告 Bug》](http://www.chiark.greenend.org.uk/~sgtatham/bugs-cn.html)
-- [《如何向开源项目提交无法解答的问题》](https://zhuanlan.zhihu.com/p/25795393)。
+If you want to refer to the issue/question, you are strongly encouraged to read the following information:
 
-另外，你可以参考学习别人的文章，但一定一定一定不能复制粘贴别人的内容，努力比别人写的更容易理解，用自己的话讲出来，适当简化表达，突出重点！
+- [The wisdom of asking questions](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way)
+- [Questions to Open Source Communities](https://github.com/seajs/seajs/issues/545)
+- [How to report a Bug effectively](http://www.chiark.greenend.org.uk/~sgtatham/bugs-cn.html)
+- [How to Address Unresolved Questions to Open Source Projects](https://zhuanlan.zhihu.com/p/25795393).
+
+Besides, you can refer to other people's articles, but you must never copy them. Try to understand them better than others, speak in your own words, properly simplify them, and focus!

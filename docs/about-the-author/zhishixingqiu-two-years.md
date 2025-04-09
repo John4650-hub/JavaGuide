@@ -1,148 +1,75 @@
----
-title: 我的知识星球 4 岁了！
-category: 知识星球
-star: 2
----
+I don't...
+My knowledge planet, four years old!
+Category: Knowledge Planet\
+Star: 2\
+I don't...
 
-<!-- @include: @small-advertisement.snippet.md -->
+@include: @small-advertisement.snippet.md-->
 
-在 **2019 年 12 月 29 号**，经过了大概一年左右的犹豫期，我正式确定要开始做一个自己的星球，帮助学习 Java 和准备 Java 面试的同学。一转眼，已经四年多了。感谢大家一路陪伴，我会信守承诺，继续认真维护这个纯粹的 Java 知识星球，不让信任我的读者失望。
+On December 29, 2019, **after about a year of hesitation, I officially decided to start being a planet of my own, to help learn Java and prepare Java for interviews. At a glance, it's been over four years. Thank you for your company, and I will keep my promise and continue to maintain this pure Java knowledge planet in earnest and not let down the readers who trust me.**
 
-![](https://oss.javaguide.cn/xingqiu/640-20230727145252757.png)
+![Image](https://oss.javaguide.cn/xingqiu/640-203072714252757.png)
 
-我是比较早一批做星球的技术号主，也是坚持做下来的那一少部人（大部分博主割一波韭菜就不维护星球了）。最开始的一两年，纯粹靠爱发电。当初定价非常低（一顿饭钱），加上刚工作的时候比较忙，提供的服务也没有现在这么多。
+I'm the technology master of the earlier planets, and one of the few who insist on it. (Most of them cut a wave of pickles without maintaining the planet.) The first year or two was pure love. When prices were very low (one meal at a time), and when they were busy at work, the services provided were not as much as now.
 
-慢慢的价格提上来，星球的收入确实慢慢也上来了。不过，考虑到我的受众主要是学生，定价依然比同类星球低很多。另外，我也没有弄训练营的打算，虽然训练营对于我这个流量来说可以赚到更多钱。
+Slowly, the planet's revenues are coming up. However, given that my audience is mainly students, the price is still much lower than that of a similar planet. Moreover, I have no plans to set up a training camp, although it would make more money for my flow.
 
-**我有自己的原则，不割韭菜，用心做内容，真心希望帮助到他人！**
+**I have my own principles, don't cut corners, do something with my heart, and really want to help others!**
 
-## 什么是知识星球？
+What is a knowledge planet?
 
-简单来说，知识星球就是一个私密交流圈子，主要用途是知识创作者连接铁杆读者/粉丝。相比于微信群，知识星球内容沉淀、信息管理更高效。
+In short, the knowledge planet is a private community of communication, the main purpose of which is to connect knowledge creators to hard-line readers/crowders. Knowledge planet content settles, and information management is more efficient than micro-comb.
 
-![](https://oss.javaguide.cn/xingqiu/image-20220211223754566.png)
+![Image](https://oss.javaguide.cn/xingqiu/image-2022211223754566.png)
 
-## 我的知识星球能为你提供什么？
+What can my knowledge planet offer you?
 
-努力做一个最优质的 Java 面试交流星球！加入到我的星球之后，你将获得：
+Trying to make the best Java interview exchange planet! After joining my planet, you'll get:
 
-1. 6 个高质量的专栏永久阅读，内容涵盖面试，源码解析，项目实战等内容！
-2. 多本原创 PDF 版本面试手册免费领取。
-3. 免费的简历修改服务（已经累计帮助 7000+ 位球友修改简历）。
-4. 一对一免费提问交流（专属建议，走心回答）。
-5. 专属求职指南和建议，让你少走弯路，效率翻倍！
-6. 海量 Java 优质面试资源分享。
-7. 打卡活动，读书交流，学习交流，让学习不再孤单，报团取暖。
-8. 不定期福利：节日抽奖、送书送课、球友线下聚会等等。
-9. ……
+1. Six high-quality columns for permanent reading, covering interviews, source analysis, project fieldwork, etc.
+1. Multiple original PDF versions of the interview manual are available free of charge.
+1. Free curriculum vitae revision services (accumulative help has been provided to 7000+ ballmates to revise curricula vitae).
+1. Free one-on-one question-and-answer sessions (exclusive recommendations, free answers).
+1. Guidelines and recommendations for the exclusive search for work, so that you do not turn the corner, doubling the efficiency!
+1. Mass Java Quality Interview Resources Sharing.
+1. Card-calling activities, book exchange, learning exchange, so that learning is no longer lonely, and the press is warm.
+1. Infrequent benefits: festival prizes, book delivery classes, under-the-book parties, etc.
+1. ...
 
-其中的任何一项服务单独拎出来价值都远超星球门票了。
+Any of these services are of far greater value than planetary tickets.
 
-这里再送一个 **30** 元的星球专属优惠券吧，数量有限（价格即将上调。老用户续费半价 ，微信扫码即可续费）！
+Here's another **30**-dollar exclusive planetary coupon, limited in number (prices are going up. The old user's fee is half-priced).
 
-![知识星球30元优惠卷](https://oss.javaguide.cn/xingqiu/xingqiuyouhuijuan-30.jpg)
+![Image](https://oss.javaguide.cn/xingqiu/xingqiuhuijuan-30.jpg)
 
-### 专属专栏
+Unique column
 
-星球更新了 **《Java 面试指北》**、**《Java 必读源码系列》**（目前已经整理了 Dubbo 2.6.x、Netty 4.x、SpringBoot2.1 的源码）、 **《从零开始写一个 RPC 框架》**（已更新完）、**《Kafka 常见面试题/知识点总结》** 等多个优质专栏。
+Planet updated **Java Interview North**, **Java Essentially Read Source Series** (the source code of Dubbo 2.6x, Netty 4.x, SpringBoot2.1 has been collated), **Writing an RPC Framework from scratch** (updated), **Kafka Common Interview Questions/Summaries of Knowledge Points** and others.
 
-![](https://oss.javaguide.cn/xingqiu/image-20220211231206733.png)
+![Image](https://oss.javaguide.cn/xingqiu/image-202221123126733.png)
 
-《Java 面试指北》内容概览：
+Overview of Java Interview Point North:
 
-![](https://oss.javaguide.cn/xingqiu/image-20220304102536445.png)
+![Image](https://oss.javaguide.cn/xingqiu/image-20203004102536445.png)
 
-进入星球之后，这些专栏即可免费永久阅读，永久同步更新！
+Once on the planet, these columns can be read for free and permanently updated!
 
-### PDF 面试手册
+## PDF interview manual
 
-进入星球就免费赠送多本优质 PDF 面试手册。
+Many quality PDF interview manuals are given free of charge on the planet.
 
-![星球 PDF 面试手册](https://oss.javaguide.cn/xingqiu/image-20220723120918434.png)
+![Star PDF interview manual](https://oss.javaguide.cn/xingqiu/image-2022211233642079.png)
 
-### 优质精华主题沉淀
+## High-quality fine subject settling
 
-星球沉淀了几年的优质精华主题，内容涵盖面经、面试题、工具网站、技术资源、程序员进阶攻略等内容，干货非常多。
+The planet has been sunk for several years with high-quality and fine topics, covering such topics as face-to-face, interview topics, tool sites, technical resources, programmers, and others.
 
-![](https://oss.javaguide.cn/xingqiu/image-20230421154518800.png)
+![Image](https://oss.javaguide.cn/xingqiu/image-202342115451800.png)
 
-并且，每个月都会整理出当月优质的主题，方便大家阅读学习，避免错过优质的内容。毫不夸张，单纯这些优质主题就足够门票价值了。
+Moreover, each month, high-quality topics of the month are organized to facilitate reading and learning and to avoid missing high-quality content. It is no exaggeration that these high-quality topics alone are of sufficient value.
 
-![星球每月优质主题整理概览](https://oss.javaguide.cn/xingqiu/image-20230902091117181.png)
+![Analytical monthly overview of high-quality thematic issues](https://oss.javaguide.cn/xingqiu/image-2023902091117181.png)
 
-加入星球之后，一定要记得抽时间把星球精华主题看看，相信你一定会有所收货！
+When you join the planet, remember to take a look at the planet's fine subject, and I'm sure you'll get something!
 
-JavaGuide 知识星球优质主题汇总传送门：<https://www.yuque.com/snailclimb/rpkqw1/ncxpnfmlng08wlf1>（为了避免这里成为知识杂货铺，我会对严格筛选入选的优质主题）。
-
-![星球优质主题汇总](https://oss.javaguide.cn/xingqiu/Xnip2023-04-21_15-48-13.png)
-
-### 简历修改
-
-一到面试季，我平均一天晚上至少要看 15 ~30 份简历。过了面试季的话，找我看简历的话会稍微少一些。要不然的话，是真心顶不住！
-
-![](https://oss.javaguide.cn/xingqiu/image-20220304123156348.png)
-
-简单统计了一下，到目前为止，我至少帮助 **7000+** 位球友提供了免费的简历修改服务。
-
-![](https://oss.javaguide.cn/xingqiu/%E7%AE%80%E5%8E%86%E4%BF%AE%E6%94%B92.jpg)
-
-我会针对每一份简历给出详细的修改完善建议，用心修改，深受好评！
-
-![](https://oss.javaguide.cn/xingqiu/image-20220725093504807.png)
-
-### 一对一提问
-
-你可以和我进行一对一免费提问交流，我会很走心地回答你的问题。到目前为止，已经累计回答了 **3000+** 个读者的提问。
-
-![](https://oss.javaguide.cn/xingqiu/wecom-temp-151578-45e66ccd48b3b5d3baa8673d33c7b664.jpg)
-
-![](https://oss.javaguide.cn/xingqiu/image-20220211223559179.png)
-
-### 学习打卡
-
-星球的学习打卡活动可以督促自己和其他球友们一起学习交流。
-
-![](https://oss.javaguide.cn/xingqiu/image-20220308143815840.png)
-
-看球友们的打卡也能有收货，最重要的是这个学习氛围对于自己自律非常有帮助！
-
-![](https://oss.javaguide.cn/xingqiu/%E7%90%83%E5%8F%8B%E6%AF%8F%E6%97%A5%E6%89%93%E5%8D%A1%E4%B9%9F%E8%83%BD%E5%AD%A6%E5%88%B0%E5%BE%88%E5%A4%9A%E4%B8%9C%E8%A5%BF.jpg)
-
-![](https://oss.javaguide.cn/xingqiu/%E7%A1%AE%E5%AE%9E%E6%98%AF%E5%AD%A6%E4%B9%A0%E4%BA%A4%E6%B5%81%E7%9A%84%E5%A5%BD%E5%9C%B0%E6%96%B9.jpg)
-
-### 读书活动
-
-定期会举办读书活动（奖励丰厚），我会带着大家一起读一些优秀的技术书籍！
-
-![](https://oss.javaguide.cn/xingqiu/image-20220211233642079.png)
-
-每一期读书活动的获奖率都非常非常非常高！直接超过门票价！！！
-
-### 不定时福利
-
-不定时地在星球送书、送专栏、发红包，福利多多，
-
-![](https://oss.javaguide.cn/xingqiu/1682063464099.png)
-
-## 是否收费？
-
-星球是需要付费才能进入的。 **为什么要收费呢？**
-
-1. 维护好星球是一件费时费力的事情，每到面试季，我经常凌晨还在看简历和回答球友问题。市面上单单一次简历修改服务也至少需要 200+，而简历修改也只是我的星球提供的服务的冰山一角。除此之外，我还要抽时间写星球专属的一些专栏，单单是这些专栏的价值就远超星球门票了。
-2. 星球提供的服务比较多，如果我是免费提供这些服务的话，是肯定忙不过来的。付费这个门槛可以帮我筛选出真正需要帮助的那批人。
-3. 免费的东西才是最贵的，加入星球之后无任何其他需要付费的项目，统统免费！
-4. 合理的收费是对我付出劳动的一种正向激励，促进我继续输出！同时，这份收入还可以让我们家人过上更好的生活。虽然累点，但也是值得的！
-
-另外，这个是一年的，到明年这个时候结束，差不过够用了。如果服务结束的时候你还需要星球服务的话，可以添加我的微信（**javaguide1024**）领取一个续费优惠卷，半价基础再减 10，记得备注 **“续费”** 。
-
-## 如何加入？
-
-这里赠送一个 **30** 元的星球专属优惠券吧，数量有限（价格即将上调。老用户续费半价 ，微信扫码即可续费）！
-
-![知识星球30元优惠卷](https://oss.javaguide.cn/xingqiu/xingqiuyouhuijuan-30.jpg)
-
-进入星球之后，记得查看 **[星球使用指南](https://t.zsxq.com/0d18KSarv)** （一定要看！！！） 和 **[星球优质主题汇总](https://t.zsxq.com/12uSKgTIm)** 。
-
-**无任何套路，无任何潜在收费项。用心做内容，不割韭菜！**
-
-不过， **一定要确定需要再进** 。并且， **三天之内觉得内容不满意可以全额退款** 。
+JavaGuide Knowledge Planet Quality Thematic Condensation portal: \<https://www.yuque.com/snailclimb/rpkkw1/ncxpnnfmng08wlf1

@@ -1,14 +1,16 @@
----
-title: Spring Boot核心源码解读（付费）
-category: 框架
-tag:
-  - Spring
----
+I don't...
+Title: Spring Boot Core Source Interpretation (Pay)\
+Category: Framework\
+Tag:
 
-**Spring Boot 核心源码解读** 为我的[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了[《Java 必读源码系列》](https://javaguide.cn/zhuanlan/source-code-reading.html)中。
+- Spring
 
-![Spring Boot核心源码解读](https://oss.javaguide.cn/xingqiu/springboot-source-code.png)
+I don't...
 
-<!-- @include: @yuanma.snippet.md -->
+**Spring Boot Core Source Reading** for my [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) (click on the link to see details and how to join) has been collated in the [Java Essentially Read Source Series](https://javaguide.cn/zhuanlan/source-code-reading.html).
 
-<!-- @include: @article-footer.snippet.md -->
+[Spring Boot Core Source Interpretation](https://oss.javaguide.cn/xingqiu/springboot-source-code.png)
+
+@include: @yuanma.snippet.md--
+
+@include: @article-footer.snippet.md--

@@ -1,146 +1,86 @@
----
-title: 糟糕程序员的 20 个坏习惯
-category: 技术文章精选集
-author: Kaito
-tag:
-  - 练级攻略
----
+I don't...
+Title: 20 Bad Habits of Bad Programmers\
+Category: Excerpts of Technical Articles\
+Author: Kaito\
+Tag:
 
-> **推荐语**：Kaito 大佬的一篇文章，很实用的建议！
->
-> **原文地址：** <https://mp.weixin.qq.com/s/6hUU6SZsxGPWAIIByq93Rw>
+- Practice.\
+  I don't...
 
-我想你肯定遇到过这样一类程序员：**他们无论是写代码，还是写文档，又或是和别人沟通，都显得特别专业**。每次遇到这类人，我都在想，他们到底是怎么做到的？
+> **Recommendation**: Big Kaito article, practical advice!
 
-随着工作时间的增长，渐渐地我也总结出一些经验，他们身上都保持着一些看似很微小的优秀习惯，但正是因为这些习惯，体现出了一个优秀程序员的基本素养。
+**Original address:** <https://mp.weixin.qq.com/s/6hU6SZsxGPWAIIByq93Rw>
 
-但今天我们来换个角度，来看看一个糟糕程序员有哪些坏习惯？只要我们都能避开这些问题，就可以逐渐向一个优秀程序员靠近。
+I'm sure you've met a kind of programmer: **They're very professional, whether they're writing code, writing files, or communicating with others.** Every time I see one of these people, I wonder how they do it.
 
-## 1、技术名词拼写不规范
+As working hours grew, I was able to draw up some lessons, and they all had some seemingly small, good habits, but it was because of them that the basics of a good programmer were reflected.
 
-无论是个人简历，还是技术文档，我经常看到拼写不规范的技术名词，例如 JAVA、javascript、python、MySql、Hbase、restful。
+But today, let's take a different angle and see what bad habits a bad programmer has. As long as we can avoid these problems, we can gradually approach being a good programmer.
 
-正确的拼写应该是 Java、JavaScript、Python、MySQL、HBase、RESTful，不要小看这个问题，很多面试官很有可能因为这一点刷掉你的简历。
+# 1. Technical nouns are irregular
 
-## 2、写文档，中英文混排不规范
+Whether it be a personal history or a technical document, I often see technical terms that are not spelled out, such as JAVA, Javascript, python, MySql, Hbase, retful.
 
-中文描述使用英文标点符号，英文和数字使用了全角字符，中文与英文、数字之间没有空格等等。
+The correct spelling should be Java, JavaScript, Python, MySQL, HBase, Restful. Don't underestimate the issue; many interviewers are likely to have brushed your resume for this.
 
-其中很多人会忽视中文和英文、数字之间加一个「空格」，这样排版阅读起来会更舒服。之前我的文章排版，都是遵循了这些细节。
+# 2. Writing documents mixed with English
 
-## 3、重要逻辑不写注释，或写得很拖沓
+The Chinese description is marked with a symbol in English, full-width characters in English and figures, and there are no spaces between Chinese and English, numbers, etc.
 
-复杂且重要的逻辑代码，很多程序员不写注释，除了自己能看懂代码逻辑，其他人根本看不懂。或者是注释虽然写了，但写得很拖沓，没有逻辑可言。
+Many of them will ignore the addition of a "space" between Chinese and English and the numbers, so that the layout will be more comfortable. These details were followed in my previous articles.
 
-重要的逻辑不止要写注释，还要写得简洁、清晰。如果是一眼就能读懂的简单代码，可以不加注释。
+# 3. Important logic without comments, or very vague
 
-## 4、写复杂冗长的函数
+Complex and important logical codes; many programmers do not write notes, and others do not understand them except for their own. Or the notes, though written, are very vague and lack logic.
 
-一个函数几百行，一个文件上千行代码，复杂函数不做拆分，导致代码变得越来越难维护，最后谁也不敢动。
+The important logic is not just to write notes but to be simple and clear. If it's a simple code that you can read at once, you can say it without comment.
 
-基本的设计模式还是要遵守的，例如单一职责，一个函数只做一件事，开闭原则，对扩展开放，对修改关闭。
+# 4. Complex, long functions
 
-如果函数逻辑确实复杂，也至少要保证主干逻辑足够清晰。
+A function of hundreds of lines, a file of thousands of lines, complex functions that do not split make it more and more difficult to maintain, and no one wants to touch it.
 
-## 5、不看官方文档，只看垃圾博客
+Basic design models are still to be followed, such as a single function doing only one thing, the closure principle, the opening to expansion, and the closing of modifications.
 
-很多人遇到问题不先去看官方文档，而是热衷于去看垃圾博客，这些博客的内容都是互相抄袭，错误百出。
+If the logic of the function is indeed complex, at least the backbone logic should be clear enough.
 
-其实很多软件官方文档写得已经非常好了，常见问题都能找到答案，认真读一读官方文档，比看垃圾博客强一百倍，要养成看官方文档的好习惯。
+# 5. No official documents, just garbage blogs
 
-## 6、宣扬内功无用论
+Many people have problems looking not at official documents but at garbage blogs, whose content is copied from one another and which contain mistakes.
 
-有些人天天追求日新月异的开源项目和框架，却不肯花时间去啃一啃底层原理，常见问题虽然可以解决，但遇到稍微深一点的问题就束手无策。
+In fact, many of the software's official documents are very well written, and common questions can be answered. It's a hundred times better to read them than to read garbage blogs, and it's a good habit to read them.
 
-很多高大上的架构设计，思路其实都源于底层。想一想，像计算机体系结构、操作系统、网络协议这些东西，经过多少年演进才变为现在的样子，演进过程中遇到的复杂问题比比皆是，理解了解决这些问题的思路，再看上层技术会变得很简单。
+# 6. Promoting the idea of incompetence
 
-## 7、乐于炫技
+Some people, while pursuing increasingly dynamic open-source projects and frameworks, refuse to spend their time understanding the principles at the bottom. While common problems can be solved, they cannot cope with slightly deeper issues.
 
-有些人天天把「高大上」的技术名词挂在嘴边，生怕别人不知道自己学了什么高深技术，嘴上乐于炫技，但别人一问他细节就会哑口无言。
+A lot of high-level architecture design thinking actually comes from the bottom. Consider how many years have passed since computer system structures, operating systems, network protocols, and so on. The complex problems encountered in this evolution are abundant, and it is easy to overlook top-level technology.
 
-## 8、不接受质疑
+# 7. Happy to show off
 
-自己设计的方案，别人提出疑问时只会回怼，而不是理性分析利弊，抱着学习的心态交流。
+Some people hang on their mouths every day the term "high-level" technology, fearing that others will not know what they have learned. They are happy to show off but become silent when asked for details.
 
-这些人学了点东西就觉得自己很有本事，殊不知只是自己见识太少。
+# 8. No challenge
 
-## 9、接口协议不规范
+Self-designed programs that others question only receive a defensive response, rather than a rational analysis of the pros and cons and communication with a learning mentality.
 
-和别人定 API 协议全靠口头沟通，不给规范的文档说明，甚至到了测试联调时会发现，竟然和协商的还不一样，或者改协议了却不通知对接方，合作体验极差。
+These people learn something and think they're good at it.
 
-## 10、遇到问题自己死磕
+# 9. Interface protocol irregularities
 
-很初级程序员容易犯的问题，遇到问题只会自己死磕，拖到 deadline 也没有产出，领导来问才知道有问题解决不了。
+The API agreement with others is based on oral communication, without standard documentation. Even when the connection is tested, it turns out that the agreement is not the same as the one negotiated, or the agreement is changed without informing the counterparty, leading to extremely poor cooperation experiences.
 
-有问题及时反馈才是对自己负责，对团队负责。
+# 10. I'm in trouble
 
-## 11、一说就会，一写就废
+It's very easy for junior programmers to get into trouble, to drag themselves to deadlines and not produce, and it's not until the leader asks for answers.
 
-平时技术方案吹得天花乱坠，一让他写代码就废，典型的眼高手低选手。
+Timely feedback is a responsibility to oneself and to the team.
 
-## 12、表达没有逻辑，不站在对方角度看问题
+# 11. Say yes, write no more
 
-讨论问题不交代背景，上来就说自己的方案，别人听得云里雾里，让你从头描述你又讲不明白。
+The usual technology program blows up smallpox and makes it useless to write code, with typical eyes and eyes.
 
-学会沟通和表达，是合作的基础。
+# 12. There's no logic to express, not taking sides
 
-## 13、不主动思考，伸手党
+If you don't talk about it, you come up and tell me your own plan.
 
-遇到问题不去 google，不做思考就向别人提问，喜欢做伸手党。
-
-每个人的时间都很宝贵，大家都更喜欢你带着自己的思考来提问，一来可以规避很多低级问题，二来可以提高交流质量。
-
-## 14、经常犯重复的错误
-
-出问题后说下次会注意，但下次问题依旧，对自己不负责任，说到底是态度问题。
-
-## 15、加功能不考虑扩展性
-
-加新功能只关注某一小块业务，不考虑系统整体的扩展性，堆代码行为严重。
-
-要学会分析需求和未来可能发生的变化，设计更通用的解决方案，降低后期开发成本。
-
-## 16、接口不自测，出问题不打日志
-
-自己开发的接口不自测就和别人联调，出了问题又说没打日志，协作效率极低。
-
-## 17、提交代码不规范
-
-很多人提交代码不写描述，或者写的是无意义的描述，尤其是修改很少代码时，这种情况会导致回溯问题成本变高。
-
-制定代码提交规范，能让你在每一次提交代码时，不会做太随意的代码修改。
-
-## 18、手动修改生产环境数据库
-
-直连生产环境数据库修改数据，更有 UPDATE / DELETE SQL 忘写 WHERE 条件的情况，产生数据事故。
-
-修改生产环境数据库一定要谨慎再谨慎，建议操作前先找同事 review 代码再操作。
-
-## 19、没理清需求就直接写代码
-
-很多程序员接到需求后，不怎么思考就开始写代码，需求和自己理解的有偏差，造成无意义返工。
-
-多花些时间梳理需求，能规避很多不合理的问题。
-
-## 20、重要设计不写文档
-
-重要的设计没有文档输出，和别人交接系统时只做口头描述，丢失关键信息。
-
-有时候理解一个设计方案，一个好的文档要比看几百行代码更高效。
-
-## 总结
-
-以上这些不良习惯，你命中几个呢？或者你身边有没有碰到这样的人？
-
-我认为提早规避这些问题，是成为一个优秀程序员必须要做的。这些习惯总结起来大致分为这 4 个方面：
-
-- 良好的编程修养
-- 谦虚的学习心态
-- 良好的沟通和表达
-- 注重团队协作
-
-优秀程序员的专业技能，我们可能很难在短时间内学会，但这些基本的职业素养，是可以在短期内做到的。
-
-希望你我可以有则改之，无则加勉。
-
-<!-- @include: @article-footer.snippet.md -->
+Learning to communicate and

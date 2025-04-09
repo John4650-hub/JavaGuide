@@ -1,21 +1,21 @@
----
-title: 《手写 RPC 框架》
-category: 知识星球
----
+I don't...
+Title: Handwritten RPC Framework\
+Category: Knowledge Planet\
+I don't...
 
-## 介绍
+# Introduction
 
-**《手写 RPC 框架》** 是我的[知识星球](../about-the-author/zhishixingqiu-two-years.md)的一个内部小册，我写了 12 篇文章来讲解如何从零开始基于 Netty+Kyro+Zookeeper 实现一个简易的 RPC 框架。
+**The Handwritten RPC Framework** is an internal book of my [knowledge planet](../about-the-author/zhishixingqiu-two-years.md), and I wrote 12 articles on how to achieve a simple RPC framework from scratch based on Netty, Kryo, and Zookeeper.
 
-麻雀虽小五脏俱全，项目代码注释详细，结构清晰，并且集成了 Check Style 规范代码结构，非常适合阅读和学习。
+The sparrows are small and whole, with detailed project code notes, a clear structure, and a check steel code structure that is well suited for reading and learning.
 
-## 内容概览
+# Overview of content
 
-![](https://oss.javaguide.cn/github/javaguide/image-20220308100605485.png)
+![https://oss.javaguide.cn/github/javaguide/image-20203008100605485.png](https://oss.javaguide.cn/github/javaguide/image-20203008100605485.png)
 
-通过这个简易的轮子，你可以学到 RPC 的底层原理和原理以及各种 Java 编码实践的运用。你甚至可以把它当做你的毕设/项目经验的选择，这是非常不错！对比其他求职者的项目经验都是各种系统，造轮子肯定是更加能赢得面试官的青睐。
+With this simple wheel, you can learn the principles of RPC and the application of various Java coding practices. You can even use it as an option for your in-house/project experience, which is very good! The project experience of other job seekers is one of a variety of systems, and the wheel must be more attractive to interviewers.
 
-- GitHub 地址：[https://github.com/Snailclimb/guide-rpc-framework](https://github.com/Snailclimb/guide-rpc-framework) 。
-- Gitee 地址：[https://gitee.com/SnailClimb/guide-rpc-framework](https://gitee.com/SnailClimb/guide-rpc-framework) 。
+- GitHub address: [https://github.com/Snailclimb/guide-rpc-framework](https://github.com/Snailclimb/guide-rpc-framework)
+- Gitee address: [https://gitee.com/SnailClimamb/guide-rpc-framework](https://gitee.com/SnailClimamb/guide-rpc-framework)
 
-<!-- @include: @planet2.snippet.md -->
+@include: @planet2.snippet.md--

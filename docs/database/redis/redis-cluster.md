@@ -1,14 +1,16 @@
----
-title: Redis集群详解(付费)
-category: 数据库
-tag:
-  - Redis
----
+I don't...
+Title: Redis Cluster Elaboration (Paying)\
+Category: Database\
+Tag:
 
-**Redis 集群** 相关的面试题为我的 [知识星球](../../about-the-author/zhishixingqiu-two-years.md)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了[《Java 面试指北》](../../zhuanlan/java-mian-shi-zhi-bei.md)中。
+- Redis
 
-![](https://oss.javaguide.cn/xingqiu/mianshizhibei-database.png)
+I don't...
 
-<!-- @include: @planet.snippet.md -->
+**Redis Cluster** The exclusive content of the related interview, entitled My [Knowledge Planet](..././about-the-author/zhishixingqiu-two-years.md) (access to the details of the presentation and how to join) has been collated in [Java Interview Point North](.../../zhuanlan/java-mian-shi-zhi-zhi-bei.md).
 
-<!-- @include: @article-footer.snippet.md -->
+![Image](https://oss.javaguide.cn/xingqiu/mianshizhibei-database.png)
+
+@include: @planet.snippet.md--
+
+@include: @article-footer.snippet.md--

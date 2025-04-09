@@ -1,40 +1,41 @@
----
+I don't...
 home: true
 icon: home
-title: Java 面试指南
-heroImage: /logo.svg
-heroText: JavaGuide
-tagline: 「Java学习 + 面试指南」涵盖 Java 程序员需要掌握的核心知识
-actions:
-  - text: 开始阅读
-    link: /home.md
-    type: primary
-  - text: 知识星球
-    link: /about-the-author/zhishixingqiu-two-years.md
-    type: default
-footer: |-
-  <a href="https://beian.miit.gov.cn/" target="_blank">鄂ICP备2020015769号-1</a> | 主题: <a href="https://vuepress-theme-hope.github.io/v2/" target="_blank">VuePress Theme Hope</a>
----
+Title: Java Interview Guide
+HeroImage: /logo.svg
+HeroText: JavaGuide
+Tagline: Java Learning + Interview Guide covers the core knowledge that Java programmers need to have.
+Actions:
 
-## 关于网站
+- text: Start reading
+  link: /home.md
+  I don't know.
+- text: knowledge planet
+  link: /about-the-author/zhishixingqiu-two-years.md
+  type: default
+  Footer:
+  <a href="https://beian.miit.gov.cn/" target="_blank">OICP for 2020015769-1</a> Theme: <a href="https://vuepress-theme-hope.github.io/v2/" target="_blank">VuePress Theme Hope</a>
+  I don't...
 
-JavaGuide 已经持续维护 6 年多了，累计提交了 **5600+** commit ，共有 **550+** 多位贡献者共同参与维护和完善。真心希望能够把这个项目做好，真正能够帮助到有需要的朋友！
+# About the website
 
-如果觉得 JavaGuide 的内容对你有帮助的话，还请点个免费的 Star（绝不强制点 Star，觉得内容不错有收获再点赞就好），这是对我最大的鼓励，感谢各位一路同行，共勉！传送门：[GitHub](https://github.com/Snailclimb/JavaGuide) | [Gitee](https://gitee.com/SnailClimb/JavaGuide)。
+JavaGuide has been in constant maintenance for more than six years, with a cumulative submission of **5600+** committee members, with a total of **550+** multiple contributors participating in maintenance and improvement. I really hope I can get this project right and really help friends in need!
 
-- [项目介绍](./javaguide/intro.md)
-- [贡献指南](./javaguide/contribution-guideline.md)
-- [常见问题](./javaguide/faq.md)
+If you think the content of JavaGuide will help you, ask for a free star. Transmitters: [GitHub](https://github.com/Snailclimb/JavaGuide) [Gitee](https://gitee.com/SnailClimamb/JavaGuide).
 
-## 关于作者
+- [Project introduction](./javaguide/intro.md)
+- [Guide of contribution](./javaguide/contribution-guideline.md)
+- [Unusual questions](./javaguide/faq.md)
 
-- [我曾经也是网瘾少年](./about-the-author/internet-addiction-teenager.md)
-- [害，毕业三年了！](./about-the-author/my-college-life.md)
-- [我的知识星球快 3 岁了！](./about-the-author/zhishixingqiu-two-years.md)
-- [坚持写技术博客六年了](./about-the-author/writing-technology-blog-six-years.md)
+# About the author
 
-## 公众号
+- [I was also an Internet addict]
+- [Grunts] Three years! (./about-the-author/my-college-life.md)
+- My knowledge planet is almost three years old! (./about-the-author/zhishixingqiu-two-years.md)
+- [Holding on to technical blogs for six years](./about-the-author/writing-technology-blog-six-years.md)
 
-最新更新会第一时间同步在公众号，推荐关注！另外，公众号上有很多干货不会同步在线阅读网站。
+# Public
 
-![JavaGuide 官方公众号](https://oss.javaguide.cn/github/javaguide/gongzhonghaoxuanchuan.png)
+The update will be synchronized at the public sign at the first opportunity. In addition, there are many dry products in the public domain that do not read the website in tandem.
+
+![Public Image](https://oss.javaguide.cn/github/javaguide/gongzhonghaoxuanchuan.png)

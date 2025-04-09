@@ -1,118 +1,94 @@
----
-title: 3种常用的缓存读写策略详解
-category: 数据库
-tag:
-  - Redis
----
+I don't...
+title: 3 Common Cache Reading and Writing Strategies
+Category: Database
+Tag:
 
-看到很多小伙伴简历上写了“**熟练使用缓存**”，但是被我问到“**缓存常用的 3 种读写策略**”的时候却一脸懵逼。
+- Redis
+  I don't...
 
-在我看来，造成这个问题的原因是我们在学习 Redis 的时候，可能只是简单写了一些 Demo，并没有去关注缓存的读写策略，或者说压根不知道这回事。
+Seeing a lot of small partners' résumés with “**proficient use of the Cache**,” but when I asked “**three commonly used reading and writing strategies**,”
 
-但是，搞懂 3 种常见的缓存读写策略对于实际工作中使用缓存以及面试中被问到缓存都是非常有帮助的！
+It seems to me that the reason for this problem is that, while we're studying Redis, we may have simply written some demos, not focused on the slow-down reading and writing strategy, or simply not known it.
 
-**下面介绍到的三种模式各有优劣，不存在最佳模式，根据具体的业务场景选择适合自己的缓存读写模式。**
+However, understanding 3 common CBC strategies can be very helpful for the use of CVs in practice and for being questioned about CVs in interviews!
 
-### Cache Aside Pattern（旁路缓存模式）
+**The three models described below have advantages and disadvantages; there are no best models, and you should choose a model for your own cache reading and writing according to the specific business scene.**
 
-**Cache Aside Pattern 是我们平时使用比较多的一个缓存读写模式，比较适合读请求比较多的场景。**
+# Cache Aside Pattern
 
-Cache Aside Pattern 中服务端需要同时维系 db 和 cache，并且是以 db 的结果为准。
+**Cache Aside Pattern is a much easier-to-read and write mode we normally use, which is more suitable for handling more read requests.**
 
-下面我们来看一下这个策略模式下的缓存读写步骤。
+The service end in Cache Aside Pattern requires both db and cache, and is based on db.
 
-**写**：
+Let's take a look at the slow reading and writing steps in this strategy mode.
 
-- 先更新 db
-- 然后直接删除 cache 。
+**Write**:
 
-简单画了一张图帮助大家理解写的步骤。
+- Update db first.
+- Then remove the cache directly.
 
-![](https://oss.javaguide.cn/github/javaguide/database/redis/cache-aside-write.png)
+A simple picture was drawn to help you understand the steps.
 
-**读** :
+![Write Steps](https://oss.javaguide.cn/github/javaguide/database/redis/cache-aside-write.png)
 
-- 从 cache 中读取数据，读取到就直接返回
-- cache 中读取不到的话，就从 db 中读取数据返回
-- 再把数据放到 cache 中。
+**Read**:
 
-简单画了一张图帮助大家理解读的步骤。
+- Read data from the cache and return it directly.
+- Read data back from db if you cannot read from cache.
+- Put the data in the cache.
 
-![](https://oss.javaguide.cn/github/javaguide/database/redis/cache-aside-read.png)
+A simple picture has been drawn to help you understand the steps of reading.
 
-你仅仅了解了上面这些内容的话是远远不够的，我们还要搞懂其中的原理。
+![Read Steps](https://oss.javaguide.cn/github/javaguide/database/redis/cache-aside-read.png)
 
-比如说面试官很可能会追问：“**在写数据的过程中，可以先删除 cache ，后更新 db 么？**”
+It is not enough for you to simply understand the above; we need to understand the rationale.
 
-**答案：** 那肯定是不行的！因为这样可能会造成 **数据库（db）和缓存（Cache）数据不一致**的问题。
+For example, the interviewer is likely to ask: "**In the process of writing data, can you delete the cache and update db?**"
 
-举例：请求 1 先写数据 A，请求 2 随后读数据 A 的话，就很有可能产生数据不一致性的问题。
+**Answer:** That's definitely not gonna work! This may cause problems with data inconsistencies between databases (db) and Cache.\*\*
 
-这个过程可以简单描述为：
+For example, request 1 for data A, request 2 for subsequent data A is likely to create data inconsistencies.
 
-> 请求 1 先把 cache 中的 A 数据删除 -> 请求 2 从 db 中读取数据->请求 1 再把 db 中的 A 数据更新
+This process can be described briefly as:
 
-当你这样回答之后，面试官可能会紧接着就追问：“**在写数据的过程中，先更新 db，后删除 cache 就没有问题了么？**”
+> Request 1 first removes the A data from the Cache -> Request 2 reads Data from db -> Request 1 updates the A data in db.
 
-**答案：** 理论上来说还是可能会出现数据不一致性的问题，不过概率非常小，因为缓存的写入速度是比数据库的写入速度快很多。
+When you answer that question, the interviewer may immediately follow up with the question: "**Update db in the process of writing the data and delete the cache.**”
 
-举例：请求 1 先读数据 A，请求 2 随后写数据 A，并且数据 A 在请求 1 请求之前不在缓存中的话，也有可能产生数据不一致性的问题。
+**Answer:** Theoretically, the problem of data inconsistency may still arise, but the probability is very low because the cache is written much faster than in the database.
 
-这个过程可以简单描述为：
+For example: Request 1 first reads data A, request 2 then writes data A, and data A may also raise data inconsistencies if it is not in the cache before the request is made.
 
-> 请求 1 从 db 读数据 A-> 请求 2 更新 db 中的数据 A（此时缓存中无数据 A ，故不用执行删除缓存操作 ） -> 请求 1 将数据 A 写入 cache
+This process can be described briefly as:
 
-现在我们再来分析一下 **Cache Aside Pattern 的缺陷**。
+> Request 1 reads Data A -> Request 2 updates Data A in db (no data A in the cache at this time, therefore no action to remove the cache) -> Request 1 writes Data A to Cache.
 
-**缺陷 1：首次请求数据一定不在 cache 的问题**
+Now let's analyze the shortcomings of **Cache Aside Pattern**.
 
-解决办法：可以将热点数据可以提前放入 cache 中。
+**Deficiency 1: the problem of not having data requested for the first time.**
 
-**缺陷 2：写操作比较频繁的话导致 cache 中的数据会被频繁被删除，这样会影响缓存命中率 。**
+Solutions: Hotspot data can be pre-loaded into cache.
 
-解决办法：
+**Deficiency 2: more frequent writing leads to frequent deletion of the data in cache, which affects the Cache Hit Rate.**
 
-- 数据库和缓存数据强一致场景：更新 db 的时候同样更新 cache，不过我们需要加一个锁/分布式锁来保证更新 cache 的时候不存在线程安全问题。
-- 可以短暂地允许数据库和缓存数据不一致的场景：更新 db 的时候同样更新 cache，但是给缓存加一个比较短的过期时间，这样的话就可以保证即使数据不一致的话影响也比较小。
+Solutions:
 
-### Read/Write Through Pattern（读写穿透）
+- Databases and caches are well aligned: the same is updated when db is updated, but we need to add a lock/distribution lock to ensure that there is no thread safety issue when updating cache.
+- A short period of time allows for a scenario where the database and the cache data are not consistent: the same is updated when db is updated, but a shorter expiry period is added to the cache, so that even if the data are not consistent, the impact will be less.
 
-Read/Write Through Pattern 中服务端把 cache 视为主要数据存储，从中读取数据并将数据写入其中。cache 服务负责将此数据读取和写入 db，从而减轻了应用程序的职责。
+# Read/Write Through Pattern
 
-这种缓存读写策略小伙伴们应该也发现了在平时在开发过程中非常少见。抛去性能方面的影响，大概率是因为我们经常使用的分布式缓存 Redis 并没有提供 cache 将数据写入 db 的功能。
+The Read/Write Through Pattern server considers cache as the primary data repository from which the data is read and written. Cache services are responsible for reading and writing this data to db, thus reducing the responsibility of the application.
 
-**写（Write Through）：**
+The small partners in this cache reading and writing strategy should also have found it very rare in the development process. It drops the performance effect, probably because the distributed cache that we often use does not provide the cache to write to db.
 
-- 先查 cache，cache 中不存在，直接更新 db。
-- cache 中存在，则先更新 cache，然后 cache 服务自己更新 db（**同步更新 cache 和 db**）。
+**Write Through:**
 
-简单画了一张图帮助大家理解写的步骤。
+- Check first; if Cache does not exist, directly update db.
+- If Cache exists, update the cache and then the cache service updates db (**synchronized updates of cache and db**).
 
-![](https://oss.javaguide.cn/github/javaguide/database/redis/write-through.png)
+A simple picture was drawn to help you understand the steps.
 
-**读(Read Through)：**
+![Write Through Steps](https://oss.javaguide.cn/github/javaguide/database/redis/write-through.png)
 
-- 从 cache 中读取数据，读取到就直接返回 。
-- 读取不到的话，先从 db 加载，写入到 cache 后返回响应。
-
-简单画了一张图帮助大家理解读的步骤。
-
-![](https://oss.javaguide.cn/github/javaguide/database/redis/read-through.png)
-
-Read-Through Pattern 实际只是在 Cache-Aside Pattern 之上进行了封装。在 Cache-Aside Pattern 下，发生读请求的时候，如果 cache 中不存在对应的数据，是由客户端自己负责把数据写入 cache，而 Read Through Pattern 则是 cache 服务自己来写入缓存的，这对客户端是透明的。
-
-和 Cache Aside Pattern 一样， Read-Through Pattern 也有首次请求数据一定不再 cache 的问题，对于热点数据可以提前放入缓存中。
-
-### Write Behind Pattern（异步缓存写入）
-
-Write Behind Pattern 和 Read/Write Through Pattern 很相似，两者都是由 cache 服务来负责 cache 和 db 的读写。
-
-但是，两个又有很大的不同：**Read/Write Through 是同步更新 cache 和 db，而 Write Behind 则是只更新缓存，不直接更新 db，而是改为异步批量的方式来更新 db。**
-
-很明显，这种方式对数据一致性带来了更大的挑战，比如 cache 数据可能还没异步更新 db 的话，cache 服务可能就就挂掉了。
-
-这种策略在我们平时开发过程中也非常非常少见，但是不代表它的应用场景少，比如消息队列中消息的异步写入磁盘、MySQL 的 Innodb Buffer Pool 机制都用到了这种策略。
-
-Write Behind Pattern 下 db 的写性能非常高，非常适合一些数据经常变化又对数据一致性要求没那么高的场景，比如浏览量、点赞量。
-
-<!-- @include: @article-footer.snippet.md -->
+\*\*Read Through:

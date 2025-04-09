@@ -1,100 +1,61 @@
----
-title: 软件工程简明教程
-category: 系统设计
----
+I don't...
+title: Software Engineering Concise
+Category: System design
+I don't...
 
-大部分软件开发从业者，都会忽略软件开发中的一些最基础、最底层的一些概念。但是，这些软件开发的概念对于软件开发来说非常重要，就像是软件开发的基石一样。这也是我写这篇文章的原因。
+Most software developers ignore some of the most basic and bottom-up concepts of software development. However, these software development concepts are very important for software development, as if they were the cornerstone of software development. That's why I wrote this article.
 
-## 何为软件工程？
+# What's software engineering?
 
-1968 年 NATO（北大西洋公约组织）提出了**软件危机**（**Software crisis**）一词。同年，为了解决软件危机问题，“**软件工程**”的概念诞生了。一门叫做软件工程的学科也就应运而生。
+In 1968, NATO (North Atlantic Treaty Organization) introduced the term **software crisis** (**Software Chris**). In the same year, in order to address the software crisis, the concept of “**software engineering**” was born. A subject called software engineering has also emerged.
 
-随着时间的推移，软件工程这门学科也经历了一轮又一轮的完善，其中的一些核心内容比如软件开发模型越来越丰富实用！
+Over time, the subject of software engineering has also undergone a series of refinements, with some core elements, such as software development models, becoming more and more operational!
 
-**什么是软件危机呢？**
+**What's a software crisis?**
 
-简单来说，软件危机描述了当时软件开发的一个痛点：我们很难高效地开发出质量高的软件。
+In short, the software crisis described a painful point in software development at the time: it was very difficult to efficiently develop high-quality software.
 
-Dijkstra（Dijkstra 算法的作者） 在 1972 年图灵奖获奖感言中也提高过软件危机，他是这样说的：“导致软件危机的主要原因是机器变得功能强大了几个数量级！坦率地说：只要没有机器，编程就完全没有问题。当我们有一些弱小的计算机时，编程成为一个温和的问题，而现在我们有了庞大的计算机，编程也同样成为一个巨大的问题”。
+Dijkstra also raised the software crisis in the 1972 Turing Prize award speech, in which he said: "The main reason for the software crisis is that the machine has become powerful in several orders of magnitude! Frankly, as long as there is no machine, there is no problem with programming. When we have small, weak computers, programming becomes a mild problem, and now we have huge computers, and programming is a huge problem as well.”
 
-**说了这么多，到底什么是软件工程呢？**
+**What's a software project?**
 
-工程是为了解决实际的问题将理论应用于实践。软件工程指的就是将工程思想应用于软件开发。
+The project is intended to solve practical problems by applying theory to practice. Software engineering refers to the application of engineering ideas to software development.
 
-上面是我对软件工程的定义，我们再来看看比较权威的定义。IEEE 软件工程汇刊给出的定义是这样的：　(1)将系统化的、规范的、可量化的方法应用到软件的开发、运行及维护中，即将工程化方法应用于软件。　(2)在(1)中所述方法的研究。
+This is my definition of software engineering. Let's look at the more authoritative definition. The IEEE software engineering journal gives a definition of the following: (1) application of systematic, standardized, quantifiable methods to software development, operation, and maintenance, and application of engineering methods to software. (2) A study of the methods described in (1).
 
-总之，软件工程的终极目标就是：**在更少资源消耗的情况下，创造出更好、更容易维护的软件。**
+In short, the ultimate goal of software engineering is to create better and more easily maintained software with less resource consumption.\*\*
 
-## 软件开发过程
+# Software development process
 
-[维基百科是这样定义软件开发过程](https://zh.wikipedia.org/wiki/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B)的：
+[Wiki encyclopedia defines the software development process in this way](https://zh.wikipedia.org/wiki/%E8%BDE%EF%E4%EB%B6%E5%EC%E5%E5%E5%E91%E8%E8%EF%87%E7%A8%25B):
 
-> 软件开发过程（英语：software development process），或软件过程（英语：software process），是软件开发的开发生命周期（software development life cycle），其各个阶段实现了软件的需求定义与分析、设计、实现、测试、交付和维护。软件过程是在开发与构建系统时应遵循的步骤，是软件开发的路线图。
+> Software development process (English: software development process) or software process (English: software development process) is the development life cycle of software development (software development life cycle), with all phases of software definition and analysis, design, realization, testing, delivery, and maintenance. The software process is a step to be followed in developing and constructing the system and a roadmap for software development.
 
-- 需求分析：分析用户的需求，建立逻辑模型。
-- 软件设计：根据需求分析的结果对软件架构进行设计。
-- 编码：编写程序运行的源代码。
-- 测试 : 确定测试用例，编写测试报告。
-- 交付：将做好的软件交付给客户。
-- 维护：对软件进行维护比如解决 bug，完善功能。
+- Needs analysis: analysis of user needs and establishment of logical models.
+- Software design: design of the software architecture based on the results of the needs analysis.
+- Encoding: the source code for the program to run.
+- Testing: Identify test examples and prepare test reports.
+- Delivery: good software delivered to clients.
+- Maintenance: maintenance of software such as solving bugs and improvement of functionality.
 
-软件开发过程只是比较笼统的层面上，一定义了一个软件开发可能涉及到的一些流程。
+The software development process is only at a more general level, defining some of the processes that software development may involve.
 
-软件开发模型更具体地定义了软件开发过程，对开发过程提供了强有力的理论支持。
+The software development model defines the software development process more specifically and provides strong theoretical support for the development process.
 
-## 软件开发模型
+# Software development model
 
-软件开发模型有很多种，比如瀑布模型（Waterfall Model）、快速原型模型（Rapid Prototype Model）、V 模型（V-model）、W 模型（W-model）、敏捷开发模型。其中最具有代表性的还是 **瀑布模型** 和 **敏捷开发** 。
+There are many models for software development, such as Waterfall Model, Rapid Prototype Model, V-Model, W-Model, and Agility Development Model. The most representative of these are the **Waterfall model** and **Agility development**.
 
-**瀑布模型** 定义了一套完成的软件开发周期，完整地展示了一个软件的的生命周期。
+The **Waterfall model** defines a completed software development cycle and presents a complete picture of the life cycle of software.
 
-![](https://oss.javaguide.cn/github/javaguide/system-design/schedule-task/up-264f2750a3d30366e36c375ec3a30ec2775.png)
+![Waterfall Model](https://oss.javaguide.cn/github/javaguide/system-design/schedule-task/up-264f2750a3d30366ec375ec30ec2775.png)
 
-**敏捷开发模型** 是目前使用的最多的一种软件开发模型。[MBA 智库百科对敏捷开发的描述](https://wiki.mbalib.com/wiki/%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91)是这样的:
+**Agility development model** is the most currently used software development model. [Agile development](https://wiki.mbalib.com/wiki/%E6%E6%E8D%B7%E5%BC%80%E5%E8F%91) is a people-centered, iterative, step-by-step approach to development. In agile development, software project construction is cut into sub-projects, and the results of each sub-project are tested with integrated and operational features. In other words, a large project is divided into small, interconnected projects that can also run independently and be completed separately, in which the software has been in serviceable.
 
-> **敏捷开发** 是一种以人为核心、迭代、循序渐进的开发方法。在敏捷开发中，软件项目的构建被切分成多个子项目，各个子项目的成果都经过测试，具备集成和可运行的特征。换言之，就是把一个大项目分为多个相互联系，但也可独立运行的小项目，并分别完成，在此过程中软件一直处于可使用状态。
+Some of the concepts that are more common now, such as **ongoing integration**, **re-engineering**, **small releases**, **low-documentation**, **pair programming**, and **test-driven development** are at the heart of agile development.
 
-像现在比较常见的一些概念比如 **持续集成**、**重构**、**小版本发布**、**低文档**、**站会**、**结对编程**、**测试驱动开发** 都是敏捷开发的核心。
+# Basic policy for software development
 
-## 软件开发的基本策略
+Software reuse
 
-### 软件复用
-
-我们在构建一个新的软件的时候，不需要从零开始，通过复用已有的一些轮子（框架、第三方库等）、设计模式、设计原则等等现成的物料，我们可以更快地构建出一个满足要求的软件。
-
-像我们平时接触的开源项目就是最好的例子。我想，如果不是开源，我们构建出一个满足要求的软件，耗费的精力和时间要比现在多的多！
-
-### 分而治之
-
-构建软件的过程中，我们会遇到很多问题。我们可以将一些比较复杂的问题拆解为一些小问题，然后，一一攻克。
-
-我结合现在比较火的软件设计方法—领域驱动设计（Domain Driven Design，简称 DDD）来说说。
-
-在领域驱动设计中，很重要的一个概念就是**领域（Domain）**，它就是我们要解决的问题。在领域驱动设计中，我们要做的就是把比较大的领域（问题）拆解为若干的小领域（子域）。
-
-除此之外，分而治之也是一个比较常用的算法思想，对应的就是分治算法。如果你想了解分治算法的话，推荐你看一下北大的[《算法设计与分析 Design and Analysis of Algorithms》](https://www.coursera.org/learn/algorithms)。
-
-### 逐步演进
-
-软件开发是一个逐步演进的过程，我们需要不断进行迭代式增量开发，最终交付符合客户价值的产品。
-
-这里补充一个在软件开发领域，非常重要的概念：**MVP（Minimum Viable Product，最小可行产品**）。
-
-这个最小可行产品，可以理解为刚好能够满足客户需求的产品。下面这张图片把这个思想展示的非常精髓。
-
-![](https://oss.javaguide.cn/github/javaguide/system-design/schedule-task/up-a99961ff7725106c0592abca845d555568a.png)
-
-利用最小可行产品，我们可以也可以提早进行市场分析，这对于我们在探索产品不确定性的道路上非常有帮助。可以非常有效地指导我们下一步该往哪里走。
-
-### 优化折中
-
-软件开发是一个不断优化改进的过程。任何软件都有很多可以优化的点，不可能完美。我们需要不断改进和提升软件的质量。
-
-但是，也不要陷入这个怪圈。要学会折中，在有限的投入内，以最有效的方式提高现有软件的质量。
-
-## 参考
-
-- 软件工程的基本概念-清华大学软件学院 刘强：<https://www.xuetangx.com/course/THU08091000367>
-- 软件开发过程-维基百科：[https://zh.wikipedia.org/wiki/软件开发过程](https://zh.wikipedia.org/wiki/软件开发过程)
-
-<!-- @include: @article-footer.snippet.md -->
+When we build new software, we do not need to start from scratch, and we can build software that meets requirements faster by reusing existing wheels (frameworks, third-party

@@ -1,11 +1,11 @@
----
-title: Netty常见面试题总结(付费)
-category: 框架
-icon: "network"
----
+I don't...
+Title: Netty's Summary of Common Interviews (PAY)\
+Category: Frame\
+icon: "network"\
+I don't...
 
-**Netty** 相关的面试题为我的[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了[《Java 面试指北》](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html)中。
+**Netty** The exclusive content of the interview, entitled My [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) (click on the link to see the details of the presentation and the method of accession) has been collated in [Java Interview Point North](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html).
 
-<!-- @include: @planet.snippet.md -->
+@include: @planet.snippet.md--
 
-<!-- @include: @article-footer.snippet.md -->
+@include: @article-footer.snippet.md--

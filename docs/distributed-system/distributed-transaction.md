@@ -1,12 +1,12 @@
----
-title: 分布式事务常见解决方案总结(付费)
-category: 分布式
----
+I don't...
+Title: Summary of Common Solutions for Distributed Services (Pays)
+Category: Distribution
+I don't...
 
-**分布式事务** 相关的面试题为我的[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了《Java 面试指北》中。
+**Distributive Service** The exclusive content of the interview entitled My [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) (click on the link to see the details of the presentation and how to join) has been collated in Java Interview Point North.
 
-![](https://oss.javaguide.cn/javamianshizhibei/distributed-system.png)
+![Distributed System](https://oss.javaguide.cn/javamianshizhibei/distributed-system.png)
 
-<!-- @include: @planet.snippet.md -->
+@include: @planet.snippet.md--
 
-<!-- @include: @article-footer.snippet.md -->
+@include: @article-footer.snippet.md--

@@ -1,114 +1,67 @@
----
-title: 项目经验指南
-category: 面试准备
-icon: project
----
+I don't...
+Title: Project Experience Guide\
+Category: Preparation for Interview\
+icon: project\
+I don't...
 
-::: tip 友情提示
-本文节选自 **[《Java 面试指北》](../zhuanlan/java-mian-shi-zhi-bei.md)**。这是一份教你如何更高效地准备面试的专栏，内容和 JavaGuide 互补，涵盖常见八股文（系统设计、常见框架、分布式、高并发 ……）、优质面经等内容。
+::: Tip friendly tips\
+Excerpts from **[Java Interview Point North](../zhuanlan/java-mian-shi-zhi-bei.md)**. This is a column that teaches you how to prepare for interviews more efficiently, with content complementary to JavaGuide, and covers the common eight-part text (system design, common framework, distribution, high-level co-production...), high-quality profile, etc.\
 :::
 
-## 没有项目经验怎么办?
+What about without experience?
 
-没有项目经验是大部分应届生会碰到的一个问题。甚至说，有很多有工作经验的程序员，对自己在公司做的项目不满意，也想找一个比较有技术含量的项目来做。
+The lack of project experience is a problem encountered by most candidates. Even though there are many programmers with work experience who are not satisfied with their projects in the company and who want to find a more technical project to work on.
 
-说几种我觉得比较靠谱的获取项目经验的方式，希望能够对你有启发。
+Speaking of several ways in which I think I can learn from project experience, I hope I can inspire you.
 
-### 实战项目视频/专栏
+# Live Project Video/Column
 
-在网上找一个符合自己能力与找工作需求的实战项目视频或者专栏，跟着老师一起做。
+Find a live video or column on the Internet that matches your abilities and job-seeking needs and works with your teachers.
 
-你可以通过慕课网、哔哩哔哩、拉勾、极客时间、培训机构（比如黑马、尚硅谷）等渠道获取到适合自己的实战项目视频/专栏。
+You can get your own live project videos/columns through the Internet, lulls, hooks, bingo hours, and training institutions (such as Black Horses, Silicon Valley).
 
-![慕课网实战课](https://oss.javaguide.cn/javamianshizhibei/mukewangzhiazhanke.png)
+![Live Project](https://oss.javaguide.cn/javamianshizhibei/mukewangzhiashhanke.png)
 
-尽量选择一个适合自己的项目，没必要必须做分布式/微服务项目，对于绝大部分同学来说，能把一个单机项目做好就已经很不错了。
+The choice of a suitable project does not have to be distributed/micro-service, and for the vast majority of students, it is good to have a single machine.
 
-我面试过很多求职者，简历上看着有微服务的项目经验，结果随便问两个问题就知道根本不是自己做的或者说做的时候压根没认真思考。这种情况会给我留下非常不好的印象。
+I interviewed a lot of job-seekers and looked at their curriculum vitae regarding the micro-services project, and asked two questions and found out that they were not doing it themselves or that they did it without thinking. This left a very bad impression on me.
 
-我在 **[《Java 面试指北》](../zhuanlan/java-mian-shi-zhi-bei.md)** 的「面试准备篇」中也说过：
+I also said in **[Java Interview Point North](../zhuanlan/java-mian-shi-zhi-bei.md)**:
 
-> 个人认为也没必要非要去做微服务或者分布式项目，不一定对你面试有利。微服务或者分布式项目涉及的知识点太多，一般人很难吃透。并且，这类项目其实对于校招生来说稍微有一点超标了。即使你做出来，很多面试官也会认为不是你独立完成的。
+> It is not necessarily in your interest to interview someone who believes that there is no need for micro-services or distributed projects. Micro-services or distributed projects involve too many knowledge points and are difficult for ordinary people to access. Moreover, such projects are a little over-standard for school enrollment. Even if you did, many interviewers would think you didn't do it alone.
 >
-> 其实，你能把一个单体项目做到极致也很好，对于个人能力提升不比做微服务或者分布式项目差。如何做到极致？代码质量这里就不提了，更重要的是你要尽量让自己的项目有一些亮点（比如你是如何提升项目性能的、如何解决项目中存在的一个痛点的），项目经历取得的成果尽量要量化一下比如我使用 xxx 技术解决了 xxx 问题，系统 qps 从 xxx 提高到了 xxx。
+> In fact, it's great that you can do a single project, and it's not as bad as a micro-service or distributed project for personal empowerment. How do we do that? The quality of the code is not mentioned here, and it is more important that you try to make your project as bright as possible (e.g., how you improve the project's performance and how you solve one of the pain points in the project), and that the results of the project experience be quantified as much as possible. For example, when I used xx to solve the xx problem, the system QPS rose from xx to xx.
 
-跟着老师做的过程中，你一定要有自己的思考，不要浅尝辄止。对于很多知识点，别人的讲解可能只是满足项目就够了，你自己想多点知识的话，对于重要的知识点就要自己学会去深入学习。
+You have to have your own thinking, not just follow others. For many knowledge points, it may be enough for others to talk about projects, and if you want to have more knowledge, you have to learn more about important knowledge points.
 
-### 实战类开源项目
+# Field Open Source Projects
 
-GitHub 或者码云上面有很多实战类别项目，你可以选择一个来研究，为了让自己对这个项目更加理解，在理解原有代码的基础上，你可以对原有项目进行改进或者增加功能。
+GitHub or the cloud has a lot of field projects, and you can choose one to study, so that you can understand the project better, and you can improve or add functionality to the original project based on your understanding of the original code.
 
-你可以参考 [Java 优质开源实战项目](https://javaguide.cn/open-source-project/practical-project.html "Java 优质开源实战项目") 上面推荐的实战类开源项目，质量都很高，项目类型也比较全面，涵盖博客/论坛系统、考试/刷题系统、商城系统、权限管理系统、快速开发脚手架以及各种轮子。
+[Java High-quality Open-source Project](https://javaguide.cn/open-source-project/practical-project.html "Java High-quality Open-source Project") The recommended field-based open-source projects are of high quality and are more comprehensive in their type, covering blogs/forum systems, examination/problem systems, mall systems, competency management systems, fast-development scaffolds, and various wheels.
 
-![Java 优质开源实战项目](https://oss.javaguide.cn/javamianshizhibei/javaguide-practical-project.png)
+![Open Source Projects](https://oss.javaguide.cn/javamianshizhibei/javaguide-practical-project.png)
 
-一定要记住：**不光要做，还要改进，改善。不论是实战项目视频或者专栏还是实战类开源项目，都一定会有很多可以完善改进的地方。**
+It is important to remember: **Not just to do it, but to do it better. Whether it is live project videos or columns or field-based open source projects, there is certainly much that can be improved.**
 
-### 从头开始做
+# Start from the Beginning
 
-自己动手去做一个自己想完成的东西，遇到不会的东西就临时去学，现学现卖。
+You do what you want to do, and then you learn something you don't.
 
-这个要求比较高，我建议你已经有了一个项目经验之后，再采用这个方法。如果你没有做过项目的话，还是老老实实采用上面两个方法比较好。
+This is a high demand, and I suggest that you adopt this approach once you have already had project experience. If you haven't done a project, it would be better to be honest with the two above.
 
-### 参加各种大公司组织的各种大赛
+# To All Kinds of Competitions Organized by Big Companies
 
-如果参加这种赛事能获奖的话，项目含金量非常高。即使没获奖也没啥，也可以写简历上。
+If you can win such competitions, the project has a very high value. Even if you don't win the prize, you can still write it on your résumé.
 
-![阿里云天池大赛](https://oss.javaguide.cn/xingqiu/up-673f598477242691900a1e72c5d8b26df2c.png)
+[Ali Cloud Contest]
 
-### 参与实际项目
+# Participation in Actual Projects
 
-通常情况下，你有如下途径接触到企业实际项目的开发：
+As a rule, you have access to the development of actual business projects by:
 
-1. 老师接的项目；
-2. 自己接的私活；
-3. 实习/工作接触到的项目；
+1. Projects carried out by teachers;
+1. Private work of your own;
+1. Internships/work-related projects;
 
-老师接的项目和自己接的私活通常都是一些偏业务的项目，很少会涉及到性能优化。这种情况下，你可以考虑对项目进行改进，别怕花时间，某个时间用心做好一件事情就好比如你对项目的数据模型进行改进、引入缓存提高访问速度等等。
-
-实习/工作接触到的项目类似，如果遇到一些偏业务的项目，也是要自己私下对项目进行改进优化。
-
-尽量是真的对项目进行了优化，这本身也是对个人能力的提升。如果你实在是没时间去实践的话，也没关系，吃透这个项目优化手段就好，把一些面试可能会遇到的问题提前准备一下。
-
-## 有没有还不错的项目推荐？
-
-**[《Java 面试指北》](../zhuanlan/java-mian-shi-zhi-bei.md)** 的「面试准备篇」中有一篇文章专门整理了一些比较高质量的实战项目，非常适合用来学习或者作为项目经验。
-
-![](https://oss.javaguide.cn/javamianshizhibei/project-experience-guide.png)
-
-这篇文章一共推荐了 15+ 个实战项目，有业务类的，也有轮子类的，有开源项目、也有视频教程。对于参加校招的小伙伴，我更建议做一个业务类项目加上一个轮子类的项目。
-
-## 我跟着视频做的项目会被面试官嫌弃不？
-
-很多应届生都是跟着视频做的项目，这个大部分面试官都心知肚明。
-
-不排除确实有些面试官不吃这一套，这个也看人。不过我相信大多数面试官都是能理解的，毕竟你在学校的时候实际上是没有什么获得实际项目经验的途径的。
-
-大部分应届生的项目经验都是自己在网上找的或者像你一样买的付费课程跟着做的，极少部分是比较真实的项目。 从你能想着做一个实战项目来说，我觉得初衷是好的，确实也能真正学到东西。 但是，究竟有多少是自己掌握了很重要。看视频最忌讳的是被动接受，自己多改进一下，多思考一下！就算是你跟着视频做的项目，也是可以优化的！
-
-**如果你想真正学到东西的话，建议不光要把项目单纯完成跑起来，还要去自己尝试着优化！**
-
-简单说几个比较容易的优化点：
-
-1. **全局异常处理**：很多项目这方面都做的不是很好，可以参考我的这篇文章：[《使用枚举简单封装一个优雅的 Spring Boot 全局异常处理！》](https://mp.weixin.qq.com/s/Y4Q4yWRqKG_lw0GLUsY2qw) 来做优化。
-2. **项目的技术选型优化**：比如使用 Guava 做本地缓存的地方可以换成 **Caffeine** 。Caffeine 的各方面的表现要更加好！再比如 Controller 层是否放了太多的业务逻辑。
-3. **数据库方面**：数据库设计可否优化？索引是否使用使用正确？SQL 语句是否可以优化？是否需要进行读写分离？
-4. **缓存**：项目有没有哪些数据是经常被访问的？是否引入缓存来提高响应速度？
-5. **安全**：项目是否存在安全问题？
-6. ……
-
-另外，我在星球分享过常见的性能优化方向实践案例，涉及到多线程、异步、索引、缓存等方向，强烈推荐你看看：<https://t.zsxq.com/06EqfeMZZ> 。
-
-最后，**再给大家推荐一个 IDEA 优化代码的小技巧，超级实用！**
-
-分析你的代码：右键项目-> Analyze->Inspect Code
-
-![](https://oss.javaguide.cn/xingqiu/up-651672bce128025a135c1536cd5dc00532e.png)
-
-扫描完成之后，IDEA 会给出一些可能存在的代码坏味道比如命名问题。
-
-![](https://oss.javaguide.cn/xingqiu/up-05c83b319941995b07c8020fddc57f26037.png)
-
-并且，你还可以自定义检查规则。
-
-![](https://oss.javaguide.cn/xingqiu/up-6b618ad3bad0bc3f76e6066d90c8cd2f255.png)
+Teacher-to-teacher programs and personal activities are usually business-oriented and rarely involve performance optimization. In this case, you can consider making improvements to the project, not to be
