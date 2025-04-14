@@ -1,82 +1,82 @@
 ---
-title: 如何基于Redis实现延时任务
-category: 数据库
+title: How to Implement Delayed Tasks Based on Redis
+category: Database
 tag:
   - Redis
 ---
 
-基于 Redis 实现延时任务的功能无非就下面两种方案：
+The functionality of implementing delayed tasks based on Redis consists of the following two solutions:
 
-1. Redis 过期事件监听
-2. Redisson 内置的延时队列
+1. Redis Expiration Event Listening
+1. Built-in Delayed Queue in Redisson
 
-面试的时候，你可以先说自己考虑了这两种方案，但最后发现 Redis 过期事件监听这种方案存在很多问题，因此你最终选择了 Redisson 内置的 DelayedQueue 这种方案。
+During the interview, you can first mention that you considered these two solutions, but ultimately found that the Redis expiration event listening approach has many issues, which led you to choose the built-in DelayedQueue in Redisson.
 
-这个时候面试官可能会追问你一些相关的问题，我们后面会提到，提前准备就好了。
+At this point, the interviewer may ask you some related questions, which we will cover later, so it's good to prepare in advance.
 
-另外，除了下面介绍到的这些问题之外，Redis 相关的常见问题建议你都复习一遍，不排除面试官会顺带问你一些 Redis 的其他问题。
+Additionally, besides the issues mentioned below, it is recommended that you review all common issues related to Redis, as the interviewer may also ask some other questions about Redis.
 
-### Redis 过期事件监听实现延时任务功能的原理？
+### What is the Principle of Implementing Delayed Task Functionality through Redis Expiration Event Listening?
 
-Redis 2.0 引入了发布订阅 (pub/sub) 功能。在 pub/sub 中，引入了一个叫做 **channel（频道）** 的概念，有点类似于消息队列中的 **topic（主题）**。
+Redis 2.0 introduced the publish/subscribe (pub/sub) feature. In pub/sub, a concept called **channel** is introduced, which is somewhat similar to **topic** in message queues.
 
-pub/sub 涉及发布者（publisher）和订阅者（subscriber，也叫消费者）两个角色：
+pub/sub involves two roles: publisher and subscriber (also known as consumers):
 
-- 发布者通过 `PUBLISH` 投递消息给指定 channel。
-- 订阅者通过`SUBSCRIBE`订阅它关心的 channel。并且，订阅者可以订阅一个或者多个 channel。
+- The publisher delivers messages to a specified channel using `PUBLISH`.
+- Subscribers subscribe to the channels of their interest using `SUBSCRIBE`, and they can subscribe to one or more channels.
 
-![Redis 发布订阅 (pub/sub) 功能](https://oss.javaguide.cn/github/javaguide/database/redis/redis-pub-sub.png)
+![Redis Publish/Subscribe (pub/sub) Functionality](https://oss.javaguide.cn/github/javaguide/database/redis/redis-pub-sub.png)
 
-在 pub/sub 模式下，生产者需要指定消息发送到哪个 channel 中，而消费者则订阅对应的 channel 以获取消息。
+In the pub/sub model, the producer needs to specify which channel the message is sent to, while consumers subscribe to the corresponding channel to receive messages.
 
-Redis 中有很多默认的 channel，这些 channel 是由 Redis 本身向它们发送消息的，而不是我们自己编写的代码。其中，`__keyevent@0__:expired` 就是一个默认的 channel，负责监听 key 的过期事件。也就是说，当一个 key 过期之后，Redis 会发布一个 key 过期的事件到`__keyevent@<db>__:expired`这个 channel 中。
+Redis has many default channels, which are messages sent by Redis itself rather than our own code. One of them, `__keyevent@0__:expired`, is a default channel responsible for listening to the expiration events of keys. This means that when a key expires, Redis will publish an expiration event to the channel `__keyevent@<db>__:expired`.
 
-我们只需要监听这个 channel，就可以拿到过期的 key 的消息，进而实现了延时任务功能。
+We only need to listen to this channel to receive messages about expired keys, thus achieving the delayed task functionality.
 
-这个功能被 Redis 官方称为 **keyspace notifications** ，作用是实时监控 Redis 键和值的变化。
+This feature is officially referred to as **keyspace notifications** by Redis, which serves to monitor changes in Redis keys and values in real-time.
 
-### Redis 过期事件监听实现延时任务功能有什么缺陷？
+### What Are the Defects of Implementing Delayed Task Functionality through Redis Expiration Event Listening?
 
-**1、时效性差**
+**1. Poor Timeliness**
 
-官方文档的一段介绍解释了时效性差的原因，地址：<https://redis.io/docs/manual/keyspace-notifications/#timing-of-expired-events> 。
+A paragraph in the official documentation explains the reason for poor timeliness, reference: <https://redis.io/docs/manual/keyspace-notifications/#timing-of-expired-events>.
 
-![Redis 过期事件](https://oss.javaguide.cn/github/javaguide/database/redis/redis-timing-of-expired-events.png)
+![Redis Expiration Events](https://oss.javaguide.cn/github/javaguide/database/redis/redis-timing-of-expired-events.png)
 
-这段话的核心是：过期事件消息是在 Redis 服务器删除 key 时发布的，而不是一个 key 过期之后就会就会直接发布。
+The core of this statement is that expiration event messages are published when the Redis server deletes the key, not immediately when a key expires.
 
-我们知道常用的过期数据的删除策略就两个：
+We know there are two common strategies for deleting expired data:
 
-1. **惰性删除**：只会在取出 key 的时候才对数据进行过期检查。这样对 CPU 最友好，但是可能会造成太多过期 key 没有被删除。
-2. **定期删除**：每隔一段时间抽取一批 key 执行删除过期 key 操作。并且，Redis 底层会通过限制删除操作执行的时长和频率来减少删除操作对 CPU 时间的影响。
+1. **Lazy Deletion**: It only checks for expiration when the key is accessed. This is friendly to the CPU but may result in many expired keys not being deleted.
+1. **Periodic Deletion**: A batch of keys is randomly selected to execute the deletion of expired keys at intervals. Moreover, Redis limits the duration and frequency of deletion operations to reduce the impact on CPU time.
 
-定期删除对内存更加友好，惰性删除对 CPU 更加友好。两者各有千秋，所以 Redis 采用的是 **定期删除+惰性/懒汉式删除** 。
+Periodic deletion is more memory-friendly, while lazy deletion is more CPU-friendly. Each has its advantages, which is why Redis adopts **periodic deletion combined with lazy/eager deletion**.
 
-因此，就会存在我设置了 key 的过期时间，但到了指定时间 key 还未被删除，进而没有发布过期事件的情况。
+Therefore, there might be scenarios where I set an expiration time for a key, but the key has not been deleted by the specified time and thus did not publish an expiration event.
 
-**2、丢消息**
+**2. Message Loss**
 
-Redis 的 pub/sub 模式中的消息并不支持持久化，这与消息队列不同。在 Redis 的 pub/sub 模式中，发布者将消息发送给指定的频道，订阅者监听相应的频道以接收消息。当没有订阅者时，消息会被直接丢弃，在 Redis 中不会存储该消息。
+Messages in Redis's pub/sub mode do not support persistence, which is different from message queues. In Redis's pub/sub mode, the publisher sends messages to a specified channel, and subscribers listen to the corresponding channel to receive messages. When there are no subscribers, messages are directly discarded and will not be stored in Redis.
 
-**3、多服务实例下消息重复消费**
+**3. Message Duplicate Consumption in Multiple Service Instances**
 
-Redis 的 pub/sub 模式目前只有广播模式，这意味着当生产者向特定频道发布一条消息时，所有订阅相关频道的消费者都能够收到该消息。
+Redis's pub/sub mode currently only supports broadcasting, which means that when a producer publishes a message to a specific channel, all consumers listening to that channel can receive it.
 
-这个时候，我们需要注意多个服务实例重复处理消息的问题，这会增加代码开发量和维护难度。
+In this case, we need to be aware of the issue of multiple service instances processing messages repeatedly, which increases both code development and maintenance difficulty.
 
-### Redisson 延迟队列原理是什么？有什么优势？
+### What Is the Principle of Redisson Delayed Queue? What Are Its Advantages?
 
-Redisson 是一个开源的 Java 语言 Redis 客户端，提供了很多开箱即用的功能，比如多种分布式锁的实现、延时队列。
+Redisson is an open-source Redis client for the Java language, providing many out-of-the-box features, such as various implementations of distributed locks and delayed queues.
 
-我们可以借助 Redisson 内置的延时队列 RDelayedQueue 来实现延时任务功能。
+We can use Redisson's built-in delayed queue RDelayedQueue to implement the delayed task functionality.
 
-Redisson 的延迟队列 RDelayedQueue 是基于 Redis 的 SortedSet 来实现的。SortedSet 是一个有序集合，其中的每个元素都可以设置一个分数，代表该元素的权重。Redisson 利用这一特性，将需要延迟执行的任务插入到 SortedSet 中，并给它们设置相应的过期时间作为分数。
+Redisson's delayed queue RDelayedQueue is implemented based on Redis's SortedSet. SortedSet is an ordered collection where each element can have a score set that represents the weight of that element. Redisson uses this feature to insert tasks that need to be executed with a delay into the SortedSet and sets their corresponding expiration time as the score.
 
-Redisson 定期使用 `zrangebyscore` 命令扫描 SortedSet 中过期的元素，然后将这些过期元素从 SortedSet 中移除，并将它们加入到就绪消息列表中。就绪消息列表是一个阻塞队列，有消息进入就会被消费者监听到。这样做可以避免消费者对整个 SortedSet 进行轮询，提高了执行效率。
+Redisson periodically uses the `zrangebyscore` command to scan for expired elements in the SortedSet, then removes these expired elements from the SortedSet and adds them to the ready message list. The ready message list is a blocking queue that consumers can listen to when new messages enter. This avoids consumers polling the entire SortedSet, thereby improving execution efficiency.
 
-相比于 Redis 过期事件监听实现延时任务功能，这种方式具备下面这些优势：
+Compared to the Redis expiration event listening method for implementing delayed tasks, this approach has the following advantages:
 
-1. **减少了丢消息的可能**：DelayedQueue 中的消息会被持久化，即使 Redis 宕机了，根据持久化机制，也只可能丢失一点消息，影响不大。当然了，你也可以使用扫描数据库的方法作为补偿机制。
-2. **消息不存在重复消费问题**：每个客户端都是从同一个目标队列中获取任务的，不存在重复消费的问题。
+1. **Reduced Possibility of Message Loss**: Messages in the DelayedQueue are persisted, so even if Redis crashes, based on the persistence mechanism, only a small number of messages may be lost, which has a minimal impact. Of course, you can also use database scanning as a compensation mechanism.
+1. **No Duplicate Consumption Issue**: Every client retrieves tasks from the same target queue, eliminating the issue of duplicate consumption.
 
-跟 Redisson 内置的延时队列相比，消息队列可以通过保障消息消费的可靠性、控制消息生产者和消费者的数量等手段来实现更高的吞吐量和更强的可靠性，实际项目中首选使用消息队列的延时消息这种方案。
+Compared to Redisson's built-in delayed queue, message queues can achieve higher throughput and stronger reliability by ensuring message consumption reliability and controlling the number of message producers and consumers, making delayed messages in message queues the preferred solution in practical projects.

@@ -1,16 +1,16 @@
 ---
-title: 常见SQL优化手段总结（付费）
-category: 高性能
+title: Summary of Common SQL Optimization Techniques (Paid)
+category: High Performance
 head:
-  - - meta
-    - name: keywords
-      content: 分页优化,索引,Show Profile,慢 SQL
-  - - meta
-    - name: description
-      content: SQL 优化是一个大家都比较关注的热门话题，无论你在面试，还是工作中，都很有可能会遇到。如果某天你负责的某个线上接口，出现了性能问题，需要做优化。那么你首先想到的很有可能是优化 SQL 优化，因为它的改造成本相对于代码来说也要小得多。
+  -   - meta
+      - name: keywords
+        content: Pagination Optimization, Indexing, Show Profile, Slow SQL
+  -   - meta
+      - name: description
+        content: SQL optimization is a hot topic that everyone pays attention to. Whether in interviews or in work, you are likely to encounter it. If one day the online interface you are responsible for experiences performance issues and needs optimization, the first thing you might think of is optimizing SQL, as the cost of modification is much lower compared to code.
 ---
 
-**常见 SQL 优化手段总结** 相关的内容为我的[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了[《Java 面试指北》](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html)中。
+**Summary of Common SQL Optimization Techniques** is exclusive content related to my [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) (click the link to view detailed introduction and joining methods), and has been organized in [“Java Interview Guide”](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html).
 
 ![](https://oss.javaguide.cn/javamianshizhibei/sql-optimization.png)
 

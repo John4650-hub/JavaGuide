@@ -1,83 +1,83 @@
 ---
-title: Paxos 算法详解
-category: 分布式
+title: Detailed Explanation of the Paxos Algorithm
+category: Distributed
 tag:
-  - 分布式协议&算法
-  - 共识算法
+  - Distributed Protocols & Algorithms
+  - Consensus Algorithms
 ---
 
-## 背景
+## Background
 
-Paxos 算法是 Leslie Lamport（[莱斯利·兰伯特](https://zh.wikipedia.org/wiki/莱斯利·兰伯特)）在 **1990** 年提出了一种分布式系统 **共识** 算法。这也是第一个被证明完备的共识算法（前提是不存在拜占庭将军问题，也就是没有恶意节点）。
+The Paxos algorithm is a consensus algorithm for distributed systems proposed by Leslie Lamport in **1990**. It is also the first consensus algorithm to be proven to be complete (under the assumption that the Byzantine Generals problem does not exist, meaning there are no malicious nodes).
 
-为了介绍 Paxos 算法，兰伯特专门写了一篇幽默风趣的论文。在这篇论文中，他虚拟了一个叫做 Paxos 的希腊城邦来更形象化地介绍 Paxos 算法。
+To introduce the Paxos algorithm, Lamport wrote a humorous and witty paper. In this paper, he created a fictional Greek city-state called Paxos to more vividly illustrate the Paxos algorithm.
 
-不过，审稿人并不认可这篇论文的幽默。于是，他们就给兰伯特说：“如果你想要成功发表这篇论文的话，必须删除所有 Paxos 相关的故事背景”。兰伯特一听就不开心了：“我凭什么修改啊，你们这些审稿人就是缺乏幽默细胞，发不了就不发了呗！”。
+However, the reviewers did not appreciate the humor in the paper. They told Lamport, "If you want to successfully publish this paper, you must remove all the background stories related to Paxos." Lamport was not pleased and replied, "Why should I make changes? You reviewers are simply lacking a sense of humor. If you can't publish it, then do not publish it!"
 
-于是乎，提出 Paxos 算法的那篇论文在当时并没有被成功发表。
+As a result, the paper proposing the Paxos algorithm was not successfully published at that time.
 
-直到 1998 年，系统研究中心 (Systems Research Center，SRC）的两个技术研究员需要找一些合适的分布式算法来服务他们正在构建的分布式系统，Paxos 算法刚好可以解决他们的部分需求。因此，兰伯特就把论文发给了他们。在看了论文之后，这俩大佬觉得论文还是挺不错的。于是，兰伯特在 **1998** 年重新发表论文 [《The Part-Time Parliament》](http://lamport.azurewebsites.net/pubs/lamport-paxos.pdf)。
+It wasn't until **1998** that two technical researchers from the Systems Research Center (SRC) needed to find suitable distributed algorithms for the distributed system they were building, and the Paxos algorithm happened to fulfill some of their requirements. Lamport then sent the paper to them. After reviewing the paper, these two researchers found it to be quite impressive. Thus, Lamport republished his paper titled [“The Part-Time Parliament”](http://lamport.azurewebsites.net/pubs/lamport-paxos.pdf) in **1998**.
 
-论文发表之后，各路学者直呼看不懂，言语中还略显调侃之意。这谁忍得了，在 **2001** 年的时候，兰伯特专门又写了一篇 [《Paxos Made Simple》](http://lamport.azurewebsites.net/pubs/paxos-simple.pdf) 的论文来简化对 Paxos 的介绍，主要讲述两阶段共识协议部分，顺便还不忘嘲讽一下这群学者。
+After the paper was published, scholars around the world exclaimed that it was hard to understand, with a hint of mocking tone in their words. Who could stand that? In **2001**, Lamport specifically wrote another paper [“Paxos Made Simple”](http://lamport.azurewebsites.net/pubs/paxos-simple.pdf) to simplify the introduction of Paxos, mainly discussing the two-phase consensus protocol, while also taking a dig at those scholars.
 
-《Paxos Made Simple》这篇论文就 14 页，相比于 《The Part-Time Parliament》的 33 页精简了不少。最关键的是这篇论文的摘要就一句话：
+The paper "Paxos Made Simple" is only 14 pages long, considerably shorter than the 33 pages of "The Part-Time Parliament." The key point is that the abstract of this paper is just one sentence:
 
 ![](./images/paxos/paxos-made-simple.png)
 
 > The Paxos algorithm, when presented in plain English, is very simple.
 
-翻译过来的意思大概就是：当我用无修饰的英文来描述时，Paxos 算法真心简单！
+This roughly translates to: "When I describe it in straightforward English, the Paxos algorithm is genuinely simple!"
 
-有没有感觉到来自兰伯特大佬满满地嘲讽的味道？
+Do you sense the strong flavor of sarcasm from Lamport?
 
-## 介绍
+## Introduction
 
-Paxos 算法是第一个被证明完备的分布式系统共识算法。共识算法的作用是让分布式系统中的多个节点之间对某个提案（Proposal）达成一致的看法。提案的含义在分布式系统中十分宽泛，像哪一个节点是 Leader 节点、多个事件发生的顺序等等都可以是一个提案。
+The Paxos algorithm is the first proven comprehensive consensus algorithm for distributed systems. The role of a consensus algorithm is to reach a unanimous opinion among multiple nodes in a distributed system about a certain proposal (Proposal). The meaning of a proposal in a distributed system is quite broad, encompassing which node is the Leader, the order of multiple events, etc.
 
-兰伯特当时提出的 Paxos 算法主要包含 2 个部分:
+The Paxos algorithm proposed by Lamport actually comprises 2 parts:
 
-- **Basic Paxos 算法**：描述的是多节点之间如何就某个值(提案 Value)达成共识。
-- **Multi-Paxos 思想**：描述的是执行多个 Basic Paxos 实例，就一系列值达成共识。Multi-Paxos 说白了就是执行多次 Basic Paxos ，核心还是 Basic Paxos 。
+- **Basic Paxos Algorithm**: This describes how multiple nodes can reach a consensus on a certain value (proposed Value).
+- **Multi-Paxos Concept**: This describes executing multiple Basic Paxos instances to achieve consensus on a series of values. Multi-Paxos, simply put, entails executing Basic Paxos multiple times, with the core still being Basic Paxos.
 
-由于 Paxos 算法在国际上被公认的非常难以理解和实现，因此不断有人尝试简化这一算法。到了 2013 年才诞生了一个比 Paxos 算法更易理解和实现的共识算法—[Raft 算法](https://javaguide.cn/distributed-system/theorem&algorithm&protocol/raft-algorithm.html) 。更具体点来说，Raft 是 Multi-Paxos 的一个变种，其简化了 Multi-Paxos 的思想，变得更容易被理解以及工程实现。
+Due to the international consensus that the Paxos algorithm is particularly difficult to understand and implement, continuous attempts have been made to simplify this algorithm. It wasn't until 2013 that a consensus algorithm more understandable and implementable than Paxos—the [Raft algorithm](https://javaguide.cn/distributed-system/theorem&algorithm&protocol/raft-algorithm.html)—was born. More specifically, Raft is a variant of Multi-Paxos that simplifies the ideas behind Multi-Paxos, making it easier to understand and engineer.
 
-针对没有恶意节点的情况，除了 Raft 算法之外，当前最常用的一些共识算法比如 **ZAB 协议**、 **Fast Paxos** 算法都是基于 Paxos 算法改进的。
+For scenarios without malicious nodes, some commonly used consensus algorithms, like the **ZAB protocol**, **Fast Paxos**, are all improvements based on the Paxos algorithm.
 
-针对存在恶意节点的情况，一般使用的是 **工作量证明（POW，Proof-of-Work）**、 **权益证明（PoS，Proof-of-Stake ）** 等共识算法。这类共识算法最典型的应用就是区块链，就比如说前段时间以太坊官方宣布其共识机制正在从工作量证明(PoW)转变为权益证明(PoS)。
+In cases with malicious nodes, consensus algorithms like **Proof-of-Work (PoW)** and **Proof-of-Stake (PoS)** are generally used. A typical application of such consensus algorithms is in blockchain technology. For example, recently, Ethereum's official announcement indicated that its consensus mechanism is transitioning from Proof-of-Work (PoW) to Proof-of-Stake (PoS).
 
-区块链系统使用的共识算法需要解决的核心问题是 **拜占庭将军问题** ，这和我们日常接触到的 ZooKeeper、Etcd、Consul 等分布式中间件不太一样。
+The core problem that consensus algorithms used in blockchain systems need to solve is the **Byzantine Generals problem**, which is quite different from the distributed middleware we encounter in daily life, such as ZooKeeper, Etcd, and Consul.
 
-下面我们来对 Paxos 算法的定义做一个总结：
+Now, let's summarize the definition of the Paxos algorithm:
 
-- Paxos 算法是兰伯特在 **1990** 年提出了一种分布式系统共识算法。
-- 兰伯特当时提出的 Paxos 算法主要包含 2 个部分: Basic Paxos 算法和 Multi-Paxos 思想。
-- Raft 算法、ZAB 协议、 Fast Paxos 算法都是基于 Paxos 算法改进而来。
+- The Paxos algorithm is a consensus algorithm for distributed systems proposed by Lamport in **1990**.
+- The Paxos algorithm proposed by Lamport primarily consists of 2 parts: the Basic Paxos algorithm and the Multi-Paxos concept.
+- The Raft algorithm, ZAB protocol, and Fast Paxos algorithm are all derived from improvements over the Paxos algorithm.
 
-## Basic Paxos 算法
+## Basic Paxos Algorithm
 
-Basic Paxos 中存在 3 个重要的角色：
+The Basic Paxos algorithm involves 3 important roles:
 
-1. **提议者（Proposer）**：也可以叫做协调者（coordinator），提议者负责接受客户端的请求并发起提案。提案信息通常包括提案编号 (Proposal ID) 和提议的值 (Value)。
-2. **接受者（Acceptor）**：也可以叫做投票员（voter），负责对提议者的提案进行投票，同时需要记住自己的投票历史；
-3. **学习者（Learner）**：如果有超过半数接受者就某个提议达成了共识，那么学习者就需要接受这个提议，并就该提议作出运算，然后将运算结果返回给客户端。
+1. **Proposer**: Also known as the Coordinator, the proposer is responsible for accepting client requests and initiating proposals. Proposal information typically includes a proposal number (Proposal ID) and the proposed value (Value).
+1. **Acceptor**: Also referred to as a voter, the acceptor is responsible for voting on proposals from the proposer and must remember its voting history.
+1. **Learner**: If more than half of the acceptors reach a consensus on a certain proposal, the learner must accept that proposal, perform computations based on it, and then return the computation results to the client.
 
 ![](https://oss.javaguide.cn/github/javaguide/distributed-system/protocol/up-890fa3212e8bf72886a595a34654918486c.png)
 
-为了减少实现该算法所需的节点数，一个节点可以身兼多个角色。并且，一个提案被选定需要被半数以上的 Acceptor 接受。这样的话，Basic Paxos 算法还具备容错性，在少于一半的节点出现故障时，集群仍能正常工作。
+To reduce the number of nodes required to implement this algorithm, a single node can take on multiple roles. Additionally, a proposal must be accepted by more than half of the acceptors to be chosen. This way, the Basic Paxos algorithm also possesses fault tolerance, allowing the cluster to operate normally even when less than half of the nodes fail.
 
-## Multi Paxos 思想
+## Multi-Paxos Concept
 
-Basic Paxos 算法的仅能就单个值达成共识，为了能够对一系列的值达成共识，我们需要用到 Multi Paxos 思想。
+The Basic Paxos algorithm can only reach consensus on a single value. To achieve consensus on a series of values, we need to employ the Multi-Paxos concept.
 
-⚠️**注意**：Multi-Paxos 只是一种思想，这种思想的核心就是通过多个 Basic Paxos 实例就一系列值达成共识。也就是说，Basic Paxos 是 Multi-Paxos 思想的核心，Multi-Paxos 就是多执行几次 Basic Paxos。
+⚠️**Note**: Multi-Paxos is merely a concept; the core of this concept is to reach consensus on a series of values through multiple Basic Paxos instances. In other words, Basic Paxos is at the heart of the Multi-Paxos concept, while Multi-Paxos simply entails executing Basic Paxos several times.
 
-由于兰伯特提到的 Multi-Paxos 思想缺少代码实现的必要细节(比如怎么选举领导者)，所以在理解和实现上比较困难。
+Since the Multi-Paxos concept mentioned by Lamport lacks the essential details for code implementation (such as how to elect a leader), it can be somewhat challenging to understand and implement.
 
-不过，也不需要担心，我们并不需要自己实现基于 Multi-Paxos 思想的共识算法，业界已经有了比较出名的实现。像 Raft 算法就是 Multi-Paxos 的一个变种，其简化了 Multi-Paxos 的思想，变得更容易被理解以及工程实现，实际项目中可以优先考虑 Raft 算法。
+However, there's no need to worry; we do not need to implement a consensus algorithm based on the Multi-Paxos concept ourselves. The industry has already produced some notable implementations. For instance, the Raft algorithm is a variant of Multi-Paxos that simplifies its ideas, making it easier to understand and implement. In actual projects, Raft should be prioritized.
 
-## 参考
+## References
 
 - <https://zh.wikipedia.org/wiki/Paxos>
-- 分布式系统中的一致性与共识算法：<http://www.xuyasong.com/?p=1970>
+- Consistency and Consensus Algorithms in Distributed Systems: <http://www.xuyasong.com/?p=1970>
 
 <!-- @include: @article-footer.snippet.md -->

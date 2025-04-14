@@ -1,140 +1,140 @@
 ---
-title: 深度分页介绍及优化建议
-category: 高性能
+title: Introduction to Deep Pagination and Optimization Suggestions
+category: High Performance
 head:
-  - - meta
-    - name: keywords
-      content: 深度分页
-  - - meta
-    - name: description
-      content: 查询偏移量过大的场景我们称为深度分页，这会导致查询性能较低。深度分页可以采用范围查询、子查询、INNER JOIN 延迟关联、覆盖索引等方法进行优化。
+  -   - meta
+      - name: keywords
+        content: Deep Pagination
+  -   - meta
+      - name: description
+        content: The scenario where the query offset is excessively large is referred to as deep pagination, which leads to lower query performance. Deep pagination can be optimized using techniques such as range queries, subqueries, INNER JOIN lazy association, and covering indexes.
 ---
 
-## 深度分页介绍
+## Introduction to Deep Pagination
 
-查询偏移量过大的场景我们称为深度分页，这会导致查询性能较低，例如：
+The scenario where the query offset is excessively large is referred to as deep pagination, which leads to lower query performance. For example:
 
 ```sql
-# MySQL 在无法利用索引的情况下跳过1000000条记录后，再获取10条记录
+# MySQL skips 1,000,000 records without utilizing the index, then retrieves 10 records.
 SELECT * FROM t_order ORDER BY id LIMIT 1000000, 10
 ```
 
-## 深度分页问题的原因
+## Reasons for Deep Pagination Issues
 
-当查询偏移量过大时，MySQL 的查询优化器可能会选择全表扫描而不是利用索引来优化查询。这是因为扫描索引和跳过大量记录可能比直接全表扫描更耗费资源。
+When the query offset is too large, the MySQL query optimizer may choose a full table scan instead of using the index to optimize the query. This is because scanning the index and skipping a large number of records may be more resource-intensive than performing a direct full table scan.
 
-![深度分页问题](https://oss.javaguide.cn/github/javaguide/mysql/deep-pagination-phenomenon.png)
+![Deep Pagination Issues](https://oss.javaguide.cn/github/javaguide/mysql/deep-pagination-phenomenon.png)
 
-不同机器上这个查询偏移量过大的临界点可能不同，取决于多个因素，包括硬件配置（如 CPU 性能、磁盘速度）、表的大小、索引的类型和统计信息等。
+The critical point for this excessively large query offset may vary between different machines, depending on multiple factors, including hardware configuration (such as CPU performance, disk speed), table size, index types, and statistical information.
 
-![转全表扫描的临界点](https://oss.javaguide.cn/github/javaguide/mysql/deep-pagination-phenomenon-critical-point.png)
+![Critical Point for Full Table Scan](https://oss.javaguide.cn/github/javaguide/mysql/deep-pagination-phenomenon-critical-point.png)
 
-MySQL 的查询优化器采用基于成本的策略来选择最优的查询执行计划。它会根据 CPU 和 I/O 的成本来决定是否使用索引扫描或全表扫描。如果优化器认为全表扫描的成本更低，它就会放弃使用索引。不过，即使偏移量很大，如果查询中使用了覆盖索引（covering index），MySQL 仍然可能会使用索引，避免回表操作。
+MySQL’s query optimizer employs a cost-based strategy to select the optimal query execution plan. It determines whether to use index scanning or full table scanning based on the costs of CPU and I/O. If the optimizer decides that the cost of a full table scan is lower, it will forgo using the index. However, even with a large offset, if a covering index is used in the query, MySQL might still utilize the index, avoiding the need to access the data rows again.
 
-## 深度分页优化建议
+## Optimization Suggestions for Deep Pagination
 
-这里以 MySQL 数据库为例介绍一下如何优化深度分页。
+Taking the MySQL database as an example, here are some ways to optimize deep pagination.
 
-### 范围查询
+### Range Query
 
-当可以保证 ID 的连续性时，根据 ID 范围进行分页是比较好的解决方案：
+When continuity of IDs can be ensured, using ID ranges for pagination is a good solution:
 
 ```sql
-# 查询指定 ID 范围的数据
+# Query data within a specified ID range
 SELECT * FROM t_order WHERE id > 100000 AND id <= 100010 ORDER BY id
-# 也可以通过记录上次查询结果的最后一条记录的ID进行下一页的查询：
+# You can also query the next page using the ID of the last record from the previous query:
 SELECT * FROM t_order WHERE id > 100000 LIMIT 10
 ```
 
-这种基于 ID 范围的深度分页优化方式存在很大限制：
+This ID range-based deep pagination optimization method has significant limitations:
 
-1. **ID 连续性要求高**: 实际项目中，数据库自增 ID 往往因为各种原因（例如删除数据、事务回滚等）导致 ID 不连续，难以保证连续性。
-2. **排序问题**: 如果查询需要按照其他字段（例如创建时间、更新时间等）排序，而不是按照 ID 排序，那么这种方法就不再适用。
-3. **并发场景**: 在高并发场景下，单纯依赖记录上次查询的最后一条记录的 ID 进行分页，容易出现数据重复或遗漏的问题。
+1. **High Requirement for ID Continuity**: In actual projects, database auto-increment IDs often become non-continuous for various reasons (such as data deletion, transaction rollbacks), making it difficult to ensure continuity.
+1. **Sorting Issues**: If the query needs to be sorted by other fields (such as creation time, update time, etc.) instead of sorting by ID, then this method is no longer applicable.
+1. **Concurrent Scenarios**: In high concurrency scenarios, relying solely on the ID of the last record from the previous query for pagination can easily lead to data duplication or omission issues.
 
-### 子查询
+### Subquery
 
-我们先查询出 limit 第一个参数对应的主键值，再根据这个主键值再去过滤并 limit，这样效率会更快一些。
+We can first retrieve the primary key values corresponding to the first parameter of limit, and then filter and limit based on this primary key value, which will be more efficient.
 
-阿里巴巴《Java 开发手册》中也有对应的描述：
+The Alibaba "Java Development Handbook" also describes this:
 
-> 利用延迟关联或者子查询优化超多分页场景。
+> Use lazy association or subqueries to optimize excessive pagination scenarios.
 >
 > ![](https://oss.javaguide.cn/github/javaguide/mysql/alibaba-java-development-handbook-paging.png)
 
 ```sql
-# 通过子查询来获取 id 的起始值，把 limit 1000000 的条件转移到子查询
+# Use a subquery to get the starting value of id, transferring the LIMIT 1000000 condition to the subquery
 SELECT * FROM t_order WHERE id >= (SELECT id FROM t_order where id > 1000000 limit 1) LIMIT 10;
 ```
 
-**工作原理**:
+**How It Works**:
 
-1. 子查询 `(SELECT id FROM t_order where id > 1000000 limit 1)` 会利用主键索引快速定位到第 1000001 条记录，并返回其 ID 值。
-2. 主查询 `SELECT * FROM t_order WHERE id >= ... LIMIT 10` 将子查询返回的起始 ID 作为过滤条件，使用 `id >=` 获取从该 ID 开始的后续 10 条记录。
+1. The subquery `(SELECT id FROM t_order where id > 1000000 limit 1)` quickly locates the 1,000,001st record using the primary key index and returns its ID value.
+1. The main query `SELECT * FROM t_order WHERE id >= ... LIMIT 10` uses the starting ID returned from the subquery as a filter condition, using `id >=` to retrieve the subsequent 10 records starting from that ID.
 
-不过，子查询的结果会产生一张新表，会影响性能，应该尽量避免大量使用子查询。并且，这种方法只适用于 ID 是正序的。在复杂分页场景，往往需要通过过滤条件，筛选到符合条件的 ID，此时的 ID 是离散且不连续的。
+However, the result of the subquery generates a temporary table, which can impact performance. Therefore, large-scale use of subqueries should be avoided. Moreover, this method is only suitable when IDs are in ascending order. In complex pagination scenarios, filtering conditions may be needed to identify matching IDs, resulting in discrete and non-continuous IDs.
 
-当然，我们也可以利用子查询先去获取目标分页的 ID 集合，然后再根据 ID 集合获取内容，但这种写法非常繁琐，不如使用 INNER JOIN 延迟关联。
+Of course, we can also use subqueries to retrieve the target page's set of IDs and then fetch content based on this ID set, but this approach is very cumbersome compared to using INNER JOIN for lazy association.
 
-### 延迟关联
+### Lazy Association
 
-延迟关联与子查询的优化思路类似，都是通过将 `LIMIT` 操作转移到主键索引树上，减少回表次数。相比直接使用子查询，延迟关联通过 `INNER JOIN` 将子查询结果集成到主查询中，避免了子查询可能产生的临时表。在执行 `INNER JOIN` 时，MySQL 优化器能够利用索引进行高效的连接操作（如索引扫描或其他优化策略），因此在深度分页场景下，性能通常优于直接使用子查询。
+Lazy association is similar to the optimization idea of subqueries, where `LIMIT` operations are moved to the primary key index tree to reduce the number of back-table operations. Compared to directly using subqueries, lazy association integrates the subquery results into the main query through `INNER JOIN`, avoiding the potential creation of temporary tables by subqueries. When executing `INNER JOIN`, the MySQL optimizer can utilize indexes for efficient join operations (like index scanning or other optimization strategies), thus usually achieving better performance in deep pagination scenarios than directly using subqueries.
 
 ```sql
--- 使用 INNER JOIN 进行延迟关联
+-- Use INNER JOIN for lazy association
 SELECT t1.*
 FROM t_order t1
 INNER JOIN (SELECT id FROM t_order where id > 1000000 LIMIT 10) t2 ON t1.id = t2.id;
 ```
 
-**工作原理**:
+**How It Works**:
 
-1. 子查询 `(SELECT id FROM t_order where id > 1000000 LIMIT 10)` 利用主键索引快速定位目标分页的 10 条记录的 ID。
-2. 通过 `INNER JOIN` 将子查询结果与主表 `t_order` 关联，获取完整的记录数据。
+1. The subquery `(SELECT id FROM t_order where id > 1000000 LIMIT 10)` quickly locates the IDs of the 10 target records using the primary key index.
+1. Using `INNER JOIN`, the subquery results are associated with the main table `t_order`, retrieving complete record data.
 
-除了使用 INNER JOIN 之外，还可以使用逗号连接子查询。
+In addition to using INNER JOIN, you can also connect subqueries with commas.
 
 ```sql
--- 使用逗号进行延迟关联
+-- Use a comma for lazy association
 SELECT t1.* FROM t_order t1,
 (SELECT id FROM t_order where id > 1000000 LIMIT 10) t2
 WHERE t1.id = t2.id;
 ```
 
-**注意**: 虽然逗号连接子查询也能实现类似的效果，但为了代码可读性和可维护性，建议使用更规范的 `INNER JOIN` 语法。
+[!NOTE]
+Although connecting subqueries with commas can achieve similar effects, it is recommended to use the more standardized `INNER JOIN` syntax for code readability and maintainability.
+### Covering Index
 
-### 覆盖索引
+A query method where all required fields are included in the index is known as a covering index.
 
-索引中已经包含了所有需要获取的字段的查询方式称为覆盖索引。
+**Benefits of Covering Index**:
 
-**覆盖索引的好处：**
-
-- **避免 InnoDB 表进行索引的二次查询，也就是回表操作:** InnoDB 是以聚集索引的顺序来存储的，对于 InnoDB 来说，二级索引在叶子节点中所保存的是行的主键信息，如果是用二级索引查询数据的话，在查找到相应的键值后，还要通过主键进行二次查询才能获取我们真实所需要的数据。而在覆盖索引中，二级索引的键值中可以获取所有的数据，避免了对主键的二次查询（回表），减少了 IO 操作，提升了查询效率。
-- **可以把随机 IO 变成顺序 IO 加快查询效率:** 由于覆盖索引是按键值的顺序存储的，对于 IO 密集型的范围查找来说，对比随机从磁盘读取每一行的数据 IO 要少的多，因此利用覆盖索引在访问时也可以把磁盘的随机读取的 IO 转变成索引查找的顺序 IO。
+- **Avoids InnoDB tables from performing second index queries, which is a back-table operation**: InnoDB stores data in the order of the clustered index. For InnoDB, the secondary index stores the primary key information in its leaf nodes. If data is queried using the secondary index, after finding the corresponding key value, a secondary query via the primary key is still required to retrieve the actual data we need. However, in covering indexes, all data can be accessed from the secondary index's key values, avoiding the need for a secondary query (back-table access), thereby reducing I/O operations and improving query efficiency.
+- **Transforms random I/O into sequential I/O, speeding up query efficiency**: Since covering indexes are stored in key value order, for I/O intensive range queries, it significantly reduces the I/O involved in randomly reading each row of data from disk, thus making disk random reads into index lookups in sequential order.
 
 ```sql
-# 如果只需要查询 id, code, type 这三列，可建立 code 和 type 的覆盖索引
+# If only the id, code, and type columns are needed, a covering index can be established for code and type
 SELECT id, code, type FROM t_order
 ORDER BY code
 LIMIT 1000000, 10;
 ```
 
-**⚠️注意**:
+**⚠️Note**:
 
-- 当查询的结果集占表的总行数的很大一部分时，MySQL 查询优化器可能选择放弃使用索引，自动转换为全表扫描。
-- 虽然可以使用 `FORCE INDEX` 强制查询优化器走索引，但这种方式可能会导致查询优化器无法选择更优的执行计划，效果并不总是理想。
+- When the result set of a query accounts for a large proportion of the total rows in the table, MySQL’s query optimizer may opt to forgo using the index, automatically switching to a full table scan.
+- While you can use `FORCE INDEX` to compel the query optimizer to use the index, this might lead to the optimizer being unable to select a better execution plan, and the outcome may not always be ideal.
 
-## 总结
+## Conclusion
 
-本文总结了几种常见的深度分页优化方案:
+This article summarizes several common optimization schemes for deep pagination:
 
-1. **范围查询**: 基于 ID 连续性进行分页，通过记录上一页最后一条记录的 ID 来获取下一页数据。适合 ID 连续且按 ID 查询的场景，但在 ID 不连续或需要按其他字段排序时存在局限。
-2. **子查询**: 先通过子查询获取分页的起始主键值，再根据主键进行筛选分页。利用主键索引提高效率，但子查询会生成临时表，复杂场景下性能不佳。
-3. **延迟关联 (INNER JOIN)**: 使用 `INNER JOIN` 将分页操作转移到主键索引上，减少回表次数。相比子查询，延迟关联的性能更优，适合大数据量的分页查询。
-4. **覆盖索引**: 通过索引直接获取所需字段，避免回表操作，减少 IO 开销，适合查询特定字段的场景。但当结果集较大时，MySQL 可能会选择全表扫描。
+1. **Range Query**: Pagination based on ID continuity, using the ID of the last record from the previous page to fetch data for the next page. Suitable for scenarios where IDs are continuous and queries are sorted by ID, but limited in cases where IDs are non-continuous or sorted by other fields.
+1. **Subquery**: First, the starting primary key value for pagination is retrieved through a subquery, then filtered based on the primary key for pagination. It utilizes primary key indexing to improve efficiency, but subqueries create temporary tables, which may lead to poor performance in complex scenarios.
+1. **Lazy Association (INNER JOIN)**: Utilizing `INNER JOIN` to shift pagination operations to the primary key index, reducing the incidence of back-table operations. Lazy association typically performs better than subqueries, making it suitable for pagination queries involving large data volumes.
+1. **Covering Index**: Directly retrieving required fields through an index, avoiding back-table operations and minimizing I/O overhead, suitable for queries that target specific fields. However, when the result set is large, MySQL may choose a full table scan.
 
-## 参考
+## References
 
-- 聊聊如何解决 MySQL 深分页问题 - 捡田螺的小男孩：<https://juejin.cn/post/7012016858379321358>
-- 数据库深分页介绍及优化方案 - 京东零售技术：<https://mp.weixin.qq.com/s/ZEwGKvRCyvAgGlmeseAS7g>
-- MySQL 深分页优化 - 得物技术：<https://juejin.cn/post/6985478936683610149>
+- Discussing how to solve MySQL deep pagination issues - A Boy Who Picks Snails: <https://juejin.cn/post/7012016858379321358>
+- Introduction to deep pagination in databases and optimization schemes - JD Retail Technology: <https://mp.weixin.qq.com/s/ZEwGKvRCyvAgGlmeseAS7g>
+- MySQL deep pagination optimization - Dewu Technology: <https://juejin.cn/post/6985478936683610149>

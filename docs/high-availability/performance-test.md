@@ -1,178 +1,178 @@
 ---
-title: 性能测试入门
-category: 高可用
+title: Introduction to Performance Testing
+category: High Availability
 icon: et-performance
 ---
 
-性能测试一般情况下都是由测试这个职位去做的，那还需要我们开发学这个干嘛呢？了解性能测试的指标、分类以及工具等知识有助于我们更好地去写出性能更好的程序，另外作为开发这个角色，如果你会性能测试的话，相信也会为你的履历加分不少。
+Performance testing is generally conducted by testers, so why should developers learn about it? Understanding performance testing metrics, classifications, and tools helps us write better-performing programs. Furthermore, if you as a developer possess performance testing skills, it will undoubtedly enhance your resume.
 
-这篇文章是我会结合自己的实际经历以及在测试这里取的经所得，除此之外，我还借鉴了一些优秀书籍，希望对你有帮助。
+This article combines my personal experiences and insights from testing, along with references to some excellent books, hoping to be of help to you.
 
-## 不同角色看网站性能
+## Perspectives on Website Performance from Different Roles
 
-### 用户
+### Users
 
-当用户打开一个网站的时候，最关注的是什么？当然是网站响应速度的快慢。比如我们点击了淘宝的主页，淘宝需要多久将首页的内容呈现在我的面前，我点击了提交订单按钮需要多久返回结果等等。
+When a user opens a website, what do they pay the most attention to? Certainly, it is the website's response speed. For instance, when we click on the homepage of Taobao, how long does it take for Taobao to display the content? How long does it take to return a result after clicking the "submit order" button, etc.
 
-所以，用户在体验我们系统的时候往往根据你的响应速度的快慢来评判你的网站的性能。
+Therefore, when users experience our system, they often judge the performance of your website based on its response speed.
 
-### 开发人员
+### Developers
 
-用户与开发人员都关注速度，这个速度实际上就是我们的系统**处理用户请求的速度**。
+Both users and developers focus on speed, which truly refers to our system's **processing speed of user requests**.
 
-开发人员一般情况下很难直观的去评判自己网站的性能，我们往往会根据网站当前的架构以及基础设施情况给一个大概的值,比如：
+Developers generally find it challenging to intuitively assess the performance of their website. We often provide an approximate value based on the current architecture and infrastructure of the website, for instance:
 
-1. 项目架构是分布式的吗？
-2. 用到了缓存和消息队列没有？
-3. 高并发的业务有没有特殊处理？
-4. 数据库设计是否合理？
-5. 系统用到的算法是否还需要优化？
-6. 系统是否存在内存泄露的问题？
-7. 项目使用的 Redis 缓存多大？服务器性能如何？用的是机械硬盘还是固态硬盘？
-8. ……
+1. Is the project architecture distributed?
+1. Are caching and messaging queues utilized?
+1. Are there any special handling for high-concurrency business?
+1. Is the database design reasonable?
+1. Do the algorithms used in the system need optimization?
+1. Does the system have memory leak issues?
+1. How large is the Redis cache used in the project? What is the server performance like? Is it using a mechanical hard disk or a solid-state drive?
+1. ……
 
-### 测试人员
+### Testers
 
-测试人员一般会根据性能测试工具来测试，然后一般会做出一个表格。这个表格可能会涵盖下面这些重要的内容：
+Testers typically conduct tests according to performance testing tools and usually create a table. This table might cover important contents like:
 
-1. 响应时间；
-2. 请求成功率；
-3. 吞吐量；
-4. ……
+1. Response time;
+1. Request success rate;
+1. Throughput;
+1. ……
 
-### 运维人员
+### Operations Personnel
 
-运维人员会倾向于根据基础设施和资源的利用率来判断网站的性能，比如我们的服务器资源使用是否合理、数据库资源是否存在滥用的情况、当然，这是传统的运维人员，现在 Devops 火起来后，单纯干运维的很少了。我们这里暂且还保留有这个角色。
+Operations personnel tend to evaluate the website's performance based on infrastructure and resource utilization rates. For instance, they might analyze whether resource usage on our servers is reasonable or whether there is abuse of database resources. Of course, this is the traditional role of operations personnel. With the rise of DevOps, pure operations roles are less common now, although we still acknowledge this role for the time being.
 
-## 性能测试需要注意的点
+## Key Points to Note in Performance Testing
 
-几乎没有文章在讲性能测试的时候提到这个问题，大家都会讲如何去性能测试，有哪些性能测试指标这些东西。
+Few articles address this issue when discussing performance testing. Most articles focus on how to conduct performance tests and what performance testing metrics exist.
 
-### 了解系统的业务场景
+### Understanding the Business Context of the System
 
-**性能测试之前更需要你了解当前的系统的业务场景。** 对系统业务了解的不够深刻，我们很容易犯测试方向偏执的错误，从而导致我们忽略了对系统某些更需要性能测试的地方进行测试。比如我们的系统可以为用户提供发送邮件的功能，用户配置成功邮箱后只需输入相应的邮箱之后就能发送，系统每天大概能处理上万次发邮件的请求。很多人看到这个可能就直接开始使用相关工具测试邮箱发送接口，但是，发送邮件这个场景可能不是当前系统的性能瓶颈，这么多人用我们的系统发邮件， 还可能有很多人一起发邮件，单单这个场景就这么人用，那用户管理可能才是性能瓶颈吧！
+**Before performance testing, it is crucial to comprehend the business context of the current system.** If our understanding of the system's business is not deep enough, we easily make biased testing direction mistakes, leading us to overlook certain areas of the system that need performance testing. For example, if our system provides users with the ability to send emails, after setting up a successful email address, users can simply input the corresponding email to send, and the system can handle thousands of email-sending requests daily. Many would immediately begin using relevant tools to test the email-sending interface, but sending emails may not currently be the performance bottleneck of the system. With so many users sending emails, there might be many others sending emails simultaneously, so user management could be the actual performance bottleneck!
 
-### 历史数据非常有用
+### Historical Data is Very Useful
 
-当前系统所留下的历史数据非常重要，一般情况下，我们可以通过相应的些历史数据初步判定这个系统哪些接口调用的比较多、哪些服务承受的压力最大，这样的话，我们就可以针对这些地方进行更细致的性能测试与分析。
+The historical data left by the current system is very important. Generally, we can use relevant historical data to initially determine which interfaces are being called frequently and which services are under the most pressure. This allows us to conduct more detailed performance testing and analysis targeted at these areas.
 
-另外，这些地方也就像这个系统的一个短板一样，优化好了这些地方会为我们的系统带来质的提升。
+Moreover, these areas are like weak points in the system; optimizing them can result in a significant qualitative improvement for our system.
 
-## 常见性能指标
+## Common Performance Metrics
 
-### 响应时间
+### Response Time
 
-**响应时间 RT(Response-time)就是用户发出请求到用户收到系统处理结果所需要的时间。**
+**Response Time RT (Response-time) is the time taken from when a user issues a request to when the user receives the system's processed result.**
 
-RT 是一个非常重要且直观的指标，RT 数值大小直接反应了系统处理用户请求速度的快慢。
+RT is a very important and intuitive metric. The size of the RT value directly reflects how quickly the system processes user requests.
 
-### 并发数
+### Concurrent Users
 
-**并发数可以简单理解为系统能够同时供多少人访问使用也就是说系统同时能处理的请求数量。**
+**Concurrent users can be simply understood as the number of people the system can support to access and use simultaneously, meaning the number of requests the system can handle at the same time.**
 
-并发数反应了系统的负载能力。
+The number of concurrent users reflects the system's load capacity.
 
-### QPS 和 TPS
+### QPS and TPS
 
-- **QPS（Query Per Second）** ：服务器每秒可以执行的查询次数；
-- **TPS（Transaction Per Second）** ：服务器每秒处理的事务数（这里的一个事务可以理解为客户发出请求到收到服务器的过程）；
+- **QPS (Queries Per Second)**: The number of queries the server can execute per second;
+- **TPS (Transactions Per Second)**: The number of transactions processed by the server per second (a transaction can be understood as the process from when a customer issues a request to when they receive a response from the server).
 
-书中是这样描述 QPS 和 TPS 的区别的。
+The book describes the difference between QPS and TPS as follows:
 
-> QPS vs TPS：QPS 基本类似于 TPS，但是不同的是，对于一个页面的一次访问，形成一个 TPS；但一次页面请求，可能产生多次对服务器的请求，服务器对这些请求，就可计入“QPS”之中。如，访问一个页面会请求服务器 2 次，一次访问，产生一个“T”，产生 2 个“Q”。
+> QPS vs TPS: QPS is quite similar to TPS, but the difference lies in that one access to a page counts as one TPS; however, a single page request may generate multiple requests to the server, which can be counted as "QPS." For example, if accessing a page generates 2 requests to the server, one access would result in one "T" and two "Q".
 
-### 吞吐量
+### Throughput
 
-**吞吐量指的是系统单位时间内系统处理的请求数量。**
+**Throughput refers to the number of requests processed by the system within a unit of time.**
 
-一个系统的吞吐量与请求对系统的资源消耗等紧密关联。请求对系统资源消耗越多，系统吞吐能力越低，反之则越高。
+The throughput of a system is closely related to the resource consumption of requests. The more resources a request consumes from the system, the lower the system's throughput capability, and vice versa.
 
-TPS、QPS 都是吞吐量的常用量化指标。
+TPS and QPS are commonly used quantitative metrics for throughput.
 
-- **QPS（TPS）** = 并发数/平均响应时间(RT)
-- **并发数** = QPS \* 平均响应时间(RT)
+- **QPS (TPS)** = Concurrent Users / Average Response Time (RT)
+- **Concurrent Users** = QPS * Average Response Time (RT)
 
-## 系统活跃度指标
+## System Activity Indicators
 
-### PV(Page View)
+### PV (Page View)
 
-访问量, 即页面浏览量或点击量，衡量网站用户访问的网页数量；在一定统计周期内用户每打开或刷新一个页面就记录 1 次，多次打开或刷新同一页面则浏览量累计。UV 从网页打开的数量/刷新的次数的角度来统计的。
+Page Views refer to website traffic or click counts, measuring the number of pages visited by users; each time a user opens or refreshes a page within a specific statistical period, it records one instance; multiple openings or refreshes of the same page accumulate the view count. UV is counted from the perspective of the number of pages opened/refreshed.
 
-### UV(Unique Visitor)
+### UV (Unique Visitor)
 
-独立访客，统计 1 天内访问某站点的用户数。1 天内相同访客多次访问网站，只计算为 1 个独立访客。UV 是从用户个体的角度来统计的。
+Unique Visitors refer to the count of users visiting a site within one day. If the same visitor accesses the site multiple times in one day, they are only counted as one unique visitor. UV is counted from the perspective of individual users.
 
-### DAU(Daily Active User)
+### DAU (Daily Active Users)
 
-日活跃用户数量。
+The number of daily active users.
 
-### MAU(monthly active users)
+### MAU (Monthly Active Users)
 
-月活跃用户人数。
+The number of monthly active users.
 
-举例：某网站 DAU 为 1200w， 用户日均使用时长 1 小时，RT 为 0.5s，求并发量和 QPS。
+For example, if a website has a DAU of 12 million, with an average usage time of 1 hour per day, and an RT of 0.5s, we can calculate the concurrent user load and QPS.
 
-平均并发量 = DAU（1200w）\* 日均使用时长（1 小时，3600 秒） /一天的秒数（86400）=1200w/24 = 50w
+Average concurrent users = DAU (12 million) * Average usage time (1 hour, 3600 seconds) / Seconds in a day (86400) = 12 million / 24 = 500,000
 
-真实并发量（考虑到某些时间段使用人数比较少） = DAU（1200w）\* 日均使用时长（1 小时，3600 秒） /一天的秒数-访问量比较小的时间段假设为 8 小时（57600）=1200w/16 = 75w
+Real concurrent users (considering lower usage during certain periods) = DAU (12 million) * Average usage time (1 hour, 3600 seconds) / Seconds in a day - assume 8 hours (57600) for low access time = 12 million / 16 = 750,000
 
-峰值并发量 = 平均并发量 \* 6 = 300w
+Peak concurrent users = Average concurrent users * 6 = 3 million
 
-QPS = 真实并发量/RT = 75W/0.5=150w/s
+QPS = Real concurrent users / RT = 750,000 / 0.5 = 1.5 million/s
 
-## 性能测试分类
+## Classification of Performance Testing
 
-### 性能测试
+### Performance Testing
 
-性能测试方法是通过测试工具模拟用户请求系统，目的主要是为了测试系统的性能是否满足要求。通俗地说，这种方法就是要在特定的运行条件下验证系统的能力状态。
+Performance testing methods simulate user requests to the system using testing tools, primarily to verify whether the system's performance meets the requirements. Simply put, this method aims to validate the system's capacity under specific operating conditions.
 
-性能测试是你在对系统性能已经有了解的前提之后进行的，并且有明确的性能指标。
+Performance testing is carried out after you have some understanding of system performance, with clear performance metrics.
 
-### 负载测试
+### Load Testing
 
-对被测试的系统继续加大请求压力，直到服务器的某个资源已经达到饱和了，比如系统的缓存已经不够用了或者系统的响应时间已经不满足要求了。
+Continuously increasing request pressure on the tested system until some resource on the server reaches saturation, such as when system caching is insufficient or the response time is no longer acceptable.
 
-负载测试说白点就是测试系统的上限。
+In simpler terms, load testing tests the limits of the system.
 
-### 压力测试
+### Stress Testing
 
-不去管系统资源的使用情况，对系统继续加大请求压力，直到服务器崩溃无法再继续提供服务。
+Pressuring the system with requests regardless of resource utilization until the server crashes and can no longer provide services.
 
-### 稳定性测试
+### Stability Testing
 
-模拟真实场景，给系统一定压力，看看业务是否能稳定运行。
+Simulating real scenarios by applying a certain amount of pressure on the system to see if the business can operate stably.
 
-## 常用性能测试工具
+## Commonly Used Performance Testing Tools
 
-### 后端常用
+### Common Backend Tools
 
-既然系统设计涉及到系统性能方面的问题，那在面试的时候，面试官就很可能会问：**你是如何进行性能测试的？**
+Since system design involves performance-related issues, interviewers are likely to ask, **How do you conduct performance testing?**
 
-推荐 4 个比较常用的性能测试工具：
+Here are four commonly used performance testing tools:
 
-1. **Jmeter** ：Apache JMeter 是 JAVA 开发的性能测试工具。
-2. **LoadRunner**：一款商业的性能测试工具。
-3. **Galtling** ：一款基于 Scala 开发的高性能服务器性能测试工具。
-4. **ab** ：全称为 Apache Bench 。Apache 旗下的一款测试工具，非常实用。
+1. **JMeter**: Apache JMeter is a performance testing tool developed in Java.
+1. **LoadRunner**: A commercial performance testing tool.
+1. **Gatling**: A high-performance server performance testing tool developed in Scala.
+1. **ab**: Full name is Apache Bench. It is a testing tool under the Apache umbrella and is very practical.
 
-没记错的话，除了 **LoadRunner** 其他几款性能测试工具都是开源免费的。
+If I remember correctly, all the performance testing tools mentioned, except for **LoadRunner**, are open-source and free.
 
-### 前端常用
+### Common Frontend Tools
 
-1. **Fiddler**：抓包工具，它可以修改请求的数据，甚至可以修改服务器返回的数据，功能非常强大，是 Web 调试的利器。
-2. **HttpWatch**: 可用于录制 HTTP 请求信息的工具。
+1. **Fiddler**: A packet capturing tool that can modify request data, and even server response data, with powerful features; it's an essential tool for web debugging.
+1. **HttpWatch**: A tool for recording HTTP request information.
 
-## 常见的性能优化策略
+## Common Performance Optimization Strategies
 
-性能优化之前我们需要对请求经历的各个环节进行分析，排查出可能出现性能瓶颈的地方，定位问题。
+Before performance optimization, we need to analyze each stage of the requests to identify potential performance bottlenecks and locate issues.
 
-下面是一些性能优化时，我经常拿来自问的一些问题：
+Here are some questions I often ask myself during performance optimization:
 
-1. 系统是否需要缓存？
-2. 系统架构本身是不是就有问题？
-3. 系统是否存在死锁的地方？
-4. 系统是否存在内存泄漏？（Java 的自动回收内存虽然很方便，但是，有时候代码写的不好真的会造成内存泄漏）
-5. 数据库索引使用是否合理？
-6. ……
+1. Does the system require caching?
+1. Does the system architecture itself have problems?
+1. Are there deadlock situations in the system?
+1. Does the system have memory leaks? (While Java’s automatic memory recovery is very convenient, poorly written code can sometimes lead to memory leaks.)
+1. Is the database indexing reasonable?
+1. ……
 
 <!-- @include: @article-footer.snippet.md -->

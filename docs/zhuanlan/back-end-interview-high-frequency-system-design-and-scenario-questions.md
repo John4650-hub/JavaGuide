@@ -1,22 +1,22 @@
 ---
-title: 《后端面试高频系统设计&场景题》
-category: 知识星球
+title: High-Frequency System Design & Scenario Questions in Backend Interviews
+category: Knowledge Planet
 ---
 
-## 介绍
+## Introduction
 
-**《后端面试高频系统设计&场景题》** 是我的[知识星球](../about-the-author/zhishixingqiu-two-years.md)的一个内部小册，包含了常见的系统设计案例比如短链系统、秒杀系统以及高频的场景题比如海量数据去重、第三方授权登录。
+**"High-Frequency System Design & Scenario Questions in Backend Interviews"** is an internal booklet for my [Knowledge Planet](../about-the-author/zhishixingqiu-two-years.md) that contains common system design cases such as short link systems, flash sale systems, and high-frequency scenario questions like large-scale data deduplication and third-party authorization login.
 
-近年来，随着国内的技术面试越来越卷，越来越多的公司开始在面试中考察系统设计和场景问题，以此来更全面的考察求职者，不论是校招还是社招。不过，正常面试全是场景题的情况还是极少的，面试官一般会在面试中穿插一两个系统设计和场景题来考察你。
+In recent years, as technical interviews in the domestic job market have become increasingly competitive, more and more companies are beginning to assess system design and scenario questions during interviews to evaluate candidates more comprehensively, whether for campus recruitment or social recruitment. However, it is still rare for interviews to consist solely of scenario questions; interviewers typically sprinkle in one or two system design and scenario questions to assess you.
 
-于是，我总结了这份《后端面试高频系统设计&场景题》，包含了常见的系统设计案例比如短链系统、秒杀系统以及高频的场景题比如海量数据去重、第三方授权登录。
+Therefore, I have compiled this "High-Frequency System Design & Scenario Questions in Backend Interviews," which includes common system design cases such as short link systems and flash sale systems, as well as high-frequency scenario questions like large-scale data deduplication and third-party authorization login.
 
-即使不是准备面试，我也强烈推荐你认真阅读这一系列文章，这对于提升自己系统设计思维和解决实际问题的能力还是非常有帮助的。并且，涉及到的很多案例都可以用到自己的项目上比如抽奖系统设计、第三方授权登录、Redis 实现延时任务的正确方式。
+Even if you are not preparing for an interview, I strongly recommend you read this series of articles carefully, as it is very helpful for improving your system design thinking and problem-solving skills. Moreover, many of the cases covered can be applied to your own projects, such as lottery system design, third-party authorization login, and the correct way to implement delayed tasks with Redis.
 
-《后端面试高频系统设计&场景题》本身是属于《Java 面试指北》的一部分，后面由于内容篇幅较多，因此被单独提了出来。
+"High-Frequency System Design & Scenario Questions in Backend Interviews" is part of "The Java Interview Guide," and was subsequently extracted due to the large volume of content.
 
-## 内容概览
+## Content Overview
 
-![《后端面试高频系统设计&场景题》](https://oss.javaguide.cn/xingqiu/back-end-interview-high-frequency-system-design-and-scenario-questions-fengmian.png)
+![High-Frequency System Design & Scenario Questions in Backend Interviews](https://oss.javaguide.cn/xingqiu/back-end-interview-high-frequency-system-design-and-scenario-questions-fengmian.png)
 
 <!-- @include: @planet2.snippet.md -->

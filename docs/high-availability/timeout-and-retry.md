@@ -1,86 +1,58 @@
 ---
-title: 超时&重试详解
-category: 高可用
+title: Timeout & Retry Explained
+category: High Availability
 icon: retry
 ---
 
-由于网络问题、系统或者服务内部的 Bug、服务器宕机、操作系统崩溃等问题的不确定性，我们的系统或者服务永远不可能保证时刻都是可用的状态。
+Due to uncertainties such as network issues, internal bugs in systems or services, server crashes, and operating system failures, our systems or services can never guarantee constant availability.
 
-为了最大限度的减小系统或者服务出现故障之后带来的影响，我们需要用到的 **超时（Timeout）** 和 **重试（Retry）** 机制。
+To minimize the impact of failures in systems or services, we need to utilize **Timeout** and **Retry** mechanisms.
 
-想要把超时和重试机制讲清楚其实很简单，因为它俩本身就不是什么高深的概念。
+Explaining the timeout and retry mechanisms is actually quite simple, as they are not complex concepts.
 
-虽然超时和重试机制的思想很简单，但是它俩是真的非常实用。你平时接触到的绝大部分涉及到远程调用的系统或者服务都会应用超时和重试机制。尤其是对于微服务系统来说，正确设置超时和重试非常重要。单体服务通常只涉及数据库、缓存、第三方 API、中间件等的网络调用，而微服务系统内部各个服务之间还存在着网络调用。
+Although the ideas behind timeout and retry mechanisms are straightforward, they are indeed very practical. Most systems or services you encounter that involve remote calls will apply timeout and retry mechanisms. This is especially important for microservices systems, where correctly setting timeouts and retries is crucial. Monolithic services typically only involve network calls to databases, caches, third-party APIs, and middleware, while microservices systems also involve network calls between various services.
 
-## 超时机制
+## Timeout Mechanism
 
-### 什么是超时机制？
+### What is the Timeout Mechanism?
 
-超时机制说的是当一个请求超过指定的时间（比如 1s）还没有被处理的话，这个请求就会直接被取消并抛出指定的异常或者错误（比如 `504 Gateway Timeout`）。
+The timeout mechanism refers to the cancellation of a request if it exceeds a specified time (e.g., 1 second) without being processed, resulting in a specified exception or error being thrown (e.g., `504 Gateway Timeout`).
 
-我们平时接触到的超时可以简单分为下面 2 种：
+Timeouts can generally be categorized into the following two types:
 
-- **连接超时（ConnectTimeout）**：客户端与服务端建立连接的最长等待时间。
-- **读取超时（ReadTimeout）**：客户端和服务端已经建立连接，客户端等待服务端处理完请求的最长时间。实际项目中，我们关注比较多的还是读取超时。
+- **Connect Timeout**: The maximum wait time for the client to establish a connection with the server.
+- **Read Timeout**: The maximum time the client waits for the server to complete processing the request after a connection has been established. In practical projects, we often focus more on read timeouts.
 
-一些连接池客户端框架中可能还会有获取连接超时和空闲连接清理超时。
+Some connection pool client frameworks may also have connection acquisition timeouts and idle connection cleanup timeouts.
 
-如果没有设置超时的话，就可能会导致服务端连接数爆炸和大量请求堆积的问题。
+If timeouts are not set, it can lead to an explosion of server connections and a backlog of requests.
 
-这些堆积的连接和请求会消耗系统资源，影响新收到的请求的处理。严重的情况下，甚至会拖垮整个系统或者服务。
+These accumulated connections and requests consume system resources, affecting the processing of new incoming requests. In severe cases, it can even bring down the entire system or service.
 
-我之前在实际项目就遇到过类似的问题，整个网站无法正常处理请求，服务器负载直接快被拉满。后面发现原因是项目超时设置错误加上客户端请求处理异常，导致服务端连接数直接接近 40w+，这么多堆积的连接直接把系统干趴了。
+I encountered a similar issue in a previous project where the entire website could not process requests normally, and the server load was nearly maxed out. The cause was found to be incorrect timeout settings combined with exceptions in client request handling, leading to server connections approaching 400,000+. Such a backlog of connections directly caused the system to crash.
 
-### 超时时间应该如何设置？
+### How Should Timeout Values Be Set?
 
-超时到底设置多长时间是一个难题！超时值设置太高或者太低都有风险。如果设置太高的话，会降低超时机制的有效性，比如你设置超时为 10s 的话，那设置超时就没啥意义了，系统依然可能会出现大量慢请求堆积的问题。如果设置太低的话，就可能会导致在系统或者服务在某些处理请求速度变慢的情况下（比如请求突然增多），大量请求重试（超时通常会结合重试）继续加重系统或者服务的压力，进而导致整个系统或者服务被拖垮的问题。
+Determining the appropriate timeout duration is a challenge! Setting the timeout value too high or too low both carry risks. If set too high, it reduces the effectiveness of the timeout mechanism; for example, if you set the timeout to 10 seconds, then the timeout becomes meaningless, and the system may still experience a backlog of slow requests. If set too low, it may lead to a situation where, under certain conditions (e.g., a sudden increase in requests), a large number of requests are retried (timeouts are usually combined with retries), further increasing the pressure on the system or service, potentially leading to a complete system failure.
 
-通常情况下，我们建议读取超时设置为 **1500ms** ,这是一个比较普适的值。如果你的系统或者服务对于延迟比较敏感的话，那读取超时值可以适当在 **1500ms** 的基础上进行缩短。反之，读取超时值也可以在 **1500ms** 的基础上进行加长，不过，尽量还是不要超过 **1500ms** 。连接超时可以适当设置长一些，建议在 **1000ms ~ 5000ms** 之内。
+In general, we recommend setting the read timeout to **1500ms**, which is a relatively universal value. If your system or service is sensitive to latency, the read timeout can be shortened from the **1500ms** baseline. Conversely, it can also be extended, but it is best not to exceed **1500ms**. The connect timeout can be set a bit longer, ideally within **1000ms to 5000ms**.
 
-没有银弹！超时值具体该设置多大，还是要根据实际项目的需求和情况慢慢调整优化得到。
+There is no silver bullet! The specific timeout value should be adjusted and optimized based on the actual project requirements and conditions.
 
-更上一层，参考[美团的 Java 线程池参数动态配置](https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html)思想，我们也可以将超时弄成可配置化的参数而不是固定的，比较简单的一种办法就是将超时的值放在配置中心中。这样的话，我们就可以根据系统或者服务的状态动态调整超时值了。
+Furthermore, referring to [Meituan's dynamic configuration of Java thread pool parameters](https://tech.meituan.com/2020/04/02/java-pooling-pratice-in-meituan.html), we can also make timeouts configurable parameters rather than fixed values. A simple approach is to place the timeout values in a configuration center. This way, we can dynamically adjust the timeout values based on the state of the system or service.
 
-## 重试机制
+## Retry Mechanism
 
-### 什么是重试机制？
+### What is the Retry Mechanism?
 
-重试机制一般配合超时机制一起使用，指的是多次发送相同的请求来避免瞬态故障和偶然性故障。
+The retry mechanism is generally used in conjunction with the timeout mechanism, referring to the repeated sending of the same request to avoid transient and occasional failures.
 
-瞬态故障可以简单理解为某一瞬间系统偶然出现的故障，并不会持久。偶然性故障可以理解为哪些在某些情况下偶尔出现的故障，频率通常较低。
+Transient failures can be simply understood as faults that occur momentarily in the system and are not persistent. Occasional failures can be understood as faults that occur infrequently under certain conditions.
 
-重试的核心思想是通过消耗服务器的资源来尽可能获得请求更大概率被成功处理。由于瞬态故障和偶然性故障是很少发生的，因此，重试对于服务器的资源消耗几乎是可以被忽略的。
+The core idea of retrying is to consume server resources to maximize the probability of successfully processing a request. Since transient and occasional failures are rare, the resource consumption from retries is almost negligible.
 
-### 常见的重试策略有哪些？
+### What Are Common Retry Strategies?
 
-常见的重试策略有两种：
+There are two common retry strategies:
 
-1. **固定间隔时间重试**：每次重试之间都使用相同的时间间隔，比如每隔 1.5 秒进行一次重试。这种重试策略的优点是实现起来比较简单，不需要考虑重试次数和时间的关系，也不需要维护额外的状态信息。但是这种重试策略的缺点是可能会导致重试过于频繁或过于稀疏，从而影响系统的性能和效率。如果重试间隔太短，可能会对目标系统造成过大的压力，导致雪崩效应；如果重试间隔太长，可能会导致用户等待时间过长，影响用户体验。
-2. **梯度间隔重试**：根据重试次数的增加去延长下次重试时间，比如第一次重试间隔为 1 秒，第二次为 2 秒，第三次为 4 秒，以此类推。这种重试策略的优点是能够有效提高重试成功的几率（随着重试次数增加，但是重试依然不成功，说明目标系统恢复时间比较长，因此可以根据重试次数延长下次重试时间），也能通过柔性化的重试避免对下游系统造成更大压力。但是这种重试策略的缺点是实现起来比较复杂，需要考虑重试次数和时间的关系，以及设置合理的上限和下限值。另外，这种重试策略也可能会导致用户等待时间过长，影响用户体验。
-
-这两种适合的场景各不相同。固定间隔时间重试适用于目标系统恢复时间比较稳定和可预测的场景，比如网络波动或服务重启。梯度间隔重试适用于目标系统恢复时间比较长或不可预测的场景，比如网络故障和服务故障。
-
-### 重试的次数如何设置？
-
-重试的次数不宜过多，否则依然会对系统负载造成比较大的压力。
-
-重试的次数通常建议设为 3 次。大部分情况下，我们还是更建议使用梯度间隔重试策略，比如说我们要重试 3 次的话，第 1 次请求失败后，等待 1 秒再进行重试，第 2 次请求失败后，等待 2 秒再进行重试，第 3 次请求失败后，等待 3 秒再进行重试。
-
-### 什么是重试幂等？
-
-超时和重试机制在实际项目中使用的话，需要注意保证同一个请求没有被多次执行。
-
-什么情况下会出现一个请求被多次执行呢？客户端等待服务端完成请求完成超时但此时服务端已经执行了请求，只是由于短暂的网络波动导致响应在发送给客户端的过程中延迟了。
-
-举个例子：用户支付购买某个课程，结果用户支付的请求由于重试的问题导致用户购买同一门课程支付了两次。对于这种情况，我们在执行用户购买课程的请求的时候需要判断一下用户是否已经购买过。这样的话，就不会因为重试的问题导致重复购买了。
-
-### Java 中如何实现重试？
-
-如果要手动编写代码实现重试逻辑的话，可以通过循环（例如 while 或 for 循环）或者递归实现。不过，一般不建议自己动手实现，有很多第三方开源库提供了更完善的重试机制实现，例如 Spring Retry、Resilience4j、Guava Retrying。
-
-## 参考
-
-- 微服务之间调用超时的设置治理：<https://www.infoq.cn/article/eyrslar53l6hjm5yjgyx>
-- 超时、重试和抖动回退：<https://aws.amazon.com/cn/builders-library/timeouts-retries-and-backoff-with-jitter/>
-
-<!-- @include: @article-footer.snippet.md -->
+1. **Fixed Interval Retry**: Each retry uses the same time interval, such as retrying every 1.5 seconds. The advantage of this strategy is its simplicity; there is no need to consider the relationship between retry count and time, nor maintain additional state information. However, the downside is that it may lead to retries being too frequent or too sparse, affecting system performance and efficiency. If the retry interval is too short, it may put excessive pressure on the target system, leading to

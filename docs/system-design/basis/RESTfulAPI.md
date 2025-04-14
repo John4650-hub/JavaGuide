@@ -1,105 +1,105 @@
 ---
-title: RestFul API 简明教程
-category: 代码质量
+title: A Brief Tutorial on RESTful API
+category: Code Quality
 ---
 
 ![](https://oss.javaguide.cn/system-design/basis/2021050713553862.png)
 
-这篇文章简单聊聊后端程序员必备的 RESTful API 相关的知识。
+This article briefly discusses the essential knowledge related to RESTful APIs that backend developers must possess.
 
-开始正式介绍 RESTful API 之前，我们需要首先搞清：**API 到底是什么？**
+Before formally introducing RESTful APIs, we first need to clarify: **What exactly is an API?**
 
-## 何为 API？
+## What is an API?
 
 ![](https://oss.javaguide.cn/system-design/basis/20210507153833945.png)
 
-**API（Application Programming Interface）** 翻译过来是应用程序编程接口的意思。
+**API (Application Programming Interface)** refers to a set of rules and protocols for building and interacting with software applications.
 
-我们在进行后端开发的时候，主要的工作就是为前端或者其他后端服务提供 API 比如查询用户数据的 API 。
+During backend development, our primary job is to provide APIs for the frontend or other backend services, such as an API for querying user data.
 
 ![](https://oss.javaguide.cn/system-design/basis/20210507130629538.png)
 
-但是， API 不仅仅代表后端系统暴露的接口，像框架中提供的方法也属于 API 的范畴。
+However, APIs do not only represent the interfaces exposed by backend systems; methods provided in frameworks also fall under the category of APIs.
 
-为了方便大家理解，我再列举几个例子 🌰：
+To help everyone understand, let me provide a few more examples 🌰:
 
-1. 你通过某电商网站搜索某某商品，电商网站的前端就调用了后端提供了搜索商品相关的 API。
-2. 你使用 JDK 开发 Java 程序，想要读取用户的输入的话，你就需要使用 JDK 提供的 IO 相关的 API。
-3. ……
+1. When you search for a product on an e-commerce website, the frontend of the site calls an API provided by the backend that relates to searching for products.
+1. When you develop a Java program using the JDK and want to read user input, you'll need to use the I/O-related APIs provided by the JDK.
+1. ……
 
-你可以把 API 理解为程序与程序之间通信的桥梁，其本质就是一个函数而已。另外，API 的使用也不是没有章法的，它的规则由（比如数据输入和输出的格式）API 提供方制定。
+You can think of APIs as the bridge for communication between programs; at their core, they are just functions. Additionally, API usage is not without rules; the API provider sets the rules (such as the format of data input and output).
 
-## 何为 RESTful API？
+## What is RESTful API?
 
-**RESTful API** 经常也被叫做 **REST API**，它是基于 REST 构建的 API。这个 REST 到底是什么，我们后文在讲，涉及到的概念比较多。
+**RESTful API** is often referred to as **REST API**, which is an API built upon REST principles. What REST actually is will be discussed later, as it involves multiple concepts.
 
-如果你看 RESTful API 相关的文章的话一般都比较晦涩难懂，主要是因为 REST 涉及到的一些概念比较难以理解。但是，实际上，我们平时开发用到的 RESTful API 的知识非常简单也很容易概括！
+If you read articles about RESTful APIs, they may often seem obscure and hard to understand, primarily because some of the concepts related to REST are complex. Nevertheless, the knowledge about RESTful APIs we usually utilize in development is quite simple and easy to summarize!
 
-举个例子，如果我给你下面两个 API 你是不是立马能知道它们是干什么用的！这就是 RESTful API 的强大之处！
+For example, if I give you the following two APIs, you would immediately know what they are for! This showcases the strength of RESTful APIs!
 
 ```plain
-GET    /classes：列出所有班级
-POST   /classes：新建一个班级
+GET    /classes: Lists all classes
+POST   /classes: Creates a new class
 ```
 
-**RESTful API 可以让你看到 URL+Http Method 就知道这个 URL 是干什么的，让你看到了 HTTP 状态码（status code）就知道请求结果如何。**
+**RESTful APIs allow you to understand what a URL does just by looking at the URL + HTTP Method and to know the result of a request by looking at the HTTP status code.**
 
-像咱们在开发过程中设计 API 的时候也应该至少要满足 RESTful API 的最基本的要求（比如接口中尽量使用名词，使用 `POST` 请求创建资源，`DELETE` 请求删除资源等等，示例：`GET /notes/id`：获取某个指定 id 的笔记的信息）。
+When we design APIs during development, we should at least meet the fundamental requirements of RESTful APIs (for instance, use nouns in the interface as much as possible, use `POST` requests to create resources, use `DELETE` requests to remove resources, etc. Example: `GET /notes/id`: Retrieve information of a note with a specific ID).
 
-## 解读 REST
+## Understanding REST
 
-**REST** 是 `REpresentational State Transfer` 的缩写。这个词组的翻译过来就是“**表现层状态转化**”。
+**REST** stands for `REpresentational State Transfer`. This phrase translates to "Representational State Transfer."
 
-这样理解起来甚是晦涩，实际上 REST 的全称是 **Resource Representational State Transfer** ，直白地翻译过来就是 **“资源”在网络传输中以某种“表现形式”进行“状态转移”** 。如果还是不能继续理解，请继续往下看，相信下面的讲解一定能让你理解到底啥是 REST 。
+This understanding might seem obscure; in fact, REST's full name is **Resource Representational State Transfer**, which can be simply translated as **"the resource" undergoes a "state transfer" in some "representational form" over the network**. If that’s still unclear, please continue reading; I believe the explanations below will help you understand what REST really is.
 
-我们分别对上面涉及到的概念进行解读，以便加深理解，实际上你不需要搞懂下面这些概念，也能看懂我下一部分要介绍到的内容。不过，为了更好地能跟别人扯扯 “RESTful API”我建议你还是要好好理解一下！
+Let’s break down the concepts mentioned above to deepen our understanding. In reality, you don't need to fully grasp these concepts to understand the next content, but I recommend you take the time to understand them better if you want to discuss "RESTful API" with others!
 
-- **资源（Resource）**：我们可以把真实的对象数据称为资源。一个资源既可以是一个集合，也可以是单个个体。比如我们的班级 classes 是代表一个集合形式的资源，而特定的 class 代表单个个体资源。每一种资源都有特定的 URI（统一资源标识符）与之对应，如果我们需要获取这个资源，访问这个 URI 就可以了，比如获取特定的班级：`/class/12`。另外，资源也可以包含子资源，比如 `/classes/classId/teachers`：列出某个指定班级的所有老师的信息
-- **表现形式（Representational）**："资源"是一种信息实体，它可以有多种外在表现形式。我们把"资源"具体呈现出来的形式比如 `json`，`xml`，`image`,`txt` 等等叫做它的"表现层/表现形式"。
-- **状态转移（State Transfer）**：大家第一眼看到这个词语一定会很懵逼？内心 BB：这尼玛是啥啊？ 大白话来说 REST 中的状态转移更多地描述的服务器端资源的状态，比如你通过增删改查（通过 HTTP 动词实现）引起资源状态的改变。ps:互联网通信协议 HTTP 协议，是一个无状态协议，所有的资源状态都保存在服务器端。
+- **Resource**: We refer to the actual object data as a resource. A resource can be either a collection or an individual entity. For example, our classes resource represents a collection, while a specific class represents an individual resource. Each resource has a specific URI (Uniform Resource Identifier) associated with it; to access this resource, you can visit its URI. For example, to get a specific class: `/class/12`. Additionally, a resource may include sub-resources, such as `/classes/classId/teachers`: Lists all teachers for a specific class.
+- **Representational**: "Resources" are information entities that can manifest in various external forms. The format in which we present "resources," such as `json`, `xml`, `image`, `txt`, etc., is referred to as its "representation."
+- **State Transfer**: Upon first glance, this term might confuse you. In simple terms, the state transfer in REST describes the status of server-side resources, for instance, how you change resource status through create, read, update, and delete (CRUD) operations (achieved via HTTP verbs). Note: The HTTP protocol is stateless; all resource states are stored on the server.
 
-综合上面的解释，我们总结一下什么是 RESTful 架构：
+To summarize what the RESTful architecture entails:
 
-1. 每一个 URI 代表一种资源；
-2. 客户端和服务器之间，传递这种资源的某种表现形式比如 `json`，`xml`，`image`,`txt` 等等；
-3. 客户端通过特定的 HTTP 动词，对服务器端资源进行操作，实现"表现层状态转化"。
+1. Each URI represents a resource.
+1. A certain representation of this resource, such as `json`, `xml`, `image`, `txt`, is exchanged between the client and server.
+1. The client operates on server-side resources using specific HTTP verbs to achieve "representational state transfer."
 
-## RESTful API 规范
+## RESTful API Specifications
 
 ![](https://oss.javaguide.cn/system-design/basis/20210507154007779.png)
 
-### 动作
+### Actions
 
-- `GET`：请求从服务器获取特定资源。举个例子：`GET /classes`（获取所有班级）
-- `POST`：在服务器上创建一个新的资源。举个例子：`POST /classes`（创建班级）
-- `PUT`：更新服务器上的资源（客户端提供更新后的整个资源）。举个例子：`PUT /classes/12`（更新编号为 12 的班级）
-- `DELETE`：从服务器删除特定的资源。举个例子：`DELETE /classes/12`（删除编号为 12 的班级）
-- `PATCH`：更新服务器上的资源（客户端提供更改的属性，可以看做作是部分更新），使用的比较少，这里就不举例子了。
+- `GET`: Requests to retrieve specific resources from the server. For example: `GET /classes` (Retrieve all classes)
+- `POST`: Creates a new resource on the server. For example: `POST /classes` (Create a class)
+- `PUT`: Updates an existing resource on the server (the client provides the entire updated resource). For example: `PUT /classes/12` (Update the class with ID 12)
+- `DELETE`: Removes a specific resource from the server. For example: `DELETE /classes/12` (Delete the class with ID 12)
+- `PATCH`: Updates an existing resource on the server (the client provides the changed attributes, considered a partial update); less commonly used, so no examples here.
 
-### 路径（接口命名）
+### Path (API Naming)
 
-路径又称"终点"（endpoint），表示 API 的具体网址。实际开发中常见的规范如下：
+Paths, also known as "endpoints," represent specific URLs for the API. Commonly seen specifications in actual development are as follows:
 
-1. **网址中不能有动词，只能有名词，API 中的名词也应该使用复数。** 因为 REST 中的资源往往和数据库中的表对应，而数据库中的表都是同种记录的"集合"（collection）。如果 API 调用并不涉及资源（如计算，翻译等操作）的话，可以用动词。比如：`GET /calculate?param1=11&param2=33` 。
-2. **不用大写字母，建议用中杠 - 不用下杠 \_** 。比如邀请码写成 `invitation-code`而不是 ~~invitation_code~~ 。
-3. **善用版本化 API**。当我们的 API 发生了重大改变而不兼容前期版本的时候，我们可以通过 URL 来实现版本化，比如 `http://api.example.com/v1`、`http://apiv1.example.com` 。版本不必非要是数字，只是数字用的最多，日期、季节都可以作为版本标识符，项目团队达成共识就可。
-4. **接口尽量使用名词，避免使用动词。** RESTful API 操作（HTTP Method）的是资源（名词）而不是动作（动词）。
+1. **URLs should not contain verbs, only nouns; nouns in the API should be in plural form.** This is because resources in REST typically correspond to tables in a database, where tables represent collections of the same type of records. If an API call does not concern resources (e.g., calculations, translations, etc.), verbs can be used. For instance: `GET /calculate?param1=11&param2=33`.
+1. **Avoid using capital letters; it's recommended to use hyphens (-) instead of underscores (\_).** For example, the invitation code should be `invitation-code` rather than ~~invitation_code~~.
+1. **Utilize API versioning.** When our API undergoes significant changes that are incompatible with previous versions, we can implement versioning via the URL, like `http://api.example.com/v1`, `http://apiv1.example.com`. Versions don’t have to be numeric; dates or seasons can also serve as version identifiers, as long as the project team comes to a consensus.
+1. **Interfaces should primarily use nouns, avoiding verbs.** RESTful API operations (HTTP Methods) concern resources (nouns) rather than actions (verbs).
 
-Talk is cheap！来举个实际的例子来说明一下吧！现在有这样一个 API 提供班级（class）的信息，还包括班级中的学生和教师的信息，则它的路径应该设计成下面这样。
+Talk is cheap! Let's give a practical example to illustrate this! Suppose we have an API that provides information about classes, including details about students and teachers in those classes. Its path should be designed as follows:
 
 ```plain
-GET    /classes：列出所有班级
-POST   /classes：新建一个班级
-GET    /classes/{classId}：获取某个指定班级的信息
-PUT    /classes/{classId}：更新某个指定班级的信息（一般倾向整体更新）
-PATCH  /classes/{classId}：更新某个指定班级的信息（一般倾向部分更新）
-DELETE /classes/{classId}：删除某个班级
-GET    /classes/{classId}/teachers：列出某个指定班级的所有老师的信息
-GET    /classes/{classId}/students：列出某个指定班级的所有学生的信息
-DELETE /classes/{classId}/teachers/{ID}：删除某个指定班级下的指定的老师的信息
+GET    /classes: Lists all classes
+POST   /classes: Creates a new class
+GET    /classes/{classId}: Retrieves information about a specific class
+PUT    /classes/{classId}: Updates information about a specific class (generally aims for complete updates)
+PATCH  /classes/{classId}: Updates information about a specific class (generally aims for partial updates)
+DELETE /classes/{classId}: Deletes a specific class
+GET    /classes/{classId}/teachers: Lists all teachers in a specific class
+GET    /classes/{classId}/students: Lists all students in a specific class
+DELETE /classes/{classId}/teachers/{ID}: Deletes a specific teacher from a specific class
 ```
 
-反例：
+Negative example:
 
 ```plain
 /getAllclasses
@@ -107,41 +107,41 @@ DELETE /classes/{classId}/teachers/{ID}：删除某个指定班级下的指定�
 /deleteAllActiveclasses
 ```
 
-理清资源的层次结构，比如业务针对的范围是学校，那么学校会是一级资源:`/schools`，老师: `/schools/teachers`，学生: `/schools/students` 就是二级资源。
+Clarifying the hierarchy of resources, for instance, if the business scope addresses schools, then a school would be a first-level resource: `/schools`, teachers: `/schools/teachers`, students: `/schools/students` would then be second-level resources.
 
-### 过滤信息（Filtering）
+### Filtering Information
 
-如果我们在查询的时候需要添加特定条件的话，建议使用 url 参数的形式。比如我们要查询 state 状态为 active 并且 name 为 guidegege 的班级：
+If we need to add specific conditions when querying, it is advisable to use URL parameters. For example, to query classes with a state of active and a name of guidegege:
 
 ```plain
 GET    /classes?state=active&name=guidegege
 ```
 
-比如我们要实现分页查询：
+To implement pagination, for example:
 
 ```plain
-GET    /classes?page=1&size=10 //指定第1页，每页10个数据
+GET    /classes?page=1&size=10 // Specify the 1st page, with 10 items per page
 ```
 
-### 状态码（Status Codes）
+### Status Codes
 
-**状态码范围：**
+**Status Code Ranges:**
 
-| 2xx：成功 | 3xx：重定向    | 4xx：客户端错误  | 5xx：服务器错误 |
-| --------- | -------------- | ---------------- | --------------- |
-| 200 成功  | 301 永久重定向 | 400 错误请求     | 500 服务器错误  |
-| 201 创建  | 304 资源未修改 | 401 未授权       | 502 网关错误    |
-|           |                | 403 禁止访问     | 504 网关超时    |
-|           |                | 404 未找到       |                 |
-|           |                | 405 请求方法不对 |                 |
+| 2xx: Success | 3xx: Redirection      | 4xx: Client Error      | 5xx: Server Error         |
+| ------------ | --------------------- | ---------------------- | ------------------------- |
+| 200 Success  | 301 Moved Permanently | 400 Bad Request        | 500 Internal Server Error |
+| 201 Created  | 304 Not Modified      | 401 Unauthorized       | 502 Bad Gateway           |
+|              |                       | 403 Forbidden          | 504 Gateway Timeout       |
+|              |                       | 404 Not Found          |                           |
+|              |                       | 405 Method Not Allowed |                           |
 
-## RESTful 的极致 HATEOAS
+## The Ultimate RESTful: HATEOAS
 
-> **RESTful 的极致是 hateoas ，但是这个基本不会在实际项目中用到。**
+> **The ultimate form of RESTful is HATEOAS, but this is rarely used in actual projects.**
 
-上面是 RESTful API 最基本的东西，也是我们平时开发过程中最容易实践到的。实际上，RESTful API 最好做到 Hypermedia，即返回结果中提供链接，连向其他 API 方法，使得用户不查文档，也知道下一步应该做什么。
+The above is the most fundamental aspect of RESTful APIs, and it’s also what we can easily practice in our development process. In fact, ideally, RESTful APIs should implement Hypermedia, meaning they should return links within the results that point to other API methods, allowing users to know the next steps without referring to documentation.
 
-比如，当用户向 `api.example.com` 的根目录发出请求，会得到这样一个返回结果
+For example, when a user sends a request to the root directory of `api.example.com`, they would receive a response like this:
 
 ```javascript
 {"link": {
@@ -152,17 +152,17 @@ GET    /classes?page=1&size=10 //指定第1页，每页10个数据
 }}
 ```
 
-上面代码表示，文档中有一个 `link` 属性，用户读取这个属性就知道下一步该调用什么 API 了。`rel` 表示这个 API 与当前网址的关系（collection 关系，并给出该 collection 的网址），`href` 表示 API 的路径，title 表示 API 的标题，`type` 表示返回类型 `Hypermedia API` 的设计被称为[HATEOAS](http://en.wikipedia.org/wiki/HATEOAS)。
+The above code indicates that there is a `link` attribute in the document; users can refer to this attribute to know which API to call next. `rel` indicates the relationship between this API and the current URL (collection relationship, with the collection's URL provided), `href` is the path of the API, `title` gives the API's title, and `type` indicates the returned type. The design of `Hypermedia API` is referred to as [HATEOAS](http://en.wikipedia.org/wiki/HATEOAS).
 
-在 Spring 中有一个叫做 HATEOAS 的 API 库，通过它我们可以更轻松的创建出符合 HATEOAS 设计的 API。相关文章：
+In Spring, there’s an API library called HATEOAS, which makes it easier for us to create APIs that conform to HATEOAS design. Related articles:
 
-- [在 Spring Boot 中使用 HATEOAS](https://blog.aisensiy.me/2017/06/04/spring-boot-and-hateoas/)
-- [Building REST services with Spring](https://spring.io/guides/tutorials/rest/) (Spring 官网 )
+- [Using HATEOAS in Spring Boot](https://blog.aisensiy.me/2017/06/04/spring-boot-and-hateoas/)
+- [Building REST services with Spring](https://spring.io/guides/tutorials/rest/) (Spring Official Site)
 - [An Intro to Spring HATEOAS](https://www.baeldung.com/spring-hateoas-tutorial)
 - [spring-hateoas-examples](https://github.com/spring-projects/spring-hateoas-examples/tree/master/hypermedia)
-- [Spring HATEOAS](https://spring.io/projects/spring-hateoas#learn) (Spring 官网 )
+- [Spring HATEOAS](https://spring.io/projects/spring-hateoas#learn) (Spring Official Site)
 
-## 参考
+## References
 
 - <https://RESTfulapi.net/>
 

@@ -1,9 +1,9 @@
 ---
-title: 分布式事务常见解决方案总结(付费)
-category: 分布式
+title: Summary of Common Solutions for Distributed Transactions (Paid)
+category: Distributed
 ---
 
-**分布式事务** 相关的面试题为我的[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了《Java 面试指北》中。
+**Distributed Transactions** interview questions are exclusive content for my [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) (click the link to view detailed information and joining methods) and have been organized into the "Java Interview Guide."
 
 ![](https://oss.javaguide.cn/javamianshizhibei/distributed-system.png)
 

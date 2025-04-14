@@ -1,9 +1,9 @@
 ---
-title: 分布式配置中心常见问题总结(付费)
-category: 分布式
+title: Summary of Common Issues in Distributed Configuration Centers (Paid)
+category: Distributed
 ---
 
-**分布式配置中心** 相关的面试题为我的[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了《Java 面试指北》中。
+The interview questions related to **Distributed Configuration Centers** are exclusive content for my [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) (click the link to see the detailed introduction and joining methods) and have been compiled into the "Java Interview Guide."
 
 ![](https://oss.javaguide.cn/javamianshizhibei/distributed-system.png)
 

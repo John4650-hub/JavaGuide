@@ -1,68 +1,56 @@
 ---
-title: 数据冷热分离详解
-category: 高性能
+title: Detailed Explanation of Data Hot and Cold Separation
+category: High Performance
 head:
-  - - meta
-    - name: keywords
-      content: 数据冷热分离,冷数据迁移,冷数据存储
-  - - meta
-    - name: description
-      content: 数据冷热分离是指根据数据的访问频率和业务重要性，将数据分为冷数据和热数据，冷数据一般存储在存储在低成本、低性能的介质中，热数据高性能存储介质中。
+  -   - meta
+      - name: keywords
+        content: Data hot and cold separation, cold data migration, cold data storage
+  -   - meta
+      - name: description
+        content: Data hot and cold separation refers to dividing data into cold and hot data based on access frequency and business importance. Cold data is generally stored in low-cost, low-performance media, while hot data is stored in high-performance media.
 ---
 
-## 什么是数据冷热分离？
+## What is Data Hot and Cold Separation?
 
-数据冷热分离是指根据数据的访问频率和业务重要性，将数据分为冷数据和热数据，冷数据一般存储在存储在低成本、低性能的介质中，热数据高性能存储介质中。
+Data hot and cold separation refers to dividing data into cold and hot data based on access frequency and business importance. Cold data is generally stored in low-cost, low-performance media, while hot data is stored in high-performance media.
 
-### 冷数据和热数据
+### Cold Data and Hot Data
 
-热数据是指经常被访问和修改且需要快速访问的数据，冷数据是指不经常访问，对当前项目价值较低，但需要长期保存的数据。
+Hot data refers to data that is frequently accessed and modified and requires quick access, while cold data refers to data that is infrequently accessed, has lower current project value, but needs to be stored for the long term.
 
-冷热数据到底如何区分呢？有两个常见的区分方法：
+How do we distinguish between hot and cold data? There are two common methods of distinction:
 
-1. **时间维度区分**：按照数据的创建时间、更新时间、过期时间等，将一定时间段内的数据视为热数据，超过该时间段的数据视为冷数据。例如，订单系统可以将 1 年前的订单数据作为冷数据，1 年内的订单数据作为热数据。这种方法适用于数据的访问频率和时间有较强的相关性的场景。
-2. **访问频率区分**：将高频访问的数据视为热数据，低频访问的数据视为冷数据。例如，内容系统可以将浏览量非常低的文章作为冷数据，浏览量较高的文章作为热数据。这种方法需要记录数据的访问频率，成本较高，适合访问频率和数据本身有较强的相关性的场景。
+1. **Time Dimension Distinction**: Data is classified as hot or cold based on its creation time, update time, expiration time, etc. Data within a certain time frame is considered hot, while data beyond that time frame is considered cold. For example, an order system might classify order data from one year ago as cold data and order data within the last year as hot data. This method is suitable for scenarios where access frequency is strongly correlated with time.
+1. **Access Frequency Distinction**: Data that is accessed frequently is considered hot, while data that is accessed infrequently is considered cold. For example, a content system might classify articles with very low views as cold data and articles with higher views as hot data. This method requires tracking data access frequency, which can be costly, and is suitable for scenarios where access frequency is strongly correlated with the data itself.
 
-几年前的数据并不一定都是冷数据，例如一些优质文章发表几年后依然有很多人访问，大部分普通用户新发表的文章却基本没什么人访问。
+Data from a few years ago is not necessarily all cold data; for instance, some high-quality articles may still receive many visits years after publication, while most newly published articles by ordinary users may hardly be accessed.
 
-这两种区分冷热数据的方法各有优劣，实际项目中，可以将两者结合使用。
+Both methods of distinguishing hot and cold data have their pros and cons, and in actual projects, they can be used in combination.
 
-### 冷热分离的思想
+### The Concept of Hot and Cold Separation
 
-冷热分离的思想非常简单，就是对数据进行分类，然后分开存储。冷热分离的思想可以应用到很多领域和场景中，而不仅仅是数据存储，例如：
+The concept of hot and cold separation is quite simple: classify data and then store it separately. This concept can be applied in many fields and scenarios, not just data storage, such as:
 
-- 邮件系统中，可以将近期的比较重要的邮件放在收件箱，将比较久远的不太重要的邮件存入归档。
-- 日常生活中，可以将常用的物品放在显眼的位置，不常用的物品放入储藏室或者阁楼。
-- 图书馆中，可以将最受欢迎和最常借阅的图书单独放在一个显眼的区域，将较少借阅的书籍放在不起眼的位置。
+- In an email system, important recent emails can be placed in the inbox, while less important older emails can be archived.
+- In daily life, frequently used items can be placed in prominent locations, while less frequently used items can be stored in a storage room or attic.
+- In a library, the most popular and frequently borrowed books can be placed in a prominent area, while less borrowed books can be placed in less noticeable locations.
 - ……
 
-### 数据冷热分离的优缺点
+### Advantages and Disadvantages of Data Hot and Cold Separation
 
-- 优点：热数据的查询性能得到优化（用户的绝大部分操作体验会更好）、节约成本（可以冷热数据的不同存储需求，选择对应的数据库类型和硬件配置，比如将热数据放在 SSD 上，将冷数据放在 HDD 上）
-- 缺点：系统复杂性和风险增加（需要分离冷热数据，数据错误的风险增加）、统计效率低（统计的时候可能需要用到冷库的数据）。
+- Advantages: The query performance of hot data is optimized (the user experience for most operations will be better), and costs are saved (different storage requirements for hot and cold data allow for the selection of appropriate database types and hardware configurations, such as placing hot data on SSDs and cold data on HDDs).
+- Disadvantages: Increased system complexity and risk (the need to separate hot and cold data increases the risk of data errors), and lower statistical efficiency (cold storage data may be needed for statistics).
 
-## 冷数据如何迁移？
+## How to Migrate Cold Data?
 
-冷数据迁移方案：
+Cold data migration solutions:
 
-1. 业务层代码实现：当有对数据进行写操作时，触发冷热分离的逻辑，判断数据是冷数据还是热数据，冷数据就入冷库，热数据就入热库。这种方案会影响性能且冷热数据的判断逻辑不太好确定，还需要修改业务层代码，因此一般不会使用。
-2. 任务调度：可以利用 xxl-job 或者其他分布式任务调度平台定时去扫描数据库，找出满足冷数据条件的数据，然后批量地将其复制到冷库中，并从热库中删除。这种方法修改的代码非常少，非常适合按照时间区分冷热数据的场景。
-3. 监听数据库的变更日志 binlog ：将满足冷数据条件的数据从 binlog 中提取出来，然后复制到冷库中，并从热库中删除。这种方法可以不用修改代码，但不适合按照时间维度区分冷热数据的场景。
+1. **Business Layer Code Implementation**: When there is a write operation on the data, trigger the logic for hot and cold separation to determine whether the data is cold or hot. Cold data goes to cold storage, while hot data goes to hot storage. This solution can impact performance, and the logic for determining hot and cold data can be difficult to establish, plus it requires modifying business layer code, so it is generally not used.
+1. **Task Scheduling**: You can use xxl-job or other distributed task scheduling platforms to periodically scan the database, identify data that meets the cold data criteria, and then batch copy it to cold storage while deleting it from hot storage. This method requires very little code modification and is very suitable for scenarios where cold and hot data are distinguished by time.
+1. **Listening to Database Change Logs (binlog)**: Extract data that meets the cold data criteria from the binlog, then copy it to cold storage and delete it from hot storage. This method does not require code modification but is not suitable for scenarios where hot and cold data are distinguished by time.
 
-如果你的公司有 DBA 的话，也可以让 DBA 进行冷数据的人工迁移，一次迁移完成冷数据到冷库。然后，再搭配上面介绍的方案实现后续冷数据的迁移工作。
+If your company has a DBA, you can also have the DBA perform manual migration of cold data to cold storage in one go. Then, you can use the solutions mentioned above to implement subsequent cold data migration work.
 
-## 冷数据如何存储？
+## How to Store Cold Data?
 
-冷数据的存储要求主要是容量大，成本低，可靠性高，访问速度可以适当牺牲。
-
-冷数据存储方案：
-
-- 中小厂：直接使用 MySQL/PostgreSQL 即可（不改变数据库选型和项目当前使用的数据库保持一致），比如新增一张表来存储某个业务的冷数据或者使用单独的冷库来存放冷数据（涉及跨库查询，增加了系统复杂性和维护难度）
-- 大厂：Hbase（常用）、RocksDB、Doris、Cassandra
-
-如果公司成本预算足的话，也可以直接上 TiDB 这种分布式关系型数据库，直接一步到位。TiDB 6.0 正式支持数据冷热存储分离，可以降低 SSD 使用成本。使用 TiDB 6.0 的数据放置功能，可以在同一个集群实现海量数据的冷热存储，将新的热数据存入 SSD，历史冷数据存入 HDD。
-
-## 案例分享
-
-- [如何快速优化几千万数据量的订单表 - 程序员济癫 - 2023](https://www.cnblogs.com/fulongyuanjushi/p/17910420.html)
-- [海量数据冷热分离方案与实践 - 字节跳动技术团队 - 2022](https://mp.weixin.qq.com/s/ZKRkZP6rLHuTE1wvnqmAPQ)
+The storage requirements for cold data mainly include large capacity, low cost, high

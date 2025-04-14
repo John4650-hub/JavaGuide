@@ -1,32 +1,30 @@
-# final,static,this,super 关键字总结
+# Summary of final, static, this, super Keywords
 
-## final 关键字
+## final Keyword
 
-**final 关键字，意思是最终的、不可修改的，最见不得变化 ，用来修饰类、方法和变量，具有以下特点：**
+**The final keyword means final and unmodifiable, it represents the least amount of change and is used to modify classes, methods, and variables with the following characteristics:**
 
-1. final 修饰的类不能被继承，final 类中的所有成员方法都会被隐式的指定为 final 方法；
+1. A class modified with final cannot be inherited, and all member methods in a final class will implicitly be designated as final methods;
+1. A method modified with final cannot be overridden;
+1. A variable modified with final is a constant. If it is a primitive data type, its value cannot be changed after initialization; if it is a reference type, it cannot point to another object after initialization.
 
-2. final 修饰的方法不能被重写；
+Note: There are two reasons to use final methods:
 
-3. final 修饰的变量是常量，如果是基本数据类型的变量，则其数值一旦在初始化之后便不能更改；如果是引用类型的变量，则在对其初始化之后便不能让其指向另一个对象。
+1. To lock the method to prevent any inherited class from modifying its meaning;
+1. Efficiency. In earlier versions of Java, final methods would be converted into inline calls. However, if the method is too large, no performance improvement from inlining may be seen (current Java versions no longer require using final methods for such optimizations).
 
-说明：使用 final 方法的原因有两个：
+## static Keyword
 
-1. 把方法锁定，以防任何继承类修改它的含义；
-2. 效率。在早期的 Java 实现版本中，会将 final 方法转为内嵌调用。但是如果方法过于庞大，可能看不到内嵌调用带来的任何性能提升（现在的 Java 版本已经不需要使用 final 方法进行这些优化了）。
+**The static keyword mainly has the following four usage scenarios:**
 
-## static 关键字
+1. **Modifying member variables and member methods:** Members modified with static belong to the class and not to a specific instance of this class, shared by all objects in the class, and it is recommended to call them through the class name. Member variables declared as static are static member variables, which are stored in the method area of the Java memory region. Invocation format: `ClassName.staticVariableName` `ClassName.staticMethodName()`
+1. **Static code blocks:** Static code blocks are defined outside of class methods and are executed before non-static code blocks (static code blocks → non-static code blocks → constructors). Regardless of how many objects are created, a static code block is executed only once.
+1. **Static inner classes (only classes that are static can modify inner classes):** There is one significant difference between static inner classes and non-static inner classes: non-static inner classes implicitly hold a reference to the enclosing class after compilation, while static inner classes do not. The absence of this reference means: 1. Its creation does not depend on the enclosing class's creation. 2. It cannot use any non-static member variables and methods of the enclosing class.
+1. **Static import (used to import static resources from a class, new feature after 1.5):** The format is: `import static` these two keywords can be used together to specify importing certain static resources from a class, and there is no need to use the class name to call static members; static member variables and methods can be accessed directly.
 
-**static 关键字主要有以下四种使用场景：**
+## this Keyword
 
-1. **修饰成员变量和成员方法:** 被 static 修饰的成员属于类，不属于单个这个类的某个对象，被类中所有对象共享，可以并且建议通过类名调用。被 static 声明的成员变量属于静态成员变量，静态变量 存放在 Java 内存区域的方法区。调用格式：`类名.静态变量名` `类名.静态方法名()`
-2. **静态代码块:** 静态代码块定义在类中方法外, 静态代码块在非静态代码块之前执行(静态代码块—>非静态代码块—>构造方法)。 该类不管创建多少对象，静态代码块只执行一次.
-3. **静态内部类（static 修饰类的话只能修饰内部类）：** 静态内部类与非静态内部类之间存在一个最大的区别: 非静态内部类在编译完成之后会隐含地保存着一个引用，该引用是指向创建它的外围类，但是静态内部类却没有。没有这个引用就意味着：1. 它的创建是不需要依赖外围类的创建。2. 它不能使用任何外围类的非 static 成员变量和方法。
-4. **静态导包(用来导入类中的静态资源，1.5 之后的新特性):** 格式为：`import static` 这两个关键字连用可以指定导入某个类中的指定静态资源，并且不需要使用类名调用类中静态成员，可以直接使用类中静态成员变量和成员方法。
-
-## this 关键字
-
-this 关键字用于引用类的当前实例。 例如：
+The this keyword is used to reference the current instance of the class. For example:
 
 ```java
 class Manager {
@@ -40,21 +38,21 @@ class Manager {
 }
 ```
 
-在上面的示例中，this 关键字用于两个地方：
+In the example above, the this keyword is used in two places:
 
-- this.employees.length：访问类 Manager 的当前实例的变量。
-- this.report（）：调用类 Manager 的当前实例的方法。
+- this.employees.length: Accessing the variable of the current instance of the Manager class.
+- this.report(): Calling the method of the current instance of the Manager class.
 
-此关键字是可选的，这意味着如果上面的示例在不使用此关键字的情况下表现相同。 但是，使用此关键字可能会使代码更易读或易懂。
+This keyword is optional, meaning that the example above would behave the same without using this keyword. However, using this keyword may make the code more readable or understandable.
 
-## super 关键字
+## super Keyword
 
-super 关键字用于从子类访问父类的变量和方法。 例如：
+The super keyword is used to access variables and methods of the parent class from a subclass. For example:
 
 ```java
 public class Super {
     protected int number;
-    protected showNumber() {
+    protected void showNumber() {
         System.out.println("number = " + number);
     }
 }
@@ -66,64 +64,64 @@ public class Sub extends Super {
 }
 ```
 
-在上面的例子中，Sub 类访问父类成员变量 number 并调用其父类 Super 的 `showNumber（）` 方法。
+In the example above, the Sub class accesses the superclass member variable number and calls its parent class Super's `showNumber()` method.
 
-**使用 this 和 super 要注意的问题：**
+**Issues to note when using this and super:**
 
-- 在构造器中使用 `super()` 调用父类中的其他构造方法时，该语句必须处于构造器的首行，否则编译器会报错。另外，this 调用本类中的其他构造方法时，也要放在首行。
-- this、super 不能用在 static 方法中。
+- When using `super()` to call another constructor in the parent class, this statement must be the first line of the constructor; otherwise, the compiler will throw an error. Similarly, when calling another constructor within the same class using this, it should also be placed at the first line.
+- this and super cannot be used in static methods.
 
-**简单解释一下：**
+**In brief:**
 
-被 static 修饰的成员属于类，不属于单个这个类的某个对象，被类中所有对象共享。而 this 代表对本类对象的引用，指向本类对象；而 super 代表对父类对象的引用，指向父类对象；所以， **this 和 super 是属于对象范畴的东西，而静态方法是属于类范畴的东西**。
+Members modified with static belong to the class and are shared by all objects within the class, while this represents a reference to the current class object and points to that instance; super represents a reference to the parent class object and points to that parent; thus, **this and super pertain to the instance realm, whereas static methods pertain to the class realm.**
 
-## 参考
+## References
 
 - <https://www.codejava.net/java-core/the-java-language/java-keywords>
 - <https://blog.csdn.net/u013393958/article/details/79881037>
 
-# static 关键字详解
+# Detailed Explanation of the static Keyword
 
-## static 关键字主要有以下四种使用场景
+## The static keyword mainly has the following four usage scenarios
 
-1. 修饰成员变量和成员方法
-2. 静态代码块
-3. 修饰类(只能修饰内部类)
-4. 静态导包(用来导入类中的静态资源，1.5 之后的新特性)
+1. Modifying member variables and methods
+1. Static code blocks
+1. Modifying classes (only inner classes)
+1. Static import (used to import static resources from a class, new feature after 1.5)
 
-### 修饰成员变量和成员方法(常用)
+### Modifying member variables and methods (Commonly used)
 
-被 static 修饰的成员属于类，不属于单个这个类的某个对象，被类中所有对象共享，可以并且建议通过类名调用。被 static 声明的成员变量属于静态成员变量，静态变量 存放在 Java 内存区域的方法区。
+Members modified with static belong to the class and not to a specific instance of this class, shared by all objects in the class, and it is recommended to call them through the class name. Member variables declared as static are static member variables, which are stored in the method area of the Java memory region.
 
-方法区与 Java 堆一样，是各个线程共享的内存区域，它用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。虽然 Java 虚拟机规范把方法区描述为堆的一个逻辑部分，但是它却有一个别名叫做 Non-Heap（非堆），目的应该是与 Java 堆区分开来。
+The method area, like the Java heap, is a memory area shared among threads and is used to store information about classes that have been loaded by the virtual machine, constants, static variables, and compiled code from the just-in-time compiler. Although the Java Virtual Machine specification describes the method area as a logical part of the heap, it is also known as Non-Heap; this is to distinguish it from the Java heap area.
 
-HotSpot 虚拟机中方法区也常被称为 “永久代”，本质上两者并不等价。仅仅是因为 HotSpot 虚拟机设计团队用永久代来实现方法区而已，这样 HotSpot 虚拟机的垃圾收集器就可以像管理 Java 堆一样管理这部分内存了。但是这并不是一个好主意，因为这样更容易遇到内存溢出问题。
+In the HotSpot virtual machine, the method area is often referred to as "Permanent Generation," but the two are not equivalent. It is merely because the team that designed the HotSpot virtual machine implemented the method area using Permanent Generation so that the garbage collector of the HotSpot virtual machine can manage this memory as it does with the Java heap. However, this is not a good idea as it can lead to memory overflow issues.
 
-调用格式：
+Invocation format:
 
-- `类名.静态变量名`
-- `类名.静态方法名()`
+- `ClassName.staticVariableName`
+- `ClassName.staticMethodName()`
 
-如果变量或者方法被 private 则代表该属性或者该方法只能在类的内部被访问而不能在类的外部被访问。
+If a variable or method is marked as private, it means that this attribute or method can only be accessed inside the class and not from outside.
 
-测试方法：
+Test method:
 
 ```java
 public class StaticBean {
     String name;
-    //静态变量
+    // Static variable
     static int age;
     public StaticBean(String name) {
         this.name = name;
     }
-    //静态方法
+    // Static method
     static void sayHello() {
-        System.out.println("Hello i am java");
+        System.out.println("Hello, I am Java");
     }
     @Override
     public String toString() {
         return "StaticBean{"+
-                "name=" + name + ",age=" + age +
+                "name=" + name + ", age=" + age +
                 "}";
     }
 }
@@ -132,51 +130,51 @@ public class StaticBean {
 ```java
 public class StaticDemo {
     public static void main(String[] args) {
-        StaticBean staticBean = new StaticBean("1");
+        StaticBean staticBean1 = new StaticBean("1");
         StaticBean staticBean2 = new StaticBean("2");
         StaticBean staticBean3 = new StaticBean("3");
         StaticBean staticBean4 = new StaticBean("4");
         StaticBean.age = 33;
-        System.out.println(staticBean + " " + staticBean2 + " " + staticBean3 + " " + staticBean4);
-        //StaticBean{name=1,age=33} StaticBean{name=2,age=33} StaticBean{name=3,age=33} StaticBean{name=4,age=33}
-        StaticBean.sayHello();//Hello i am java
+        System.out.println(staticBean1 + " " + staticBean2 + " " + staticBean3 + " " + staticBean4);
+        // StaticBean{name=1, age=33} StaticBean{name=2, age=33} StaticBean{name=3, age=33} StaticBean{name=4, age=33}
+        StaticBean.sayHello(); // Hello, I am Java
     }
 }
 ```
 
-### 静态代码块
+### Static Code Blocks
 
-静态代码块定义在类中方法外, 静态代码块在非静态代码块之前执行(静态代码块 —> 非静态代码块 —> 构造方法)。 该类不管创建多少对象，静态代码块只执行一次.
+Static code blocks are defined outside of class methods. Static code blocks are executed before non-static code blocks (static code blocks → non-static code blocks → constructors). Regardless of how many objects are created, a static code block is executed only once.
 
-静态代码块的格式是
+The format of a static code block is:
 
 ```plain
 static {
-语句体;
+    statement;
 }
 ```
 
-一个类中的静态代码块可以有多个，位置可以随便放，它不在任何的方法体内，JVM 加载类时会执行这些静态的代码块，如果静态代码块有多个，JVM 将按照它们在类中出现的先后顺序依次执行它们，每个代码块只会被执行一次。
+A class can have multiple static code blocks, which can be placed anywhere within the class. The JVM executes these static code blocks when loading the class. If there are multiple static code blocks, the JVM will execute them in the order they appear in the class. Each block is executed only once.
 
 ![](https://oss.javaguide.cn/github/javaguide/88531075.jpg)
 
-静态代码块对于定义在它之后的静态变量，可以赋值，但是不能访问.
+Static code blocks can assign values to static variables defined after them but cannot access them.
 
-### 静态内部类
+### Static Inner Class
 
-静态内部类与非静态内部类之间存在一个最大的区别，我们知道非静态内部类在编译完成之后会隐含地保存着一个引用，该引用是指向创建它的外围类，但是静态内部类却没有。没有这个引用就意味着：
+The biggest difference between static inner classes and non-static inner classes is that non-static inner classes implicitly save a reference to the enclosing class after compilation, while static inner classes do not. The absence of this reference implies:
 
-1. 它的创建是不需要依赖外围类的创建。
-2. 它不能使用任何外围类的非 static 成员变量和方法。
+1. Its creation does not depend on the creation of the enclosing class.
+1. It cannot use any non-static member variables and methods of the enclosing class.
 
-Example（静态内部类实现单例模式）
+Example (Static inner class implementing singleton pattern):
 
 ```java
 public class Singleton {
-    //声明为 private 避免调用默认构造方法创建对象
+    // Declared as private to prevent calling the default constructor to create an object
     private Singleton() {
     }
-   // 声明为 private 表明静态内部该类只能在该 Singleton 类中被访问
+    // Declared as private to indicate that the static inner class can only be accessed within the Singleton class
     private static class SingletonHolder {
         private static final Singleton INSTANCE = new Singleton();
     }
@@ -186,35 +184,35 @@ public class Singleton {
 }
 ```
 
-当 Singleton 类加载时，静态内部类 SingletonHolder 没有被加载进内存。只有当调用 `getUniqueInstance()`方法从而触发 `SingletonHolder.INSTANCE` 时 SingletonHolder 才会被加载，此时初始化 INSTANCE 实例，并且 JVM 能确保 INSTANCE 只被实例化一次。
+When the Singleton class is loaded, the static inner class SingletonHolder is not loaded into memory. Only when calling the `getUniqueInstance()` method, triggering `SingletonHolder.INSTANCE`, will SingletonHolder be loaded, initializing the INSTANCE. The JVM ensures that INSTANCE is instantiated only once.
 
-这种方式不仅具有延迟初始化的好处，而且由 JVM 提供了对线程安全的支持。
+This method not only provides the advantage of lazy initialization but also offers thread safety support from the JVM.
 
-### 静态导包
+### Static Import
 
-格式为：import static
+The format is: import static
 
-这两个关键字连用可以指定导入某个类中的指定静态资源，并且不需要使用类名调用类中静态成员，可以直接使用类中静态成员变量和成员方法
+Using these two keywords together allows specifying importing specific static resources from a class without using the class name to call static members; thus, static member variables and methods can be accessed directly.
 
 ```java
- //将Math中的所有静态资源导入，这时候可以直接使用里面的静态方法，而不用通过类名进行调用
- //如果只想导入单一某个静态方法，只需要将*换成对应的方法名即可
-import static java.lang.Math.*;//换成import static java.lang.Math.max;具有一样的效果
+// Importing all static resources from Math, allowing direct usage of its static methods without class name
+// If you only want to import a specific static method, just replace * with the method name accordingly
+import static java.lang.Math.*; // Alternatively, you may use import static java.lang.Math.max; for the same effect
 public class Demo {
   public static void main(String[] args) {
-    int max = max(1,2);
+    int max = max(1, 2);
     System.out.println(max);
   }
 }
 ```
 
-## 补充内容
+## Supplementary Content
 
-### 静态方法与非静态方法
+### Static Methods vs Non-Static Methods
 
-静态方法属于类本身，非静态方法属于从该类生成的每个对象。 如果您的方法执行的操作不依赖于其类的各个变量和方法，请将其设置为静态（这将使程序的占用空间更小）。 否则，它应该是非静态的。
+Static methods belong to the class itself, while non-static methods belong to each object instantiated from the class. If your method performs operations independent of its instance variables and methods, consider making it static (this will reduce space consumption of the program). Otherwise, it should be non-static.
 
-Example
+Example:
 
 ```java
 class Foo {
@@ -226,81 +224,81 @@ class Foo {
        return "An example string that doesn't depend on i (an instance variable)";
     }
     public int method2() {
-       return this.i + 1;  //Depends on i
+       return this.i + 1;  // Depends on i
     }
 }
 ```
 
-你可以像这样调用静态方法：`Foo.method1()`。 如果您尝试使用这种方法调用 method2 将失败。 但这样可行
+You can call static methods like this: `Foo.method1()`. If you try calling method2 this way, it will fail. However, the following is acceptable:
 
 ```java
 Foo bar = new Foo(1);
 bar.method2();
 ```
 
-总结：
+Summary:
 
-- 在外部调用静态方法时，可以使用”类名.方法名”的方式，也可以使用”对象名.方法名”的方式。而实例方法只有后面这种方式。也就是说，调用静态方法可以无需创建对象。
-- 静态方法在访问本类的成员时，只允许访问静态成员（即静态成员变量和静态方法），而不允许访问实例成员变量和实例方法；实例方法则无此限制
+- When calling static methods externally, you can use either "ClassName.MethodName" or "ObjectName.MethodName" syntax. However, instance methods only support the latter. In other words, static methods can be accessed without creating objects.
+- In accessing members of the class, static methods are only allowed to access static members (i.e., static member variables and static methods) and cannot access instance member variables and instance methods; instance methods do not have this restriction.
 
-### `static{}`静态代码块与`{}`非静态代码块(构造代码块)
+### Differences Between `static{}` Static Code Blocks and `{}` Non-Static Code Blocks (Constructor Code Blocks)
 
-相同点：都是在 JVM 加载类时且在构造方法执行之前执行，在类中都可以定义多个，定义多个时按定义的顺序执行，一般在代码块中对一些 static 变量进行赋值。
+Similarities: Both are executed when the JVM loads the class and before the constructor executes; multiple instances can be defined, executed in the order defined, and are generally used for initializing some static variables.
 
-不同点：静态代码块在非静态代码块之前执行(静态代码块 -> 非静态代码块 -> 构造方法)。静态代码块只在第一次 new 执行一次，之后不再执行，而非静态代码块在每 new 一次就执行一次。 非静态代码块可在普通方法中定义(不过作用不大)；而静态代码块不行。
+Differences: Static code blocks execute before non-static code blocks (static code block → non-static code block → constructor). A static code block only executes once during the first instantiation, while non-static code blocks execute every time a new instance is created. Non-static blocks can be defined within ordinary methods (though their utility is limited), while static code blocks cannot.
 
-> **🐛 修正（参见：[issue #677](https://github.com/Snailclimb/JavaGuide/issues/677)）**：静态代码块可能在第一次 new 对象的时候执行，但不一定只在第一次 new 的时候执行。比如通过 `Class.forName("ClassDemo")`创建 Class 对象的时候也会执行，即 new 或者 `Class.forName("ClassDemo")` 都会执行静态代码块。
-> 一般情况下,如果有些代码比如一些项目最常用的变量或对象必须在项目启动的时候就执行的时候,需要使用静态代码块,这种代码是主动执行的。如果我们想要设计不需要创建对象就可以调用类中的方法，例如：`Arrays` 类，`Character` 类，`String` 类等，就需要使用静态方法, 两者的区别是 静态代码块是自动执行的而静态方法是被调用的时候才执行的.
+> **🐛 Correction (refer to: [issue #677](https://github.com/Snailclimb/JavaGuide/issues/677))**: Static code blocks may be executed during the first instantiation of an object but are not guaranteed to execute only once upon instantiation. For example, executing `Class.forName("ClassDemo")` also triggers their execution; thus, both instantiation and `Class.forName("ClassDemo")` will lead to the static block execution.
+> Generally, if certain code, such as commonly used project variables or objects, must execute when the project starts, static blocks should be used. Such code is executed automatically. Conversely, to design methods that can be called without creating an object, such as the `Arrays`, `Character`, or `String` classes, static methods must be employed. The distinction is that static blocks execute automatically, while static methods only execute when called.
 
-Example：
+Example:
 
 ```java
 public class Test {
     public Test() {
-        System.out.print("默认构造方法！--");
+        System.out.print("Default constructor! --");
     }
-    //非静态代码块
+    // Non-static code block
     {
-        System.out.print("非静态代码块！--");
+        System.out.print("Non-static code block! --");
     }
-    //静态代码块
+    // Static code block
     static {
-        System.out.print("静态代码块！--");
+        System.out.print("Static code block! --");
     }
     private static void test() {
-        System.out.print("静态方法中的内容! --");
+        System.out.print("Content in static method! --");
         {
-            System.out.print("静态方法中的代码块！--");
+            System.out.print("Code block in static method! --");
         }
     }
     public static void main(String[] args) {
         Test test = new Test();
-        Test.test();//静态代码块！--静态方法中的内容! --静态方法中的代码块！--
+        Test.test(); // Static code block! -- Content in static method! -- Code block in static method! --
     }
 }
 ```
 
-上述代码输出：
+The output of the above code is:
 
 ```plain
-静态代码块！--非静态代码块！--默认构造方法！--静态方法中的内容! --静态方法中的代码块！--
+Static code block! -- Non-static code block! -- Default constructor! -- Content in static method! -- Code block in static method! --
 ```
 
-当只执行 `Test.test();` 时输出：
+When only executing `Test.test();`:
 
 ```plain
-静态代码块！--静态方法中的内容! --静态方法中的代码块！--
+Static code block! -- Content in static method! -- Code block in static method! --
 ```
 
-当只执行 `Test test = new Test();` 时输出：
+When only executing `Test test = new Test();`:
 
 ```plain
-静态代码块！--非静态代码块！--默认构造方法！--
+Static code block! -- Non-static code block! -- Default constructor! --
 ```
 
-非静态代码块与构造函数的区别是：非静态代码块是给所有对象进行统一初始化，而构造函数是给对应的对象初始化，因为构造函数是可以多个的，运行哪个构造函数就会建立什么样的对象，但无论建立哪个对象，都会先执行相同的构造代码块。也就是说，构造代码块中定义的是不同对象共性的初始化内容。
+The difference between non-static blocks and constructors is that non-static blocks serve to initialize all objects uniformly, whereas constructors initialize corresponding objects. Given that there can be multiple constructors, the executed constructor determines the created object, but regardless of which object is established, the same constructor code block will always execute, meaning the initialization contents defined in the constructor block are common for different objects.
 
-### 参考
+### References
 
 - <https://blog.csdn.net/chen13579867831/article/details/78995480>
 - <https://www.cnblogs.com/chenssy/p/3388487.html>

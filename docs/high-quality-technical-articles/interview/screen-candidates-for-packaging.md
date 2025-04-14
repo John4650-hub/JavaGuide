@@ -1,118 +1,114 @@
 ---
-title: 如何甄别应聘者的包装程度
-category: 技术文章精选集
+title: How to Identify the Degree of Candidate Packaging
+category: Selected Technical Articles
 author: Coody
 tag:
-  - 面试
+  - Interview
 ---
 
-> **推荐语**：经常听到培训班待过的朋友给我说他们的老师是怎么教他们“包装”自己的，不光是培训班，我认识的很多朋友也都会在面试之前“包装”一下自己，所以这个现象是普遍存在的。但是面试官也不都是傻子，通过下面这篇文章来看看面试官是如何甄别应聘者的包装程度。
+> **Recommendation**: I often hear from friends who have attended training classes about how their teachers taught them to "package" themselves. It's not just in training classes; many friends I know also "package" themselves before interviews. This phenomenon is widespread. However, interviewers are not fools. Let’s take a look at how interviewers identify the degree of candidate packaging through the following article.
 >
-> **原文地址**：<https://my.oschina.net/hooker/blog/3014656>
+> **Original article link**: <https://my.oschina.net/hooker/blog/3014656>
 
-## 前言
+## Introduction
 
-上到职场干将下到职场萌新，都会接触到包装简历这个词语。当你简历投到心仪的公司，公司内负责求职的工作人员是如何甄别简历的包装程度的？我根据自己的经验写下了这篇文章，谁都不是天才，包装无可厚非，切勿对号入座!
+From experienced professionals to newcomers in the workplace, everyone will encounter the term packaging resumes. When your resume lands in your ideal company, how do the staff in charge of recruitment discern the degree of your resume packaging? I have written this article based on my own experiences. No one is a genius; packaging is understandable, so don't take it personally!
 
-## 正文
+## Main Text
 
-在互联网极速膨胀的社会背景下，各行各业涌入互联网的 IT 民工日益增大。
+In the context of the rapid expansion of the internet, the number of IT workers entering various industries has been steadily increasing.
 
-早在 2016 年，我司发布了 Java、Ios 工程师的招聘信息，就 Java 工程师单个岗位而言，日收简历近 200 份，Ios 日收简历近一千份。
+Back in 2016, my company published job postings for Java and iOS engineers. Just for the Java engineer position alone, we received nearly 200 resumes per day, and for iOS, almost a thousand.
 
-没错，这就是当年培训机构对 Ios 工程师这个岗位发起的市场讨伐。而随着近几年的发展，市场供大于求现象日益严重。人员摸底成为用人单位对人才考核的重大难题。
+Indeed, this is the result of market campaigns initiated by training institutions targeting the iOS engineer position. However, in recent years, the oversupply in the market has become increasingly severe. Evaluating personnel has become a significant difficulty for employers in talent assessment.
 
-笔者初次与求职者以面试的形式进行沟通是 2015 年 6 月。由于当时笔者从业时间短，经验不够丰富，错过了一些优秀的求职者。
+My first communication with a job seeker in the form of an interview occurred in June 2015. At that time, due to my short industry experience, I missed some excellent candidates.
 
-三年后的，今天，笔者再次因公司规模扩大而深入与求职者进行沟通。
+Three years later, today, my company has expanded, which has led me to engage more deeply with job seekers.
 
-### 1.初选如何鉴别劣质简历
+### 1. How to Identify Poor Quality Resumes During Initial Screening
 
-培训机构除了提供技术培训，往往还提供**简历编写指导**、**面试指导**。很多潜移默化的东西，我们很难甄别。但培训机构包装的简历，存在千遍一律的特征。
+Besides providing technical training, training institutions often offer **resume writing guidance** and **interview coaching**. Many subtle factors are tough to discern. However, resumes packaged by training institutions typically exhibit uniform characteristics.
 
-**年龄较小却具备高级文凭**
+**Young but possess advanced degrees**
 
-年龄较小却具备高级文凭，这个或许不能作为一项标准，但是大部分的应聘者，均符合传统文凭的市场情况。个别技术爱好者可能通过自考获得文凭，这种情况需提供独有的技术亮点。
+While being young and possessing advanced degrees may not be a definitive standard, most candidates appear to conform to traditional educational backgrounds. Individual tech enthusiasts might obtain degrees through self-study, in which case they need to present unique technical highlights.
 
-**年龄较大却几乎不具备技术经验**
+**Old but with virtually no technical experience**
 
-年龄较大却几乎不具备技术经验，相对前一点，这个问题就比较严重了。大家都知道，一个正常的人，对新事物的接受能力会随着年龄的增长而降低，互联网技术也包括其内。如果一个人年龄较大不具备技术经验，那么只有两种情况：
+This issue is more severe than the previous one. It's well-known that an individual's ability to accept new things generally declines with age, including internet technologies. If an older person lacks technical experience, only two scenarios could explain this:
 
-1. 中途转行(通过培训、自学等方式强行入行)。
-2. 由于能力问题，已有的经验不敢写入简历中(能力与经验/薪资不符)。
+1. They changed careers midway (forcing their way in through training or self-learning).
+1. Due to capability issues, they do not dare to include their existing experience on their resume (their skills do not align with their experience/salary).
 
-**项目经验多为管理系统**
+**Project experience mostly comprises management systems**
 
-项目经验，这一项用来评估应聘者的水平太合适不过了。随着互联网的发展迭代，每一年都会出来很多创新型的互联网公司和新兴行业。笔者最近发布的招聘需求里面。CRM 系统、商城、XX 管理系统、问卷系统、课堂系统占了 90%的份额。试问现在 2019 年，内部管理系统这么火爆么。言归正传，我们对于简历的评估，应当多考虑“确有其事”的项目。比如说该人员当时就职于 XX 公司，该公司当时的背景下确实研发了该项目（外包除外）。
+Project experience is an essential criterion for evaluating a candidate's level. With the rapid iteration of the internet, numerous innovative internet companies and emerging industries arise each year. In my recent recruitment requests, 90% of responses focused on CRM systems, e-commerce, management systems, survey systems, and classroom systems. Is internal management so popular now in 2019? To evaluate resumes, we should consider projects that are "real." For instance, if an individual was employed by Company XX at the time and that company indeed developed the project (excluding outsourcing).
 
-**项目的背景不符合互联网发展背景**
+**Project backgrounds not aligning with internet development trends**
 
-项目背景，每年的市场走向不同，从早些年的电商、彩票风波，到后来的 O2O、夺宝、直播、新零售。每个系列的产品的出现，都符合市场的定义。如果简历中出现 18 年、19 年才刚立项做彩票(15 年政府禁止互联网彩票)、O2O、商城、夺宝(17 年初禁止夺宝类产品)、直播等产品。显然是非常不符合市场需求的。这种情况下需考虑具体情况是否存在理解空间。
+Project backgrounds vary with market directions each year, from early years of e-commerce and lottery issues to later O2O, treasure-hunting, live streaming, and new retail trends. Each series of products arises to meet market definitions. If resumes mention projects initiated in 2018 or 2019 related to lotteries (which were banned in 2015), O2O, e-commerce, treasure-hunting (which was prohibited in early 2017), live streaming, etc., it clearly does not match market demands. In this case, we must assess whether any misunderstanding could exist.
 
-**缺乏新意**
+**Lack of innovation**
 
-不同工作经验下多个项目技术架构或项目结构一致，缺乏新意。一般情况而言，不同的公司技术栈不同，甚至产品的走向和模式完全不同。故此，当一个应聘者多家公司的多个项目中写到的技术千遍一律，业务流程异曲同工。看似整洁，实则更加缺乏说服力。
+If a candidate describes multiple projects with the same technical architecture or project structure, this suggests a lack of innovation. Generally, different companies have different tech stacks, and even product direction and models differ entirely. Therefore, when a candidate cites the same technology across multiple projects at various companies, the appearance of tidiness masks a lack of persuasiveness.
 
-**技术过于新颖，对旧技术却只字不提**
+**Too focused on new technologies, with no mention of old technologies**
 
-技术过于新颖，根据互联网技术发展的走向来看，我们在不断向新型技术靠拢。但是任何企业作为资历深厚的 CTO、架构师来说。往往会选择更稳定、更成熟、学习成本更低的已有技术。对新技术的追求不会过于明显。而培训机构则是“哪项技术火我们就教哪项”。故此，出现了很多走入互联网行业的新人对旧技术一窍不通。甚至很多技术都没听过。
+When observing the evolution of internet technology, we continuously align with new technologies. However, any veteran CTO or architect in a company typically opts for more stable, mature, and lower-cost learning technologies. The pursuit of new technologies will not be overly evident. Conversely, training institutions tend to teach whatever technology is trending. Hence, many newcomers to the internet industry lack even basic knowledge of established technologies.
 
-**工作经验较丰富，但从事的工作较低级。**
+**Rich work experience but engaged in low-level work**
 
-工作经验比较丰富，单从事的工作比较低级，这里存在很大的问题，要么就是原公司没法提供合理的舞台给该人员更好的发展空间，要么就是该人员能力不够，没法完成更高级的工作。当然，还有一种情况就是该人员包装过多的经验导致简历中不和谐。这种情况需要评估公司规模和背景。
+Having considerable work experience but engaged in low-level roles poses significant issues. It may indicate either that the prior company lacked the opportunity to provide better developmental pathways for the individual, or that the individual's skills were insufficient for more advanced work. There is also a scenario wherein excessive packaging of experience renders a resume discordant. Assessing the company’s scale and background becomes necessary in this situation.
 
-**公司背景跨省跨市**
+**Company background crossing provinces and cities**
 
-可能很多用人单位和鄙人一样，最近接受到的简历，90%为跨市跳槽的人员。其中武汉占了 60%以上。均为武汉 XX 网络科技有限公司。公司规模均小于 50 人。也有厦门、宁波、南京等等。这个问题笔者就不提了，大家都懂的。跨地区跳槽不好查证。
+Many hiring entities, including myself, have recently noticed that 90% of resumes received involve individuals relocating across cities. Over 60% come from Wuhan XX Network Technology Co., Ltd., with all companies having fewer than 50 employees. Others hail from Xiamen, Ningbo, Nanjing, etc. This issue is self-explanatory; we all understand it. Cross-regional job-hopping is difficult to verify.
 
-**缺少业余热情于技术的证明**
+**Lack of passion for technology in personal projects**
 
-有些眼高手低的技术员，做了几个管理系统。用到的技术确是各种分布式、集群、高并发、大数据、消息队列、搜索引擎、镜像容器、多数据库、数据中心等等。期望的薪资也高于行业标准。一个对技术很热情的人，业余时间肯定在技术方面花费过不少时间。那么可以从该人员的博客、git 地址入手。甚至可以通过手机号、邮箱、昵称、马甲。去搜索引擎进行搜集，核实该人员是否在论坛、贴吧、开源组织有过技术背景。
+Some overambitious technicians have completed several management systems yet have utilized a variety of distributed systems, clusters, high concurrency techniques, big data, message queues, search engines, image containers, multiple databases, and data centers—all while expecting salaries above industry standards. A genuinely passionate individual in technology would undoubtedly invest a considerable amount of personal time into it. Consequently, we can explore the candidate's blog, Git address, or even trace back their phone number, email, nickname, or pseudo name through search engines to verify whether the individual has a technical background in forums, discussion boards, or open-source organizations.
 
-### 2. 进入面试阶段，如何甄别对方的水分
+### 2. Entering the Interview Phase: How to Identify Their Fluff
 
-在甄别对方水分这一块，并没有明确的标准，但是笔者可以提几个点。这也是笔者在实际面试中惯用的做法。
+Identifying fluff in a candidate's statements does not follow defined standards, but I can propose a few points based on my usual interview practices.
 
-**通过公司规模、团队规模、人员分配是否合理、人员合作方式来判断对方是否具备工作经验**
+**Assessing the company’s size, team structure, reasonable personnel allocation, and collaboration methods to determine if the candidate possesses relevant work experience**
 
-当招聘初级、初中级 IT 人员的时候，可以询问一些问题，比如公司有多少人、产品团队多少人、产品、技术、后端、前端、客户端、UI、测试各多少人。工作中如何合作的、产品做了多少时间、何时上线的、上线后多长时间迭代一个版本、多长时间迭代一个活动、发展至今多少用户(后端)、多大并发等等(后端)。根据笔者的经验，如果一个人没有任何从业周期，面对这些问题的时候，或多或少答非所问或者给出的答案非常不合理。
+When hiring junior or mid-level IT personnel, it can be beneficial to pose inquiries regarding the company’s size, the size of the product team, and distribution across product, technical, backend, frontend, UI, and testing roles. Understand how collaboration occurs, how long the product has been under development, when it was launched, the frequency of version iterations, the duration of activity iterations, the number of users (backend), and peak concurrency (backend). According to my experience, if a person lacks any practical experience, they will typically provide off-the-mark answers or give irrational responses when faced with these questions.
 
-**背景公司入职时间、项目立项实现、完工时间、产品技术栈、迭代流程的核实**
+**Verifying background company entry time, project initiation and completion times, product tech stack, and iteration processes**
 
-很多应聘者对于简历过于包装，只为了追求更高的薪资。当我们问起：你是 xx 年 xx 月入职的该公司？你们项目是 xx 年 xx 月上线的？你们项目使用到 xx 技术？你们每次上线前夕是如何评审的。面对这些问题，应聘者给出的答案经常与简历不符合。这样问题就来了。关于项目使用到的技术，很多项目我们可以通过搜索该项目的地址、APP。通过 HTTP 协议、技术特征、抛出异常特征来大致判别对方使用到的技术。如果应聘者给出的答案明显与之不匹配，嘿嘿。
+Many candidates excessively embellish their resumes to pursue higher salaries. When we inquire: "You joined the company in xx year and xx month?" "Your project went live in xx year and xx month?" "What technology did your project use?" "How do you typically review your releases?" Candidates often provide answers that conflict with the information on their resumes. This prompts questions regarding the technology used in projects. We can generally assess utilized technologies through project addresses or apps, leveraging HTTP protocol, technical characteristics, and exceptional traits. If candidates provide responses that obviously do not match, that is telling.
 
-**通过技术深度，甄别对方的技术水平**
+**Assessing technical depth to gauge the candidate's technical level**
 
-1. 确定对方的技术栈，如：你做过最满意的项目是哪个，为什么？你最喜欢使用的技术是哪些，为什么？
+1. Determine the candidate's tech stack: For example, "What project are you most satisfied with, and why?" "What technologies do you prefer to use, and why?"
+1. Assess the product's developmental stage: "How long has your product been in development, how many iterations have occurred, how many versions released, what is the current user count, and what peak concurrency are you handling?"
+1. Identify the candidate's technical networking habits: "What channels do you use to interact with other technical individuals, and what technologies have you primarily communicated about?"
 
-2. 确定对方项目的发展程度，如：你们产品做了多久，迭代了多久，发布了多少版本，发展到了多少用户，带来多大并发，多少流水？
+Recently, many candidates presented resumes filled with an array of technologies. To avoid stepping outside the candidate’s expertise, I specifically focus on the technologies mentioned in their resumes when forming my inquiries. Here are a few examples.
 
-3. 确定对方的技术属性，如：平时你会通过什么渠道跟其他技术人形成技术沟通与交流，主要交流过哪些技术？
+**1) A candidate claimed proficiency in Redis.**
 
-笔者最近接待的面试者，很多面试者的简历上，写着层出不穷的各种技术，为了不跨越求职者的技术栈，笔者专门挑应聘者简历写到或用到的技术来进行询问。笔者举几个例子。
+1. Describe the Redis data structures you have used and their business scenarios;
+1. Explain the plugins you used to manipulate Redis;
+1. Clarify the serialization methods employed;
+1. Discuss any significant issues you encountered while using Redis;
 
-**1)某求职者简历上写着熟练使用 Redis。**
+**2) A candidate asserted familiarity with HTTP protocols and claimed to have written web crawlers.**
 
-1. 介绍一下你使用过 Redis 的哪些数据结构，并描述一下使用的业务场景；
-2. 介绍一下你操作 Redis 用到的是什么插件；
-3. 介绍一下你们使用的序列化方式；
-4. 介绍一下你们使用 Redis 遇到过给你印象较深的问题；
+1. Describe the HTTP headers you are familiar with and their purposes;
+1. If a frontend submission succeeds but the backend cannot receive the data, how would you troubleshoot this issue?;
+1. Explain the basic structure of an HTTP message;
+1. If the server returns a Cookie, what header field in the response contains it?;
+1. What does it signify if the server returns `Transfer-Encoding: chunked`?;
+1. Can you describe segmented loading and its technical process?
 
-**2)某求职者声称熟练 HTTP 协议并编写过爬虫。**
+Of course, the technical depth will vary based on the specific technologies involved.
 
-1. 介绍一下你所了解的几个 HTTP head 头并描述其用途；
-2. 如果前端提交成功，后端无法接受数据，这时候你将如何排查问题；
-3. 描述一下 HTTP 基本报文结构;
-4. 如果服务器返回 Cookie，存储在响应内容里面 head 头的字段叫做什么;
-5. 当服务端返回 Transfer-Encoding：chunked 代表什么含义
-6. 是否了解分段加载并描述下其技术流程。
+The general approach is as follows: If you claim to have slaughtered pigs, I’ll surely ask how many pigs, at what times, and the sizes and colors of them. The responses might be: "I’ve slaughtered dozens, some weighing fifty pounds, and they’ve been green, yellow, red, and blue." Yet, issues arise when a candidate claiming to have used Git for two years is unaware of GitHub, or another has a year’s experience using Redis without knowledge of data structures or serialization methods, or a specialist in web scraping fails to understand the meaning of `content-type`, or an individual using search engine technology cannot name two segmentation plugins while working with read-write separation in databases but knows nothing of synchronization delays, etc.
 
-当然，面向不同的技术，对应的技术深度自然也不一样。
-
-大体上的套路便是如此：你说你杀过猪。那么你杀过几头猪，分别是啥时候，杀过多大的猪，有啥毛色。事实上对方可能给你的回答是：杀过、十几头、杀过五十斤的、杀过绿色、黄色、红色、蓝色的猪。那么问题就来了。
-
-然而笔者碰到的问题是：使用 Git 两年却不知道 GitHub、使用 Redis 一年却不知道数据结构也不知道序列化、专业做爬虫却不懂 `content-type` 含义、使用搜索引擎技术却说不出两个分词插件、使用数据库读写分离却不知道同步延时等等。
-
-写在最后，笔者认为在招聘途中，并不是不允许求职者包装，但是尽可能满足能筹平衡。虽然这篇文章没有完美的结尾，但是笔者提供了面试失败的各种经验。笔者最终招到了如意的小伙伴。也希望所有技术面试官早日找到符合自己产品发展的 IT 伙伴。
+In conclusion, I believe that in the recruitment process, it is not forbidden for candidates to package themselves, but it is crucial to strike a balance. Although this article does not have a perfect ending, I have provided various experiences regarding interview failures. Ultimately, I found suitable partners. I also hope that all technical interviewers find their ideal IT partners that align with their product development needs soon.
 
 <!-- @include: @article-footer.snippet.md -->

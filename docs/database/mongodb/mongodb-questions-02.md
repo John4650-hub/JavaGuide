@@ -1,49 +1,49 @@
 ---
-title: MongoDB常见面试题总结（下）
-category: 数据库
+title: Summary of Common MongoDB Interview Questions (Part 2)
+category: Database
 tag:
   - NoSQL
   - MongoDB
 ---
 
-## MongoDB 索引
+## MongoDB Indexes
 
-### MongoDB 索引有什么用?
+### What are the uses of MongoDB indexes?
 
-和关系型数据库类似，MongoDB 中也有索引。索引的目的主要是用来提高查询效率，如果没有索引的话，MongoDB 必须执行 **集合扫描** ，即扫描集合中的每个文档，以选择与查询语句匹配的文档。如果查询存在合适的索引，MongoDB 可以使用该索引来限制它必须检查的文档数量。并且，MongoDB 可以使用索引中的排序返回排序后的结果。
+Similar to relational databases, MongoDB also has indexes. The main purpose of indexes is to improve query efficiency. Without indexes, MongoDB must perform **collection scans**, which means scanning every document in the collection to select documents that match the query statement. If a suitable index exists for the query, MongoDB can use that index to limit the number of documents it must check. Additionally, MongoDB can return sorted results based on the index order.
 
-虽然索引可以显著缩短查询时间，但是使用索引、维护索引是有代价的。在执行写入操作时，除了要更新文档之外，还必须更新索引，这必然会影响写入的性能。因此，当有大量写操作而读操作少时，或者不考虑读操作的性能时，都不推荐建立索引。
+While indexes can significantly reduce query time, there is a cost to using and maintaining indexes. When performing write operations, in addition to updating documents, the indexes must also be updated, which inevitably affects write performance. Therefore, it is not recommended to create indexes when there are many write operations and few read operations, or when read operation performance is not a concern.
 
-### MongoDB 支持哪些类型的索引？
+### What types of indexes does MongoDB support?
 
-**MongoDB 支持多种类型的索引，包括单字段索引、复合索引、多键索引、哈希索引、文本索引、 地理位置索引等，每种类型的索引有不同的使用场合。**
+**MongoDB supports various types of indexes, including single-field indexes, compound indexes, multi-key indexes, hash indexes, text indexes, and geospatial indexes, each with different use cases.**
 
-- **单字段索引：** 建立在单个字段上的索引，索引创建的排序顺序无所谓，MongoDB 可以头/尾开始遍历。
-- **复合索引：** 建立在多个字段上的索引，也可以称之为组合索引、联合索引。
-- **多键索引**：MongoDB 的一个字段可能是数组，在对这种字段创建索引时，就是多键索引。MongoDB 会为数组的每个值创建索引。就是说你可以按照数组里面的值做条件来查询，这个时候依然会走索引。
-- **哈希索引**：按数据的哈希值索引，用在哈希分片集群上。
-- **文本索引：** 支持对字符串内容的文本搜索查询。文本索引可以包含任何值为字符串或字符串元素数组的字段。一个集合只能有一个文本搜索索引，但该索引可以覆盖多个字段。MongoDB 虽然支持全文索引，但是性能低下，暂时不建议使用。
-- **地理位置索引：** 基于经纬度的索引，适合 2D 和 3D 的位置查询。
-- **唯一索引**：确保索引字段不会存储重复值。如果集合已经存在了违反索引的唯一约束的文档，则后台创建唯一索引会失败。
-- **TTL 索引**：TTL 索引提供了一个过期机制，允许为每一个文档设置一个过期时间，当一个文档达到预设的过期时间之后就会被删除。
+- **Single-field index:** An index built on a single field. The sort order of the index creation does not matter; MongoDB can traverse from the beginning or the end.
+- **Compound index:** An index built on multiple fields, which can also be called a composite index or a combined index.
+- **Multi-key index:** When a field in MongoDB is an array, creating an index on that field is known as a multi-key index. MongoDB will create indexes for each value in the array. This means you can query based on the values inside the array while still using the index.
+- **Hash index:** An index based on the hash values of the data, used in hash-sharded clusters.
+- **Text index:** Supports full-text search queries on string content. A text index can include any field whose values are strings or arrays of strings. A collection can only have one text search index, but that index can cover multiple fields. Although MongoDB supports full-text indexing, its performance is poor, and it is not recommended for now.
+- **Geospatial index:** An index based on latitude and longitude, suitable for 2D and 3D location queries.
+- **Unique index:** Ensures that the indexed field does not store duplicate values. If a document violating the unique constraint already exists in the collection, creating a unique index in the background will fail.
+- **TTL index:** TTL indexes provide an expiration mechanism, allowing an expiration time to be set for each document. When a document reaches its preset expiration time, it will be deleted.
 - ……
 
-### 复合索引中字段的顺序有影响吗？
+### Does the order of fields in a compound index matter?
 
-复合索引中字段的顺序非常重要，例如下图中的复合索引由`{userid:1, score:-1}`组成，则该复合索引首先按照`userid`升序排序；然后再每个`userid`的值内，再按照`score`降序排序。
+The order of fields in a compound index is very important. For example, if a compound index consists of `{userid:1, score:-1}`, the compound index first sorts by `userid` in ascending order; then within each value of `userid`, it sorts by `score` in descending order.
 
-![复合索引](https://oss.javaguide.cn/github/javaguide/database/mongodb/mongodb-composite-index.png)
+![Compound Index](https://oss.javaguide.cn/github/javaguide/database/mongodb/mongodb-composite-index.png)
 
-在复合索引中，按照何种方式排序，决定了该索引在查询中是否能被应用到。
+The sorting method in a compound index determines whether that index can be applied in a query.
 
-走复合索引的排序：
+Sorting that uses the compound index:
 
 ```sql
 db.s2.find().sort({"userid": 1, "score": -1})
 db.s2.find().sort({"userid": -1, "score": 1})
 ```
 
-不走复合索引的排序：
+Sorting that does not use the compound index:
 
 ```sql
 db.s2.find().sort({"userid": 1, "score": 1})
@@ -54,45 +54,45 @@ db.s2.find().sort({"score": -1, "userid": -1})
 db.s2.find().sort({"score": -1, "userid": 1})
 ```
 
-我们可以通过 explain 进行分析：
+We can analyze this through explain:
 
 ```sql
 db.s2.find().sort({"score": -1, "userid": 1}).explain()
 ```
 
-### 复合索引遵循左前缀原则吗？
+### Does a compound index follow the left-prefix principle?
 
-**MongoDB 的复合索引遵循左前缀原则**：拥有多个键的索引，可以同时得到所有这些键的前缀组成的索引，但不包括除左前缀之外的其他子集。比如说，有一个类似 `{a: 1, b: 1, c: 1, ..., z: 1}` 这样的索引，那么实际上也等于有了 `{a: 1}`、`{a: 1, b: 1}`、`{a: 1, b: 1, c: 1}` 等一系列索引，但是不会有 `{b: 1}` 这样的非左前缀的索引。
+**MongoDB's compound index follows the left-prefix principle**: An index with multiple keys can simultaneously obtain indexes composed of all prefixes of those keys, but does not include subsets other than the left prefix. For example, an index like `{a: 1, b: 1, c: 1, ..., z: 1}` effectively implies indexes like `{a: 1}`, `{a: 1, b: 1}`, `{a: 1, b: 1, c: 1}`, etc., but there will be no index like `{b: 1}` that is not a left prefix index.
 
-### 什么是 TTL 索引？
+### What is a TTL index?
 
-TTL 索引提供了一个过期机制，允许为每一个文档设置一个过期时间 `expireAfterSeconds` ，当一个文档达到预设的过期时间之后就会被删除。TTL 索引除了有 `expireAfterSeconds` 属性外，和普通索引一样。
+A TTL index provides an expiration mechanism, allowing an expiration time `expireAfterSeconds` to be set for each document. When a document reaches its preset expiration time, it will be deleted. Aside from having the `expireAfterSeconds` attribute, a TTL index is just like a normal index.
 
-数据过期对于某些类型的信息很有用，比如机器生成的事件数据、日志和会话信息，这些信息只需要在数据库中保存有限的时间。
+Data expiration is useful for certain types of information, such as machine-generated event data, logs, and session information, which only need to be retained in the database for a limited time.
 
-**TTL 索引运行原理**：
+**How TTL Index Works:**
 
-- MongoDB 会开启一个后台线程读取该 TTL 索引的值来判断文档是否过期，但不会保证已过期的数据会立马被删除，因后台线程每 60 秒触发一次删除任务，且如果删除的数据量较大，会存在上一次的删除未完成，而下一次的任务已经开启的情况，导致过期的数据也会出现超过了数据保留时间 60 秒以上的现象。
-- 对于副本集而言，TTL 索引的后台进程只会在 Primary 节点开启，在从节点会始终处于空闲状态，从节点的数据删除是由主库删除后产生的 oplog 来做同步。
+- MongoDB will start a background thread to read the TTL index values to determine if documents have expired, but it will not guarantee that expired data is deleted immediately, as the background thread triggers a deletion task every 60 seconds. If a large amount of data needs to be deleted, it is possible for the previous deletion to not complete before the next task starts, resulting in expired data being retained beyond the 60-second limit.
+- For replica sets, the TTL index background process runs only on the Primary node, while it remains idle on Secondary nodes. The deletion of data on Secondary nodes is synchronized from the Primary through the oplog after it has been deleted.
 
-**TTL 索引限制**：
+**TTL Index Limitations:**
 
-- TTL 索引是单字段索引。复合索引不支持 TTL
-- `_id`字段不支持 TTL 索引。
-- 无法在上限集合(Capped Collection)上创建 TTL 索引，因为 MongoDB 无法从上限集合中删除文档。
-- 如果某个字段已经存在非 TTL 索引，那么在该字段上无法再创建 TTL 索引。
+- TTL indexes are single-field indexes. Compound indexes do not support TTL.
+- The `_id` field does not support TTL indexes.
+- It is not possible to create a TTL index on capped collections, as MongoDB cannot delete documents from capped collections.
+- If a non-TTL index already exists on a field, a TTL index cannot be created on that field.
 
-### 什么是覆盖索引查询？
+### What is a covered index query?
 
-根据官方文档介绍，覆盖查询是以下的查询：
+According to the official documentation, a covered query is defined as follows:
 
-- 所有的查询字段是索引的一部分。
-- 结果中返回的所有字段都在同一索引中。
-- 查询中没有字段等于`null`。
+- All query fields are part of the index.
+- All fields returned in the result are contained within the same index.
+- The query does not contain any fields equal to `null`.
 
-由于所有出现在查询中的字段是索引的一部分， MongoDB 无需在整个数据文档中检索匹配查询条件和返回使用相同索引的查询结果。因为索引存在于内存中，从索引中获取数据比通过扫描文档读取数据要快得多。
+Since all fields that appear in the query are part of the index, MongoDB does not need to retrieve matching query conditions from the entire data document. Accessing data from the index, which resides in memory, is much faster than reading data via document scanning.
 
-举个例子：我们有如下 `users` 集合:
+For example, we have the following `users` collection:
 
 ```json
 {
@@ -105,171 +105,171 @@ TTL 索引提供了一个过期机制，允许为每一个文档设置一个过�
 }
 ```
 
-我们在 `users` 集合中创建联合索引，字段为 `gender` 和 `user_name` :
+We create a compound index in the `users` collection on the fields `gender` and `user_name`:
 
 ```sql
 db.users.ensureIndex({gender:1,user_name:1})
 ```
 
-现在，该索引会覆盖以下查询：
+Now, this index will cover the following query:
 
 ```sql
 db.users.find({gender:"M"},{user_name:1,_id:0})
 ```
 
-为了让指定的索引覆盖查询，必须显式地指定 `_id: 0` 来从结果中排除 `_id` 字段，因为索引不包括 `_id` 字段。
+To ensure that the specified index covers the query, you must explicitly specify `_id: 0` to exclude the `_id` field from the result, as the index does not include the `_id` field.
 
-## MongoDB 高可用
+## MongoDB High Availability
 
-### 复制集群
+### Replica Set
 
-#### 什么是复制集群？
+#### What is a replica set?
 
-MongoDB 的复制集群又称为副本集群，是一组维护相同数据集合的 mongod 进程。
+MongoDB's replica set is a group of mongod processes that maintain the same dataset.
 
-客户端连接到整个 Mongodb 复制集群，主节点机负责整个复制集群的写，从节点可以进行读操作，但默认还是主节点负责整个复制集群的读。主节点发生故障时，自动从从节点中选举出一个新的主节点，确保集群的正常使用，这对于客户端来说是无感知的。
+Clients connect to the entire MongoDB replica set, where the primary node is responsible for all writes to the replica set, while secondary nodes can perform read operations. However, by default, the primary node is responsible for all reads within the replica set. If the primary node fails, a new primary node is automatically elected from the secondary nodes to ensure the cluster's ongoing availability, which is transparent to the client.
 
-通常来说，一个复制集群包含 1 个主节点（Primary），多个从节点（Secondary）以及零个或 1 个仲裁节点（Arbiter）。
+Typically, a replica set includes one primary node (Primary), multiple secondary nodes (Secondary), and zero or one arbiter node (Arbiter).
 
-- **主节点**：整个集群的写操作入口，接收所有的写操作，并将集合所有的变化记录到操作日志中，即 oplog。主节点挂掉之后会自动选出新的主节点。
-- **从节点**：从主节点同步数据，在主节点挂掉之后选举新节点。不过，从节点可以配置成 0 优先级，阻止它在选举中成为主节点。
-- **仲裁节点**：这个是为了节约资源或者多机房容灾用，只负责主节点选举时投票不存数据，保证能有节点获得多数赞成票。
+- **Primary Node:** The entry point for write operations in the cluster, receiving all write operations and logging all changes to the operation log, known as oplog. A new primary node is automatically elected if the current one fails.
+- **Secondary Node:** Synchronizes data from the primary node and elects a new node if the primary node fails. However, a secondary node can be configured with a priority of 0 to prevent it from being elected as the primary.
+- **Arbiter Node:** Used to save resources or for disaster recovery across multiple data centers; it only votes during primary node elections and does not store data, ensuring that a node can receive a majority of votes.
 
-下图是一个典型的三成员副本集群：
+The diagram below shows a typical three-member replica set:
 
 ![](https://oss.javaguide.cn/github/javaguide/database/mongodb/replica-set-read-write-operations-primary.png)
 
-主节点与备节点之间是通过 **oplog（操作日志）** 来同步数据的。oplog 是 local 库下的一个特殊的 **上限集合(Capped Collection)** ，用来保存写操作所产生的增量日志，类似于 MySQL 中 的 Binlog。
+Data synchronization between the primary and secondary nodes occurs through the **oplog (operation log)**. The oplog is a special **capped collection** in the local database that stores incremental logs produced by write operations, similar to the Binlog in MySQL.
 
-> 上限集合类似于定长的循环队列，数据顺序追加到集合的尾部，当集合空间达到上限时，它会覆盖集合中最旧的文档。上限集合的数据将会被顺序写入到磁盘的固定空间内，所以，I/O 速度非常快，如果不建立索引，性能更好。
+> A capped collection is similar to a fixed-length circular queue where data is appended to the end of the collection. When the collection reaches its maximum capacity, it overwrites the oldest documents. Data in a capped collection is sequentially written to disk, providing very fast I/O speeds, and performance is even better when no indexes are established.
 
 ![](https://oss.javaguide.cn/github/javaguide/database/mongodb/replica-set-primary-with-two-secondaries.png)
 
-当主节点上的一个写操作完成后，会向 oplog 集合写入一条对应的日志，而从节点则通过这个 oplog 不断拉取到新的日志，在本地进行回放以达到数据同步的目的。
+After a write operation is completed on the primary node, a corresponding log entry is written to the oplog collection, and the secondary nodes continuously pull new logs from this oplog, replaying them locally to achieve data synchronization.
 
-副本集最多有一个主节点。 如果当前主节点不可用，一个选举会抉择出新的主节点。MongoDB 的节点选举规则能够保证在 Primary 挂掉之后选取的新节点一定是集群中数据最全的一个。
+There can be at most one primary node in a replica set. If the current primary node becomes unavailable, an election will determine a new primary node. The rules for node election in MongoDB guarantee that the newly chosen node after a primary failure is the one with the most complete data in the cluster.
 
-#### 为什么要用复制集群？
+#### Why use a replica set?
 
-- **实现 failover**：提供自动故障恢复的功能，主节点发生故障时，自动从从节点中选举出一个新的主节点，确保集群的正常使用，这对于客户端来说是无感知的。
-- **实现读写分离**：我们可以设置从节点上可以读取数据，主节点负责写入数据，这样的话就实现了读写分离，减轻了主节点读写压力过大的问题。MongoDB 4.0 之前版本如果主库压力不大,不建议读写分离，因为写会阻塞读，除非业务对响应时间不是非常关注以及读取历史数据接受一定时间延迟。
+- **To implement failover:** It provides automatic fault recovery functionality. When the primary node fails, a new primary is automatically elected from the secondary nodes to ensure the normal operation of the cluster, which is transparent to the client.
+- **To achieve read-write separation:** We can configure secondary nodes to read data while the primary node is responsible for write operations, thus achieving read-write separation and alleviating the excessive load on the primary node. Prior to MongoDB 4.0, it was not recommended to separate reads and writes if the primary node was not under heavy load, as writes would block reads unless the business did not emphasize response time and was acceptable with a certain delay in reading historical data.
 
-### 分片集群
+### Sharded Clusters
 
-#### 什么是分片集群？
+#### What is a sharded cluster?
 
-分片集群是 MongoDB 的分布式版本，相较副本集，分片集群数据被均衡的分布在不同分片中， 不仅大幅提升了整个集群的数据容量上限，也将读写的压力分散到不同分片，以解决副本集性能瓶颈的难题。
+A sharded cluster is the distributed version of MongoDB. Unlike replica sets, the data in a sharded cluster is balanced across different shards, significantly increasing the overall data capacity of the cluster and distributing the read and write load across different shards to address the performance bottlenecks of replica sets.
 
-MongoDB 的分片集群由如下三个部分组成（下图来源于[官方文档对分片集群的介绍](https://www.mongodb.com/docs/manual/sharding/)）：
+A MongoDB sharded cluster consists of the following three components (the diagram below is sourced from the [official documentation on sharded clusters](https://www.mongodb.com/docs/manual/sharding/)):
 
 ![](https://oss.javaguide.cn/github/javaguide/database/mongodb/sharded-cluster-production-architecture.png)
 
-- **Config Servers**：配置服务器，本质上是一个 MongoDB 的副本集，负责存储集群的各种元数据和配置，如分片地址、Chunks 等
-- **Mongos**：路由服务，不存具体数据，从 Config 获取集群配置讲请求转发到特定的分片，并且整合分片结果返回给客户端。
-- **Shard**：每个分片是整体数据的一部分子集，从 MongoDB3.6 版本开始，每个 Shard 必须部署为副本集（replica set）架构
+- **Config Servers:** Config servers are essentially a MongoDB replica set that is responsible for storing various metadata and configurations for the cluster, such as shard addresses, Chunks, etc.
+- **Mongos:** Router service that does not store actual data. It retrieves the cluster configuration from Config and forwards requests to specific shards, aggregating results and returning them to the client.
+- **Shard:** Each shard is a subset of the overall data. Starting from MongoDB 3.6, each shard must be deployed as a replica set architecture.
 
-#### 为什么要用分片集群？
+#### Why use a sharded cluster?
 
-随着系统数据量以及吞吐量的增长，常见的解决办法有两种：垂直扩展和水平扩展。
+As the amount of data and throughput in a system grows, common solutions include vertical scaling and horizontal scaling.
 
-垂直扩展通过增加单个服务器的能力来实现，比如磁盘空间、内存容量、CPU 数量等；水平扩展则通过将数据存储到多个服务器上来实现，根据需要添加额外的服务器以增加容量。
+Vertical scaling achieves this by increasing the capability of a single server, such as disk space, memory capacity, CPU count, etc. Horizontal scaling achieves this by distributing data across multiple servers, adding additional servers as needed to increase capacity.
 
-类似于 Redis Cluster，MongoDB 也可以通过分片实现 **水平扩展** 。水平扩展这种方式更灵活，可以满足更大数据量的存储需求，支持更高吞吐量。并且，水平扩展所需的整体成本更低，仅仅需要相对较低配置的单机服务器即可，代价是增加了部署的基础设施和维护的复杂性。
+Similar to Redis Cluster, MongoDB can also implement **horizontal scaling** through sharding. This scaling method is more flexible, can meet the storage needs of larger datasets, and supports higher throughput. Furthermore, the overall cost required for horizontal scaling is lower since it only needs relatively lower-configured single servers, albeit at the cost of increased complexity in infrastructure deployment and maintenance.
 
-也就是说当你遇到如下问题时，可以使用分片集群解决：
+This means that when you encounter the following issues, a sharded cluster can be used for resolution:
 
-- 存储容量受单机限制，即磁盘资源遭遇瓶颈。
-- 读写能力受单机限制，可能是 CPU、内存或者网卡等资源遭遇瓶颈，导致读写能力无法扩展。
+- Storage capacity is limited by a single machine, meaning disk resources encounter bottlenecks.
+- Read and write capabilities are constrained by a single machine, possibly due to CPU, memory, or network card resources encountering bottlenecks, preventing the ability to scale reads and writes.
 
-#### 什么是分片键？
+#### What is a shard key?
 
-**分片键（Shard Key）** 是数据分区的前提， 从而实现数据分发到不同服务器上，减轻服务器的负担。也就是说，分片键决定了集合内的文档如何在集群的多个分片间的分布状况。
+**Shard Key** is the premise for data partitioning, enabling data distribution across different servers to lighten the server's load. In other words, the shard key determines how documents within a collection are distributed across multiple shards in the cluster.
 
-分片键就是文档里面的一个字段，但是这个字段不是普通的字段，有一定的要求：
+A shard key is essentially a field within the document, but it is not an ordinary field and has certain requirements:
 
-- 它必须在所有文档中都出现。
-- 它必须是集合的一个索引，可以是单索引或复合索引的前缀索引，不能是多索引、文本索引或地理空间位置索引。
-- MongoDB 4.2 之前的版本，文档的分片键字段值不可变。MongoDB 4.2 版本开始，除非分片键字段是不可变的 `_id` 字段，否则您可以更新文档的分片键值。MongoDB 5.0 版本开始，实现了实时重新分片（live resharding），可以实现分片键的完全重新选择。
-- 它的大小不能超过 512 字节。
+- It must appear in all documents.
+- It must be an index for the collection and can be a single index or the prefix index of a compound index; it cannot be a multi-index, text index, or geospatial index.
+- Before MongoDB 4.2, the values of a document's shard key field were immutable. Since version 4.2, unless the shard key field is the immutable `_id` field, you can update the value of the shard key in the document. Starting from version 5.0, live resharding has been implemented, allowing for complete reshaping of the shard key.
+- Its size cannot exceed 512 bytes.
 
-#### 如何选择分片键？
+#### How to choose a shard key?
 
-选择合适的片键对 sharding 效率影响很大，主要基于如下四个因素（摘自[分片集群使用注意事项 - - 腾讯云文档](https://cloud.tencent.com/document/product/240/44611)）：
+Choosing an appropriate shard key significantly affects the efficiency of sharding and is primarily based on the following four factors (excerpt from [Sharded Cluster Usage Notes - Tencent Cloud Documentation](https://cloud.tencent.com/document/product/240/44611)):
 
-- **取值基数** 取值基数建议尽可能大，如果用小基数的片键，因为备选值有限，那么块的总数量就有限，随着数据增多，块的大小会越来越大，导致水平扩展时移动块会非常困难。 例如：选择年龄做一个基数，范围最多只有 100 个，随着数据量增多，同一个值分布过多时，导致 chunck 的增长超出 chuncksize 的范围，引起 jumbo chunk，从而无法迁移，导致数据分布不均匀，性能瓶颈。
-- **取值分布** 取值分布建议尽量均匀，分布不均匀的片键会造成某些块的数据量非常大，同样有上面数据分布不均匀，性能瓶颈的问题。
-- **查询带分片** 查询时建议带上分片，使用分片键进行条件查询时，mongos 可以直接定位到具体分片，否则 mongos 需要将查询分发到所有分片，再等待响应返回。
-- **避免单调递增或递减** 单调递增的 sharding key，数据文件挪动小，但写入会集中，导致最后一篇的数据量持续增大，不断发生迁移，递减同理。
+- **Cardinality of values:** It is recommended to have as high cardinality as possible. If a shard key with low cardinality is used, then the total number of chunks will be limited, as there are limited alternative values. As data increases, the size of chunks will become larger, making it very difficult to move chunks during horizontal expansions. For example, choosing age as a cardinality will have a maximum range of only 100, and as data increases, the same value being distributed too much will cause chunk size to exceed chunk size limit, leading to jumbo chunks that cannot migrate, resulting in uneven data distribution and performance bottlenecks.
+- **Distribution of values:** It is advisable to have a uniform distribution of values. An unevenly distributed shard key can cause some chunks with a significantly larger amount of data, similarly leading to the above issues of uneven data distribution and performance bottlenecks.
+- **Query with shard key:** It is recommended to include the shard key in your queries. Using the shard key for conditional queries allows mongos to directly locate a specific shard; otherwise, mongos needs to distribute the queries to all shards and wait for responses to return.
+- **Avoid monotonic increase or decrease:** Monotonic increasing shard keys may lead to small data file movements but concentrated writes, resulting in a continually growing data quantity in the last chunk and causing frequent migrations. The same applies for monotonic decreases.
 
-综上，在选择片键时要考虑以上 4 个条件，尽可能满足更多的条件，才能降低 MoveChunks 对性能的影响，从而获得最优的性能体验。
+In summary, when choosing a shard key, consider the above four conditions and try to meet as many of those conditions as possible to reduce the impact of MoveChunks on performance and achieve the optimal performance experience.
 
-#### 分片策略有哪些？
+#### What are the sharding strategies?
 
-MongoDB 支持两种分片算法来满足不同的查询需求（摘自[MongoDB 分片集群介绍 - 阿里云文档](https://help.aliyun.com/document_detail/64561.html?spm=a2c4g.11186623.0.0.3121565eQhUGGB#h2--shard-key-3)）：
+MongoDB supports two sharding algorithms to meet different query needs (excerpt from [Introduction to MongoDB Sharded Clusters - Alibaba Cloud Documentation](https://help.aliyun.com/document_detail/64561.html?spm=a2c4g.11186623.0.0.3121565eQhUGGB#h2--shard-key-3)):
 
-**1、基于范围的分片**：
+**1. Range-based sharding:**
 
 ![](https://oss.javaguide.cn/github/javaguide/database/mongodb/example-of-scope-based-sharding.png)
 
-MongoDB 按照分片键（Shard Key）的值的范围将数据拆分为不同的块（Chunk），每个块包含了一段范围内的数据。当分片键的基数大、频率低且值非单调变更时，范围分片更高效。
+MongoDB splits data into different chunks based on the ranges of the shard key (Shard Key) values, with each chunk containing data within a certain range. Range sharding is more efficient when the cardinality of the shard key is high, frequency is low, and values are not monotonically changing.
 
-- 优点：Mongos 可以快速定位请求需要的数据，并将请求转发到相应的 Shard 节点中。
-- 缺点：可能导致数据在 Shard 节点上分布不均衡，容易造成读写热点，且不具备写分散性。
-- 适用场景：分片键的值不是单调递增或单调递减、分片键的值基数大且重复的频率低、需要范围查询等业务场景。
+- Advantages: Mongos can quickly locate the required data for requests and forward the requests to the corresponding shard nodes.
+- Disadvantages: May lead to data being unevenly distributed across shard nodes, easily causing read/write hotspots and lacking write dispersion.
+- Applicable scenarios: When the values of the shard key are neither monotonically increasing nor decreasing, the cardinality of the shard key values is high with a low repetition frequency, and range queries are needed.
 
-**2、基于 Hash 值的分片**
+**2. Hash-based sharding:**
 
 ![](https://oss.javaguide.cn/github/javaguide/database/mongodb/example-of-hash-based-sharding.png)
 
-MongoDB 计算单个字段的哈希值作为索引值，并以哈希值的范围将数据拆分为不同的块（Chunk）。
+MongoDB computes the hash value of a single field as an index value and splits data into different chunks based on the range of hash values.
 
-- 优点：可以将数据更加均衡地分布在各 Shard 节点中，具备写分散性。
-- 缺点：不适合进行范围查询，进行范围查询时，需要将读请求分发到所有的 Shard 节点。
-- 适用场景：分片键的值存在单调递增或递减、片键的值基数大且重复的频率低、需要写入的数据随机分发、数据读取随机性较大等业务场景。
+- Advantages: Can distribute data more evenly across shard nodes, exhibiting write dispersion.
+- Disadvantages: Not suitable for range queries; range queries require distributing read requests to all shard nodes.
+- Applicable scenarios: When the values of the shard key exhibit monotonic increases or decreases, the cardinality of shard key values is high with a low repetition frequency, and data needs to be randomly distributed for writing or reading request randomness is high.
 
-除了上述两种分片策略，您还可以配置 **复合片键** ，例如由一个低基数的键和一个单调递增的键组成。
+In addition to the above two sharding strategies, you can also configure **composite shard keys**, for example, one low cardinality key combined with a monotonically increasing key.
 
-#### 分片数据如何存储？
+#### How is sharded data stored?
 
-**Chunk（块）** 是 MongoDB 分片集群的一个核心概念，其本质上就是由一组 Document 组成的逻辑数据单元。每个 Chunk 包含一定范围片键的数据，互不相交且并集为全部数据，即离散数学中**划分**的概念。
+**Chunk** is a core concept in MongoDB sharded clusters, essentially a logical unit of data composed of a set of documents. Each chunk contains data of certain ranges of shard keys, with non-overlapping ranges and a union that represents all data, aligning with the concept of **partitioning** in discrete mathematics.
 
-分片集群不会记录每条数据在哪个分片上，而是记录 Chunk 在哪个分片上一级这个 Chunk 包含哪些数据。
+Sharded clusters do not record where each data point is located within which shard; instead, they keep track of which chunks are on which shards and which data each chunk encompasses.
 
-默认情况下，一个 Chunk 的最大值默认为 64MB（可调整，取值范围为 1~1024 MB。如无特殊需求，建议保持默认值），进行数据插入、更新、删除时，如果此时 Mongos 感知到了目标 Chunk 的大小或者其中的数据量超过上限，则会触发 **Chunk 分裂**。
+By default, the maximum value of a chunk is set to 64MB (adjustable, ranging from 1 to 1024 MB. Unless a specific need arises, it is recommended to keep the default value). When inserting, updating, or deleting data, if mongos detects that the target chunk's size or its data exceeds the limit, it will trigger a **chunk split**.
 
-![Chunk 分裂](https://oss.javaguide.cn/github/javaguide/database/mongodb/chunk-splitting-shard-a.png)
+![Chunk Splitting](https://oss.javaguide.cn/github/javaguide/database/mongodb/chunk-splitting-shard-a.png)
 
-数据的增长会让 Chunk 分裂得越来越多。这个时候，各个分片上的 Chunk 数量可能会不平衡。Mongos 中的 **均衡器(Balancer)** 组件就会执行自动平衡，尝试使各个 Shard 上 Chunk 的数量保持均衡，这个过程就是 **再平衡（Rebalance）**。默认情况下，数据库和集合的 Rebalance 是开启的。
+As data increases, chunks will become increasingly more numerous. At this point, the quantity of chunks on each shard may become unbalanced. The **balancer** component in mongos will execute automatic balancing, attempting to maintain an even quantity of chunks across each shard, a process known as **rebalance**. By default, rebalance for databases and collections is enabled.
 
-如下图所示，随着数据插入，导致 Chunk 分裂，让 AB 两个分片有 3 个 Chunk，C 分片只有一个，这个时候就会把 B 分配的迁移一个到 C 分片实现集群数据均衡。
+As shown in the diagram below, as data is inserted leading to chunk splits, shards A and B may have 3 chunks, while shard C has only one; at this point, one chunk from B may be migrated to shard C to achieve balanced cluster data.
 
-![Chunk 迁移](https://oss.javaguide.cn/github/javaguide/database/mongodb/mongo-reblance-three-shards.png)
+![Chunk Migration](https://oss.javaguide.cn/github/javaguide/database/mongodb/mongo-reblance-three-shards.png)
 
-> Balancer 是 MongoDB 的一个运行在 Config Server 的 Primary 节点上(自 MongoDB 3.4 版本起)的后台进程，它监控每个分片上 Chunk 数量，并在某个分片上 Chunk 数量达到阈值进行迁移。
+> The balancer is a background process running on the Primary node of the Config Server (since MongoDB version 3.4) that monitors the number of chunks on each shard and migrates chunks when the quantity on a shard exceeds a threshold.
 
-Chunk 只会分裂，不会合并，即使 chunkSize 的值变大。
+Chunks only split, they do not merge, even if the value of chunkSize increases.
 
-Rebalance 操作是比较耗费系统资源的，我们可以通过在业务低峰期执行、预分片或者设置 Rebalance 时间窗等方式来减少其对 MongoDB 正常使用所带来的影响。
+Rebalance operations are resource-intensive; thus, we can reduce their impact on regular MongoDB operations by executing them during off-peak business hours, pre-splitting, or setting rebalance time windows.
 
-#### Chunk 迁移原理是什么？
+#### What is the principle behind chunk migration?
 
-关于 Chunk 迁移原理的详细介绍，推荐阅读 MongoDB 中文社区的[一文读懂 MongoDB chunk 迁移](https://mongoing.com/archives/77479)这篇文章。
+For a detailed introduction to the principles of chunk migration, it is recommended to read the article on [Understanding MongoDB chunk migration in a single article](https://mongoing.com/archives/77479) from the MongoDB Chinese community.
 
-## 学习资料推荐
+## Recommended Learning Resources
 
-- [MongoDB 中文手册|官方文档中文版](https://docs.mongoing.com/)（推荐）：基于 4.2 版本，不断与官方最新版保持同步。
-- [MongoDB 初学者教程——7 天学习 MongoDB](https://mongoing.com/archives/docs/mongodb%e5%88%9d%e5%ad%a6%e8%80%85%e6%95%99%e7%a8%8b/mongodb%e5%a6%82%e4%bd%95%e5%88%9b%e5%bb%ba%e6%95%b0%e6%8d%ae%e5%ba%93%e5%92%8c%e9%9b%86%e5%90%88)：快速入门。
-- [SpringBoot 整合 MongoDB 实战 - 2022](https://www.cnblogs.com/dxflqm/p/16643981.html)：很不错的一篇 MongoDB 入门文章，主要围绕 MongoDB 的 Java 客户端使用进行基本的增删改查操作介绍。
+- [MongoDB Chinese Manual | Official Documentation in Chinese](https://docs.mongoing.com/) (Recommended): Based on version 4.2, continuously synchronized with the latest official version.
+- [MongoDB Beginner's Tutorial — Learn MongoDB in 7 Days](https://mongoing.com/archives/docs/mongodb%e5%88%9d%e5%ad%a6%e8%80%85%e6%95%99%e7%a8%8b/mongodb%e5%a6%82%e4%bd%95%e5%88%9b%e5%bb%ba%e6%95%b0%e6%8d%ae%e5%ba%93%e5%92%8c%e9%9b%86%e5%90%88): A quick introduction.
+- [SpringBoot Integration with MongoDB Practice - 2022](https://www.cnblogs.com/dxflqm/p/16643981.html): A great introductory article on MongoDB, mainly focusing on basic CRUD operations using the MongoDB Java client.
 
-## 参考
+## References
 
-- MongoDB 官方文档（主要参考资料，以官方文档为准）：<https://www.mongodb.com/docs/manual/>
-- 《MongoDB 权威指南》
-- Indexes - MongoDB 官方文档：<https://www.mongodb.com/docs/manual/indexes/>
-- MongoDB - 索引知识 - 程序员翔仔 - 2022：<https://fatedeity.cn/posts/database/mongodb-index-knowledge.html>
-- MongoDB - 索引: <https://www.cnblogs.com/Neeo/articles/14325130.html>
-- Sharding - MongoDB 官方文档：<https://www.mongodb.com/docs/manual/sharding/>
-- MongoDB 分片集群介绍 - 阿里云文档：<https://help.aliyun.com/document_detail/64561.html>
-- 分片集群使用注意事项 - - 腾讯云文档：<https://cloud.tencent.com/document/product/240/44611>
+- MongoDB Official Documentation (main reference material, take as authoritative): <https://www.mongodb.com/docs/manual/>
+- "MongoDB: The Definitive Guide"
+- Indexes - MongoDB Official Documentation: <https://www.mongodb.com/docs/manual/indexes/>
+- MongoDB - Index Knowledge - Programmer Xiangzai - 2022: <https://fatedeity.cn/posts/database/mongodb-index-knowledge.html>
+- MongoDB - Index: <https://www.cnblogs.com/Neeo/articles/14325130.html>
+- Sharding - MongoDB Official Documentation: <https://www.mongodb.com/docs/manual/sharding/>
+- Introduction to MongoDB Sharded Clusters - Alibaba Cloud Documentation: <https://help.aliyun.com/document_detail/64561.html>
+- Usage Notes for Sharded Clusters - Tencent Cloud Documentation: <https://cloud.tencent.com/document/product/240/44611>
 
 <!-- @include: @article-footer.snippet.md -->

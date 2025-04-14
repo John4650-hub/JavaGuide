@@ -1,55 +1,55 @@
 ---
-title: 常见问题
-category: 走近项目
+title: Frequently Asked Questions
+category: Get Closer to the Project
 icon: help
 ---
 
-## JavaGuide 是否支持 RSS？
+## Does JavaGuide support RSS?
 
-必须支持！推荐 RSS 订阅本网站获取最新更新。
+It definitely does! I recommend subscribing to the RSS feed of this website to receive the latest updates.
 
-## JavaGuide 有没有 PDF 版本？
+## Is there a PDF version of JavaGuide?
 
-由于 JavaGuide 内容在持续完善，所以并没有一个完全与之同步的 PDF 版本提供。如果你想要 PDF 版本的话，可以考虑 **《JavaGuide 面试突击版》** ，这是对 JavaGuide 内容的浓缩总结。
+Since the content of JavaGuide is continuously being improved, there is currently no fully synchronized PDF version available. If you want a PDF version, you might consider **"JavaGuide Interview Crash Course"**, which is a condensed summary of JavaGuide's content.
 
-《JavaGuide 面试突击版》在我的公众号后台回复“**PDF**”即可获取，免费的。除了 《JavaGuide 面试突击版》之外，还会免费送你多本优质面试 PDF 手册。
+You can get the "JavaGuide Interview Crash Course" by replying with "**PDF**" in the backend of my public account, it’s free. In addition to "JavaGuide Interview Crash Course," you will also receive several high-quality interview PDF manuals for free.
 
-![公众号](https://oss.javaguide.cn/github/javaguide/gongzhonghaoxuanchuan.png)
+![Public Account](https://oss.javaguide.cn/github/javaguide/gongzhonghaoxuanchuan.png)
 
-## 如何看待 JavaGuide 的 star 数量很多？
+## What do you think about the high number of stars on JavaGuide?
 
-[JavaGuide](https://github.com/Snailclimb) 目前已经是 Java 领域 star 数量最多的几个项目之一，登顶过很多次 GitHub Trending。
+[JavaGuide](https://github.com/Snailclimb) is currently one of the projects with the most stars in the Java field, having topped GitHub Trending many times.
 
-不过，这个真心没啥好嘚瑟的。因为，教程类的含金量其实是比较低的，star 数量比较多主要也是因为受众面比较广，大家觉得不错，点个 star 就相当于收藏了。很多特别优秀的框架，star 数量可能只有几 K。所以，单纯看 star 数量没啥意思，就当看个笑话吧！
+However, there's really no point in boasting about it. The value of tutorial content is relatively low, and the high star count is mainly because of the broad audience; people find it useful and star it as a way of bookmarking. Many outstanding frameworks may have only a few thousand stars. So, looking solely at the star count isn’t meaningful; you might as well take it as a joke!
 
-维护这个项目的过程中，也被某些人 diss 过：“md 项目，没啥含金量，给国人丢脸！”。
+During the maintenance of this project, some people have also diss'ed it: "This is an MD project with no real value; it’s embarrassing for the Chinese!"
 
-对于说这类话的人，我觉得对我没啥影响，就持续完善，把 JavaGuide 做的更好吧！其实，国外的很多项目也是纯 MD 啊！就比如外国的朋友发起的 awesome 系列、求职面试系列。无需多说，行动自证！凎！
+To those who say such things, I feel it doesn't affect me much; I'll just keep improving and make JavaGuide better! In fact, many foreign projects are purely MD too! For example, the awesome series and job interview series initiated by friends overseas. No need to say more, actions speak for themselves!
 
-开源非常重要的一点就是协作。如果你开源了一个项目之后，就不再维护，别人给你提交 issue/pr，你都不处理，那开源也没啥意义了！
+An essential aspect of open source is collaboration. If you open source a project but stop maintaining it, and you don't process the issues/pr submitted by others, then open sourcing becomes meaningless!
 
-## JavaGuide 会不会推出纸质书籍？
+## Will JavaGuide publish a printed book?
 
-可以给出一个比较明确的答案：**暂时没有考虑出书** 。
+I can give a relatively clear answer: **There are currently no plans to publish a book**.
 
-JavaGuide 这个项目诞生一年左右就有出版社的老师联系我了，由于自知个人能力尚需沉淀，我都婉拒了。这几年的话，由于项目还是有一点知名度的，找我出书的出版社老师更多了，也都被我一一婉拒了。
+About a year after the project started, I was contacted by a publisher; however, realizing that my personal abilities needed further refinement, I declined the offer. In recent years, as the project gained some notoriety, more publishers have approached me for book deals, but I have respectfully declined all of them.
 
-**出书既能博名又能赚点钱，我为啥不考虑出书呢？**
+**Publishing a book can enhance reputation and earn some money, so why don't I consider it?**
 
-- JavaGuide 的很多内容我还不是很满意，也一直在维护中，细心的小伙伴看我的[提交记录](https://github.com/Snailclimb/JavaGuide/commits/main)就明白了。
-- 开源版本更容易维护和修改，也能让更多人更方便地参与到项目的建设中，这也是我最初做这个项目的初衷。
-- 我觉得出书是一件神圣的事情，自认能力还不够。
-- 个人精力有限，不光有本职工作，还弄了一个[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)赚点外快，还要维护完善 JavaGuide。
-- ……
+- There’s a lot of content in JavaGuide that I am not fully satisfied with and it is still being maintained. Attentive partners can see my [commit history](https://github.com/Snailclimb/JavaGuide/commits/main).
+- The open-source version is easier to maintain and modify, and it allows more people to conveniently participate in the project's development, which was my initial motivation for starting this project.
+- I believe that publishing a book is a sacred act, and I admit that my abilities are not sufficient yet.
+- My personal energy is limited; I not only have my main job but have also started a [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) to earn some extra income while also maintaining and improving JavaGuide.
+- …
 
-这几年一直在默默完善，真心希望 JavaGuide 越来越好，帮助到更多朋友！也欢迎大家参与进来！
+Over the past few years, I have been quietly refining the project and sincerely hope that JavaGuide will continue to improve and help more friends! I also welcome everyone to participate!
 
-## JavaGuide 上为什么有一些付费文章？
+## Why are there some paid articles on JavaGuide?
 
-是这样的，JavaGuide 上确实有非常非常少的付费文章，差不多 10 篇不到吧，这对于整个网站的内容来说算是微不足道了。
+Indeed, there are very few paid articles on JavaGuide, less than about 10, which is negligible compared to the overall content of the site.
 
-这些付费文章属于[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)专属，是我用来引流知识星球的，对整体阅读其实并没有什么影响的。
+These paid articles are exclusive to [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) and are used by me to drive traffic to Knowledge Planet; they do not have much impact on the overall reading experience.
 
-我也知道大家不喜欢营销，所以我会让自己控制好一个度。我一不割韭菜，二不贩卖焦虑，仅仅赚一份小钱提升家人生活品质。
+I also understand that people dislike marketing, so I will make sure to keep it within a reasonable limit. I neither exploit people nor sell anxiety; I am just trying to earn a small amount to improve my family's quality of life.
 
-**用心做内容，真心希望能帮助到其他人。**
+**I am committed to creating valuable content and sincerely hope it can help others.**

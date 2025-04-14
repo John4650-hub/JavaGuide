@@ -1,155 +1,155 @@
 ---
-title: 数据库基础知识总结
-category: 数据库
+title: Summary of Basic Knowledge of Databases
+category: Database
 tag:
-  - 数据库基础
+  - Database Fundamentals
 ---
 
 <!-- @include: @small-advertisement.snippet.md -->
 
-数据库知识基础，这部分内容一定要理解记忆。虽然这部分内容只是理论知识，但是非常重要，这是后面学习 MySQL 数据库的基础。PS: 这部分内容由于涉及太多概念性内容，所以参考了维基百科和百度百科相应的介绍。
+The foundation of database knowledge is essential to understand and remember. Although this part consists only of theoretical knowledge, it is very important as it is the basis for learning MySQL databases later on. PS: Due to the involvement of many conceptual contents in this section, references have been taken from the corresponding introductions in Wikipedia and Baidu Encyclopedia.
 
-## 什么是数据库, 数据库管理系统, 数据库系统, 数据库管理员?
+## What are databases, database management systems, database systems, and database administrators?
 
-- **数据库** : 数据库(DataBase 简称 DB)就是信息的集合或者说数据库是由数据库管理系统管理的数据的集合。
-- **数据库管理系统** : 数据库管理系统(Database Management System 简称 DBMS)是一种操纵和管理数据库的大型软件，通常用于建立、使用和维护数据库。
-- **数据库系统** : 数据库系统(Data Base System，简称 DBS)通常由软件、数据库和数据管理员(DBA)组成。
-- **数据库管理员** : 数据库管理员(Database Administrator, 简称 DBA)负责全面管理和控制数据库系统。
+- **Database**: A database (abbreviated as DB) is a collection of information, or more specifically, a database is a collection of data managed by a database management system.
+- **Database Management System**: A database management system (abbreviated as DBMS) is a large software that manipulates and manages databases, commonly used to create, use, and maintain databases.
+- **Database System**: A database system (abbreviated as DBS) typically consists of software, databases, and a database administrator (DBA).
+- **Database Administrator**: The database administrator (abbreviated as DBA) is responsible for the overall management and control of the database system.
 
-## 什么是元组, 码, 候选码, 主码, 外码, 主属性, 非主属性？
+## What are tuples, keys, candidate keys, primary keys, foreign keys, primary attributes, and non-primary attributes?
 
-- **元组**：元组（tuple）是关系数据库中的基本概念，关系是一张表，表中的每行（即数据库中的每条记录）就是一个元组，每列就是一个属性。 在二维表里，元组也称为行。
-- **码**：码就是能唯一标识实体的属性，对应表中的列。
-- **候选码**：若关系中的某一属性或属性组的值能唯一的标识一个元组，而其任何、子集都不能再标识，则称该属性组为候选码。例如：在学生实体中，“学号”是能唯一的区分学生实体的，同时又假设“姓名”、“班级”的属性组合足以区分学生实体，那么{学号}和{姓名，班级}都是候选码。
-- **主码** : 主码也叫主键。主码是从候选码中选出来的。 一个实体集中只能有一个主码，但可以有多个候选码。
-- **外码** : 外码也叫外键。如果一个关系中的一个属性是另外一个关系中的主码则这个属性为外码。
-- **主属性**：候选码中出现过的属性称为主属性。比如关系 工人（工号，身份证号，姓名，性别，部门）. 显然工号和身份证号都能够唯一标示这个关系，所以都是候选码。工号、身份证号这两个属性就是主属性。如果主码是一个属性组，那么属性组中的属性都是主属性。
-- **非主属性：** 不包含在任何一个候选码中的属性称为非主属性。比如在关系——学生（学号，姓名，年龄，性别，班级）中，主码是“学号”，那么其他的“姓名”、“年龄”、“性别”、“班级”就都可以称为非主属性。
+- **Tuple**: A tuple is a fundamental concept in relational databases. A relation is a table, and each row (i.e., each record in the database) is a tuple, while each column is an attribute. In a two-dimensional table, tuples are also referred to as rows.
+- **Key**: A key is an attribute that can uniquely identify an entity, corresponding to a column in a table.
+- **Candidate Key**: If a certain attribute or group of attributes in a relation can uniquely identify a tuple, and no subset can do so, this group of attributes is called a candidate key. For example, in the student entity, the "student ID" uniquely differentiates student entities. Assuming that the combination of the attributes "name" and "class" is sufficient to distinguish student entities, both {student ID} and {name, class} are candidate keys.
+- **Primary Key**: A primary key is a key selected from the candidate keys. An entity set can have only one primary key but may have multiple candidate keys.
+- **Foreign Key**: A foreign key is an attribute in one relation that is a primary key in another relation.
+- **Primary Attribute**: Attributes that appear in the candidate keys are called primary attributes. For instance, in the relation worker (employee ID, ID number, name, gender, department), both employee ID and ID number can uniquely identify this relation, so they are both candidate keys. Employee ID and ID number are primary attributes. If the primary key is a set of attributes, then all attributes in that set are primary attributes.
+- **Non-primary Attribute**: Attributes not included in any candidate keys are called non-primary attributes. For instance, in the relation student (student ID, name, age, gender, class), if the primary key is "student ID," then "name," "age," "gender," and "class" are all considered non-primary attributes.
 
-## 什么是 ER 图？
+## What is an ER diagram?
 
-我们做一个项目的时候一定要试着画 ER 图来捋清数据库设计，这个也是面试官问你项目的时候经常会被问到的。
+When working on a project, it's important to try drawing an ER diagram to clarify database design. This is often a question asked by interviewers when discussing your projects.
 
-**ER 图** 全称是 Entity Relationship Diagram（实体联系图），提供了表示实体类型、属性和联系的方法。
+**ER Diagram** stands for Entity Relationship Diagram, which provides a method to represent entity types, attributes, and relationships.
 
-ER 图由下面 3 个要素组成：
+An ER diagram consists of the following three elements:
 
-- **实体**：通常是现实世界的业务对象，当然使用一些逻辑对象也可以。比如对于一个校园管理系统，会涉及学生、教师、课程、班级等等实体。在 ER 图中，实体使用矩形框表示。
-- **属性**：即某个实体拥有的属性，属性用来描述组成实体的要素，对于产品设计来说可以理解为字段。在 ER 图中，属性使用椭圆形表示。
-- **联系**：即实体与实体之间的关系，在 ER 图中用菱形表示，这个关系不仅有业务关联关系，还能通过数字表示实体之间的数量对照关系。例如，一个班级会有多个学生就是一种实体间的联系。
+- **Entity**: Typically represents real-world business objects; logical objects can also be used. For instance, in a campus management system, entities may include students, teachers, courses, classes, etc. In an ER diagram, entities are represented by rectangular boxes.
+- **Attributes**: Attributes describe the elements that make up the entity. In product design, they can be understood as fields. In an ER diagram, attributes are represented by oval shapes.
+- **Relationships**: Relationships denote the connections between entities and are represented by diamonds in the ER diagram. These relationships can reflect not only business associations but also the quantity correspondence between entities using numbers. For example, a class may have multiple students, which illustrates a relationship between entities.
 
-下图是一个学生选课的 ER 图，每个学生可以选若干门课程，同一门课程也可以被若干人选择，所以它们之间的关系是多对多（M: N）。另外，还有其他两种实体之间的关系是：1 对 1（1:1）、1 对多（1: N）。
+The following diagram is an ER diagram for student course selection, where each student can select multiple courses, and the same course can be selected by multiple students, making this a many-to-many (M:N) relationship. Additionally, there are two other types of relationships between entities: one-to-one (1:1) and one-to-many (1:N).
 
-![学生与课程之间联系的E-R图](https://oss.javaguide.cn/github/javaguide/csdn/c745c87f6eda9a439e0eea52012c7f4a.png)
+![ER Diagram of Student and Course Relationship](https://oss.javaguide.cn/github/javaguide/csdn/c745c87f6eda9a439e0eea52012c7f4a.png)
 
-## 数据库范式了解吗?
+## Are you familiar with database normalization?
 
-数据库范式有 3 种：
+There are three types of database normalization:
 
-- 1NF(第一范式)：属性不可再分。
-- 2NF(第二范式)：1NF 的基础之上，消除了非主属性对于码的部分函数依赖。
-- 3NF(第三范式)：3NF 在 2NF 的基础之上，消除了非主属性对于码的传递函数依赖 。
+- 1NF (First Normal Form): Attributes cannot be further divided.
+- 2NF (Second Normal Form): Building on 1NF, it eliminates partial functional dependencies of non-primary attributes regarding keys.
+- 3NF (Third Normal Form): 3NF, based on 2NF, eliminates transitive functional dependencies of non-primary attributes regarding keys.
 
-### 1NF(第一范式)
+### 1NF (First Normal Form)
 
-属性（对应于表中的字段）不能再被分割，也就是这个字段只能是一个值，不能再分为多个其他的字段了。**1NF 是所有关系型数据库的最基本要求** ，也就是说关系型数据库中创建的表一定满足第一范式。
+Attributes (corresponding to fields in the table) cannot be further divided, meaning this field can only contain a single value and cannot be broken down into multiple other fields. **1NF is the most basic requirement for all relational databases**, implying that tables created in a relational database must satisfy the first normal form.
 
-### 2NF(第二范式)
+### 2NF (Second Normal Form)
 
-2NF 在 1NF 的基础之上，消除了非主属性对于码的部分函数依赖。如下图所示，展示了第一范式到第二范式的过渡。第二范式在第一范式的基础上增加了一个列，这个列称为主键，非主属性都依赖于主键。
+2NF builds on 1NF by eliminating partial functional dependencies of non-primary attributes on keys. The diagram below demonstrates the transition from the first normal form to the second normal form. The second normal form adds a column based on the first normal form, designated as the primary key, where non-primary attributes depend on the primary key.
 
-![第二范式](https://oss.javaguide.cn/github/javaguide/csdn/bd1d31be3779342427fc9e462bf7f05c.png)
+![Second Normal Form](https://oss.javaguide.cn/github/javaguide/csdn/bd1d31be3779342427fc9e462bf7f05c.png)
 
-一些重要的概念：
+Some important concepts:
 
-- **函数依赖（functional dependency）**：若在一张表中，在属性（或属性组）X 的值确定的情况下，必定能确定属性 Y 的值，那么就可以说 Y 函数依赖于 X，写作 X → Y。
-- **部分函数依赖（partial functional dependency）**：如果 X→Y，并且存在 X 的一个真子集 X0，使得 X0→Y，则称 Y 对 X 部分函数依赖。比如学生基本信息表 R 中（学号，身份证号，姓名）当然学号属性取值是唯一的，在 R 关系中，（学号，身份证号）->（姓名），（学号）->（姓名），（身份证号）->（姓名）；所以姓名部分函数依赖于（学号，身份证号）；
-- **完全函数依赖(Full functional dependency)**：在一个关系中，若某个非主属性数据项依赖于全部关键字称之为完全函数依赖。比如学生基本信息表 R（学号，班级，姓名）假设不同的班级学号有相同的，班级内学号不能相同，在 R 关系中，（学号，班级）->（姓名），但是（学号）->(姓名)不成立，（班级）->(姓名)不成立，所以姓名完全函数依赖与（学号，班级）；
-- **传递函数依赖**：在关系模式 R(U)中，设 X，Y，Z 是 U 的不同的属性子集，如果 X 确定 Y、Y 确定 Z，且有 X 不包含 Y，Y 不确定 X，（X∪Y）∩Z=空集合，则称 Z 传递函数依赖(transitive functional dependency) 于 X。传递函数依赖会导致数据冗余和异常。传递函数依赖的 Y 和 Z 子集往往同属于某一个事物，因此可将其合并放到一个表中。比如在关系 R(学号 , 姓名, 系名，系主任)中，学号 → 系名，系名 → 系主任，所以存在非主属性系主任对于学号的传递函数依赖。
+- **Functional Dependency**: In a table, if the value of attribute (or set of attributes) X determines the value of attribute Y, then Y is said to be functionally dependent on X, denoted as X → Y.
+- **Partial Functional Dependency**: If X → Y, and there exists a proper subset X0 of X such that X0 → Y, then Y is partially functionally dependent on X. For instance, in the table of basic student information R (student ID, ID number, name), the student ID attribute is unique; thus, in relation R, (student ID, ID number) → (name), (student ID) → (name), and (ID number) → (name) hold; therefore, the name is partially functionally dependent on (student ID, ID number).
+- **Full Functional Dependency**: If a non-primary attribute data item depends on the entire key in a relation, it is called full functional dependency. For instance, in the basic student information table R (student ID, class, name), assuming there are identical student IDs across different classes but they cannot be the same within the class, in relation R, (student ID, class) → (name) holds, but (student ID) → (name) and (class) → (name) do not hold; therefore, name is fully functionally dependent on (student ID, class).
+- **Transitive Functional Dependency**: In relation schema R(U), let X, Y, Z be different subsets of U. If X determines Y, Y determines Z, and neither Y include X nor X includes Y, and (X ∪ Y) ∩ Z = empty set, Z is said to be transitively functionally dependent on X. Transitive functional dependency can lead to data redundancy and anomalies. The subsets Y and Z of transitive functional dependency often belong to the same entity, so they can be merged into a single table. For instance, in relation R (student ID, name, department name, department head), student ID → department name, and department name → department head, creating a transitive functional dependency of the non-primary attribute department head concerning student ID.
 
-### 3NF(第三范式)
+### 3NF (Third Normal Form)
 
-3NF 在 2NF 的基础之上，消除了非主属性对于码的传递函数依赖 。符合 3NF 要求的数据库设计，**基本**上解决了数据冗余过大，插入异常，修改异常，删除异常的问题。比如在关系 R(学号 , 姓名, 系名，系主任)中，学号 → 系名，系名 → 系主任，所以存在非主属性系主任对于学号的传递函数依赖，所以该表的设计，不符合 3NF 的要求。
+3NF builds on 2NF by eliminating transitive functional dependencies of non-primary attributes regarding keys. A database design that meets the requirements of 3NF essentially resolves the issues of excessive data redundancy, insertion anomalies, modification anomalies, and deletion anomalies. For instance, in relation R (student ID, name, department name, department head), student ID → department name and department name → department head create a transitive functional dependency of the non-primary attribute department head regarding student ID, making this table design not comply with 3NF’s requirements.
 
-## 主键和外键有什么区别?
+## What is the difference between primary keys and foreign keys?
 
-- **主键(主码)**：主键用于唯一标识一个元组，不能有重复，不允许为空。一个表只能有一个主键。
-- **外键(外码)**：外键用来和其他表建立联系用，外键是另一表的主键，外键是可以有重复的，可以是空值。一个表可以有多个外键。
+- **Primary Key**: A primary key uniquely identifies a tuple, cannot be duplicated, and is not allowed to be null. A table can have only one primary key.
+- **Foreign Key**: A foreign key is used to establish relationships with other tables. A foreign key is a primary key from another table and can have duplicates or null values. A table can have multiple foreign keys.
 
-## 为什么不推荐使用外键与级联？
+## Why is the use of foreign keys and cascading updates not recommended?
 
-对于外键和级联，阿里巴巴开发手册这样说到：
+Regarding foreign keys and cascading updates, the Alibaba development manual states:
 
-> 【强制】不得使用外键与级联，一切外键概念必须在应用层解决。
+> **Mandatory**: Do not use foreign keys and cascading operations; all foreign key concepts must be resolved at the application layer.
 >
-> 说明: 以学生和成绩的关系为例，学生表中的 student_id 是主键，那么成绩表中的 student_id 则为外键。如果更新学生表中的 student_id，同时触发成绩表中的 student_id 更新，即为级联更新。外键与级联更新适用于单机低并发，不适合分布式、高并发集群；级联更新是强阻塞，存在数据库更新风暴的风险；外键影响数据库的插入速度
+> Explanation: For example, in the relationship between students and grades, if the student_id in the student table is a primary key, then the student_id in the grades table is a foreign key. If the student_id in the student table is updated and triggers the update of student_id in the grades table, this is a cascading update. Foreign keys and cascading updates are suitable for low concurrency in standalone scenarios, but they are not suitable for distributed or high-concurrency clusters; cascading updates involve strong blocking, posing a risk of database update storms; foreign keys affect the insertion speed of the database.
 
-为什么不要用外键呢？大部分人可能会这样回答：
+Why should foreign keys not be used? Most people might answer as follows:
 
-1. **增加了复杂性：** a. 每次做 DELETE 或者 UPDATE 都必须考虑外键约束，会导致开发的时候很痛苦, 测试数据极为不方便; b. 外键的主从关系是定的，假如哪天需求有变化，数据库中的这个字段根本不需要和其他表有关联的话就会增加很多麻烦。
-2. **增加了额外工作**：数据库需要增加维护外键的工作，比如当我们做一些涉及外键字段的增，删，更新操作之后，需要触发相关操作去检查，保证数据的的一致性和正确性，这样会不得不消耗数据库资源。如果在应用层面去维护的话，可以减小数据库压力；
-3. **对分库分表不友好**：因为分库分表下外键是无法生效的。
-4. ……
+1. **Increased Complexity**: a. Every DELETE or UPDATE must consider foreign key constraints, making development painful and testing data cumbersome; b. The master-slave relationship of foreign keys is fixed. If the requirements change and the database no longer needs this field to be associated with other tables, it can cause many issues.
+1. **Additional Work**: The database must maintain foreign keys, requiring additional operations when performing insertions, deletions, or updates involving foreign key fields to ensure data consistency and correctness, consuming database resources. If handled at the application level, database pressure can be alleviated.
+1. **Not Friendly for Sharding**: Foreign keys cannot be effective in sharded database scenarios.
+1. …
 
-我个人觉得上面这种回答不是特别的全面，只是说了外键存在的一个常见的问题。实际上，我们知道外键也是有很多好处的，比如：
+I personally feel that the above answers are not particularly comprehensive; they only address a common issue with foreign keys. In reality, we know that foreign keys also have many advantages, such as:
 
-1. 保证了数据库数据的一致性和完整性；
-2. 级联操作方便，减轻了程序代码量；
-3. ……
+1. Ensuring data consistency and integrity in the database.
+1. Facilitating cascading operations and reducing programmatic code.
+1. …
 
-所以说，不要一股脑的就抛弃了外键这个概念，既然它存在就有它存在的道理，如果系统不涉及分库分表，并发量不是很高的情况还是可以考虑使用外键的。
+Therefore, it is essential not to dismiss the concept of foreign keys altogether. As they exist for a reason, if the system does not involve database sharding and the concurrency is not very high, using foreign keys should still be considered.
 
-## 什么是存储过程?
+## What is a stored procedure?
 
-我们可以把存储过程看成是一些 SQL 语句的集合，中间加了点逻辑控制语句。存储过程在业务比较复杂的时候是非常实用的，比如很多时候我们完成一个操作可能需要写一大串 SQL 语句，这时候我们就可以写有一个存储过程，这样也方便了我们下一次的调用。存储过程一旦调试完成通过后就能稳定运行，另外，使用存储过程比单纯 SQL 语句执行要快，因为存储过程是预编译过的。
+A stored procedure can be viewed as a collection of SQL statements complemented by logical control statements. Stored procedures are quite useful in complex business scenarios. For example, often when we complete an operation, we might need to write a long series of SQL statements; in such cases, we can create a stored procedure, making it easier for future calls. Once a stored procedure is debugged and complete, it can run reliably, and utilizing stored procedures is generally faster than executing pure SQL statements, as stored procedures are pre-compiled.
 
-存储过程在互联网公司应用不多，因为存储过程难以调试和扩展，而且没有移植性，还会消耗数据库资源。
+Stored procedures are not widely used in internet companies, as they can be difficult to debug and extend, lack portability, and consume database resources.
 
-阿里巴巴 Java 开发手册里要求禁止使用存储过程。
+The Alibaba Java development manual mandates the prohibition of stored procedures.
 
-![阿里巴巴Java开发手册: 禁止存储过程](https://oss.javaguide.cn/github/javaguide/csdn/0fa082bc4d4f919065767476a41b2156.png)
+![Alibaba Java Development Manual: Prohibition of Stored Procedures](https://oss.javaguide.cn/github/javaguide/csdn/0fa082bc4d4f919065767476a41b2156.png)
 
-## drop、delete 与 truncate 区别？
+## What is the difference between drop, delete, and truncate?
 
-### 用法不同
+### Different Usage
 
-- `drop`(丢弃数据): `drop table 表名` ，直接将表都删除掉，在删除表的时候使用。
-- `truncate` (清空数据) : `truncate table 表名` ，只删除表中的数据，再插入数据的时候自增长 id 又从 1 开始，在清空表中数据的时候使用。
-- `delete`（删除数据） : `delete from 表名 where 列名=值`，删除某一行的数据，如果不加 `where` 子句和`truncate table 表名`作用类似。
+- `drop` (delete data): `drop table table_name`, directly deletes the table itself and is used when removing a table.
+- `truncate` (empty data): `truncate table table_name`, only deletes the data within the table, and when inserting data again, the auto-incrementing ID starts from 1 again; it's used when clearing data from a table.
+- `delete` (delete data): `delete from table_name where column_name=value`, deletes data from a specific row without a `where` clause, similar to the effect of `truncate table table_name`.
 
-`truncate` 和不带 `where`子句的 `delete`、以及 `drop` 都会删除表内的数据，但是 **`truncate` 和 `delete` 只删除数据不删除表的结构(定义)，执行 `drop` 语句，此表的结构也会删除，也就是执行`drop` 之后对应的表不复存在。**
+Both `truncate` and `delete` (without a `where` clause), as well as `drop`, will delete data from the tables. However, **`truncate` and `delete` only remove data without deleting the table structure (definition), while executing the `drop` statement deletes the table structure as well, meaning the table does not exist after executing `drop`.**
 
-### 属于不同的数据库语言
+### Different Database Languages
 
-`truncate` 和 `drop` 属于 DDL(数据定义语言)语句，操作立即生效，原数据不放到 rollback segment 中，不能回滚，操作不触发 trigger。而 `delete` 语句是 DML (数据库操作语言)语句，这个操作会放到 rollback segment 中，事务提交之后才生效。
+`truncate` and `drop` are classified as DDL (Data Definition Language) statements, which take effect immediately, and the original data is not placed in the rollback segment, meaning operations cannot be rolled back, and triggers are not invoked. Conversely, the `delete` statement is a DML (Data Manipulation Language) statement, where the operation is placed in the rollback segment and only takes effect after the transaction is committed.
 
-**DML 语句和 DDL 语句区别：**
+**Differences between DML and DDL statements:**
 
-- DML 是数据库操作语言（Data Manipulation Language）的缩写，是指对数据库中表记录的操作，主要包括表记录的插入、更新、删除和查询，是开发人员日常使用最频繁的操作。
-- DDL （Data Definition Language）是数据定义语言的缩写，简单来说，就是对数据库内部的对象进行创建、删除、修改的操作语言。它和 DML 语言的最大区别是 DML 只是对表内部数据的操作，而不涉及到表的定义、结构的修改，更不会涉及到其他对象。DDL 语句更多的被数据库管理员（DBA）所使用，一般的开发人员很少使用。
+- DML stands for Data Manipulation Language, which refers to operations on records in database tables, mainly involving inserting, updating, deleting, and querying table records. These operations are the most frequently used by developers in day-to-day tasks.
+- DDL stands for Data Definition Language, which refers to operations for creating, deleting, and modifying objects within the database. The main difference from DML is that DML pertains only to operations within table data without modifying anything related to table definitions or structures, nor does it involve other objects. DDL statements are generally more utilized by database administrators (DBAs) and are infrequently used by regular developers.
 
-另外，由于`select`不会对表进行破坏，所以有的地方也会把`select`单独区分开叫做数据库查询语言 DQL（Data Query Language）。
+Additionally, since `select` does not destroy tables, in some contexts, `select` is distinctly classified as Data Query Language (DQL).
 
-### 执行速度不同
+### Different Execution Speeds
 
-一般来说：`drop` > `truncate` > `delete`（这个我没有实际测试过）。
+Generally, the performance order is: `drop` > `truncate` > `delete` (although I have not verified this empirically).
 
-- `delete`命令执行的时候会产生数据库的`binlog`日志，而日志记录是需要消耗时间的，但是也有个好处方便数据回滚恢复。
-- `truncate`命令执行的时候不会产生数据库日志，因此比`delete`要快。除此之外，还会把表的自增值重置和索引恢复到初始大小等。
-- `drop`命令会把表占用的空间全部释放掉。
+- The `delete` command generates database `binlog` logs during execution, which requires time to record logs but has the advantage of facilitating data rollback recovery.
+- The `truncate` command does not generate database logs during execution, making it faster than `delete`. Moreover, it also resets the table's auto-incrementing value and restores indexes to their initial size.
+- The `drop` command wholly releases the space occupied by the table.
 
-Tips：你应该更多地关注在使用场景上，而不是执行效率。
+Tips: You should focus more on the usage scenario rather than execution efficiency.
 
-## 数据库设计通常分为哪几步?
+## What are the typical steps in database design?
 
-1. **需求分析** : 分析用户的需求，包括数据、功能和性能需求。
-2. **概念结构设计** : 主要采用 E-R 模型进行设计，包括画 E-R 图。
-3. **逻辑结构设计** : 通过将 E-R 图转换成表，实现从 E-R 模型到关系模型的转换。
-4. **物理结构设计** : 主要是为所设计的数据库选择合适的存储结构和存取路径。
-5. **数据库实施** : 包括编程、测试和试运行
-6. **数据库的运行和维护** : 系统的运行与数据库的日常维护。
+1. **Requirement Analysis**: Analyze user requirements, including data, functionality, and performance needs.
+1. **Conceptual Structure Design**: Primarily use the E-R model for design, which includes drawing the E-R diagram.
+1. **Logical Structure Design**: Transform the E-R diagram into tables, implementing the conversion from the E-R model to the relational model.
+1. **Physical Structure Design**: Choose the appropriate storage structures and access paths for the designed database.
+1. **Database Implementation**: Involves programming, testing, and trial runs.
+1. **Operation and Maintenance of the Database**: Regular operation of the system and daily maintenance of the database.
 
-## 参考
+## References
 
 - <https://blog.csdn.net/rl529014/article/details/48391465>
 - <https://www.zhihu.com/question/24696366/answer/29189700>

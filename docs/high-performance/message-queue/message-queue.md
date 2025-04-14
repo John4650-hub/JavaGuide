@@ -1,314 +1,314 @@
 ---
-title: 消息队列基础知识总结
-category: 高性能
+title: Summary of Basic Knowledge of Message Queue
+category: High Performance
 tag:
-  - 消息队列
+  - Message Queue
 ---
 
 ::: tip
 
-这篇文章中的消息队列主要指的是分布式消息队列。
+The message queue discussed in this article primarily refers to distributed message queues.
 
 :::
 
-“RabbitMQ？”“Kafka？”“RocketMQ？”...在日常学习与开发过程中，我们常常听到消息队列这个关键词。我也在我的多篇文章中提到了这个概念。可能你是熟练使用消息队列的老手，又或者你是不懂消息队列的新手，不论你了不了解消息队列，本文都将带你搞懂消息队列的一些基本理论。
+"RabbitMQ?" "Kafka?" "RocketMQ?"... In our daily study and development, we often hear the keyword message queue. I have mentioned this concept in my multiple articles. You may be an experienced user of message queues, or perhaps you are a novice unfamiliar with message queues. Regardless of your understanding, this article will help you grasp some fundamental theories of message queues.
 
-如果你是老手，你可能从本文学到你之前不曾注意的一些关于消息队列的重要概念，如果你是新手，相信本文将是你打开消息队列大门的一板砖。
+If you are an expert, you may learn some important concepts about message queues that you have not previously noticed from this article. If you are a novice, I believe this article will serve as a stepping stone for you to open the door to message queues.
 
-## 什么是消息队列？
+## What is a Message Queue?
 
-我们可以把消息队列看作是一个存放消息的容器，当我们需要使用消息的时候，直接从容器中取出消息供自己使用即可。由于队列 Queue 是一种先进先出的数据结构，所以消费消息时也是按照顺序来消费的。
+We can think of a message queue as a container for storing messages. When we need to use a message, we can directly take it out from the container. Since a queue is a first-in, first-out data structure, the consumption of messages is also done in order.
 
 ![](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/message-queue-small.png)
 
-参与消息传递的双方称为 **生产者** 和 **消费者** ，生产者负责发送消息，消费者负责处理消息。
+The two parties involved in message transmission are called **producers** and **consumers**. The producer is responsible for sending messages, while the consumer is responsible for processing messages.
 
-![发布/订阅（Pub/Sub）模型](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/message-queue-pub-sub-model.png)
+![Publish/Subscribe (Pub/Sub) Model](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/message-queue-pub-sub-model.png)
 
-操作系统中的进程通信的一种很重要的方式就是消息队列。我们这里提到的消息队列稍微有点区别，更多指的是各个服务以及系统内部各个组件/模块之前的通信，属于一种 **中间件** 。
+One important way for process communication in operating systems is through message queues. The message queues we are referring to here are slightly different; they more often indicate communication between various services and components/modules within systems, functioning as a type of **middleware**.
 
-维基百科是这样介绍中间件的：
+Wikipedia describes middleware as follows:
 
-> 中间件（英语：Middleware），又译中间件、中介层，是一类提供系统软件和应用软件之间连接、便于软件各部件之间的沟通的软件，应用软件可以借助中间件在不同的技术架构之间共享信息与资源。中间件位于客户机服务器的操作系统之上，管理着计算资源和网络通信。
+> Middleware is software that provides common services and capabilities to applications outside of what's offered by the operating system. It can be used to connect different applications, making communication between software components easier. Middleware sits on top of the operating system of client-server and manages computing resources and network communication.
 
-简单来说：**中间件就是一类为应用软件服务的软件，应用软件是为用户服务的，用户不会接触或者使用到中间件。**
+In simple terms: **Middleware is a type of software that serves application software, which in turn serves users who do not directly interact with or use middleware.**
 
-除了消息队列之外，常见的中间件还有 RPC 框架、分布式组件、HTTP 服务器、任务调度框架、配置中心、数据库层的分库分表工具和数据迁移工具等等。
+In addition to message queues, common middleware includes RPC frameworks, distributed components, HTTP servers, task scheduling frameworks, configuration centers, database partitioning and sharding tools, and data migration tools, among others.
 
-关于中间件比较详细的介绍可以参考阿里巴巴淘系技术的一篇回答：<https://www.zhihu.com/question/19730582/answer/1663627873> 。
+A more detailed introduction to middleware can be found in a response from Alibaba's Taobao technology: <https://www.zhihu.com/question/19730582/answer/1663627873>.
 
-随着分布式和微服务系统的发展，消息队列在系统设计中有了更大的发挥空间，使用消息队列可以降低系统耦合性、实现任务异步、有效地进行流量削峰，是分布式和微服务系统中重要的组件之一。
+With the development of distributed and microservice systems, message queues have gained greater utility in system design. Using message queues can reduce system coupling, enable asynchronous tasks, and effectively manage peak traffic. They are one of the key components in distributed and microservice systems.
 
-## 消息队列有什么用？
+## What Are the Uses of Message Queues?
 
-通常来说，使用消息队列主要能为我们的系统带来下面三点好处：
+Generally speaking, using message queues can bring the following three benefits to our systems:
 
-1. 异步处理
-2. 削峰/限流
-3. 降低系统耦合性
+1. Asynchronous processing
+1. Traffic shaping/throttling
+1. Reduced system coupling
 
-除了这三点之外，消息队列还有其他的一些应用场景，例如实现分布式事务、顺序保证和数据流处理。
+In addition to these three points, message queues also have other application scenarios, such as implementing distributed transactions, ensuring order guarantees, and performing data stream processing.
 
-如果在面试的时候你被面试官问到这个问题的话，一般情况是你在你的简历上涉及到消息队列这方面的内容，这个时候推荐你结合你自己的项目来回答。
+If you are asked this question in an interview, it is usually because you have mentioned message queues in your resume. At this point, it is advisable to relate your answer to your own project experience.
 
-### 异步处理
+### Asynchronous Processing
 
-![通过异步处理提高系统性能](https://oss.javaguide.cn/github/javaguide/Asynchronous-message-queue.png)
+![Improving System Performance Through Asynchronous Processing](https://oss.javaguide.cn/github/javaguide/Asynchronous-message-queue.png)
 
-将用户请求中包含的耗时操作，通过消息队列实现异步处理，将对应的消息发送到消息队列之后就立即返回结果，减少响应时间，提高用户体验。随后，系统再对消息进行消费。
+Handling time-consuming operations included in user requests through message queues allows the corresponding messages to be sent to the queue, enabling immediate results to be returned and reducing response times, thus improving user experience. Subsequently, the system consumes the messages.
 
-因为用户请求数据写入消息队列之后就立即返回给用户了，但是请求数据在后续的业务校验、写数据库等操作中可能失败。因此，**使用消息队列进行异步处理之后，需要适当修改业务流程进行配合**，比如用户在提交订单之后，订单数据写入消息队列，不能立即返回用户订单提交成功，需要在消息队列的订单消费者进程真正处理完该订单之后，甚至出库后，再通过电子邮件或短信通知用户订单成功，以免交易纠纷。这就类似我们平时手机订火车票和电影票。
+Since user request data is written into the message queue and immediately returned to the user, it is possible that the request fails during subsequent business verification or database writing operations. Therefore, **after using a message queue for asynchronous processing, it is necessary to appropriately modify business processes to accommodate this**, for instance, informing users of successful order submissions via email or SMS only after the order is truly processed by the message queue's consumer process or shipped, to avoid transaction disputes. This is similar to the process of booking train tickets or movie tickets on our smartphones.
 
-### 削峰/限流
+### Traffic Shaping/Throttling
 
-**先将短时间高并发产生的事务消息存储在消息队列中，然后后端服务再慢慢根据自己的能力去消费这些消息，这样就避免直接把后端服务打垮掉。**
+**Store the transactional messages generated by high concurrency in a short period in the message queue, and then the backend services can gradually consume these messages based on their capacity, thereby avoiding overwhelming the backend services.**
 
-举例：在电子商务一些秒杀、促销活动中，合理使用消息队列可以有效抵御促销活动刚开始大量订单涌入对系统的冲击。如下图所示：
+For example: In some e-commerce flash sales or promotional activities, properly using message queues can effectively mitigate the impact of a surge of orders at the start of a promotional event. As shown in the figure below:
 
-![削峰](https://oss.javaguide.cn/github/javaguide/%E5%89%8A%E5%B3%B0-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png)
+![Traffic Shaping](https://oss.javaguide.cn/github/javaguide/%E5%89%8A%E5%B3%B0-%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png)
 
-### 降低系统耦合性
+### Reducing System Coupling
 
-使用消息队列还可以降低系统耦合性。如果模块之间不存在直接调用，那么新增模块或者修改模块就对其他模块影响较小，这样系统的可扩展性无疑更好一些。
+Using message queues can also reduce system coupling. If there are no direct calls between modules, then adding or modifying a module impacts other modules less, enhancing system scalability.
 
-生产者（客户端）发送消息到消息队列中去，消费者（服务端）处理消息，需要消费的系统直接去消息队列取消息进行消费即可而不需要和其他系统有耦合，这显然也提高了系统的扩展性。
+The producer (client) sends messages to the message queue, and the consumer (server) processes the messages. The systems that need to consume messages can directly retrieve them from the message queue without coupling with other systems, clearly improving system extensibility.
 
-![发布/订阅（Pub/Sub）模型](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/message-queue-pub-sub-model.png)
+![Publish/Subscribe (Pub/Sub) Model](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/message-queue-pub-sub-model.png)
 
-**消息队列使用发布-订阅模式工作，消息发送者（生产者）发布消息，一个或多个消息接受者（消费者）订阅消息。** 从上图可以看到**消息发送者（生产者）和消息接受者（消费者）之间没有直接耦合**，消息发送者将消息发送至分布式消息队列即结束对消息的处理，消息接受者从分布式消息队列获取该消息后进行后续处理，并不需要知道该消息从何而来。**对新增业务，只要对该类消息感兴趣，即可订阅该消息，对原有系统和业务没有任何影响，从而实现网站业务的可扩展性设计**。
+**Message queues work using the publish-subscribe model, where the message sender (producer) publishes messages, and one or more message receivers (consumers) subscribe to the messages.** As seen in the above diagram, **there is no direct coupling between message senders (producers) and message receivers (consumers)**. The message sender sends the message to the distributed message queue and completes its handling of that message. The message receiver retrieves the message from the distributed message queue for further processing without needing to know where the message originated. **For new business, as long as the interested parties subscribe to the relevant messages, there is no impact on existing systems and business, thereby achieving extensibility of the website's business design**.
 
-例如，我们商城系统分为用户、订单、财务、仓储、消息通知、物流、风控等多个服务。用户在完成下单后，需要调用财务（扣款）、仓储（库存管理）、物流（发货）、消息通知（通知用户发货）、风控（风险评估）等服务。使用消息队列后，下单操作和后续的扣款、发货、通知等操作就解耦了，下单完成发送一个消息到消息队列，需要用到的地方去订阅这个消息进行消息即可。
+For instance, our e-commerce system comprises various services like user, order, finance, storage, message notification, logistics, and risk control. After a user completes an order, it needs to call services for finance (payment), storage (inventory management), logistics (delivery), message notification (notifying users of shipment), and risk control (risk assessment). With message queues, the order placement and subsequent payment, delivery, notification, etc., become decoupled; after placing an order, a message is sent to the message queue, and the necessary parties can subscribe to that message for consumption.
 
 ![](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/message-queue-decouple-mall-example.png)
 
-另外，为了避免消息队列服务器宕机造成消息丢失，会将成功发送到消息队列的消息存储在消息生产者服务器上，等消息真正被消费者服务器处理后才删除消息。在消息队列服务器宕机后，生产者服务器会选择分布式消息队列服务器集群中的其他服务器发布消息。
+Additionally, to prevent message loss due to message queue server downtime, successfully sent messages are stored on the message producer's server and are deleted only once the message has been genuinely processed by the consumer server. When the message queue server is down, the producer server will choose another server from the distributed message queue server cluster to publish the message.
 
-**备注：** 不要认为消息队列只能利用发布-订阅模式工作，只不过在解耦这个特定业务环境下是使用发布-订阅模式的。除了发布-订阅模式，还有点对点订阅模式（一个消息只有一个消费者），我们比较常用的是发布-订阅模式。另外，这两种消息模型是 JMS 提供的，AMQP 协议还提供了另外 5 种消息模型。
+**Note:** Do not think that message queues can only work using the publish-subscribe model; it is just that in the specific business context of decoupling, the publish-subscribe model is utilized. Besides the publish-subscribe model, there is also the point-to-point subscription model (where a message is consumed by only one consumer). The most commonly used model is the publish-subscribe model. Moreover, these two messaging models are provided by JMS, and the AMQP protocol offers five additional messaging models.
 
-### 实现分布式事务
+### Implementing Distributed Transactions
 
-分布式事务的解决方案之一就是 MQ 事务。
+One solution for distributed transactions is MG transactions.
 
-RocketMQ、 Kafka、Pulsar、QMQ 都提供了事务相关的功能。事务允许事件流应用将消费，处理，生产消息整个过程定义为一个原子操作。
+RocketMQ, Kafka, Pulsar, and QMQ all provide features related to transactions. Transactions allow event-stream applications to define the entire process of consuming, processing, and producing messages as an atomic operation.
 
-详细介绍可以查看 [分布式事务详解(付费)](https://javaguide.cn/distributed-system/distributed-transaction.html) 这篇文章。
+For a detailed introduction, you can refer to the article [Detailed Explanation of Distributed Transactions (Paid)](https://javaguide.cn/distributed-system/distributed-transaction.html).
 
-![分布式事务详解 - MQ事务](https://oss.javaguide.cn/github/javaguide/csdn/07b338324a7d8894b8aef4b659b76d92.png)
+![Detailed Explanation of Distributed Transactions - MQ Transactions](https://oss.javaguide.cn/github/javaguide/csdn/07b338324a7d8894b8aef4b659b76d92.png)
 
-### 顺序保证
+### Order Guarantee
 
-在很多应用场景中，处理数据的顺序至关重要。消息队列保证数据按照特定的顺序被处理，适用于那些对数据顺序有严格要求的场景。大部分消息队列，例如 RocketMQ、RabbitMQ、Pulsar、Kafka，都支持顺序消息。
+In many application scenarios, the order of data processing is crucial. Message queues ensure that data is processed in a specific order, making them suitable for scenarios with strict requirements for data order. Most message queues, such as RocketMQ, RabbitMQ, Pulsar, and Kafka, support ordered messages.
 
-### 延时/定时处理
+### Delayed/Timed Processing
 
-消息发送后不会立即被消费，而是指定一个时间，到时间后再消费。大部分消息队列，例如 RocketMQ、RabbitMQ、Pulsar、Kafka，都支持定时/延时消息。
+Messages are not immediately consumed after being sent but are instead scheduled for processing after a specified time. Most message queues, like RocketMQ, RabbitMQ, Pulsar, and Kafka, support scheduled/delayed messages.
 
 ![](https://oss.javaguide.cn/github/javaguide/tools/docker/rocketmq-schedule-message.png)
 
-### 即时通讯
+### Instant Messaging
 
-MQTT（消息队列遥测传输协议）是一种轻量级的通讯协议，采用发布/订阅模式，非常适合于物联网（IoT）等需要在低带宽、高延迟或不可靠网络环境下工作的应用。它支持即时消息传递，即使在网络条件较差的情况下也能保持通信的稳定性。
+MQTT (Message Queuing Telemetry Transport) is a lightweight messaging protocol that adopts the publish/subscribe model and is very suitable for applications in IoT (Internet of Things) that need to operate in low bandwidth, high latency, or unreliable network environments. It supports instant messaging, maintaining stable communication even under adverse network conditions.
 
-RabbitMQ 内置了 MQTT 插件用于实现 MQTT 功能（默认不启用，需要手动开启）。
+RabbitMQ has an MQTT plugin built-in to implement MQTT functionality (it is disabled by default and needs to be manually enabled).
 
-### 数据流处理
+### Data Stream Processing
 
-针对分布式系统产生的海量数据流，如业务日志、监控数据、用户行为等，消息队列可以实时或批量收集这些数据，并将其导入到大数据处理引擎中，实现高效的数据流管理和处理。
+For the massive data streams generated by distributed systems, such as business logs, monitoring data, and user behavior, message queues can collect this data in real-time or in batches and import it into big data processing engines, enabling efficient data stream management and processing.
 
-## 使用消息队列会带来哪些问题？
+## What Problems Can Using Message Queues Bring?
 
-- **系统可用性降低：** 系统可用性在某种程度上降低，为什么这样说呢？在加入 MQ 之前，你不用考虑消息丢失或者说 MQ 挂掉等等的情况，但是，引入 MQ 之后你就需要去考虑了！
-- **系统复杂性提高：** 加入 MQ 之后，你需要保证消息没有被重复消费、处理消息丢失的情况、保证消息传递的顺序性等等问题！
-- **一致性问题：** 我上面讲了消息队列可以实现异步，消息队列带来的异步确实可以提高系统响应速度。但是，万一消息的真正消费者并没有正确消费消息怎么办？这样就会导致数据不一致的情况了!
+- **Decreased System Availability:** System availability is reduced to some extent. Why is that? Before introducing MQ, you didn't have to consider issues like message loss or MQ crashes, but after introducing MQ, you do!
+- **Increased System Complexity:** After adding MQ, you need to ensure messages are not consumed multiple times, handle message processing failures, guarantee message delivery order, and other related issues!
+- **Consistency Problems:** I mentioned above that message queues can achieve asynchronous processing, which indeed improves system response speed. However, what if the true consumers of the messages do not consume them correctly? This can lead to inconsistent data!
 
-## JMS 和 AMQP
+## JMS and AMQP
 
-### JMS 是什么？
+### What is JMS?
 
-JMS（JAVA Message Service,java 消息服务）是 Java 的消息服务，JMS 的客户端之间可以通过 JMS 服务进行异步的消息传输。**JMS（JAVA Message Service，Java 消息服务）API 是一个消息服务的标准或者说是规范**，允许应用程序组件基于 JavaEE 平台创建、发送、接收和读取消息。它使分布式通信耦合度更低，消息服务更加可靠以及异步性。
+JMS (Java Message Service) is Java's messaging service, allowing JMS clients to perform asynchronous message transmission through JMS services. **The JMS (Java Message Service) API is a standard or specification for message services**, allowing application components to create, send, receive, and read messages based on the JavaEE platform. It reduces the coupling of distributed communication, making message services more reliable and asynchronous.
 
-JMS 定义了五种不同的消息正文格式以及调用的消息类型，允许你发送并接收以一些不同形式的数据：
+JMS defines five different message body formats and calling message types that allow you to send and receive data in various forms:
 
-- `StreamMessage：Java` 原始值的数据流
-- `MapMessage`：一套名称-值对
-- `TextMessage`：一个字符串对象
-- `ObjectMessage`：一个序列化的 Java 对象
-- `BytesMessage`：一个字节的数据流
+- `StreamMessage`: Java raw value data stream
+- `MapMessage`: A set of name-value pairs
+- `TextMessage`: A string object
+- `ObjectMessage`: A serialized Java object
+- `BytesMessage`: A byte data stream
 
-**ActiveMQ（已被淘汰） 就是基于 JMS 规范实现的。**
+**ActiveMQ (now deprecated) is based on the JMS specification.**
 
-### JMS 两种消息模型
+### Two Message Models in JMS
 
-#### 点到点（P2P）模型
+#### Point-to-Point (P2P) Model
 
-![队列模型](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/message-queue-queue-model.png)
+![Queue Model](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/message-queue-queue-model.png)
 
-使用**队列（Queue）**作为消息通信载体；满足**生产者与消费者模式**，一条消息只能被一个消费者使用，未被消费的消息在队列中保留直到被消费或超时。比如：我们生产者发送 100 条消息的话，两个消费者来消费一般情况下两个消费者会按照消息发送的顺序各自消费一半（也就是你一个我一个的消费。）
+Uses **Queues** as the message communication carrier; satisfies the **Producer-Consumer model** where a message can only be used by one consumer. Unconsumed messages remain in the queue until they are consumed or time out. For example, if the producer sends 100 messages, typically, two consumers will consume half of them each, following the order in which the messages were sent.
 
-#### 发布/订阅（Pub/Sub）模型
+#### Publish/Subscribe (Pub/Sub) Model
 
-![发布/订阅（Pub/Sub）模型](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/message-queue-pub-sub-model.png)
+![Publish/Subscribe (Pub/Sub) Model](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/message-queue-pub-sub-model.png)
 
-发布订阅模型（Pub/Sub） 使用**主题（Topic）**作为消息通信载体，类似于**广播模式**；发布者发布一条消息，该消息通过主题传递给所有的订阅者。
+The Publish-Subscribe model (Pub/Sub) uses **Topics** as the message communication carrier, similar to **broadcast mode**; when a publisher publishes a message, that message is delivered to all subscribers through the topic.
 
-### AMQP 是什么？
+### What is AMQP?
 
-AMQP，即 Advanced Message Queuing Protocol，一个提供统一消息服务的应用层标准 **高级消息队列协议**（二进制应用层协议），是应用层协议的一个开放标准，为面向消息的中间件设计，兼容 JMS。基于此协议的客户端与消息中间件可传递消息，并不受客户端/中间件同产品，不同的开发语言等条件的限制。
+AMQP, or Advanced Message Queuing Protocol, is a binary application layer protocol providing a unified messaging service. It is an open standard designed for message-oriented middleware and is compatible with JMS. AMQP-based clients can pass messages to message middleware without being limited by client/middleware products or different programming languages.
 
-**RabbitMQ 就是基于 AMQP 协议实现的。**
+**RabbitMQ is based on the AMQP protocol.**
 
-### JMS vs AMQP
+### Comparison of JMS and AMQP
 
-|   对比方向   | JMS                                     | AMQP                                                                                                                                                                                               |
-| :----------: | :-------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|     定义     | Java API                                | 协议                                                                                                                                                                                               |
-|    跨语言    | 否                                      | 是                                                                                                                                                                                                 |
-|    跨平台    | 否                                      | 是                                                                                                                                                                                                 |
-| 支持消息类型 | 提供两种消息模型：①Peer-2-Peer;②Pub/sub | 提供了五种消息模型：①direct exchange；②fanout exchange；③topic change；④headers exchange；⑤system exchange。本质来讲，后四种和 JMS 的 pub/sub 模型没有太大差别，仅是在路由机制上做了更详细的划分； |
-| 支持消息类型 | 支持多种消息类型 ，我们在上面提到过     | byte[]（二进制）                                                                                                                                                                                   |
+|  Comparison Aspect   | JMS                                                   | AMQP                                                                                                                                                                                                                                                           |
+| :------------------: | :---------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|      Definition      | Java API                                              | Protocol                                                                                                                                                                                                                                                       |
+|    Cross-Language    | No                                                    | Yes                                                                                                                                                                                                                                                            |
+|    Cross-Platform    | No                                                    | Yes                                                                                                                                                                                                                                                            |
+| Message Type Support | Provides two message models: ① Peer-2-Peer; ② Pub/Sub | Provides five message models: ① direct exchange; ② fanout exchange; ③ topic change; ④ headers exchange; ⑤ system exchange. Essentially, the latter four are not significantly different from the JMS pub/sub model but have a more detailed routing mechanism. |
+| Message Type Support | Supports various message types mentioned above        | byte[](binary)                                                                                                                                                                                                                                                 |
 
-**总结：**
+**Summary:**
 
-- AMQP 为消息定义了线路层（wire-level protocol）的协议，而 JMS 所定义的是 API 规范。在 Java 体系中，多个 client 均可以通过 JMS 进行交互，不需要应用修改代码，但是其对跨平台的支持较差。而 AMQP 天然具有跨平台、跨语言特性。
-- JMS 支持 `TextMessage`、`MapMessage` 等复杂的消息类型；而 AMQP 仅支持 `byte[]` 消息类型（复杂的类型可序列化后发送）。
-- 由于 Exchange 提供的路由算法，AMQP 可以提供多样化的路由方式来传递消息到消息队列，而 JMS 仅支持 队列 和 主题/订阅 方式两种。
+- AMQP defines a wire-level protocol for messaging, while JMS defines the API specification. Within the Java ecosystem, multiple clients can interact through JMS without needing to modify application code, but its support for cross-platform capability is weaker. AMQP, by nature, supports cross-platform and cross-language features.
+- JMS supports complex message types like `TextMessage` and `MapMessage`, whereas AMQP only supports `byte[]` message types (complex types can be serialized and sent).
+- Due to the routing algorithms provided by Exchange, AMQP can offer a diverse range of routing methods for delivering messages to message queues, while JMS only supports two methods: queues and topics/subscriptions.
 
-## RPC 和消息队列的区别
+## Differences Between RPC and Message Queues
 
-RPC 和消息队列都是分布式微服务系统中重要的组件之一，下面我们来简单对比一下两者：
+Both RPC and message queues are important components in distributed microservice systems. Let's briefly compare the two:
 
-- **从用途来看**：RPC 主要用来解决两个服务的远程通信问题，不需要了解底层网络的通信机制。通过 RPC 可以帮助我们调用远程计算机上某个服务的方法，这个过程就像调用本地方法一样简单。消息队列主要用来降低系统耦合性、实现任务异步、有效地进行流量削峰。
-- **从通信方式来看**：RPC 是双向直接网络通讯，消息队列是单向引入中间载体的网络通讯。
-- **从架构上来看**：消息队列需要把消息存储起来，RPC 则没有这个要求，因为前面也说了 RPC 是双向直接网络通讯。
-- **从请求处理的时效性来看**：通过 RPC 发出的调用一般会立即被处理，存放在消息队列中的消息并不一定会立即被处理。
+- **Use Case:** RPC primarily addresses the remote communication issue between two services, without needing to know the underlying network communication mechanism. Through RPC, we can easily invoke methods from services on remote computers as if calling local methods. Message queues are mainly used to reduce system coupling, achieve asynchronous tasks, and efficiently manage traffic shaping.
+- **Communication Method:** RPC is bidirectional direct network communication, while message queues are unidirectional with an intermediary.
+- **Architecture Requirements:** Message queues need to store messages, whereas RPC does not require this, as it is bidirectional direct network communication.
+- **Timeliness of Request Processing:** Calls made through RPC are typically processed immediately, while messages stored in a message queue may not be processed right away.
 
-RPC 和消息队列本质上是网络通讯的两种不同的实现机制，两者的用途不同，万不可将两者混为一谈。
+RPC and message queues are essentially two different implementation mechanisms for network communication, serving different purposes and should not be conflated.
 
-## 分布式消息队列技术选型
+## Distributed Message Queue Technology Selection
 
-### 常见的消息队列有哪些？
+### What Are the Common Message Queues?
 
 #### Kafka
 
 ![](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/kafka-logo.png)
 
-Kafka 是 LinkedIn 开源的一个分布式流式处理平台，已经成为 Apache 顶级项目，早期被用来用于处理海量的日志，后面才慢慢发展成了一款功能全面的高性能消息队列。
+Kafka is a distributed streaming processing platform open-sourced by LinkedIn and has become an Apache top-level project. It was initially used for handling massive logs, later evolving into a comprehensive high-performance message queue.
 
-流式处理平台具有三个关键功能：
+Streaming processing platforms have three key functions:
 
-1. **消息队列**：发布和订阅消息流，这个功能类似于消息队列，这也是 Kafka 也被归类为消息队列的原因。
-2. **容错的持久方式存储记录消息流**：Kafka 会把消息持久化到磁盘，有效避免了消息丢失的风险。
-3. **流式处理平台：** 在消息发布的时候进行处理，Kafka 提供了一个完整的流式处理类库。
+1. **Message Queues:** Publishing and subscribing to message streams, similar to message queues, which is why Kafka is categorized as a message queue.
+1. **Fault-Tolerant Persistent Storage of Recorded Message Streams:** Kafka persists messages to disk, effectively avoiding the risk of message loss.
+1. **Streaming Processing Platform:** Processes messages during publishing, with Kafka providing a complete streaming processing library.
 
-Kafka 是一个分布式系统，由通过高性能 TCP 网络协议进行通信的服务器和客户端组成，可以部署在在本地和云环境中的裸机硬件、虚拟机和容器上。
+Kafka is a distributed system composed of servers and clients communicating through a high-performance TCP network protocol and can be deployed on bare metal hardware, virtual machines, and containers in local and cloud environments.
 
-在 Kafka 2.8 之前，Kafka 最被大家诟病的就是其重度依赖于 Zookeeper 做元数据管理和集群的高可用。在 Kafka 2.8 之后，引入了基于 Raft 协议的 KRaft 模式，不再依赖 Zookeeper，大大简化了 Kafka 的架构，让你可以以一种轻量级的方式来使用 Kafka。
+Before Kafka 2.8, Kafka was heavily criticized for its reliance on Zookeeper for metadata management and cluster high availability. After Kafka 2.8, KRaft mode was introduced based on the Raft protocol, eliminating the dependency on Zookeeper and greatly simplifying Kafka's architecture to allow for a more lightweight usage.
 
-不过，要提示一下：**如果要使用 KRaft 模式的话，建议选择较高版本的 Kafka，因为这个功能还在持续完善优化中。Kafka 3.3.1 版本是第一个将 KRaft（Kafka Raft）共识协议标记为生产就绪的版本。**
+However, a note of caution: **If you want to use KRaft mode, it is recommended that you choose a higher version of Kafka, as this feature is still under continuous refinement and optimization. Kafka version 3.3.1 is the first release where KRaft (Kafka Raft) consensus protocol is marked as production-ready.**
 
 ![](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/kafka3.3.1-kraft-production-ready.png)
 
-Kafka 官网：<http://kafka.apache.org/>
+Kafka official website: <http://kafka.apache.org/>
 
-Kafka 更新记录（可以直观看到项目是否还在维护）：<https://kafka.apache.org/downloads>
+Kafka update records (to visually check if the project is still maintained): <https://kafka.apache.org/downloads>
 
 #### RocketMQ
 
 ![](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/rocketmq-logo.png)
 
-RocketMQ 是阿里开源的一款云原生“消息、事件、流”实时数据处理平台，借鉴了 Kafka，已经成为 Apache 顶级项目。
+RocketMQ is an open-source "message, event, and stream" real-time data processing platform from Alibaba, which has drawn inspiration from Kafka and has become an Apache top-level project.
 
-RocketMQ 的核心特性（摘自 RocketMQ 官网）：
+Core features of RocketMQ (from the RocketMQ official site):
 
-- 云原生：生与云，长与云，无限弹性扩缩，K8s 友好
-- 高吞吐：万亿级吞吐保证，同时满足微服务与大数据场景。
-- 流处理：提供轻量、高扩展、高性能和丰富功能的流计算引擎。
-- 金融级：金融级的稳定性，广泛用于交易核心链路。
-- 架构极简：零外部依赖，Shared-nothing 架构。
-- 生态友好：无缝对接微服务、实时计算、数据湖等周边生态。
+- Cloud-Native: Designed for cloud environments with infinite scalability, Kubernetes-friendly.
+- High Throughput: Guarantees trillions of throughput while meeting microservices and big data scenarios.
+- Stream Processing: Provides lightweight, highly scalable, high-performance, and feature-rich stream computing engines.
+- Financial Grade: Stable enough for enterprise-level core trading links.
+- Simplified Architecture: No external dependencies, shared-nothing architecture.
+- Ecosystem Friendly: Seamless integration with microservices, real-time computing, data lakes, and other surrounding ecosystems.
 
-根据官网介绍：
+According to the official site,
 
-> Apache RocketMQ 自诞生以来，因其架构简单、业务功能丰富、具备极强可扩展性等特点被众多企业开发者以及云厂商广泛采用。历经十余年的大规模场景打磨，RocketMQ 已经成为业内共识的金融级可靠业务消息首选方案，被广泛应用于互联网、大数据、移动互联网、物联网等领域的业务场景。
+> Since its inception, Apache RocketMQ has been widely adopted by numerous enterprise developers and cloud vendors due to its simple architecture, rich business functionality, and strong scalability. After ten years of large-scale scene refinement, RocketMQ has become a consensus choice for financial-grade reliable business messaging, widely used in e-commerce, big data, mobile internet, and IoT applications.
 
-RocketMQ 官网：<https://rocketmq.apache.org/> （文档很详细，推荐阅读）
+RocketMQ official site: <https://rocketmq.apache.org/> (the documentation is very detailed and highly recommended)
 
-RocketMQ 更新记录（可以直观看到项目是否还在维护）：<https://github.com/apache/rocketmq/releases>
+RocketMQ update records (to visually check if the project is still maintained): <https://github.com/apache/rocketmq/releases>
 
 #### RabbitMQ
 
 ![](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/rabbitmq-logo.png)
 
-RabbitMQ 是采用 Erlang 语言实现 AMQP(Advanced Message Queuing Protocol，高级消息队列协议）的消息中间件，它最初起源于金融系统，用于在分布式系统中存储转发消息。
+RabbitMQ is a messaging middleware implemented in Erlang that uses AMQP (Advanced Message Queuing Protocol). It originally stemmed from financial systems for message storage and forwarding in distributed systems.
 
-RabbitMQ 发展到今天，被越来越多的人认可，这和它在易用性、扩展性、可靠性和高可用性等方面的卓著表现是分不开的。RabbitMQ 的具体特点可以概括为以下几点：
+Today, RabbitMQ has gained recognition among many users due to its outstanding performance in usability, scalability, reliability, and high availability. The specific characteristics of RabbitMQ can be summarized as follows:
 
-- **可靠性：** RabbitMQ 使用一些机制来保证消息的可靠性，如持久化、传输确认及发布确认等。
-- **灵活的路由：** 在消息进入队列之前，通过交换器来路由消息。对于典型的路由功能，RabbitMQ 己经提供了一些内置的交换器来实现。针对更复杂的路由功能，可以将多个交换器绑定在一起，也可以通过插件机制来实现自己的交换器。这个后面会在我们讲 RabbitMQ 核心概念的时候详细介绍到。
-- **扩展性：** 多个 RabbitMQ 节点可以组成一个集群，也可以根据实际业务情况动态地扩展集群中节点。
-- **高可用性：** 队列可以在集群中的机器上设置镜像，使得在部分节点出现问题的情况下队列仍然可用。
-- **支持多种协议：** RabbitMQ 除了原生支持 AMQP 协议，还支持 STOMP、MQTT 等多种消息中间件协议。
-- **多语言客户端：** RabbitMQ 几乎支持所有常用语言，比如 Java、Python、Ruby、PHP、C#、JavaScript 等。
-- **易用的管理界面：** RabbitMQ 提供了一个易用的用户界面，使得用户可以监控和管理消息、集群中的节点等。在安装 RabbitMQ 的时候会介绍到，安装好 RabbitMQ 就自带管理界面。
-- **插件机制：** RabbitMQ 提供了许多插件，以实现从多方面进行扩展，当然也可以编写自己的插件。感觉这个有点类似 Dubbo 的 SPI 机制
+- **Reliability:** RabbitMQ employs mechanisms to ensure message reliability, such as persistence, delivery confirmations, and publishing confirmations.
+- **Flexible Routing:** Messages are routed through exchangeers before entering queues. RabbitMQ has provided built-in exchangeers for typical routing functionalities. For more complex routing functionalities, multiple exchangeers can be bound together or custom exchangeers can be implemented via plugins, which will be detailed later in the core concepts of RabbitMQ.
+- **Scalability:** Multiple RabbitMQ nodes can form a cluster and dynamically extend nodes based on actual business demands.
+- **High Availability:** Queues can be mirrored across machines in the cluster, ensuring availability even if some nodes fail.
+- **Support for Multiple Protocols:** In addition to natively supporting AMQP, RabbitMQ also supports STOMP, MQTT, and various other messaging middleware protocols.
+- **Multi-language Clients:** RabbitMQ supports almost all commonly used languages such as Java, Python, Ruby, PHP, C#, and JavaScript.
+- **User-Friendly Management Interface:** RabbitMQ provides an easy-to-use graphical interface for users to monitor and manage messages and nodes in the cluster. We will discuss this during the RabbitMQ installation.
+- **Plugin Mechanism:** RabbitMQ offers numerous plugins for diverse functionalities and there is also the capability to develop custom plugins, somewhat akin to Dubbo's SPI mechanism.
 
-RabbitMQ 官网：<https://www.rabbitmq.com/> 。
+RabbitMQ official site: <https://www.rabbitmq.com/>.
 
-RabbitMQ 更新记录（可以直观看到项目是否还在维护）：<https://www.rabbitmq.com/news.html>
+RabbitMQ update records (to visually check if the project is still maintained): <https://www.rabbitmq.com/news.html>
 
 #### Pulsar
 
 ![](https://oss.javaguide.cn/github/javaguide/high-performance/message-queue/pulsar-logo.png)
 
-Pulsar 是下一代云原生分布式消息流平台，最初由 Yahoo 开发 ，已经成为 Apache 顶级项目。
+Pulsar is a next-generation cloud-native distributed messaging streaming platform, initially developed by Yahoo, and has become an Apache top-level project.
 
-Pulsar 集消息、存储、轻量化函数式计算为一体，采用计算与存储分离架构设计，支持多租户、持久化存储、多机房跨区域数据复制，具有强一致性、高吞吐、低延时及高可扩展性等流数据存储特性，被看作是云原生时代实时消息流传输、存储和计算最佳解决方案。
+Pulsar integrates messaging, storage, and lightweight function-based computing, adopting a compute-storage separation architecture design, and supports multi-tenancy, persistent storage, and cross-region data replication, offering strong consistency, high throughput, low latency, and high scalability characteristics for streaming data storage. It is considered one of the best solutions for real-time message transmission, storage, and computation in the cloud-native era.
 
-Pulsar 的关键特性如下（摘自官网）：
+Key features of Pulsar include (from the official site):
 
-- 是下一代云原生分布式消息流平台。
-- Pulsar 的单个实例原生支持多个集群，可跨机房在集群间无缝地完成消息复制。
-- 极低的发布延迟和端到端延迟。
-- 可无缝扩展到超过一百万个 topic。
-- 简单的客户端 API，支持 Java、Go、Python 和 C++。
-- 主题的多种订阅模式（独占、共享和故障转移）。
-- 通过 Apache BookKeeper 提供的持久化消息存储机制保证消息传递 。
-- 由轻量级的 serverless 计算框架 Pulsar Functions 实现流原生的数据处理。
-- 基于 Pulsar Functions 的 serverless connector 框架 Pulsar IO 使得数据更易移入、移出 Apache Pulsar。
-- 分层式存储可在数据陈旧时，将数据从热存储卸载到冷/长期存储（如 S3、GCS）中。
+- A next-generation cloud-native distributed messaging streaming platform.
+- A single instance of Pulsar natively supports multiple clusters and can seamlessly replicate messages across regions.
+- Extremely low publish latency and end-to-end latency.
+- Seamless scalability to over one million topics.
+- A simple client API that supports Java, Go, Python, and C++.
+- Various subscription modes for topics (exclusive, shared, and failover).
+- A persistent message storage mechanism guaranteed by Apache BookKeeper.
+- Stream native data processing realized by the lightweight serverless computing framework Pulsar Functions.
+- A serverless connector framework based on Pulsar Functions called Pulsar IO makes it easier to move data into and out of Apache Pulsar.
+- Layered storage allows data to be offloaded from hot storage to cold/long-term storage (such as S3, GCS) as it becomes stale.
 
-Pulsar 官网：<https://pulsar.apache.org/>
+Pulsar official site: <https://pulsar.apache.org/>
 
-Pulsar 更新记录（可以直观看到项目是否还在维护）：<https://github.com/apache/pulsar/releases>
+Pulsar update records (to visually check if the project is still maintained): <https://github.com/apache/pulsar/releases>
 
 #### ActiveMQ
 
-目前已经被淘汰，不推荐使用，不建议学习。
+Currently deprecated; not recommended for use or learning.
 
-### 如何选择？
+### How to Choose?
 
-> 参考《Java 工程师面试突击第 1 季-中华石杉老师》
+> Refer to "Java Engineer Interview Quick Strike Season 1 - Teacher Zhonghua Shishan"
 
-| 对比方向 | 概要                                                                                                                                                                            |
-| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 吞吐量   | 万级的 ActiveMQ 和 RabbitMQ 的吞吐量（ActiveMQ 的性能最差）要比十万级甚至是百万级的 RocketMQ 和 Kafka 低一个数量级。                                                            |
-| 可用性   | 都可以实现高可用。ActiveMQ 和 RabbitMQ 都是基于主从架构实现高可用性。RocketMQ 基于分布式架构。 Kafka 也是分布式的，一个数据多个副本，少数机器宕机，不会丢失数据，不会导致不可用 |
-| 时效性   | RabbitMQ 基于 Erlang 开发，所以并发能力很强，性能极其好，延时很低，达到微秒级，其他几个都是 ms 级。                                                                             |
-| 功能支持 | Pulsar 的功能更全面，支持多租户、多种消费模式和持久性模式等功能，是下一代云原生分布式消息流平台。                                                                               |
-| 消息丢失 | ActiveMQ 和 RabbitMQ 丢失的可能性非常低， Kafka、RocketMQ 和 Pulsar 理论上可以做到 0 丢失。                                                                                     |
+| Comparison Aspect | Overview                                                                                                                                                                                                                                                                                                             |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Throughput        | The throughput of ActiveMQ and RabbitMQ (with ActiveMQ being the worst performer) at tens of thousands is an order of magnitude lower than that of RocketMQ and Kafka at hundreds of thousands or even millions.                                                                                                     |
+| Availability      | All can achieve high availability. ActiveMQ and RabbitMQ implement high availability based on a master-slave architecture, while RocketMQ is based on a distributed architecture. Kafka is also distributed with multiple data replicas, meaning that data loss is unlikely even if a small number of machines fail. |
+| Timeliness        | RabbitMQ, being developed on Erlang, has strong concurrency capabilities and performs exceptionally well, achieving microsecond latency, while the others range in millisecond latency.                                                                                                                              |
+| Feature Support   | Pulsar offers more comprehensive features, supporting multi-tenancy, various consumption modes, persistent modes, etc., and is the next-generation cloud-native distributed messaging stream platform.                                                                                                               |
+| Message Loss      | The likelihood of message loss in ActiveMQ and RabbitMQ is very low; Kafka, RocketMQ, and Pulsar can theoretically achieve zero loss.                                                                                                                                                                                |
 
-**总结：**
+**Summary:**
 
-- ActiveMQ 的社区算是比较成熟，但是较目前来说，ActiveMQ 的性能比较差，而且版本迭代很慢，不推荐使用，已经被淘汰了。
-- RabbitMQ 在吞吐量方面虽然稍逊于 Kafka、RocketMQ 和 Pulsar，但是由于它基于 Erlang 开发，所以并发能力很强，性能极其好，延时很低，达到微秒级。但是也因为 RabbitMQ 基于 Erlang 开发，所以国内很少有公司有实力做 Erlang 源码级别的研究和定制。如果业务场景对并发量要求不是太高（十万级、百万级），那这几种消息队列中，RabbitMQ 或许是你的首选。
-- RocketMQ 和 Pulsar 支持强一致性，对消息一致性要求比较高的场景可以使用。
-- RocketMQ 阿里出品，Java 系开源项目，源代码我们可以直接阅读，然后可以定制自己公司的 MQ，并且 RocketMQ 有阿里巴巴的实际业务场景的实战考验。
-- Kafka 的特点其实很明显，就是仅仅提供较少的核心功能，但是提供超高的吞吐量，ms 级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。同时 Kafka 最好是支撑较少的 topic 数量即可，保证其超高吞吐量。Kafka 唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略这个特性天然适合大数据实时计算以及日志收集。如果是大数据领域的实时计算、日志采集等场景，用 Kafka 是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。
+- ActiveMQ has a mature community but is currently underperforming compared to others and experiences slow version iterations, leading to its deprecation.
+- Although RabbitMQ's throughput lags behind Kafka, RocketMQ, and Pulsar, its concurrent capabilities are robustly supported by Erlang, leading to exceptional performance and low latency. However, few companies in China possess the capability to conduct Erlang-level code research and customizations. If your business scenario does not demand extremely high levels of concurrency (like hundreds of thousands or millions), RabbitMQ could be your first choice among these message queues.
+- RocketMQ and Pulsar support strong consistency, making them suitable for scenarios demanding high message consistency.
+- RocketMQ is produced by Alibaba, is an open-source project within the Java ecosystem, allowing one to read its source code directly and tailor it to company needs. RocketMQ has also undergone practical tests in Alibaba's business scenarios.
+- Kafka's characteristics are notable: it focuses on providing fewer core functionalities but achieves extremely high throughput, ms-level latency, and exceptional availability and reliability, with flexible scalability. Kafka operates best with fewer topic counts to maintain its super high throughput. The only downside is the potential for message duplicates, which may have a minimal impact on data accuracy. However, this slight impact is negligible in the domain of big data and log collection. Kafka is indeed the industry standard for real-time computing and log collection in big data scenarios, with a highly active community that is unlikely to stagnate, making it the de facto norm worldwide in this field.
 
-## 参考
+## References
 
-- 《大型网站技术架构 》
-- KRaft: Apache Kafka Without ZooKeeper：<https://developer.confluent.io/learn/kraft/>
-- 消息队列的使用场景是什么样的？：<https://mp.weixin.qq.com/s/4V1jI6RylJr7Jr9JsQe73A>
+- "Technical Architecture of Large-Scale Websites"
+- KRaft: Apache Kafka Without ZooKeeper: <https://developer.confluent.io/learn/kraft/>
+- What Are the Usage Scenarios for Message Queues?: <https://mp.weixin.qq.com/s/4V1jI6RylJr7Jr9JsQe73A>
 
 <!-- @include: @article-footer.snippet.md -->

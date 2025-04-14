@@ -1,22 +1,22 @@
 ---
-title: 设计模式常见面试题总结
-category: 系统设计
-icon: "Tools"
+title: Summary of Common Interview Questions on Design Patterns
+category: System Design
+icon: Tools
 head:
-  - - meta
-    - name: keywords
-      content: 设计模式,单例模式,责任链模式,适配器模式,工厂模式,代理模式
-  - - meta
-    - name: description
-      content: 设计模式(Design pattern)代表了最佳的实践，通常被有经验的面向对象 的软件开发人员所采用。设计模式是软件开发人员在软件开发过程中面临 的一般问题的解决方案。这些解决方案是众多软件开发人员经过相当⻓的 一段时间的试验和错误总结出来的。
+  -   - meta
+      - name: keywords
+        content: Design Patterns, Singleton Pattern, Chain of Responsibility Pattern, Adapter Pattern, Factory Pattern, Proxy Pattern
+  -   - meta
+      - name: description
+        content: Design patterns represent best practices and are often adopted by experienced object-oriented software developers. Design patterns are solutions to common problems faced by software developers during the software development process. These solutions have been summarized by numerous software developers after a considerable amount of trial and error.
 ---
 
-**设计模式** 相关的面试题已经整理到了 PDF 手册中，你可以在我的公众号“**JavaGuide**”后台回复“**PDF**” 获取。
+**Interview questions** related to **design patterns** have been compiled into a PDF manual, which you can obtain by replying "PDF" in the backend of my public account "**JavaGuide**".
 
-![JavaGuide 官方公众号](https://oss.javaguide.cn/github/javaguide/gongzhonghaoxuanchuan.png)
+![JavaGuide Official Public Account](https://oss.javaguide.cn/github/javaguide/gongzhonghaoxuanchuan.png)
 
-**《设计模式》PDF 电子书内容概览**：
+**Overview of the content in the "Design Patterns" PDF eBook**:
 
-![《设计模式》PDF文档概览](https://oss.javaguide.cn/github/javaguide/system-design/design-pattern-pdf.png)
+![Overview of the "Design Patterns" PDF Document](https://oss.javaguide.cn/github/javaguide/system-design/design-pattern-pdf.png)
 
 <!-- @include: @article-footer.snippet.md -->

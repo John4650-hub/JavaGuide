@@ -1,208 +1,208 @@
 ---
-title: 负载均衡原理及算法详解
-category: 高性能
+title: Detailed Explanation of Load Balancing Principles and Algorithms
+category: High Performance
 head:
   - - meta
     - name: keywords
-      content: 客户端负载均衡,服务负载均衡,Nginx,负载均衡算法,七层负载均衡,DNS解析
+      content: Client-side Load Balancing, Server-side Load Balancing, Nginx, Load Balancing Algorithms, Layer 7 Load Balancing, DNS Resolution
   - - meta
     - name: description
-      content: 负载均衡指的是将用户请求分摊到不同的服务器上处理，以提高系统整体的并发处理能力。负载均衡可以简单分为服务端负载均衡和客户端负载均衡 这两种。服务端负载均衡涉及到的知识点更多，工作中遇到的也比较多，因为，我会花更多时间来介绍。
+      content: Load balancing refers to distributing user requests across different servers to improve the overall concurrency and reliability of the system. Load balancing can be simply divided into two types: server-side load balancing and client-side load balancing. Server-side load balancing involves more knowledge points and is encountered more frequently in work, thus, I will spend more time introducing it.
 ---
 
-## 什么是负载均衡？
+## What is Load Balancing?
 
-**负载均衡** 指的是将用户请求分摊到不同的服务器上处理，以提高系统整体的并发处理能力以及可靠性。负载均衡服务可以有由专门的软件或者硬件来完成，一般情况下，硬件的性能更好，软件的价格更便宜（后文会详细介绍到）。
+**Load balancing** refers to distributing user requests across different servers to enhance the overall concurrency capacity and reliability of a system. Load balancing services can be implemented by specialized software or hardware. Generally, hardware has better performance, while software is cheaper (which will be discussed in detail later).
 
-下图是[《Java 面试指北》](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247519384&idx=1&sn=bc7e71af75350b755f04ca4178395b1a&chksm=cea1c353f9d64a458f797696d4144b4d6e58639371a4612b8e4d106d83a66d2289e7b2cd7431&token=660789642&lang=zh_CN&scene=21#wechat_redirect) 「高并发篇」中的一篇文章的配图，从图中可以看出，系统的商品服务部署了多份在不同的服务器上，为了实现访问商品服务请求的分流，我们用到了负载均衡。
+The following image is from an article in the "High Concurrency" section of [“Java Interview Guide”](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247519384&idx=1&sn=bc7e71af75350b755f04ca4178395b1a&chksm=cea1c353f9d64a458f797696d4144b4d6e58639371a4612b8e4d106d83a66d2289e7b2cd7431&token=660789642&lang=zh_CN&scene=21#wechat_redirect). From the image, we can see that the system's product service is deployed across multiple servers, and to achieve request sharding for accessing the product service, we utilize load balancing.
 
-![多服务实例-负载均衡](https://oss.javaguide.cn/github/javaguide/high-performance/load-balancing/multi-service-load-balancing.drawio.png)
+![Multiple Service Instances - Load Balancing](https://oss.javaguide.cn/github/javaguide/high-performance/load-balancing/multi-service-load-balancing.drawio.png)
 
-负载均衡是一种比较常用且实施起来较为简单的提高系统并发能力和可靠性的手段，不论是单体架构的系统还是微服务架构的系统几乎都会用到。
+Load balancing is a commonly used and relatively simple means of enhancing system concurrency and reliability. It is utilized in nearly all systems, whether they are monolithic architectures or microservice architectures.
 
-## 负载均衡分为哪几种？
+## What Types of Load Balancing Are There?
 
-负载均衡可以简单分为 **服务端负载均衡** 和 **客户端负载均衡** 这两种。
+Load balancing can be simply divided into **server-side load balancing** and **client-side load balancing**.
 
-服务端负载均衡涉及到的知识点更多，工作中遇到的也比较多，因此，我会花更多时间来介绍。
+Server-side load balancing involves more knowledge points and is encountered more frequently in work, hence I will spend more time introducing it.
 
-### 服务端负载均衡
+### Server-side Load Balancing
 
-**服务端负载均衡** 主要应用在 **系统外部请求** 和 **网关层** 之间，可以使用 **软件** 或者 **硬件** 实现。
+**Server-side load balancing** is mainly applied between **external system requests** and the **gateway layer** and can be implemented using **software** or **hardware**.
 
-下图是我画的一个简单的基于 Nginx 的服务端负载均衡示意图：
+The following diagram illustrates a simple server-side load balancing setup based on Nginx:
 
-![基于 Nginx 的服务端负载均衡](https://oss.javaguide.cn/github/javaguide/high-performance/load-balancing/server-load-balancing.png)
+![Server-side Load Balancing Based on Nginx](https://oss.javaguide.cn/github/javaguide/high-performance/load-balancing/server-load-balancing.png)
 
-**硬件负载均衡** 通过专门的硬件设备（比如 **F5、A10、Array** ）实现负载均衡功能。
+**Hardware load balancing** is achieved via specialized hardware devices (such as **F5, A10, Array**).
 
-硬件负载均衡的优势是性能很强且稳定，缺点就是实在是太贵了。像基础款的 F5 最低也要 20 多万，绝大部分公司是根本负担不起的，业务量不大的话，真没必要非要去弄个硬件来做负载均衡，用软件负载均衡就足够了！
+The advantage of hardware load balancing is its strong and stable performance; however, the downside is that it is quite expensive. For instance, a basic model of F5 starts from over 200,000 yuan, which most companies cannot afford. If the business volume is not high, it is unnecessary to invest in hardware for load balancing; software load balancing suffices!
 
-在我们日常开发中，一般很难接触到硬件负载均衡，接触的比较多的还是 **软件负载均衡** 。软件负载均衡通过软件（比如 **LVS、Nginx、HAproxy** ）实现负载均衡功能，性能虽然差一些，但价格便宜啊！像基础款的 Linux 服务器也就几千，性能好一点的 2~3 万的就很不错了。
+In our daily development, we generally have limited exposure to hardware load balancing, as we encounter **software load balancing** more frequently. Software load balancing uses software (such as **LVS, Nginx, HAProxy**) to implement load balancing functionality; while its performance is slightly lower, it is more cost-effective! For instance, a basic Linux server can be just a few thousand yuan, and a slightly better one might cost around 20,000 to 30,000 yuan.
 
-根据 OSI 模型，服务端负载均衡还可以分为：
+According to the OSI model, server-side load balancing can also be categorized into:
 
-- 二层负载均衡
-- 三层负载均衡
-- 四层负载均衡
-- 七层负载均衡
+- Layer 2 Load Balancing
+- Layer 3 Load Balancing
+- Layer 4 Load Balancing
+- Layer 7 Load Balancing
 
-最常见的是四层和七层负载均衡，因此，本文也是重点介绍这两种负载均衡。
+The most common types are Layer 4 and Layer 7 load balancing, thus this article will primarily focus on these two types.
 
-> Nginx 官网对四层负载和七层负载均衡均衡做了详细介绍，感兴趣的可以看看。
+> The Nginx official website provides a detailed introduction to Layer 4 and Layer 7 load balancing. If you're interested, you can check it out.
 >
 > - [What Is Layer 4 Load Balancing?](https://www.nginx.com/resources/glossary/layer-4-load-balancing/)
 > - [What Is Layer 7 Load Balancing?](https://www.nginx.com/resources/glossary/layer-7-load-balancing/)
 
-![OSI 七层模型](https://oss.javaguide.cn/github/javaguide/cs-basics/network/osi-7-model.png)
+![OSI Seven Layer Model](https://oss.javaguide.cn/github/javaguide/cs-basics/network/osi-7-model.png)
 
-- **四层负载均衡** 工作在 OSI 模型第四层，也就是传输层，这一层的主要协议是 TCP/UDP，负载均衡器在这一层能够看到数据包里的源端口地址以及目的端口地址，会基于这些信息通过一定的负载均衡算法将数据包转发到后端真实服务器。也就是说，四层负载均衡的核心就是 IP+端口层面的负载均衡，不涉及具体的报文内容。
-- **七层负载均衡** 工作在 OSI 模型第七层，也就是应用层，这一层的主要协议是 HTTP 。这一层的负载均衡比四层负载均衡路由网络请求的方式更加复杂，它会读取报文的数据部分（比如说我们的 HTTP 部分的报文），然后根据读取到的数据内容（如 URL、Cookie）做出负载均衡决策。也就是说，七层负载均衡器的核心是报文内容（如 URL、Cookie）层面的负载均衡，执行第七层负载均衡的设备通常被称为 **反向代理服务器** 。
+- **Layer 4 load balancing** operates at the fourth layer of the OSI model, which is the transport layer. The main protocols at this layer are TCP/UDP. The load balancer at this layer can see the source and destination port addresses in the data packets and will forward the packets to the backend real servers based on this information using specific load balancing algorithms. In other words, the core of Layer 4 load balancing is IP + port level load balancing without involving the actual content of the messages.
+- **Layer 7 load balancing** functions at the seventh layer of the OSI model, which is the application layer. The main protocol at this layer is HTTP. The load balancing at this layer is more complex than at Layer 4, as it reads the message data section (for instance, the HTTP portion of messages), and makes load balancing decisions based on the content read (such as URL, Cookie). In other words, the core of Layer 7 load balancers is load balancing at the message content level (such as URL, Cookie), and devices performing Layer 7 load balancing are usually referred to as **reverse proxy servers**.
 
-七层负载均衡比四层负载均衡会消耗更多的性能，不过，也相对更加灵活，能够更加智能地路由网络请求，比如说你可以根据请求的内容进行优化如缓存、压缩、加密。
+Layer 7 load balancing consumes more performance than Layer 4 load balancing, but it is also relatively more flexible and capable of routing network requests more intelligently. For example, you can optimize based on request content, such as caching, compression, and encryption.
 
-简单来说，**四层负载均衡性能很强，七层负载均衡功能更强！** 不过，对于绝大部分业务场景来说，四层负载均衡和七层负载均衡的性能差异基本可以忽略不计的。
+In short, **Layer 4 load balancing has strong performance, while Layer 7 load balancing has more powerful functionalities!** However, for most business scenarios, the performance difference between Layer 4 and Layer 7 load balancing can generally be negligible.
 
-下面这段话摘自 Nginx 官网的 [What Is Layer 4 Load Balancing?](https://www.nginx.com/resources/glossary/layer-4-load-balancing/) 这篇文章。
+The following excerpt is from the Nginx official article [What Is Layer 4 Load Balancing?](https://www.nginx.com/resources/glossary/layer-4-load-balancing/).
 
 > Layer 4 load balancing was a popular architectural approach to traffic handling when commodity hardware was not as powerful as it is now, and the interaction between clients and application servers was much less complex. It requires less computation than more sophisticated load balancing methods (such as Layer 7), but CPU and memory are now sufficiently fast and cheap that the performance advantage for Layer 4 load balancing has become negligible or irrelevant in most situations.
 >
 > 第 4 层负载平衡是一种流行的流量处理体系结构方法，当时商用硬件没有现在这么强大，客户端和应用程序服务器之间的交互也不那么复杂。它比更复杂的负载平衡方法(如第 7 层)需要更少的计算量，但是 CPU 和内存现在足够快和便宜，在大多数情况下，第 4 层负载平衡的性能优势已经变得微不足道或无关紧要。
 
-在工作中，我们通常会使用 **Nginx** 来做七层负载均衡，LVS(Linux Virtual Server 虚拟服务器， Linux 内核的 4 层负载均衡)来做四层负载均衡。
+In practice, we usually use **Nginx** for Layer 7 load balancing and LVS (Linux Virtual Server, a Layer 4 load balancer in the Linux kernel) for Layer 4 load balancing.
 
-关于 Nginx 的常见知识点总结，[《Java 面试指北》](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html) 中「技术面试题篇」中已经有对应的内容了，感兴趣的小伙伴可以去看看。
+For a summary of common knowledge about Nginx, corresponding content is already available in the "Technical Interview Questions" section of [“Java Interview Guide”](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html). Interested readers can take a look.
 
 ![](https://oss.javaguide.cn/github/javaguide/image-20220328105759300.png)
 
-不过，LVS 这个绝大部分公司真用不上，像阿里、百度、腾讯、eBay 等大厂才会使用到，用的最多的还是 Nginx。
+However, most companies do not need to use LVS; it is typically used by large companies like Alibaba, Baidu, Tencent, eBay, etc. The most commonly used solution remains Nginx.
 
-### 客户端负载均衡
+### Client-side Load Balancing
 
-**客户端负载均衡** 主要应用于系统内部的不同的服务之间，可以使用现成的负载均衡组件来实现。
+**Client-side load balancing** is mainly applied between different services within the system and can be implemented using existing load balancing components.
 
-在客户端负载均衡中，客户端会自己维护一份服务器的地址列表，发送请求之前，客户端会根据对应的负载均衡算法来选择具体某一台服务器处理请求。
+In client-side load balancing, the client maintains its own list of server addresses. Before sending a request, the client selects a specific server to handle the request based on the corresponding load balancing algorithm.
 
-客户端负载均衡器和服务运行在同一个进程或者说 Java 程序里，不存在额外的网络开销。不过，客户端负载均衡的实现会受到编程语言的限制，比如说 Spring Cloud Load Balancer 就只能用于 Java 语言。
+The client load balancer and the services run within the same process or Java program, eliminating additional network overhead. However, the implementation of client-side load balancing may be constrained by the programming language; for instance, Spring Cloud Load Balancer can only be used with Java.
 
-Java 领域主流的微服务框架 Dubbo、Spring Cloud 等都内置了开箱即用的客户端负载均衡实现。Dubbo 属于是默认自带了负载均衡功能，Spring Cloud 是通过组件的形式实现的负载均衡，属于可选项，比较常用的是 Spring Cloud Load Balancer（官方，推荐） 和 Ribbon（Netflix，已被弃用）。
+Mainstream microservice frameworks in the Java field, such as Dubbo and Spring Cloud, come with out-of-the-box client-side load balancing implementations. Dubbo has load balancing functionality built in by default, while Spring Cloud implements load balancing through components; it is optional, with Spring Cloud Load Balancer (official, recommended) and Ribbon (Netflix, deprecated) being the more commonly used options.
 
-下图是我画的一个简单的基于 Spring Cloud Load Balancer（Ribbon 也类似） 的客户端负载均衡示意图：
+The following diagram illustrates a simple client-side load balancing setup based on Spring Cloud Load Balancer (Ribbon is similar):
 
 ![](https://oss.javaguide.cn/github/javaguide/high-performance/load-balancing/spring-cloud-lb-gateway.png)
 
-## 负载均衡常见的算法有哪些？
+## What Are the Common Algorithms for Load Balancing?
 
-### 随机法
+### Random Method
 
-**随机法** 是最简单粗暴的负载均衡算法。
+**Random method** is the simplest and most brute-force load balancing algorithm.
 
-如果没有配置权重的话，所有的服务器被访问到的概率都是相同的。如果配置权重的话，权重越高的服务器被访问的概率就越大。
+If weights are not configured, all servers have the same probability of being accessed. If weights are configured, servers with higher weights are more likely to be accessed.
 
-未加权重的随机算法适合于服务器性能相近的集群，其中每个服务器承载相同的负载。加权随机算法适合于服务器性能不等的集群，权重的存在可以使请求分配更加合理化。
+The unweighted random algorithm is suitable for clusters with similar server performance, where each server bears the same load. The weighted random algorithm is suitable for clusters with unequal server performance, where the presence of weights allows for a more rational request distribution.
 
-不过，随机算法有一个比较明显的缺陷：部分机器在一段时间之内无法被随机到，毕竟是概率算法，就算是大家权重一样， 也可能会出现这种情况。
+However, the random algorithm has a notable flaw: some machines may not be randomly selected for a period of time due to the nature of probability algorithms. Even if everyone has the same weight, such situations can still occur.
 
-于是，**轮询法** 来了！
+Thus, the **Round Robin method** comes into play!
 
-### 轮询法
+### Round Robin Method
 
-轮询法是挨个轮询服务器处理，也可以设置权重。
+The Round Robin method involves polling each server for processing, and weights can also be set.
 
-如果没有配置权重的话，每个请求按时间顺序逐一分配到不同的服务器处理。如果配置权重的话，权重越高的服务器被访问的次数就越多。
+If weights are not configured, each request is distributed sequentially to different servers based on time. If weights are configured, the server with the higher weight will be accessed more frequently.
 
-未加权重的轮询算法适合于服务器性能相近的集群，其中每个服务器承载相同的负载。加权轮询算法适合于服务器性能不等的集群，权重的存在可以使请求分配更加合理化。
+The unweighted round robin algorithm is suitable for clusters with similar server performance, where each server bears the same load. The weighted round robin algorithm is suitable for clusters with unequal server performance, where the presence of weights allows for a more rational request distribution.
 
-在加权轮询的基础上，还有进一步改进得到的负载均衡算法，比如平滑的加权轮训算法。
+On the basis of weighted round robin, further improved load balancing algorithms may arise, such as the smooth weighted round robin algorithm.
 
-平滑的加权轮训算法最早是在 Nginx 中被实现，可以参考这个 commit：<https://github.com/phusion/nginx/commit/27e94984486058d73157038f7950a0a36ecc6e35>。如果你认真学习过 Dubbo 负载均衡策略的话，就会发现 Dubbo 的加权轮询就借鉴了该算法实现并进一步做了优化。
+The smooth weighted round robin algorithm was first implemented in Nginx; you can refer to this commit: <https://github.com/phusion/nginx/commit/27e94984486058d73157038f7950a0a36ecc6e35>. If you have studied Dubbo's load balancing strategies seriously, you will find that Dubbo's weighted round robin borrowed from this algorithm and further optimized it.
 
-![Dubbo 加权轮询负载均衡算法](https://oss.javaguide.cn/github/javaguide/high-performance/load-balancing/dubbo-round-robin-load-balance.png)
+![Dubbo Weighted Round Robin Load Balancing Algorithm](https://oss.javaguide.cn/github/javaguide/high-performance/load-balancing/dubbo-round-robin-load-balance.png)
 
-### 两次随机法
+### Two-time Random Method
 
-两次随机法在随机法的基础上多增加了一次随机，多选出一个服务器。随后再根据两台服务器的负载等情况，从其中选择出一个最合适的服务器。
+The two-time random method adds an additional round of randomness on the basis of the random method by selecting an extra server. Then, based on the load conditions of these two servers, one is chosen as the most suitable for processing.
 
-两次随机法的好处是可以动态地调节后端节点的负载，使其更加均衡。如果只使用一次随机法，可能会导致某些服务器过载，而某些服务器空闲。
+The benefit of the two-time random method is that it can dynamically adjust the load of backend nodes to achieve better balance. Relying solely on the single random method may lead to certain servers being overloaded while others remain idle.
 
-### 哈希法
+### Hash Method
 
-将请求的参数信息通过哈希函数转换成一个哈希值，然后根据哈希值来决定请求被哪一台服务器处理。
+The request parameters are transformed into a hash value using a hash function, and the request is then directed to the server based on this hash value.
 
-在服务器数量不变的情况下，相同参数的请求总是发到同一台服务器处理，比如同个 IP 的请求、同一个用户的请求。
+When the number of servers remains the same, requests with the same parameters will always be sent to the same server, such as requests from the same IP address or requests from the same user.
 
-### 一致性 Hash 法
+### Consistent Hash Method
 
-和哈希法类似，一致性 Hash 法也可以让相同参数的请求总是发到同一台服务器处理。不过，它解决了哈希法存在的一些问题。
+Similar to the hash method, the consistent hash method also allows requests with the same parameters to be consistently sent to the same server. However, it addresses some issues present in the hash method.
 
-常规哈希法在服务器数量变化时，哈希值会重新落在不同的服务器上，这明显违背了使用哈希法的本意。而一致性哈希法的核心思想是将数据和节点都映射到一个哈希环上，然后根据哈希值的顺序来确定数据属于哪个节点。当服务器增加或删除时，只影响该服务器的哈希，而不会导致整个服务集群的哈希键值重新分布。
+Conventional hash methods reassign hash values to different servers when the number of servers changes, which clearly defeats the purpose of using the hash method. The core idea of consistent hashing is to map both data and nodes onto a hash ring and determine the respective nodes based on the order of hash values. When servers are added or removed, only the hash of the related servers is affected, without causing a complete redistribution of the hash keys across the service cluster.
 
-### 最小连接法
+### Least Connections Method
 
-当有新的请求出现时，遍历服务器节点列表并选取其中连接数最小的一台服务器来响应当前请求。相同连接的情况下，可以进行加权随机。
+When a new request arrives, the load balancer traverses the server node list and selects the one with the least number of connections to handle the current request. In the case of equal connections, weighted random methods may be employed.
 
-最少连接数基于一个服务器连接数越多，负载就越高这一理想假设。然而， 实际情况是连接数并不能代表服务器的实际负载，有些连接耗费系统资源更多，有些连接不怎么耗费系统资源。
+The least connected method is based on the ideal assumption that a higher number of connections indicates a higher load on the server. In practice, however, the number of connections does not accurately represent the server's actual load, as some connections may consume more system resources than others.
 
-### 最少活跃法
+### Least Active Method
 
-最少活跃法和最小连接法类似，但要更科学一些。最少活跃法以活动连接数为标准，活动连接数可以理解为当前正在处理的请求数。活跃数越低，说明处理能力越强，这样就可以使处理能力强的服务器处理更多请求。相同活跃数的情况下，可以进行加权随机。
+The least active method is similar to the least connections method but is more scientific. The least active method uses the number of active connections as the standard; active connections could be understood as the current number of requests being processed. The lower the active connection count, the stronger the processing capacity, allowing more requests to be handled by stronger servers. In the case of the same number of active connections, weighted random methods can be employed.
 
-### 最快响应时间法
+### Fastest Response Time Method
 
-不同于最小连接法和最少活跃法，最快响应时间法以响应时间为标准来选择具体是哪一台服务器处理。客户端会维持每个服务器的响应时间，每次请求挑选响应时间最短的。相同响应时间的情况下，可以进行加权随机。
+Differing from the least connections and least active methods, the fastest response time method selects the appropriate server based on the response time. The client maintains the response times for each server and chooses the one with the shortest response time for each request. In the case of equal response times, weighted random methods may be employed.
 
-这种算法可以使得请求被更快处理，但可能会造成流量过于集中于高性能服务器的问题。
+This algorithm ensures that requests are processed more quickly, but it may lead to an excessive concentration of traffic on high-performance servers.
 
-## 七层负载均衡可以怎么做？
+## How Can Layer 7 Load Balancing Be Achieved?
 
-简单介绍两种项目中常用的七层负载均衡解决方案：DNS 解析和反向代理。
+Let’s briefly introduce two commonly used Layer 7 load balancing solutions: DNS resolution and reverse proxy.
 
-除了我介绍的这两种解决方案之外，HTTP 重定向等手段也可以用来实现负载均衡，不过，相对来说，还是 DNS 解析和反向代理用的更多一些，也更推荐一些。
+Apart from the two solutions introduced, other methods such as HTTP redirection can also achieve load balancing; however, DNS resolution and reverse proxy are generally used more and are recommended.
 
-### DNS 解析
+### DNS Resolution
 
-DNS 解析是比较早期的七层负载均衡实现方式，非常简单。
+DNS resolution is an early implementation of Layer 7 load balancing; it is very simple.
 
-DNS 解析实现负载均衡的原理是这样的：在 DNS 服务器中为同一个主机记录配置多个 IP 地址，这些 IP 地址对应不同的服务器。当用户请求域名的时候，DNS 服务器采用轮询算法返回 IP 地址，这样就实现了轮询版负载均衡。
+The principle of DNS resolution for achieving load balancing is as follows: Multiple IP addresses corresponding to different servers are configured in the DNS server for the same host record. When a user requests a domain name, the DNS server uses a round-robin algorithm to return an IP address, thereby achieving round-robin load balancing.
 
 ![](https://oss.javaguide.cn/github/javaguide/high-performance/load-balancing/6997605302452f07e8b28d257d349bf0.png)
 
-现在的 DNS 解析几乎都支持 IP 地址的权重配置，这样的话，在服务器性能不等的集群中请求分配会更加合理化。像我自己目前正在用的阿里云 DNS 就支持权重配置。
+Most modern DNS resolutions support the configuration of weight for IP addresses, making request distribution in clusters with unequal server performance more rational. For instance, Alibaba Cloud DNS, which I am currently using, supports weight configuration.
 
 ![](https://oss.javaguide.cn/github/javaguide/aliyun-dns-weight-setting.png)
 
-### 反向代理
+### Reverse Proxy
 
-客户端将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器，获取数据后再返回给客户端。对外暴露的是反向代理服务器地址，隐藏了真实服务器 IP 地址。反向代理“代理”的是目标服务器，这一个过程对于客户端而言是透明的。
+Clients send requests to the reverse proxy server, which then selects the target server. After obtaining the data, it is returned to the client. The external address exposed is the reverse proxy server's address, concealing the real server IP addresses. The reverse proxy "proxies" the target server, and this process is transparent to the client.
 
-Nginx 就是最常用的反向代理服务器，它可以将接收到的客户端请求以一定的规则（负载均衡策略）均匀地分配到这个服务器集群中所有的服务器上。
+Nginx is the most commonly used reverse proxy server, capable of evenly distributing incoming client requests across all servers in the server cluster based on certain rules (load balancing strategies).
 
-反向代理负载均衡同样属于七层负载均衡。
+Reverse proxy load balancing also falls under Layer 7 load balancing.
 
 ![](https://oss.javaguide.cn/github/javaguide/nginx-load-balance.png)
 
-## 客户端负载均衡通常是怎么做的？
+## How Is Client-side Load Balancing Usually Implemented?
 
-我们上面也说了，客户端负载均衡可以使用现成的负载均衡组件来实现。
+As mentioned earlier, client-side load balancing can be implemented using existing load balancing components.
 
-**Netflix Ribbon** 和 **Spring Cloud Load Balancer** 就是目前 Java 生态最流行的两个负载均衡组件。
+**Netflix Ribbon** and **Spring Cloud Load Balancer** are currently the two most popular load balancing components in the Java ecosystem.
 
-Ribbon 是老牌负载均衡组件，由 Netflix 开发，功能比较全面，支持的负载均衡策略也比较多。 Spring Cloud Load Balancer 是 Spring 官方为了取代 Ribbon 而推出的，功能相对更简单一些，支持的负载均衡也少一些。
+Ribbon is an established load balancing component developed by Netflix, offering comprehensive features and supporting various load balancing strategies. Spring Cloud Load Balancer is launched by Spring as a replacement for Ribbon, featuring a relatively simpler function set and fewer supported load balancing strategies.
 
-Ribbon 支持的 7 种负载均衡策略：
+The 7 load balancing strategies supported by Ribbon include:
 
-- `RandomRule`：随机策略。
-- `RoundRobinRule`（默认）：轮询策略
-- `WeightedResponseTimeRule`：权重（根据响应时间决定权重）策略
-- `BestAvailableRule`：最小连接数策略
-- `RetryRule`：重试策略（按照轮询策略来获取服务，如果获取的服务实例为 null 或已经失效，则在指定的时间之内不断地进行重试来获取服务，如果超过指定时间依然没获取到服务实例则返回 null）
-- `AvailabilityFilteringRule`：可用敏感性策略（先过滤掉非健康的服务实例，然后再选择连接数较小的服务实例）
-- `ZoneAvoidanceRule`：区域敏感性策略（根据服务所在区域的性能和服务的可用性来选择服务实例）
+- `RandomRule`: Random strategy.
+- `RoundRobinRule` (default): Round-robin strategy
+- `WeightedResponseTimeRule`: Weighted strategy (determining weights based on response time)
+- `BestAvailableRule`: Least connections strategy
+- `RetryRule`: Retry strategy (fetching services based on round-robin strategy; if the obtained service instance is null or already invalid, it keeps retrying within the specified time; if it still cannot fetch a service instance beyond the specified time, it returns null)
+- `AvailabilityFilteringRule`: Availability sensitivity strategy (first filtering out unhealthy service instances, then choosing the one with a lesser number of connections)
+- `ZoneAvoidanceRule`: Zone sensitivity strategy (selecting service instances based on performance and availability of the service's operating zone)
 
-Spring Cloud Load Balancer 支持的 2 种负载均衡策略：
+The 2 load balancing strategies supported by Spring Cloud Load Balancer include:
 
-- `RandomLoadBalancer`：随机策略
-- `RoundRobinLoadBalancer`（默认）：轮询策略
+- `RandomLoadBalancer`: Random strategy
+- `RoundRobinLoadBalancer` (default): Round-robin strategy
 
 ```java
 public class CustomLoadBalancerConfiguration {
@@ -218,16 +218,16 @@ public class CustomLoadBalancerConfiguration {
 }
 ```
 
-不过，Spring Cloud Load Balancer 支持的负载均衡策略其实不止这两种，`ServiceInstanceListSupplier` 的实现类同样可以让其支持类似于 Ribbon 的负载均衡策略。这个应该是后续慢慢完善引入的，不看官方文档还真发现不了，所以说阅读官方文档真的很重要！
+However, the load balancing strategies supported by Spring Cloud Load Balancer extend beyond just these two; the implementation class of `ServiceInstanceListSupplier` can also be configured to support loading balancing strategies similar to those of Ribbon. This should be gradually improved and introduced in future updates. Without looking at the official documentation, one might not realize this, which underscores the importance of reading official documentation!
 
-这里举两个官方的例子：
+Here are two official examples:
 
-- `ZonePreferenceServiceInstanceListSupplier`：实现基于区域的负载平衡
-- `HintBasedServiceInstanceListSupplier`：实现基于 hint 提示的负载均衡
+- `ZonePreferenceServiceInstanceListSupplier`: Implements region-based load balancing
+- `HintBasedServiceInstanceListSupplier`: Implements hint-based load balancing
 
 ```java
 public class CustomLoadBalancerConfiguration {
-    // 使用基于区域的负载平衡方法
+    // Using region-based loading balancing method
     @Bean
     public ServiceInstanceListSupplier discoveryClientServiceInstanceListSupplier(
             ConfigurableApplicationContext context) {
@@ -240,28 +240,28 @@ public class CustomLoadBalancerConfiguration {
 }
 ```
 
-关于 Spring Cloud Load Balancer 更详细更新的介绍，推荐大家看看官方文档：<https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#spring-cloud-loadbalancer> ，一切以官方文档为主。
+For a more detailed and updated introduction to Spring Cloud Load Balancer, I recommend checking the official documentation: <https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#spring-cloud-loadbalancer>, everything is based on the official documentation.
 
-轮询策略基本可以满足绝大部分项目的需求，我们的实际项目中如果没有特殊需求的话，通常使用的就是默认的轮询策略。并且，Ribbon 和 Spring Cloud Load Balancer 都支持自定义负载均衡策略。
+The round-robin strategy can meet the needs of the vast majority of projects. In our actual projects, if there are no special requirements, we usually just use the default round-robin strategy. Moreover, both Ribbon and Spring Cloud Load Balancer support custom load balancing strategies.
 
-个人建议如非必需 Ribbon 某个特有的功能或者负载均衡策略的话，就优先选择 Spring 官方提供的 Spring Cloud Load Balancer。
+Personally, I suggest opting for Spring Cloud Load Balancer first unless you specifically need a unique feature or load balancing strategy from Ribbon.
 
-最后再说说为什么我不太推荐使用 Ribbon 。
+Lastly, let's discuss why I do not recommend using Ribbon much.
 
-Spring Cloud 2020.0.0 版本移除了 Netflix 除 Eureka 外的所有组件。Spring Cloud Hoxton.M2 是第一个支持 Spring Cloud Load Balancer 来替代 Netfix Ribbon 的版本。
+Spring Cloud 2020.0.0 version removed all Netflix components except for Eureka. Spring Cloud Hoxton.M2 was the first version to support Spring Cloud Load Balancer in place of Netflix Ribbon.
 
-我们早期学习微服务，肯定接触过 Netflix 公司开源的 Feign、Ribbon、Zuul、Hystrix、Eureka 等知名的微服务系统构建所必须的组件，直到现在依然有非常非常多的公司在使用这些组件。不夸张地说，Netflix 公司引领了 Java 技术栈下的微服务发展。
+When we were learning about microservices, we certainly came across well-known components necessary for building microservices systems, such as Feign, Ribbon, Zuul, Hystrix, and Eureka from Netflix. Even now, many companies are still using these components. It is not an exaggeration to say that Netflix has led the development of microservices in the Java technology stack.
 
 ![](https://oss.javaguide.cn/github/javaguide/SpringCloudNetflix.png)
 
-**那为什么 Spring Cloud 这么急着移除 Netflix 的组件呢？** 主要是因为在 2018 年的时候，Netflix 宣布其开源的核心组件 Hystrix、Ribbon、Zuul、Eureka 等进入维护状态，不再进行新特性开发，只修 BUG。于是，Spring 官方不得不考虑移除 Netflix 的组件。
+**So why is Spring Cloud so eager to remove Netflix components?** The main reason is that in 2018, Netflix announced that its core open-source components such as Hystrix, Ribbon, Zuul, and Eureka would enter maintenance mode, ceasing new feature developments and focusing solely on bug fixes. Therefore, Spring had to consider removing Netflix components.
 
-**Spring Cloud Alibaba** 是一个不错的选择，尤其是对于国内的公司和个人开发者来说。
+**Spring Cloud Alibaba** is a good choice, especially for domestic companies and individual developers.
 
-## 参考
+## References
 
-- 干货 | eBay 的 4 层软件负载均衡实现：<https://mp.weixin.qq.com/s/bZMxLTECOK3mjdgiLbHj-g>
-- HTTP Load Balancing（Nginx 官方文档）：<https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/>
-- 深入浅出负载均衡 - vivo 互联网技术：<https://www.cnblogs.com/vivotech/p/14859041.html>
+- Practical Guide | eBay's Layer 4 Software Load Balancing Implementation: <https://mp.weixin.qq.com/s/bZMxLTECOK3mjdgiLbHj-g>
+- HTTP Load Balancing (Nginx Official Documentation): <https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/>
+- In-depth Understanding of Load Balancing - Vivo Internet Technology: <https://www.cnblogs.com/vivotech/p/14859041.html>
 
 <!-- @include: @article-footer.snippet.md -->

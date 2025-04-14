@@ -1,119 +1,119 @@
 ---
-title: 阿里技术面试的一些秘密
-category: 技术文章精选集
-author: 龙叔
+title: Some Secrets of Alibaba's Technical Interviews
+category: Selected Technical Articles
+author: Uncle Long
 tag:
-  - 面试
+  - Interview
 ---
 
-> **推荐语**：详细介绍了求职者在面试中应该具备哪些能力才会有更大概率脱颖而出。
+> **Recommendation**: It details the abilities that job seekers should possess to have a higher probability of standing out in interviews.
 >
-> **原文地址：** <https://mp.weixin.qq.com/s/M2M808PwQ2JcMqfLQfXQMw>
+> **Original Article Address:** <https://mp.weixin.qq.com/s/M2M808PwQ2JcMqfLQfXQMw>
 
-最近我的工作稍微轻松些，就被安排去校招面试了
+Recently, my work has become slightly easier, so I was assigned to participate in campus recruitment interviews.
 
-当时还是有些**激动**的，以前都是被面试的，现在我自己也成为一个面试别人的面试官
+At that time, I was a bit **excited**; previously, I was the one being interviewed, and now I have become an interviewer.
 
-接下来就谈谈我的面试心得(谈谈阿里面试的秘籍)
+Next, I will share my interview insights (talk about Alibaba's interview secrets).
 
-## 我是怎么筛选简历的？
+## How Do I Screen Resumes?
 
-面试之前都是要筛选简历，这个大家应该知道
+Before the interviews, resumes need to be screened, which everyone should know.
 
-阿里对待招聘非常负责任，面试官必须对每位同学的简历进行查看和筛选，如果不合适还需要写清楚理由
+Alibaba takes recruitment very seriously; interviewers must review and filter every candidate's resume, and if it's not suitable, they need to clearly state the reasons.
 
-对于校招生来说，第一份工作非常重要，而且校招的面试机会也只有一次，一旦收到大家的简历意味着大家非常认可和喜爱阿里这家公司
+For campus recruits, the first job is very important, and there is only one chance for the campus recruitment interview. Receiving everyone's resumes means they highly recognize and appreciate Alibaba as a company.
 
-所以我们对每份简历都会认真看，大家可以非常放心，不会无缘无故挂掉大家的简历
+Therefore, we look carefully at each resume; you can rest assured that we won't discard resumes without reason.
 
-尽管我们报以非常负责任的态度，但有些同学们的简历实在是难以下看
+Although we approach this with a very responsible attitude, some candidates' resumes are indeed difficult to read.
 
-关于如何写简历，我之前写过类似的文章，这里就把之前的文章放这里让大家看看 [一份好的简历应该有哪些内容](https://mp.weixin.qq.com/s?__biz=MzI4MDYzNDc1Mg==&mid=2247484010&idx=1&sn=afbe90c8446f5f21631cae750431d3ee&scene=21#wechat_redirect)
+I have previously written similar articles on how to write a resume, so I will link to it here for everyone to check out: [What Should a Good Resume Include](https://mp.weixin.qq.com/s?__biz=MzI4MDYzNDc1Mg==&mid=2247484010&idx=1&sn=afbe90c8446f5f21631cae750431d3ee&scene=21#wechat_redirect).
 
-在筛选简历的时候会有以下信息非常重要，大家一定要认真写
+The following information is very important when screening resumes, and candidates must write them carefully:
 
-- **项目经历**，具体写法可以看上面提到的文章
-- **个人含金量比较高的奖项**，比如 ACM 奖牌、计算机竞赛等
-- **个人技能** 这块会看，但是大多数简历写法都差不多，尽量写得**言简意赅**
-- **重要期刊论文发表、开源项目** 加分项
+- **Project Experience**; specifics can be found in the aforementioned article.
+- **High-Value Personal Awards**; such as ACM medals, computer competitions, etc.
+- **Personal Skills**; this section will be reviewed, but most resumes are similar, so try to write **concise** descriptions.
+- **Publications in Important Journals, Open Source Projects**; these are considered pluses.
 
-这些信息非常重要，我筛选简历的时候这些信息占整份简历的比重 4/5 左右
+This information is highly important, and during my resume screening, these aspects account for about 4/5 of the entire resume.
 
-## 面试的时候我会注重哪些方面？
+## What Aspects Do I Focus on During the Interview?
 
-### **表达要清楚**
+### **Clear Expression**
 
-这点是硬伤，在面试的时候有些同学半天说不清楚自己做的项目，我都在替你着急
+This is a major flaw; during interviews, some candidates struggle to clearly explain their projects, and I feel anxious for them.
 
-描述项目有个简单的方法论，我自己总结的 大家看看适不适合自己
+There is a simple methodology for describing projects that I have summarized, and I hope it suits you:
 
-- 最好言简意赅的描述一下你的项目背景，让面试官很快知道项目干了啥(让面试官很快对项目感兴趣)
-- 说下项目用了哪些技术，做技术的用了哪些技术得说清楚，面试官会对你的技术比较感兴趣
-- 解决了什么问题，做项目肯定是为了解决问题，总不能为了做项目而做项目吧(解决问题的能力非常重要)
-- 遇到哪些难题，如何突破这些难题，项目遇到困难问题很正常，突破困难才是一次好的成长
-- 项目还有哪些完善的地方，不可能设计出完美的执行方案，有待改进说明你对项目认识深刻，思考深入
+- It's best to concisely describe your project's background so the interviewer quickly understands what the project is about (this engages their interest quickly).
+- Talk about which technologies were used in the project. Be clear on the technologies you worked with since interviewers will be very interested in your technical skills.
+- What problems were solved; projects are generally undertaken to solve problems, as projects shouldn't just exist for their own sake (the ability to solve problems is very important).
+- What difficulties were encountered, and how were they overcome? It's normal to face difficulties in a project; overcoming them is a sign of good growth.
+- What areas still require improvement? It's impossible to design a perfect execution plan; suggesting improvements shows your deep understanding of the project and thorough thinking.
 
-一场面试时间一般 60—80 分钟，好的表达有助于彼此之间了解更多的问题
+The general interview lasts about 60-80 minutes, and good expression helps us understand each other better.
 
-### **基础知识要扎实**
+### **Solid Foundation Knowledge**
 
-校招非常注重基础知识，所以这块问的问题比较多，我一般会结合你项目去问，看看同学对技术是停留在用的阶段还是有自己的深入思考
+Campus recruitment places a strong emphasis on foundational knowledge, so the questions in this area are numerous. I typically ask questions related to your projects to see if you have merely utilized the technology or if you have deeper insights.
 
-每个方向对基础知识要求不同，但有些基础知识是通用的
+Different fields have different requirements for foundational knowledge, but some basics are applicable across the board.
 
-比如**数据结构与算法**、**操作系统**、**计算机网络** 等
+For instance, **Data Structures and Algorithms**, **Operating Systems**, **Computer Networks**, etc.
 
-这些基础技术知识一定要掌握扎实，技术岗位都会或多或少去问这些基础
+These technical fundamentals must be mastered thoroughly, as technical positions will generally inquire about these basics.
 
-### **动手能力很重要**
+### **Practical Skills Are Important**
 
-action，action，action ，重要的事情说三遍，做技术的不可能光靠一张嘴，能落地才是最重要的
+Action, action, action – I can't emphasize this enough. People in technical roles cannot rely solely on words; being able to implement is most crucial.
 
-面试官除了问你基础知识和项目还会去考考你的动手能力，面试时间一般不会太长，根据岗位的不同一般会让同学们写一些算法题目
+Besides asking you about foundational knowledge and projects, interviewers will also assess your practical abilities. The interview time typically isn't too long, and will often involve writing some algorithm questions depending on the position.
 
-阿里面试，不会给你出非常变态的算法题目
+In Alibaba interviews, you're not given exceedingly difficult algorithm problems.
 
-主要还是考察大家的动手能力、思考问题的能力、数据结构的应用能力
+The goal is primarily to evaluate your practical skills, problem-solving abilities, and understanding of data structures.
 
-在写代码的过程中，我也总结了自己的方法论：
+Through my coding experience, I have summarized my own methodology:
 
-- 上来不要先写，审题、问清楚题目意图，不要自以为是的去理解思路，工作中 沟通需求、明确需求、提出质疑和建议是非常好的习惯
-- 接下来说思路 思路错了写到一半再去改会非常浪费时间
-- 描述清楚之后，先写代码思路的步骤注释，一边写注释，脑子里迭代一遍自己的思路是否正确，是否是最优解
-- 最后，代码规范
+- Don't start by writing immediately; first analyze the problem and ask for clarification on the question's intent. Avoid making assumptions without understanding; it's a very good habit in the workplace to communicate needs, clarify requirements, and raise questions and suggestions.
+- Then, articulate your thoughts. If your approach is incorrect, rewriting halfway through will waste a lot of time.
+- After clearly describing your thought process, first write the steps of your coding thoughts in comments. While writing comments, iterate over whether your thinking is correct and if it's the optimal solution.
+- Lastly, adhere to coding standards.
 
-## 除了上面这些常规的方面
+## Aside from These Conventional Aspects
 
-其实，现在面试已经非常**卷**了，上面说的这些很多都是 **八股文**
+In fact, interviews have become very **intense**; much of what’s been discussed is just **formulaic**.
 
-有些学生会拿到很多面试题目和答案，反复的去记忆，面试官问问题他就开始在脑子里面检索答案
+Some students acquire numerous interview questions and answers and memorize them repeatedly. When an interviewer asks a question, they search for an answer in their head.
 
-我一般问几个问题就知道该学生是不是在背八股文了。
+I typically know if a student is just reciting formulaic responses after asking a few questions.
 
-对于背八股文的同学，我真的非常难过。
+I genuinely feel saddened for students who rely on rote memorization.
 
-尽管你背的很好，但不能给你过啊，得对得起自己职责，得对公司负责啊！
+Even if you remember everything well, it doesn't justify passing; one must be responsible to oneself and the company!
 
-背的在好，不如理解一个知识点，理解一个知识点会有助于你去理解很多其他的知识点，很多知识点连起来就是一个知识体系。
+Understanding a knowledge point is far more valuable than memorizing it. Grasping one concept can help you understand many others, and many knowledge points together form a knowledge system.
 
-当面试官问你体系中的任何一个问题，都可以把这个体系讲给他听，不是**背诵** 。
+When interviewers ask about any topic within that system, you should be able to articulate the entire framework rather than just **reciting**.
 
-深入理解问题，我会比较关注。
+I pay close attention to a deep understanding of issues.
 
-我在面试过程中，会通过一个问题去问一串问题，慢慢就把整体体系串起来。
+During my interviews, I ask a series of questions rooted in a single theme, gradually connecting the entire framework.
 
-你的**比赛**和**论文**是你的亮点，这些东西是非常重要的加分项。
+Your **competitions** and **papers** are your highlights; these elements are significant bonus points.
 
-我也会在面试中穿插一些**开放性题目**，都是思考题 考验一个同学思考问题的方式。
+I also weave some **open-ended questions** into the interview—they are thought exercises that test how a candidate thinks through problems.
 
-## 最后
+## Finally
 
-作为一个面试官，我很想对大家说，每个企业都非常渴望人才，都希望找到最适合企业发展的人
+As an interviewer, I want to say that every company is eager for talent and hopes to find the most suitable people for its development.
 
-面试的时候面试官会尽量去挖掘你的价值。
+During the interview, interviewers will try their best to uncover your value.
 
-但是，面试时间有限，同学们一定要在有限的时间里展现出自己的**能力**和**无限的潜力** 。
+However, time is limited during interviews, and candidates must demonstrate their **capabilities** and **infinite potential** within that time.
 
-最后，祝愿优秀的你能找到自己理想的工作！
+In conclusion, I wish you all the best in finding your ideal job!
 
 <!-- @include: @article-footer.snippet.md -->

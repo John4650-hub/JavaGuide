@@ -1,39 +1,39 @@
 ---
-title: Java 代理模式详解
+title: Detailed Explanation of Java Proxy Pattern
 category: Java
 tag:
-  - Java基础
+  - Java Basics
 ---
 
-## 1. 代理模式
+## 1. Proxy Pattern
 
-代理模式是一种比较好理解的设计模式。简单来说就是 **我们使用代理对象来代替对真实对象(real object)的访问，这样就可以在不修改原目标对象的前提下，提供额外的功能操作，扩展目标对象的功能。**
+The proxy pattern is a design pattern that is relatively easy to understand. Simply put, **we use a proxy object to replace the access to the real object, which allows us to provide additional functionality and extend the real object's capabilities without modifying it.**
 
-**代理模式的主要作用是扩展目标对象的功能，比如说在目标对象的某个方法执行前后你可以增加一些自定义的操作。**
+**The main purpose of the proxy pattern is to extend the functionality of the target object. For example, you can add some custom operations before and after a certain method of the target object is executed.**
 
-举个例子：新娘找来了自己的姨妈来代替自己处理新郎的提问，新娘收到的提问都是经过姨妈处理过滤之后的。姨妈在这里就可以看作是代理你的代理对象，代理的行为（方法）是接收和回复新郎的提问。
+For instance: a bride asks her aunt to handle the groom's inquiries on her behalf. The inquiries that the bride receives have all been filtered by the aunt. The aunt can be viewed as the proxy object, whose role (method) is to receive and respond to the groom's questions.
 
 ![Understanding the Proxy Design Pattern | by Mithun Sasidharan | Medium](https://oss.javaguide.cn/2020-8/1*DjWCgTFm-xqbhbNQVsaWQw.png)
 
 <p style="text-align:right;font-size:13px;color:gray">https://medium.com/@mithunsasidharan/understanding-the-proxy-design-pattern-5e63fe38052a</p>
 
-代理模式有静态代理和动态代理两种实现方式，我们 先来看一下静态代理模式的实现。
+There are two implementations of the proxy pattern: static proxy and dynamic proxy. Let's first look at the implementation of static proxy.
 
-## 2. 静态代理
+## 2. Static Proxy
 
-**静态代理中，我们对目标对象的每个方法的增强都是手动完成的（_后面会具体演示代码_），非常不灵活（_比如接口一旦新增加方法，目标对象和代理对象都要进行修改_）且麻烦(_需要对每个目标类都单独写一个代理类_）。** 实际应用场景非常非常少，日常开发几乎看不到使用静态代理的场景。
+**In static proxy, the enhancement for each method of the target object is done manually (_code demonstration will follow_), which is very inflexible (_for example, if the interface adds a new method, both the target object and the proxy object need to be modified_) and troublesome (_a separate proxy class needs to be written for each target class_).** The actual application of static proxies is very rare; you hardly see static proxies used in daily development.
 
-上面我们是从实现和应用角度来说的静态代理，从 JVM 层面来说， **静态代理在编译时就将接口、实现类、代理类这些都变成了一个个实际的 class 文件。**
+The above perspective is from the implementation and application angle of static proxy. From the JVM perspective, **the static proxy generates the interface, implementation class, and proxy class into actual class files at compile time.**
 
-静态代理实现步骤:
+Steps to implement static proxy:
 
-1. 定义一个接口及其实现类；
-2. 创建一个代理类同样实现这个接口
-3. 将目标对象注入进代理类，然后在代理类的对应方法调用目标类中的对应方法。这样的话，我们就可以通过代理类屏蔽对目标对象的访问，并且可以在目标方法执行前后做一些自己想做的事情。
+1. Define an interface and its implementation class.
+1. Create a proxy class that also implements this interface.
+1. Inject the target object into the proxy class, and then call the corresponding method of the target class within the proxy class's corresponding method. This way, we can shield the access to the target object through the proxy class and perform some desired operations before and after the execution of the target method.
 
-下面通过代码展示！
+Let's demonstrate this with code!
 
-**1.定义发送短信的接口**
+**1. Define the interface for sending messages**
 
 ```java
 public interface SmsService {
@@ -41,7 +41,7 @@ public interface SmsService {
 }
 ```
 
-**2.实现发送短信的接口**
+**2. Implement the interface for sending messages**
 
 ```java
 public class SmsServiceImpl implements SmsService {
@@ -52,7 +52,7 @@ public class SmsServiceImpl implements SmsService {
 }
 ```
 
-**3.创建代理类并同样实现发送短信的接口**
+**3. Create a proxy class that also implements the interface for sending messages**
 
 ```java
 public class SmsProxy implements SmsService {
@@ -65,17 +65,17 @@ public class SmsProxy implements SmsService {
 
     @Override
     public String send(String message) {
-        //调用方法之前，我们可以添加自己的操作
+        // Before calling the method, we can add our own operations
         System.out.println("before method send()");
         smsService.send(message);
-        //调用方法之后，我们同样可以添加自己的操作
+        // After calling the method, we can also add our own operations
         System.out.println("after method send()");
         return null;
     }
 }
 ```
 
-**4.实际使用**
+**4. Actual usage**
 
 ```java
 public class Main {
@@ -87,7 +87,7 @@ public class Main {
 }
 ```
 
-运行上述代码之后，控制台打印出：
+After running the above code, the console prints:
 
 ```bash
 before method send()
@@ -95,31 +95,31 @@ send message:java
 after method send()
 ```
 
-可以输出结果看出，我们已经增加了 `SmsServiceImpl` 的`send()`方法。
+From the output, we can see that we have added functionality to the `send()` method of `SmsServiceImpl`.
 
-## 3. 动态代理
+## 3. Dynamic Proxy
 
-相比于静态代理来说，动态代理更加灵活。我们不需要针对每个目标类都单独创建一个代理类，并且也不需要我们必须实现接口，我们可以直接代理实现类( _CGLIB 动态代理机制_)。
+Compared to static proxy, dynamic proxy is more flexible. We do not need to create a separate proxy class for each target class, nor do we need to implement an interface; we can directly proxy the implementation class (_CGLIB dynamic proxy mechanism_).
 
-**从 JVM 角度来说，动态代理是在运行时动态生成类字节码，并加载到 JVM 中的。**
+**From the JVM perspective, dynamic proxy dynamically generates bytecode for classes at runtime and loads it into the JVM.**
 
-说到动态代理，Spring AOP、RPC 框架应该是两个不得不提的，它们的实现都依赖了动态代理。
+When it comes to dynamic proxy, Spring AOP and RPC frameworks are two notable examples that rely on dynamic proxy.
 
-**动态代理在我们日常开发中使用的相对较少，但是在框架中的几乎是必用的一门技术。学会了动态代理之后，对于我们理解和学习各种框架的原理也非常有帮助。**
+**Dynamic proxy is used relatively less in our daily development, but it is an essential technology in frameworks. Understanding dynamic proxies is very helpful for us to comprehend and learn the principles of various frameworks.**
 
-就 Java 来说，动态代理的实现方式有很多种，比如 **JDK 动态代理**、**CGLIB 动态代理**等等。
+In Java, there are many ways to implement dynamic proxies, such as **JDK Dynamic Proxy** and **CGLIB Dynamic Proxy**.
 
-[guide-rpc-framework](https://github.com/Snailclimb/guide-rpc-framework) 使用的是 JDK 动态代理，我们先来看看 JDK 动态代理的使用。
+[guide-rpc-framework](https://github.com/Snailclimb/guide-rpc-framework) uses JDK dynamic proxy; let's first take a look at how to use JDK dynamic proxy.
 
-另外，虽然 [guide-rpc-framework](https://github.com/Snailclimb/guide-rpc-framework) 没有用到 **CGLIB 动态代理** ，我们这里还是简单介绍一下其使用以及和**JDK 动态代理**的对比。
+Additionally, although [guide-rpc-framework](https://github.com/Snailclimb/guide-rpc-framework) does not utilize **CGLIB Dynamic Proxy**, we will briefly introduce its usage and compare it with **JDK Dynamic Proxy**.
 
-### 3.1. JDK 动态代理机制
+### 3.1. JDK Dynamic Proxy Mechanism
 
-#### 3.1.1. 介绍
+#### 3.1.1. Introduction
 
-**在 Java 动态代理机制中 `InvocationHandler` 接口和 `Proxy` 类是核心。**
+**In Java's dynamic proxy mechanism, the `InvocationHandler` interface and the `Proxy` class are the core components.**
 
-`Proxy` 类中使用频率最高的方法是：`newProxyInstance()` ，这个方法主要用来生成一个代理对象。
+The most frequently used method in the `Proxy` class is: `newProxyInstance()`, which is primarily used to generate a proxy object.
 
 ```java
     public static Object newProxyInstance(ClassLoader loader,
@@ -131,44 +131,44 @@ after method send()
     }
 ```
 
-这个方法一共有 3 个参数：
+This method has three parameters:
 
-1. **loader** :类加载器，用于加载代理对象。
-2. **interfaces** : 被代理类实现的一些接口；
-3. **h** : 实现了 `InvocationHandler` 接口的对象；
+1. **loader**: The class loader used to load the proxy object.
+1. **interfaces**: The interfaces implemented by the target class.
+1. **h**: An object that implements the `InvocationHandler` interface.
 
-要实现动态代理的话，还必须需要实现`InvocationHandler` 来自定义处理逻辑。 当我们的动态代理对象调用一个方法时，这个方法的调用就会被转发到实现`InvocationHandler` 接口类的 `invoke` 方法来调用。
+To implement dynamic proxy, you must also implement `InvocationHandler` to customize the handling logic. When our dynamic proxy object calls a method, the call will be forwarded to the `invoke` method of the class implementing the `InvocationHandler` interface.
 
 ```java
 public interface InvocationHandler {
 
     /**
-     * 当你使用代理对象调用方法的时候实际会调用到这个方法
+     * This method is invoked when you call a method on the proxy object.
      */
     public Object invoke(Object proxy, Method method, Object[] args)
         throws Throwable;
 }
 ```
 
-`invoke()` 方法有下面三个参数：
+The `invoke()` method has three parameters:
 
-1. **proxy** :动态生成的代理类
-2. **method** : 与代理类对象调用的方法相对应
-3. **args** : 当前 method 方法的参数
+1. **proxy**: The dynamically generated proxy class.
+1. **method**: The method corresponding to the method called on the proxy class object.
+1. **args**: The parameters for the current method.
 
-也就是说：**你通过`Proxy` 类的 `newProxyInstance()` 创建的代理对象在调用方法的时候，实际会调用到实现`InvocationHandler` 接口的类的 `invoke()`方法。** 你可以在 `invoke()` 方法中自定义处理逻辑，比如在方法执行前后做什么事情。
+In other words, **the proxy object created by the `Proxy` class's `newProxyInstance()` will actually invoke the `invoke()` method of the class implementing the `InvocationHandler` interface when calling a method.** You can customize the handling logic in the `invoke()` method, such as performing tasks before and after method execution.
 
-#### 3.1.2. JDK 动态代理类使用步骤
+#### 3.1.2. Steps to Use JDK Dynamic Proxy
 
-1. 定义一个接口及其实现类；
-2. 自定义 `InvocationHandler` 并重写`invoke`方法，在 `invoke` 方法中我们会调用原生方法（被代理类的方法）并自定义一些处理逻辑；
-3. 通过 `Proxy.newProxyInstance(ClassLoader loader,Class<?>[] interfaces,InvocationHandler h)` 方法创建代理对象；
+1. Define an interface and its implementation class.
+1. Customize the `InvocationHandler` and override the `invoke` method, where we will call the actual method (the method of the proxied class) and customize some handling logic.
+1. Create a proxy object using the `Proxy.newProxyInstance(ClassLoader loader, Class<?>[] interfaces, InvocationHandler h)` method.
 
-#### 3.1.3. 代码示例
+#### 3.1.3. Code Example
 
-这样说可能会有点空洞和难以理解，我上个例子，大家感受一下吧！
+This might seem a bit abstract and hard to understand, so let's use an example to illustrate!
 
-**1.定义发送短信的接口**
+**1. Define the interface for sending messages**
 
 ```java
 public interface SmsService {
@@ -176,7 +176,7 @@ public interface SmsService {
 }
 ```
 
-**2.实现发送短信的接口**
+**2. Implement the interface for sending messages**
 
 ```java
 public class SmsServiceImpl implements SmsService {
@@ -187,7 +187,7 @@ public class SmsServiceImpl implements SmsService {
 }
 ```
 
-**3.定义一个 JDK 动态代理类**
+**3. Define a JDK dynamic proxy class**
 
 ```java
 import java.lang.reflect.InvocationHandler;
@@ -200,7 +200,7 @@ import java.lang.reflect.Method;
  */
 public class DebugInvocationHandler implements InvocationHandler {
     /**
-     * 代理类中的真实对象
+     * The real object in the proxy class.
      */
     private final Object target;
 
@@ -210,43 +210,42 @@ public class DebugInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
-        //调用方法之前，我们可以添加自己的操作
+        // Before calling the method, we can add our own operations
         System.out.println("before method " + method.getName());
         Object result = method.invoke(target, args);
-        //调用方法之后，我们同样可以添加自己的操作
+        // After calling the method, we can also add our own operations
         System.out.println("after method " + method.getName());
         return result;
     }
 }
-
 ```
 
-`invoke()` 方法: 当我们的动态代理对象调用原生方法的时候，最终实际上调用到的是 `invoke()` 方法，然后 `invoke()` 方法代替我们去调用了被代理对象的原生方法。
+The `invoke()` method: When our dynamic proxy object calls the actual method, it ultimately calls the `invoke()` method, which then calls the original method of the proxied object.
 
-**4.获取代理对象的工厂类**
+**4. Factory class to get the proxy object**
 
 ```java
 public class JdkProxyFactory {
     public static Object getProxy(Object target) {
         return Proxy.newProxyInstance(
-                target.getClass().getClassLoader(), // 目标类的类加载器
-                target.getClass().getInterfaces(),  // 代理需要实现的接口，可指定多个
-                new DebugInvocationHandler(target)   // 代理对象对应的自定义 InvocationHandler
+                target.getClass().getClassLoader(), // The class loader of the target class
+                target.getClass().getInterfaces(),  // Interfaces that the proxy needs to implement, can specify multiple
+                new DebugInvocationHandler(target)   // Custom InvocationHandler corresponding to the proxy object
         );
     }
 }
 ```
 
-`getProxy()`：主要通过`Proxy.newProxyInstance（）`方法获取某个类的代理对象
+`getProxy()`: Primarily obtains the proxy object of a certain class through the `Proxy.newProxyInstance()` method.
 
-**5.实际使用**
+**5. Actual usage**
 
 ```java
 SmsService smsService = (SmsService) JdkProxyFactory.getProxy(new SmsServiceImpl());
 smsService.send("java");
 ```
 
-运行上述代码之后，控制台打印出：
+After running the above code, the console prints:
 
 ```plain
 before method send
@@ -254,45 +253,43 @@ send message:java
 after method send
 ```
 
-### 3.2. CGLIB 动态代理机制
+### 3.2. CGLIB Dynamic Proxy Mechanism
 
-#### 3.2.1. 介绍
+#### 3.2.1. Introduction
 
-**JDK 动态代理有一个最致命的问题是其只能代理实现了接口的类。**
+**The most critical issue with JDK dynamic proxy is that it can only proxy classes that implement interfaces.**
 
-**为了解决这个问题，我们可以用 CGLIB 动态代理机制来避免。**
+**To resolve this issue, we can use the CGLIB dynamic proxy mechanism.**
 
-[CGLIB](https://github.com/cglib/cglib)(_Code Generation Library_)是一个基于[ASM](http://www.baeldung.com/java-asm)的字节码生成库，它允许我们在运行时对字节码进行修改和动态生成。CGLIB 通过继承方式实现代理。很多知名的开源框架都使用到了[CGLIB](https://github.com/cglib/cglib)， 例如 Spring 中的 AOP 模块中：如果目标对象实现了接口，则默认采用 JDK 动态代理，否则采用 CGLIB 动态代理。
+[CGLIB](https://github.com/cglib/cglib) (_Code Generation Library_) is a bytecode generation library based on [ASM](http://www.baeldung.com/java-asm). It allows us to modify and dynamically generate bytecode at runtime. CGLIB implements proxying through inheritance. Many well-known open-source frameworks utilize [CGLIB](https://github.com/cglib/cglib), such as Spring's AOP module: if the target object implements an interface, JDK dynamic proxy is used by default; otherwise, CGLIB dynamic proxy is used.
 
-**在 CGLIB 动态代理机制中 `MethodInterceptor` 接口和 `Enhancer` 类是核心。**
+**In the CGLIB dynamic proxy mechanism, the `MethodInterceptor` interface and the `Enhancer` class are the core components.**
 
-你需要自定义 `MethodInterceptor` 并重写 `intercept` 方法，`intercept` 用于拦截增强被代理类的方法。
+You need to customize `MethodInterceptor` and override the `intercept` method, which is used to intercept and enhance the proxied class's method.
 
 ```java
-public interface MethodInterceptor
-extends Callback{
-    // 拦截被代理类中的方法
-    public Object intercept(Object obj, java.lang.reflect.Method method, Object[] args,MethodProxy proxy) throws Throwable;
+public interface MethodInterceptor extends Callback {
+    // Intercept methods in the proxied class
+    public Object intercept(Object obj, java.lang.reflect.Method method, Object[] args, MethodProxy proxy) throws Throwable;
 }
-
 ```
 
-1. **obj** : 被代理的对象（需要增强的对象）
-2. **method** : 被拦截的方法（需要增强的方法）
-3. **args** : 方法入参
-4. **proxy** : 用于调用原始方法
+1. **obj**: The object being proxied (the object to be enhanced).
+1. **method**: The intercepted method (the method to be enhanced).
+1. **args**: Method parameters.
+1. **proxy**: Used to call the original method.
 
-你可以通过 `Enhancer`类来动态获取被代理类，当代理类调用方法的时候，实际调用的是 `MethodInterceptor` 中的 `intercept` 方法。
+You can dynamically obtain the proxied class through the `Enhancer` class. When the proxy class calls a method, the actual call is made to the `intercept` method in `MethodInterceptor`.
 
-#### 3.2.2. CGLIB 动态代理类使用步骤
+#### 3.2.2. Steps to Use CGLIB Dynamic Proxy
 
-1. 定义一个类；
-2. 自定义 `MethodInterceptor` 并重写 `intercept` 方法，`intercept` 用于拦截增强被代理类的方法，和 JDK 动态代理中的 `invoke` 方法类似；
-3. 通过 `Enhancer` 类的 `create()`创建代理类；
+1. Define a class.
+1. Customize `MethodInterceptor` and override the `intercept` method, similar to the `invoke` method in JDK dynamic proxy.
+1. Create a proxy class using the `Enhancer` class's `create()` method.
 
-#### 3.2.3. 代码示例
+#### 3.2.3. Code Example
 
-不同于 JDK 动态代理不需要额外的依赖。[CGLIB](https://github.com/cglib/cglib)(_Code Generation Library_) 实际是属于一个开源项目，如果你要使用它的话，需要手动添加相关依赖。
+Unlike JDK dynamic proxy, CGLIB dynamic proxy doesn't require additional dependencies. [CGLIB](https://github.com/cglib/cglib) (_Code Generation Library_) is an open-source project; if you wish to use it, you need to manually add the relevant dependencies.
 
 ```xml
 <dependency>
@@ -302,7 +299,7 @@ extends Callback{
 </dependency>
 ```
 
-**1.实现一个使用阿里云发送短信的类**
+**1. Implement a class for sending messages using Aliyun**
 
 ```java
 package github.javaguide.dynamicProxy.cglibDynamicProxy;
@@ -315,7 +312,7 @@ public class AliSmsService {
 }
 ```
 
-**2.自定义 `MethodInterceptor`（方法拦截器）**
+**2. Customize `MethodInterceptor` (method interceptor)**
 
 ```java
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -324,31 +321,29 @@ import net.sf.cglib.proxy.MethodProxy;
 import java.lang.reflect.Method;
 
 /**
- * 自定义MethodInterceptor
+ * Custom MethodInterceptor
  */
 public class DebugMethodInterceptor implements MethodInterceptor {
 
-
     /**
-     * @param o           被代理的对象（需要增强的对象）
-     * @param method      被拦截的方法（需要增强的方法）
-     * @param args        方法入参
-     * @param methodProxy 用于调用原始方法
+     * @param o           The object being proxied (the object to be enhanced).
+     * @param method      The intercepted method (the method to be enhanced).
+     * @param args        Method parameters.
+     * @param methodProxy Used to call the original method.
      */
     @Override
     public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
-        //调用方法之前，我们可以添加自己的操作
+        // Before calling the method, we can add our own operations
         System.out.println("before method " + method.getName());
         Object object = methodProxy.invokeSuper(o, args);
-        //调用方法之后，我们同样可以添加自己的操作
+        // After calling the method, we can also add our own operations
         System.out.println("after method " + method.getName());
         return object;
     }
-
 }
 ```
 
-**3.获取代理类**
+**3. Obtain the proxy class**
 
 ```java
 import net.sf.cglib.proxy.Enhancer;
@@ -356,28 +351,28 @@ import net.sf.cglib.proxy.Enhancer;
 public class CglibProxyFactory {
 
     public static Object getProxy(Class<?> clazz) {
-        // 创建动态代理增强类
+        // Create dynamic proxy enhancement class
         Enhancer enhancer = new Enhancer();
-        // 设置类加载器
+        // Set the class loader
         enhancer.setClassLoader(clazz.getClassLoader());
-        // 设置被代理类
+        // Set the proxied class
         enhancer.setSuperclass(clazz);
-        // 设置方法拦截器
+        // Set the method interceptor
         enhancer.setCallback(new DebugMethodInterceptor());
-        // 创建代理类
+        // Create the proxy class
         return enhancer.create();
     }
 }
 ```
 
-**4.实际使用**
+**4. Actual usage**
 
 ```java
 AliSmsService aliSmsService = (AliSmsService) CglibProxyFactory.getProxy(AliSmsService.class);
 aliSmsService.send("java");
 ```
 
-运行上述代码之后，控制台打印出：
+After running the above code, the console prints:
 
 ```bash
 before method send
@@ -385,20 +380,20 @@ send message:java
 after method send
 ```
 
-### 3.3. JDK 动态代理和 CGLIB 动态代理对比
+### 3.3. Comparison Between JDK Dynamic Proxy and CGLIB Dynamic Proxy
 
-1. **JDK 动态代理只能代理实现了接口的类或者直接代理接口，而 CGLIB 可以代理未实现任何接口的类。** 另外， CGLIB 动态代理是通过生成一个被代理类的子类来拦截被代理类的方法调用，因此不能代理声明为 final 类型的类和方法。
-2. 就二者的效率来说，大部分情况都是 JDK 动态代理更优秀，随着 JDK 版本的升级，这个优势更加明显。
+1. **JDK dynamic proxy can only proxy classes that implement interfaces or directly proxy interfaces, while CGLIB can proxy classes that do not implement any interfaces.** Additionally, CGLIB dynamic proxy intercepts method calls by generating a subclass of the proxied class, so it cannot proxy methods or classes declared as final.
+1. In terms of efficiency, JDK dynamic proxy is generally more efficient. As JDK versions improve, this advantage becomes even more pronounced.
 
-## 4. 静态代理和动态代理的对比
+## 4. Comparison Between Static Proxy and Dynamic Proxy
 
-1. **灵活性**：动态代理更加灵活，不需要必须实现接口，可以直接代理实现类，并且可以不需要针对每个目标类都创建一个代理类。另外，静态代理中，接口一旦新增加方法，目标对象和代理对象都要进行修改，这是非常麻烦的！
-2. **JVM 层面**：静态代理在编译时就将接口、实现类、代理类这些都变成了一个个实际的 class 文件。而动态代理是在运行时动态生成类字节码，并加载到 JVM 中的。
+1. **Flexibility**: Dynamic proxy is more flexible; there is no need to implement an interface, and it can directly proxy the implementation class without creating a separate proxy class for each target class. Additionally, in static proxy, if a new method is added to the interface, modifications need to be made to both the target object and the proxy object, which is cumbersome.
+1. **JVM Perspective**: Static proxy generates the interface, implementation class, and proxy class into actual class files at compile time, while dynamic proxy dynamically generates class bytecode at runtime and loads it into the JVM.
 
-## 5. 总结
+## 5. Summary
 
-这篇文章中主要介绍了代理模式的两种实现：静态代理以及动态代理。涵盖了静态代理和动态代理实战、静态代理和动态代理的区别、JDK 动态代理和 Cglib 动态代理区别等内容。
+This article mainly introduces two implementations of the proxy pattern: static proxy and dynamic proxy. It covers the practical applications of static and dynamic proxies, the differences between them, and the distinctions between JDK and CGLIB dynamic proxies.
 
-文中涉及到的所有源码，你可以在这里找到：[https://github.com/Snailclimb/guide-rpc-framework-learning/tree/master/src/main/java/github/javaguide/proxy](https://github.com/Snailclimb/guide-rpc-framework-learning/tree/master/src/main/java/github/javaguide/proxy) 。
+All the source code involved in this article can be found here: [https://github.com/Snailclimb/guide-rpc-framework-learning/tree/master/src/main/java/github/javaguide/proxy](https://github.com/Snailclimb/guide-rpc-framework-learning/tree/master/src/main/java/github/javaguide/proxy).
 
 <!-- @include: @article-footer.snippet.md -->

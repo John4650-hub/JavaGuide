@@ -1,1 +1,1 @@
-![JavaGuide 官方公众号](https://oss.javaguide.cn/github/javaguide/gongzhonghaoxuanchuan.png)
+![JavaGuide Official WeChat Account](https://oss.javaguide.cn/github/javaguide/gongzhonghaoxuanchuan.png)

@@ -1,85 +1,85 @@
 ---
-title: 分布式必读经典书籍
-category: 计算机书籍
-icon: "distributed-network"
+title: Must-Read Classic Books on Distributed Systems
+category: Computer Books
+icon: distributed-network
 ---
 
-## 《深入理解分布式系统》
+## "In-Depth Understanding of Distributed Systems"
 
 ![](https://oss.javaguide.cn/github/javaguide/books/deep-understanding-of-distributed-system.png)
 
-**[《深入理解分布式系统》](https://book.douban.com/subject/35794814/)** 是 2022 年出版的一本分布式中文原创书籍，主要讲的是分布式领域的基本概念、常见挑战以及共识算法。
+**["In-Depth Understanding of Distributed Systems"](https://book.douban.com/subject/35794814/)** is a Chinese original book published in 2022, focusing on the basic concepts, common challenges, and consensus algorithms in the field of distributed systems.
 
-作者用了大量篇幅来介绍分布式领域中非常重要的共识算法，并且还会基于 Go 语言带着你从零实现了一个共识算法的鼻祖 Paxos 算法。
+The author dedicates a substantial portion of the book to discussing the very important consensus algorithms in the distributed field, and also guides you through the implementation of the ancestral Paxos algorithm from scratch using the Go language.
 
-实话说，我还没有开始看这本书。但是！这本书的作者的博客上的分布式相关的文章我几乎每一篇都认真看过。作者从 2019 年开始构思《深入理解分布式系统》，2020 年开始动笔，花了接近两年的时间才最终交稿。
+To be honest, I haven't started reading this book yet. However! I have carefully read almost every one of the articles related to distributed systems on the author's blog. The author began conceptualizing "In-Depth Understanding of Distributed Systems" in 2019 and started writing in 2020, spending nearly two years before finally submitting the manuscript.
 
 ![](https://oss.javaguide.cn/github/javaguide/books/image-20220706121952258.png)
 
-作者专门写了一篇文章来介绍这本书的背后的故事，感兴趣的小伙伴可以自行查阅：<https://zhuanlan.zhihu.com/p/487534882> 。
+The author has also written an article to introduce the story behind this book; interested friends can check it out: <https://zhuanlan.zhihu.com/p/487534882>.
 
-最后，放上这本书的代码仓库和勘误地址：<https://github.com/tangwz/DistSysDeepDive> 。
+Finally, here is the repository for the book's code and errata: <https://github.com/tangwz/DistSysDeepDive>.
 
-## 《数据密集型应用系统设计》
+## "Designing Data-Intensive Applications"
 
 ![](https://oss.javaguide.cn/github/javaguide/books/ddia.png)
 
-强推一波 **[《Designing Data-Intensive Application》](https://book.douban.com/subject/30329536/)** （DDIA，数据密集型应用系统设计），值得读很多遍！豆瓣有接近 90% 的人看了这本书之后给了五星好评。
+Highly recommend **["Designing Data-Intensive Applications"](https://book.douban.com/subject/30329536/)** (DDIA), a book well worth reading multiple times! Nearly 90% of readers on Douban have given this book a five-star rating.
 
-这本书主要讲了分布式数据库、数据分区、事务、分布式系统等内容。
+This book mainly covers topics such as distributed databases, data partitioning, transactions, and distributed systems.
 
-书中介绍的大部分概念你可能之前都听过，但是在看了书中的内容之后，你可能会豁然开朗：“哇塞！原来是这样的啊！这不是某技术的原理么？”。
+You may have heard most of the concepts introduced in this book before, but after reading its content, you might find yourself enlightened: "Wow! So that's how it is! Isn't that the principle behind a certain technology?"
 
-这本书我之前专门写过知乎回答介绍和推荐，没看过的朋友可以看看：[有哪些你看了以后大呼过瘾的编程书？](https://www.zhihu.com/question/50408698/answer/2278198495) 。另外，如果你在阅读这本书的时候感觉难度比较大，很多地方读不懂的话，我这里推荐一下《深入理解分布式系统》作者写的[《DDIA 逐章精读》小册](https://ddia.qtmuniao.com)。
+I have previously written a Zhihu answer to introduce and recommend this book; if you haven't read it yet, you can take a look: [What programming books have made you shout in excitement after reading?](https://www.zhihu.com/question/50408698/answer/2278198495). Additionally, if you find the reading of this book challenging and difficult to understand in many places, I recommend the [“DDIA Chapter by Chapter Study Guide”](https://ddia.qtmuniao.com) written by the author of "In-Depth Understanding of Distributed Systems".
 
-## 《深入理解分布式事务》
+## "In-Depth Understanding of Distributed Transactions"
 
 ![](https://oss.javaguide.cn/github/javaguide/books/In-depth-understanding-of-distributed-transactions-xiaoyu.png)
 
-**[《深入理解分布式事务》](https://book.douban.com/subject/35626925/)** 这本书的其中一位作者是 Apache ShenYu（incubating）网关创始人、Hmily、RainCat、Myth 等分布式事务框架的创始人。
+**["In-Depth Understanding of Distributed Transactions"](https://book.douban.com/subject/35626925/)** features one of the authors as the founder of Apache ShenYu (incubating) Gateway, as well as the founder of distributed transaction frameworks like Hmily, RainCat, and Myth.
 
-学习分布式事务的时候，可以参考一下这本书。虽有一些小错误以及逻辑不通顺的地方，但对于各种分布式事务解决方案的介绍，总体来说还是不错的。
+When learning about distributed transactions, this book can serve as a useful reference. While it contains some minor errors and areas with logical inconsistencies, the overall introduction to various distributed transaction solutions is still commendable.
 
-## 《从 Paxos 到 Zookeeper》
+## "From Paxos to Zookeeper"
 
 ![](https://oss.javaguide.cn/github/javaguide/books/image-20211216161350118.png)
 
-**[《从 Paxos 到 Zookeeper》](https://book.douban.com/subject/26292004/)** 是一本带你入门分布式理论的好书。这本书主要介绍几种典型的分布式一致性协议，以及解决分布式一致性问题的思路，其中重点讲解了 Paxos 和 ZAB 协议。
+**["From Paxos to Zookeeper"](https://book.douban.com/subject/26292004/)** is a good book to get you started on distributed theory. It mainly introduces several typical distributed consistency protocols and strategies for solving distributed consistency problems, with a focus on the Paxos and ZAB protocols.
 
-PS：Zookeeper 现在用的不多，可以不用重点学习，但 Paxos 和 ZAB 协议还是非常值得深入研究的。
+PS: Zookeeper is not widely used nowadays, so it may not require in-depth study; however, the Paxos and ZAB protocols are still very worthwhile for thorough research.
 
-## 《深入理解分布式共识算法》
+## "In-Depth Understanding of Distributed Consensus Algorithms"
 
 ![](https://oss.javaguide.cn/github/javaguide/books/deep-dive-into-distributed-consensus-algorithms.png)
 
-**[《深入理解分布式共识算法》](https://book.douban.com/subject/36335459/)** 详细剖析了 Paxos、Raft、Zab 等主流分布式共识算法的核心原理和实现细节。如果你想要了解分布式共识算法的话，不妨参考一下这本书的总结。
+**["In-Depth Understanding of Distributed Consensus Algorithms"](https://book.douban.com/subject/36335459/)** provides a detailed analysis of the core principles and implementation details of mainstream distributed consensus algorithms such as Paxos, Raft, and Zab. If you want to learn about distributed consensus algorithms, consider using this book as a reference.
 
-## 《微服务架构设计模式》
+## "Microservices Architecture Patterns"
 
 ![](https://oss.javaguide.cn/github/javaguide/books/microservices-patterns.png)
 
-**[《微服务架构设计模式》](https://book.douban.com/subject/33425123/)** 的作者 Chris Richardson 被评为世界十大软件架构师之一、微服务架构先驱。这本书汇集了 44 个经过实践验证的架构设计模式，这些模式用来解决诸如服务拆分、事务管理、查询和跨服务通信等难题。书中的内容不仅理论扎实，还通过丰富的 Java 代码示例，引导读者一步步掌握开发和部署生产级别的微服务架构应用。
+**["Microservices Architecture Patterns"](https://book.douban.com/subject/33425123/)** is authored by Chris Richardson, recognized as one of the top ten software architects in the world and a pioneer in microservices architecture. This book compiles 44 practical architecture design patterns that address challenges such as service decomposition, transaction management, querying, and inter-service communication. The content of the book is not only solid in theory but also includes rich Java code examples, guiding readers step by step in mastering the development and deployment of production-level microservices architecture applications.
 
-## 《凤凰架构》
+## "Phoenix Architecture"
 
 ![](https://oss.javaguide.cn/github/javaguide/books/f5bec14d3b404ac4b041d723153658b5.png)
 
-**[《凤凰架构》](https://book.douban.com/subject/35492898/)** 这本书是周志明老师多年架构和研发经验的总结，内容非常干货，深度与广度并存，理论结合实践！
+**["Phoenix Architecture"](https://book.douban.com/subject/35492898/)** is a summary of Teacher Zhou Zhiming's many years of architectural and development experience. The content is very rich, blending depth and breadth, and combines theory with practice!
 
-正如书名的副标题“构建可靠的大型分布式系统”所说的那样，这本书的主要内容就是讲：“如何构建一套可靠的分布式大型软件系统” ，涵盖了下面这些方面的内容：
+As the subtitle of the book suggests, "Building Reliable Large-Scale Distributed Systems," the main content discusses: "How to build a reliable distributed large software system," covering aspects such as:
 
-- 软件架构从单体到微服务再到无服务的演进之路。
-- 架构师应该在架构设计时应该注意哪些问题，有哪些比较好的实践。
-- 分布式的基石比如常见的分布式共识算法 Paxos、Multi Paxos。
-- 不可变基础设施比如虚拟化容器、服务网格。
-- 向微服务迈进的避坑指南。
+- The evolution of software architecture from monolithic to microservices to serverless.
+- What architects should pay attention to during architectural design and good practices to follow.
+- Foundations of distributed systems, such as common distributed consensus algorithms like Paxos and Multi Paxos.
+- Immutable infrastructures such as virtualization containers and service meshes.
+- A guide to avoid pitfalls when transitioning to microservices.
 
-这本书我推荐过很多次了。详见历史文章：
+I have recommended this book many times. See my historical articles for more details:
 
-- [周志明老师的又一神书！发现宝藏！](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247505254&idx=1&sn=04faf3093d6002354f06fffbfc2954e0&chksm=cea19aadf9d613bbba7ed0e02ccc4a9ef3a30f4d83530e7ad319c2cc69cd1770e43d1d470046&scene=178&cur_album_id=1646812382221926401#rd)
-- [Java 领域的又一神书！周志明老师 YYDS！](https://mp.weixin.qq.com/s/9nbzfZGAWM9_qIMp1r6uUQ)
+- [Teacher Zhou Zhiming's Another Great Book! Discover the Treasure!](https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247505254&idx=1&sn=04faf3093d6002354f06fffbfc2954e0&chksm=cea19aadf9d613bbba7ed0e02ccc4a9ef3a30f4d83530e7ad319c2cc69cd1770e43d1d470046&scene=178&cur_album_id=1646812382221926401#rd)
+- [Another Great Book in the Java Field! Teacher Zhou Zhiming is Forever Young!](https://mp.weixin.qq.com/s/9nbzfZGAWM9_qIMp1r6uUQ)
 
-## 其他
+## Others
 
-- [《分布式系统 : 概念与设计》](https://book.douban.com/subject/21624776/)：偏教材类型，内容全而无趣，可作为参考书籍；
-- [《分布式架构原理与实践》](https://book.douban.com/subject/35689350/)：2021 年出版的，没什么热度，我也还没看过。
+- ["Distributed Systems: Principles and Paradigms"](https://book.douban.com/subject/21624776/): More textbook-like, with comprehensive yet tedious content, can be used as a reference book;
+- ["Principles and Practice of Distributed Architecture"](https://book.douban.com/subject/35689350/): Published in 2021, it lacks interest, and I haven't read it yet.

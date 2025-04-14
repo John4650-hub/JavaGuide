@@ -1,152 +1,152 @@
 ---
-title: 我曾经也是网瘾少年
-category: 走近作者
+title: I Was Once a Teenager Addicted to the Internet
+category: Closer to the Author
 tag:
-  - 个人经历
+  - Personal Experience
 ---
 
-> 这篇文章写于 2021 年高考前夕。
+> This article was written on the eve of the college entrance examination in 2021.
 
-聊到高考，无数人都似乎有很多话说。今天就假借高考的名义，简单来聊聊我的高中求学经历吧！
+When it comes to the college entrance examination, countless people seem to have a lot to say. Today, I’ll borrow the occasion of the examination to briefly talk about my high school experience!
 
-说实话，我自己的高中求学经历真的还不算平淡，甚至有点魔幻，所以还是有很多话想要说的。
+To be honest, my own high school experience was not bland at all; it was even a bit fantastical, so I have a lot to share.
 
-这篇文章大概会从我的初中一直介绍到高中，每一部分我都不会花太多篇幅，就简单聊聊吧！
+This article will probably cover my journey from middle school to high school. I won’t spend too much time on each part, just a simple chat!
 
-**以下所有内容皆是事实，没有任何夸大的地方，稍微有一点点魔幻。**
+**All the following content is factual, with no exaggerations, just a little bit of fantasy.**
 
-## 刚开始接触电脑
+## First Encounter with Computers
 
-最开始接触电脑是在我刚上五年级的时候，那时候家里没电脑，刚开始上网都是在黑网吧玩的。
+I first encountered computers when I was in the fifth grade. At that time, my family didn’t have a computer, and I started going online in an internet café.
 
-黑网吧大概就是下面这样式儿的，一个没有窗户的房间里放了很多台老式电脑，非常拥挤。
+The internet café was pretty much like this: a windowless room filled with many old computers, and it was very crowded.
 
-![黑网吧](https://oss.javaguide.cn/about-the-author/internet-addiction-teenager/heiwangba.png)
+![Internet Cafe](https://oss.javaguide.cn/about-the-author/internet-addiction-teenager/heiwangba.png)
 
-在黑网吧上网的经历也是一波三折，经常会遇到警察来检查或者碰到大孩子骚扰。在黑网吧上网的一年多中，我一共两次碰到警察来检查，主要是看有没有未成年人（当时黑网吧里几乎全是未成年人），实际感觉像是要问黑网吧老板要点好处。碰到大孩子骚扰的次数就比较多，大孩子经常抢我电脑，还威胁我把身上所有的钱给他们。我当时一个人也比较怂，被打了几次之后，就尽量避开大孩子来玩的时间去黑网吧，身上也只带很少的钱。小时候的性格就比较独立，在外遇到事情我一般也不会给家里人说（因为说了也没什么用，家人给我的安全感很少）。
+The experience of going online in the internet café was full of twists and turns. I often encountered police checks or older kids harassing me. During the year I spent online in the internet café, I met police checks twice, mainly to see if there were any minors (almost all the patrons were minors). It felt like they were just looking to ask the café owner for some benefits. I often encountered older kids who would steal my computer and threaten me to give them all the money I had on me. I was pretty timid at that time, and after being beaten a few times, I made an effort to avoid going at times when older kids were around, and I would only bring a little money with me. I was quite independent as a child and generally wouldn’t tell my family about incidents I encountered outside (because it wouldn’t make much difference; there was little sense of security from my family).
 
-我现在已经记不太清当时是被我哥还是我姐带进网吧的，好像是我姐。
+I can’t quite remember whether it was my brother or sister who brought me into the internet café; it seems like it was my sister.
 
-起初的时候，自己就是玩玩流行蝴蝶剑、单机摩托之类的单机游戏。但是，也没有到沉迷的地步，只是觉得这东西确实挺好玩的，一玩就可以玩一下午，恋恋不舍。
+At first, I just played single-player games like "Butterfly Sword" and standalone motorcycle games. However, I didn’t reach an addictive level, just found them quite fun, spending entire afternoons reluctantly playing.
 
 ![](https://oss.javaguide.cn/github/javaguide/books2a6021b9-e7a0-41c4-b69e-a652f7bc3e12-20200802173601289.png)
 
-## 小学毕业后开始有网瘾
+## Internet Addiction After Primary School Graduation
 
-开始有网瘾是在小学毕业的时候，在我玩了一款叫做 **QQ 飞车** 的游戏之后（好像是六年级末就开始玩了）。我艹，当时真的被这游戏吸引了。**每天上课都幻想自己坐在车里面飘逸，没错，当时就觉得秋名山车神就是我啦！**
+I started to get addicted to the internet when I graduated from primary school, after I played a game called **QQ Speed** (I think I started playing it at the end of sixth grade). Wow, I was really captivated by this game at that time. **Every day in class, I would fantasize about drifting in the car, thinking, no doubt, I was the king of Akina!**
 
-我当时技术还是挺不错的，整个网吧玩这个游戏的貌似还没有可以打败我的（我们当时经常会开放切磋）。
+I was quite skilled back then, and it seemed like no one in the internet café could defeat me (we often had friendly competitions).
 
-QQ 飞车这款戏当时还挺火的，很多 90 后的小伙伴应该比较熟悉。
+QQ Speed was quite popular at that time, and many post-90s friends should be familiar with it.
 
-我记得，那时候上网还不要身份证，10 元办一张网卡就行了，网费也是一元一小时。我就经常不吃早饭，攒钱用来上网。只要口袋里有钱，我都会和我的小伙伴奔跑到网吧一起玩 QQ 飞车。青回啊！
+I remember that back then, there was no need for an ID to go online; you just needed 10 yuan to get a network card, and the internet fee was 1 yuan per hour. I often skipped breakfast to save money for internet time. Whenever I had money in my pocket, I would rush to the café with my friends to play QQ Speed. Ah, the nostalgia!
 
-> 说到这，我情不自禁地打开自己的 Windows 电脑，下载了 Wegame ，然后下载了 QQ 飞车。
+> Speaking of this, I couldn’t help but open my Windows computer, download Wegame, and then download QQ Speed.
 
-到了初二的时候，就没玩 QQ 飞车了。我的等级也永久定格在了 **120** 级，这个等级在当时那个升级难的一匹的年代，算的上非常高的等级了。
+By the time I was in the second year of middle school, I stopped playing QQ Speed. My level was permanently fixed at **120**, which was considered quite high back in those days when leveling up was incredibly difficult.
 
 ![](https://oss.javaguide.cn/javaguide/b488618c-3c25-4bc9-afd4-7324e27553bd-20200802175534614.png)
 
-## 初二网瘾爆发
+## Internet Addiction Erupts in Second Year of Middle School
 
-网瘾爆发是在上了初中之后。初二的时候，最为猖狂，自己当时真的是太痴迷于 **穿越火线** 这款游戏了，比 QQ 飞车还要更痴迷一些。每天上课都在想像自己拿起枪横扫地方阵营的场景，心完全不在学习上。
+My internet addiction erupted after I entered middle school. In the second year, it was the peak; I was truly obsessed with the game **CrossFire**, even more than with QQ Speed. Every day during class, I would imagine myself with a gun sweeping through enemy camps, completely detached from studying.
 
-我经常每天早上起早去玩别人包夜留下的机子，毕竟那时候上学也没什么钱嘛！我几乎每个周五晚上都会趁家人睡着之后，偷偷跑出去通宵。整个初二我通宵了无数次，我的眼睛就是这样近视的。
+I often woke up early each morning to play on machines left overnight by others since I didn’t have much money for school! Almost every Friday night, I would sneak out to play overnight after my family was asleep. I ended up pulling countless all-nighters throughout my second year, which is how I developed my nearsightedness.
 
-有网瘾真的很可怕，为了上网什么都敢做。当时我家住在顶楼的隔热层，我每次晚上偷偷出去上网，为了不被家里人发现，要从我的房间的窗户爬出去，穿过几栋楼，经过几间无人居住的顶楼隔热层之后再下楼。现在想想，还是比较危险的。而且，我天生比较怕黑。当时为了上网，每次穿过这么多没人居住的顶层隔热层都没怕过。你让我现在再去，我都不敢，实在是佩服当年的自己的啊！
+Internet addiction is indeed terrifying; you would do anything to get online. At that time, I lived on the top floor in an insulated layer, and every night I would secretly climb out of my room’s window to avoid being discovered by my family. I would cross several buildings and pass through a few deserted top-floor insulation layers before heading downstairs. Thinking about it now, it was quite dangerous. Also, I was naturally afraid of the dark. Yet, I didn’t feel scared at all going through those deserted layers just to get online. If you made me do that now, I wouldn’t dare; I truly admire my former self!
 
-![我家楼顶拍的雪景](https://oss.javaguide.cn/about-the-author/image-20230429114622340.png)
+![Snow Scene from My Rooftop](https://oss.javaguide.cn/about-the-author/image-20230429114622340.png)
 
-周五晚上通宵完之后，我会睡到中午，然后下午继续去网吧玩。到了周日，基本都是直接从早上 8 点玩到晚上 9 点 10 点。那时候精力是真旺盛，真的完全不会感觉比较累，反而乐在其中。
+After all-nighters on Friday, I would sleep until noon and then head to the café again in the afternoon. By Sunday, I’d typically play from 8 AM until 9 or 10 PM. My energy levels were truly high back then; I didn’t feel tired at all, rather, I enjoyed it thoroughly.
 
-我的最终军衔停留在了两个钻石，玩过的小伙伴应该清楚这在当时要玩多少把（现在升级比较简单）。
+I ended up reaching two diamond ranks; those who have played should know how many matches it takes to achieve that (now leveling up is much easier).
 
 ![](https://oss.javaguide.cn/about-the-author/cf.png)
 
-ps: 回坑 CF 快一年了，目前的军衔是到了两颗星中校 3 了。
+Ps: I’ve returned to CrossFire for almost a year now, and my rank has reached two-star lieutenant colonel 3.
 
-那时候成绩挺差的。这样说吧！我当时在很普通的一个县级市的高中，全年级有 500 来人，我基本都是在 280 名左右。而且，整个初二我都没有学物理，上物理课就睡觉，考试就交白卷。
+Back then, my grades were quite poor. To put it simply! I was in an ordinary high school in a county-level city with around 500 students in my grade, and I hovered around the 280th position. Moreover, throughout the entire second year, I didn’t study physics at all; I would sleep during physics class and turn in blank sheets for exams.
 
-为什么对物理这么抵触呢？这是因为开学不久的一次物理课，物理老师误会我在上课吃东西还狡辩，扇了我一巴掌。那时候心里一直记仇到大学，想着以后自己早晚有时间把这个物理老师暴打一顿。
+Why was I so resistant to physics? This was because, not long after school started, during one physics class, the teacher mistakenly thought I was eating during class and accused me, then slapped me. I held a grudge against that for years, thinking I would one day have the chance to pay back that physics teacher.
 
-## 初三开启学习模式
+## Awakening to Study in Third Year
 
-初三上学期的时候突然觉悟，像是开窍了一样，当时就突然意识到自己马上就要升高中了，要开始好好搞搞学习了。
+In the first semester of my third year, I suddenly had an epiphany, as if I was enlightened, realizing that I was about to graduate to high school and needed to start taking my studies seriously.
 
-诶，其实也不算是开窍，主要还是为了让自己能在家附近上学，这样上网容易一些。因为当时我家就在我们当地的二中附近，附近有特别特别多的网吧，上网特别特别容易，加上我又能走读。
+Well, actually, it wasn’t really an epiphany; it was mostly because I wanted to attend school near my home, making it easier to go online. My family lived near our local Second Middle School, which had many internet cafés, so going online was incredibly easy since I could be a day student.
 
-像我初中在的那个学校，年级前 80 的话基本才有可能考得上二中。经过努力，初三上学期的第一次月考，我直接从 280 多名进步到了年级 50 多名，有机会考入二中。当时还因为进步太大，被当作 **进步之星** 在讲台上给整个年级做演讲，分享经验。这也是我第一次在这么多人面前讲话，挺紧张的，但是挺爽的，在暗恋对象面前赚足了面子。
+In my middle school, students ranked in the top 80 had a good chance of getting into Second Middle School. After some effort, I improved from the 280th position in the first monthly exam of my third year to around 50th, making it possible for me to go to Second Middle School. I even became a **Star of Progress** and shared my experience with the whole grade on stage because of my significant improvement. This was also my first time speaking in front of so many people, and though I was pretty nervous, it felt great, especially in front of my crush.
 
-其实在初三的时候，我的网瘾还是很大。不过，我去玩游戏的前提都是自己把所有任务做完，并且上课听讲也相对比较认真的听。
+Even though I still had a large internet addiction during my third year, I ensured that I completed all tasks and listened attentively in classes before playing games.
 
-初三那会，我通宵的次数变少了一些，但会经常晚上趁着家人睡觉了，偷偷跑出去玩到凌晨 2 点多回来。
+During that time, my nights out decreased a bit, but I often sneaked out to play until 2 AM while my family was asleep.
 
-当时，我们当地的高中有一个政策是每个学校的成绩比较优秀的学生可以参加 **高中提前招生考试** ，只要考上了就不用参加中考了。我当时也有幸参加了这次考试并成功进入了我们当地的二中。
+At that time, our local high school had a policy that allowed students with good grades to take part in an **Advanced Enrollment Examination**. If you passed, you wouldn't need to take the entrance exam. Fortunately, I was able to participate in this exam and successfully enroll in Second Middle School.
 
-在我参加高中提前考试前的一个晚上，我半夜 12 点趁着妈妈睡着，跑去了网吧玩 CF 到凌晨 3 点多回来。就那一次我被抓了现行，到家之后发现妈妈就坐在客厅等我，训斥一顿后，我就保证以后不再晚上偷偷跑出去了。
+One night before the advanced exam, I snuck out to play CrossFire until after 3 AM, taking advantage of my mom sleeping. That time, I got caught red-handed; after arriving home, I found my mom waiting in the living room and, after a stern lecture, I promised to never sneak out at night again.
 
-> 这里要说明一点：我的智商我自己有自知之明的，属于比较普通的水平吧！前进很大的主要原因是自己基础还行，特别是英语和物理。英语是因为自己喜欢，加上小学就学了很多初中的英语课程。物理的话就很奇怪，虽然初二也不怎么听物理课，也不会物理，但是到了初三之后自己就突然开窍了。真的！我现在都感觉很奇怪。然后，到了高中之后，我的英语和物理依然是我最好的两门课。大学的兼职，我出去做家教都是教的高中物理。
+> Here’s a point to clarify: I’m aware of my own intelligence level; it’s pretty average! The main reason for my significant progress was that I had a solid foundation, especially in English and physics. My English was good because I liked it and had studied many middle school English topics in primary school. The situation with physics is interesting; although I didn’t pay much attention in physics class during my second year and didn’t understand it, I suddenly got it in my third year. Seriously! I still find it quite strange. Then, in high school, English and physics continued to be my two strongest subjects. During college, when I tutored, I taught high school physics.
 
-## 高中从小班掉到平行班
+## Dropped from Small Class to Regular Class in High School
 
-![出高考成绩后回高中母校拍摄](https://oss.javaguide.cn/about-the-author/internet-addiction-teenager/wodegaozhong.png)
+![Photo Taken After Receiving Exam Results at My High School](https://oss.javaguide.cn/about-the-author/internet-addiction-teenager/wodegaozhong.png)
 
-由于参加了高中提前招生考试，我提前 4 个月就来到了高中，进入了小班，开始学习高中的课程。
+Because I participated in the advanced enrollment examination, I entered high school four months early, starting in a small class where I began taking high school courses.
 
-上了高中的之后，我上课就偷偷看小说，神印王座、斗罗大陆、斗破苍穹很多小说都是当时看的。中午和晚上回家之后，就在家里玩几把 DNF。当时家里也买了电脑，姥爷给买的，是对自己顺利进入二中的奖励。到我卸载 DNF 的时候，已经练了 4 个满级的号，两个接近满级的号。
+Once I got to high school, I secretly read novels during class, including "God’s Seal," "Douluo Continent," and "Battle Through the Heavens," among many others. In the afternoons and evenings when I returned home, I’d play a few rounds of DNF. My family had also bought a computer, a reward from my grandfather for successfully entering Second Middle School. By the time I uninstalled DNF, I had already leveled up four characters to max level, with two others nearing max level.
 
-当时我的空间专门有一个相册里面放的全是 DNF 的一些照片和截图，无比痴迷于练级和刷图。
+I had a specific album on my social media account that contained a collection of DNF photos and screenshots, as I was incredibly obsessed with leveling up and dungeon raids.
 
-在高中待了不到一个月，我上体育课的时候不小心把腿摔断了，这也是我第一次感受到骨头断裂的头疼，实在是太难受了！
+In less than a month in high school, I accidentally broke my leg during a PE class, feeling the pain of a broken bone for the first time—it was absolutely unbearable!
 
-于是，我就开始休学养病。直到高中正式开学一个月之后，我才去上学，也没有参加军训。
+As a result, I had to take a break from school to recuperate. I didn’t return to school until a month after the official start of senior high, and I didn’t attend military training.
 
-由于我耽误了几个月的课程，因此没办法再进入小班，只能转到奥赛班。到了奥赛班之后，我继续把时间和经历都投入在游戏和小说上，于是我的成绩在奥赛班快接近倒数了。等到高二分班的时候，我成功被踢出奥赛班来到了最普通的平行班。
+Since I had missed a few months of classes, I couldn’t go back to the small class and could only transfer to the Olympiad class. After joining the Olympiad class, I continued to invest my time and energy in games and novels, leading my grades to close to the bottom of the class. When the second-year evaluation came around, I was successfully dropped from the Olympiad class to the most ordinary regular class.
 
-**我成功把自己从学校最好的小班玩到奥赛班，然后再到平行班。有点魔幻吧！**
+**I successfully played myself from the best small class to the Olympiad class and then back to the regular class. Quite surreal, right?**
 
-## 高二开始奋起直追
+## A Strong Comeback in Senior Year
 
-高中觉悟是在高二下学期的时候，当时是真的觉悟了，就突然觉得游戏不香了，觉得 DNF 也不好玩了，什么杀怪打装备不过是虚无，练了再多满级的 DNF 账号也屁用没有，没钱都是浮云。
+I truly awakened academically in the second semester of senior year; I suddenly felt that games just weren’t appealing anymore, that DNF was no longer fun. Everything involving monster hunting and equipment grinding was just hollow; no matter how many max levels I achieved in DNF, it was meaningless without money.
 
-我妈妈当时还很诧异，还奇怪地问我：“怎么不玩游戏了？”（我妈属于不怎么管我玩游戏的，她觉得这东西还是要靠自觉）。
+My mom was surprised and curiously asked me, “Why aren’t you playing games anymore?” (She didn’t really mind me playing games; she believed it’s something that relies on self-discipline).
 
-于是，我便开始牟足劲学习，每天都沉迷学习无法自拔（豪不夸张），乐在其中。虽然晚自习上完回到家已经差不多 11 点了，但也并不感觉累，反而感觉很快乐，很充实。
+So, I began to study earnestly, immersing myself in learning (not exaggerating), and enjoying it. Even though I returned home around 11 PM after evening self-study sessions, I didn’t feel tired; instead, I felt happy and fulfilled.
 
-**我的付出也很快得到了回报，我顺利返回了奥赛班。** 当时，理科平行班大概有 7 个，每次考试都是平行班之间会单独排一个名次，小班和奥赛班不和我们一起排名次。后面的话，自己基本每次都能在平行班得第一，并且很多时候都是领先第二名 30 来分。由于成绩还算亮眼，高三上学期快结束的时候，我就向年级主任申请去了奥赛班。
+**My efforts quickly paid off, and I successfully returned to the Olympiad class.** At that time, there were about seven science regular classes, and exam rankings were determined separately for these classes; we didn’t compete with the small and Olympiad classes for rankings. From then on, I was able to take first place in my regular class in almost every exam, often leading the second-place student by around 30 points. Given my outstanding grades, I applied to the head of our grade to return to the Olympiad class just before the first semester of senior year ended.
 
-## 高考前的失眠
+## Insomnia Before College Entrance Examination
 
-> **失败之后，不要抱怨外界因素，自始至终实际都是自己的问题，自己不够强大！** 然后，高考前的失眠也是我自己问题，要怪只能怪自己，别的没有任何接口。
+> **After failure, don’t blame external factors; the problem has always been with yourself—not strong enough!** Likewise, the insomnia before my college entrance exam was also my own issue; if I have to point fingers, it’s only at myself—there’s no other outlet.
 
-我的高考经历其实还蛮坎坷的，毫不夸张的说，高考那今天可能是我到现在为止，经历的最难熬的时候，特别是在晚上。
+My college entrance exam experience was quite tumultuous. It’s no exaggeration to say that the days of the exam were the most challenging time I’ve experienced, especially at night.
 
-我在高考那几天晚上都经历了失眠，想睡都睡不着那种痛苦想必很多人或许都体验过。
+During the few nights of the exam, I suffered from insomnia; the pain of being unable to sleep is something that many may have experienced.
 
-其实我在之前是从来没有过失眠的经历的。高考前夕，因为害怕自己睡不着，所以，我提前让妈妈去买了几瓶老师推荐的安神补脑液。我到现在还记得这个安神补脑液是敖东牌的。
+Actually, I had never experienced insomnia before. On the eve of the college entrance exam, fearing I wouldn’t be able to sleep, I had my mom buy several bottles of the nerve-soothing tonic recommended by my teacher. I still remember the brand: Aodong.
 
 ![](https://oss.javaguide.cn/about-the-author/internet-addiction-teenager/image-20220625194714247.png)
 
-高考那几天的失眠，我觉得可能和我喝了老师推荐的安神补脑液有关系，又或者是我自己太过于紧张了。因为那几天睡觉总会感觉有很多蚂蚁在身上爬一样，身上还起了一些小痘痘（有点像是过敏）。
+The insomnia during the exam period might have been related to the tonic I drank, or perhaps I was too tense. Those nights, I felt as if many ants were crawling on me whenever I tried to sleep, and I broke out in some small hives (similar to an allergy).
 
-这里要格外说明一点，避免引起误导：**睡不着本身就是自身的问题，上述言论并没有责怪这个补脑液的意思。** 另外， 这款安神补脑液我去各个平台都查了一下，发现大家对他的评价都挺好，和我们老师当时推荐的理由差不多。如果大家需要改善睡眠的话，可以咨询相关医生之后尝试一下。
+Here’s something important to clarify to avoid misunderstandings: **Inability to sleep is a personal issue; none of the above statements are meant to blame the tonic.** Additionally, I’ve checked various platforms, and find that reviews for this tonic are quite favorable, similar to the reasons our teacher recommended it. If anyone needs help with sleep, you might consider consulting a doctor and giving it a try.
 
-高考也确实没发挥好，整个人在考场都是懵的状态。高考成绩出来之后，比我自己预估的还低了几十分，最后只上了一个双非一本。不过，好在专业选的好，吃了一些计算机专业的红利，大学期间也挺努力的。
+I indeed didn’t perform well on the college entrance exam, feeling like I was in a daze throughout. After the results were announced, I scored lower than I had predicted by several points and ultimately only got into a non-prestigious university. However, I was fortunate that I chose a good major and benefited from the computer science field during my university years, studying quite hard.
 
-## 大学生活
+## College Life
 
-大学生活过的还是挺丰富的，我会偶尔通宵敲代码，也会偶尔半夜发疯跑出去和同学一起走走古城墙、去网吧锤一夜的 LOL。
+My college life was quite rich. I would occasionally pull all-nighters coding or frantically head out at night with classmates to walk along the ancient city walls or spend the night in an internet café playing LOL.
 
-大学生活专门写过一篇文章介绍：[害，毕业三年了！](./my-college-life.md) 。
+I wrote a dedicated article about my college life: [Oh no, it’s been three years since graduation!](./my-college-life.md).
 
-## 总结
+## Conclusion
 
-整个初中我都属于有点网瘾少年的状态，不过初三的时候稍微克制一些。到了高二下学期的时候，自己才对游戏真的没有那么沉迷了。
+Throughout middle school, I was somewhat of an internet-addicted teenager, but I was able to restrain myself a bit during the third year. It wasn’t until the second semester of senior year that I truly stopped being addicted to games.
 
-对游戏不那么沉迷，也是因为自己意识到游戏终究只是消遣，学习才是当时最重要的事情。而且，我的游戏技术又不厉害，又不能靠游戏吃饭，什么打怪升级到最后不过是电脑中的二进制数据罢了！
+My reduced obsession with games stemmed from the realization that games are ultimately just a pastime, and studying was the most important thing at that time. Besides, my gaming skills weren’t impressive, and I couldn’t make a living through gaming—everything concerning leveling up and monster hunting was merely binary data on a computer!
 
-**这玩意必须你自己意识到，不然，单纯靠父母监督真的很难改变！如果心不在学习上面的话，那同时是不可能学好的！**
+**This realization must come from within yourself; otherwise, relying solely on parental supervision is indeed very difficult to change! If your heart isn’t set on studying, it’s impossible to achieve good results!**
 
-我真的很反对父母过于干涉孩子的生活，强烈谴责很多父母把自己孩子的网瘾归咎于网络游戏，把自己孩子的暴力归咎于影视媒体。
+I strongly oppose overly intrusive parenting and vehemently denounce many parents who attribute their children's internet addiction to online games or blame media for their child’s violence.
 
-**时刻把自己的孩子保护起来不是一件靠谱的事情，他终究要独自面对越来越多的诱惑。到了大学，很多被父母保护太好的孩子就直接废了。他们没有独立意识，没有抗拒诱惑的定力！**
+**Constantly shielding your child isn’t a reliable solution; they will eventually face more and more temptations on their own. In university, many children who were overly protected by their parents end up failing. They lack independence and the strength to resist temptation!**

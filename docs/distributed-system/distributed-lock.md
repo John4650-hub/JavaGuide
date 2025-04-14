@@ -1,84 +1,56 @@
 ---
-title: 分布式锁介绍
-category: 分布式
+title: Introduction to Distributed Locks
+category: Distributed
 ---
 
 <!-- @include: @small-advertisement.snippet.md -->
 
-网上有很多分布式锁相关的文章，写了一个相对简洁易懂的版本，针对面试和工作应该够用了。
+There are many articles online about distributed locks, and I have written a relatively concise and easy-to-understand version that should be sufficient for interviews and work.
 
-这篇文章我们先介绍一下分布式锁的基本概念。
+In this article, we will first introduce the basic concepts of distributed locks.
 
-## 为什么需要分布式锁？
+## Why Do We Need Distributed Locks?
 
-在多线程环境中，如果多个线程同时访问共享资源（例如商品库存、外卖订单），会发生数据竞争，可能会导致出现脏数据或者系统问题，威胁到程序的正常运行。
+In a multithreaded environment, if multiple threads access shared resources (such as product inventory or food delivery orders) simultaneously, data contention can occur, potentially leading to dirty data or system issues, threatening the normal operation of the program.
 
-举个例子，假设现在有 100 个用户参与某个限时秒杀活动，每位用户限购 1 件商品，且商品的数量只有 3 个。如果不对共享资源进行互斥访问，就可能出现以下情况：
+For example, suppose there are 100 users participating in a limited-time flash sale, with each user allowed to purchase 1 item, and there are only 3 items available. If mutual exclusion is not applied to the shared resource, the following situation may occur:
 
-- 线程 1、2、3 等多个线程同时进入抢购方法，每一个线程对应一个用户。
-- 线程 1 查询用户已经抢购的数量，发现当前用户尚未抢购且商品库存还有 1 个，因此认为可以继续执行抢购流程。
-- 线程 2 也执行查询用户已经抢购的数量，发现当前用户尚未抢购且商品库存还有 1 个，因此认为可以继续执行抢购流程。
-- 线程 1 继续执行，将库存数量减少 1 个，然后返回成功。
-- 线程 2 继续执行，将库存数量减少 1 个，然后返回成功。
-- 此时就发生了超卖问题，导致商品被多卖了一份。
+- Threads 1, 2, 3, etc., enter the purchase method simultaneously, with each thread corresponding to a user.
+- Thread 1 queries the number of items the user has already purchased, finds that the current user has not yet purchased and that there is still 1 item in stock, and thus believes it can continue the purchase process.
+- Thread 2 also executes the query for the number of items the user has already purchased, finds that the current user has not yet purchased and that there is still 1 item in stock, and thus believes it can continue the purchase process.
+- Thread 1 continues to execute, reducing the stock quantity by 1, and then returns success.
+- Thread 2 continues to execute, reducing the stock quantity by 1, and then returns success.
+- At this point, an overselling issue occurs, resulting in the product being sold more than once.
 
-![共享资源未互斥访问导致出现问题](https://oss.javaguide.cn/github/javaguide/distributed-system/distributed-lock/oversold-without-locking.png)
+![Issues caused by non-mutual access to shared resources](https://oss.javaguide.cn/github/javaguide/distributed-system/distributed-lock/oversold-without-locking.png)
 
-为了保证共享资源被安全地访问，我们需要使用互斥操作对共享资源进行保护，即同一时刻只允许一个线程访问共享资源，其他线程需要等待当前线程释放后才能访问。这样可以避免数据竞争和脏数据问题，保证程序的正确性和稳定性。
+To ensure that shared resources are accessed safely, we need to use mutual exclusion operations to protect shared resources, allowing only one thread to access the shared resource at any given time, while other threads must wait until the current thread releases it. This can avoid data contention and dirty data issues, ensuring the correctness and stability of the program.
 
-**如何才能实现共享资源的互斥访问呢？** 锁是一个比较通用的解决方案，更准确点来说是悲观锁。
+**How can we achieve mutual access to shared resources?** Locks are a relatively general solution, more specifically, pessimistic locks.
 
-悲观锁总是假设最坏的情况，认为共享资源每次被访问的时候就会出现问题(比如共享数据被修改)，所以每次在获取资源操作的时候都会上锁，这样其他线程想拿到这个资源就会阻塞直到锁被上一个持有者释放。也就是说，**共享资源每次只给一个线程使用，其它线程阻塞，用完后再把资源转让给其它线程**。
+Pessimistic locks always assume the worst-case scenario, believing that issues will arise every time shared resources are accessed (for example, shared data being modified). Therefore, every time a resource operation is performed, a lock is acquired, causing other threads that want to access this resource to block until the lock is released by the previous holder. In other words, **the shared resource is used by only one thread at a time, while other threads are blocked, and after use, the resource is transferred to other threads**.
 
-对于单机多线程来说，在 Java 中，我们通常使用 `ReentrantLock` 类、`synchronized` 关键字这类 JDK 自带的 **本地锁** 来控制一个 JVM 进程内的多个线程对本地共享资源的访问。
+For single-machine multithreading, in Java, we typically use the `ReentrantLock` class or the `synchronized` keyword, which are built-in **local locks** provided by the JDK, to control access to local shared resources by multiple threads within a single JVM process.
 
-下面是我对本地锁画的一张示意图。
+Here is a diagram I created to illustrate local locks.
 
-![本地锁](https://oss.javaguide.cn/github/javaguide/distributed-system/distributed-lock/jvm-local-lock.png)
+![Local Lock](https://oss.javaguide.cn/github/javaguide/distributed-system/distributed-lock/jvm-local-lock.png)
 
-从图中可以看出，这些线程访问共享资源是互斥的，同一时刻只有一个线程可以获取到本地锁访问共享资源。
+From the diagram, it can be seen that these threads access shared resources mutually exclusively, with only one thread able to acquire the local lock to access the shared resource at any given time.
 
-分布式系统下，不同的服务/客户端通常运行在独立的 JVM 进程上。如果多个 JVM 进程共享同一份资源的话，使用本地锁就没办法实现资源的互斥访问了。于是，**分布式锁** 就诞生了。
+In a distributed system, different services/clients typically run in separate JVM processes. If multiple JVM processes share the same resource, local locks cannot achieve mutual access to the resource. Thus, **distributed locks** were born.
 
-举个例子：系统的订单服务一共部署了 3 份，都对外提供服务。用户下订单之前需要检查库存，为了防止超卖，这里需要加锁以实现对检查库存操作的同步访问。由于订单服务位于不同的 JVM 进程中，本地锁在这种情况下就没办法正常工作了。我们需要用到分布式锁，这样的话，即使多个线程不在同一个 JVM 进程中也能获取到同一把锁，进而实现共享资源的互斥访问。
+For example: The order service of the system is deployed in 3 instances, all providing services externally. Before a user places an order, they need to check the inventory. To prevent overselling, a lock is needed to synchronize access to the inventory check operation. Since the order service is located in different JVM processes, local locks cannot function properly in this case. We need to use distributed locks, which allow multiple threads, even if they are not in the same JVM process, to acquire the same lock, thereby achieving mutual access to shared resources.
 
-下面是我对分布式锁画的一张示意图。
+Here is a diagram I created to illustrate distributed locks.
 
-![分布式锁](https://oss.javaguide.cn/github/javaguide/distributed-system/distributed-lock/distributed-lock.png)
+![Distributed Lock](https://oss.javaguide.cn/github/javaguide/distributed-system/distributed-lock/distributed-lock.png)
 
-从图中可以看出，这些独立的进程中的线程访问共享资源是互斥的，同一时刻只有一个线程可以获取到分布式锁访问共享资源。
+From the diagram, it can be seen that threads in these independent processes access shared resources mutually exclusively, with only one thread able to acquire the distributed lock to access the shared resource at any given time.
 
-## 分布式锁应该具备哪些条件？
+## What Conditions Should a Distributed Lock Meet?
 
-一个最基本的分布式锁需要满足：
+A basic distributed lock needs to satisfy the following:
 
-- **互斥**：任意一个时刻，锁只能被一个线程持有。
-- **高可用**：锁服务是高可用的，当一个锁服务出现问题，能够自动切换到另外一个锁服务。并且，即使客户端的释放锁的代码逻辑出现问题，锁最终一定还是会被释放，不会影响其他线程对共享资源的访问。这一般是通过超时机制实现的。
-- **可重入**：一个节点获取了锁之后，还可以再次获取锁。
-
-除了上面这三个基本条件之外，一个好的分布式锁还需要满足下面这些条件：
-
-- **高性能**：获取和释放锁的操作应该快速完成，并且不应该对整个系统的性能造成过大影响。
-- **非阻塞**：如果获取不到锁，不能无限期等待，避免对系统正常运行造成影响。
-
-## 分布式锁的常见实现方式有哪些？
-
-常见分布式锁实现方案如下：
-
-- 基于关系型数据库比如 MySQL 实现分布式锁。
-- 基于分布式协调服务 ZooKeeper 实现分布式锁。
-- 基于分布式键值存储系统比如 Redis 、Etcd 实现分布式锁。
-
-关系型数据库的方式一般是通过唯一索引或者排他锁实现。不过，一般不会使用这种方式，问题太多比如性能太差、不具备锁失效机制。
-
-基于 ZooKeeper 或者 Redis 实现分布式锁这两种实现方式要用的更多一些，我专门写了一篇文章来详细介绍这两种方案：[分布式锁常见实现方案总结](./distributed-lock-implementations.md)。
-
-## 总结
-
-这篇文章我们主要介绍了：
-
-- 分布式锁的用途：分布式系统下，不同的服务/客户端通常运行在独立的 JVM 进程上。如果多个 JVM 进程共享同一份资源的话，使用本地锁就没办法实现资源的互斥访问了。
-- 分布式锁的应该具备的条件：互斥、高可用、可重入、高性能、非阻塞。
-- 分布式锁的常见实现方式：关系型数据库比如 MySQL、分布式协调服务 ZooKeeper、分布式键值存储系统比如 Redis 、Etcd 。
-
-<!-- @include: @article-footer.snippet.md -->
+- **Mutual Exclusion**: At any given time, the lock can only be held by one thread.
+- **High Availability**: The lock service is highly available. When one

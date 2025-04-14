@@ -1,39 +1,38 @@
 ---
-title: Java 反射机制详解
+title: Java Reflection Mechanism Detailed Explanation
 category: Java
 tag:
-  - Java基础
+  - Java Basics
 ---
 
-## 何为反射？
+## What is Reflection?
 
-如果说大家研究过框架的底层原理或者咱们自己写过框架的话，一定对反射这个概念不陌生。
+If you have studied the underlying principles of frameworks or have written your own frameworks, you must be familiar with the concept of reflection.
 
-反射之所以被称为框架的灵魂，主要是因为它赋予了我们在运行时分析类以及执行类中方法的能力。
+Reflection is called the soul of frameworks mainly because it gives us the ability to analyze classes and execute methods in those classes at runtime.
 
-通过反射你可以获取任意一个类的所有属性和方法，你还可以调用这些方法和属性。
+With reflection, you can obtain all properties and methods of any class, and you can also invoke these methods and access these properties.
 
-## 反射的应用场景了解么？
+## Do You Know the Application Scenarios of Reflection?
 
-像咱们平时大部分时候都是在写业务代码，很少会接触到直接使用反射机制的场景。
+Most of the time, we are writing business code and rarely encounter scenarios where we directly use reflection.
 
-但是，这并不代表反射没有用。相反，正是因为反射，你才能这么轻松地使用各种框架。像 Spring/Spring Boot、MyBatis 等等框架中都大量使用了反射机制。
+However, this does not mean that reflection is useless. On the contrary, it is precisely because of reflection that you can easily use various frameworks. Frameworks like Spring/Spring Boot, MyBatis, etc., make extensive use of reflection.
 
-**这些框架中也大量使用了动态代理，而动态代理的实现也依赖反射。**
+**These frameworks also use dynamic proxies extensively, and the implementation of dynamic proxies relies on reflection.**
 
-比如下面是通过 JDK 实现动态代理的示例代码，其中就使用了反射类 `Method` 来调用指定的方法。
+For example, below is sample code that implements dynamic proxies using JDK, where the reflection class `Method` is used to invoke the specified method.
 
 ```java
 public class DebugInvocationHandler implements InvocationHandler {
     /**
-     * 代理类中的真实对象
+     * The real object in the proxy class
      */
     private final Object target;
 
     public DebugInvocationHandler(Object target) {
         this.target = target;
     }
-
 
     public Object invoke(Object proxy, Method method, Object[] args) throws InvocationTargetException, IllegalAccessException {
         System.out.println("before method " + method.getName());
@@ -42,59 +41,58 @@ public class DebugInvocationHandler implements InvocationHandler {
         return result;
     }
 }
-
 ```
 
-另外，像 Java 中的一大利器 **注解** 的实现也用到了反射。
+Additionally, one of Java's powerful features, **annotations**, also relies on reflection for its implementation.
 
-为什么你使用 Spring 的时候 ，一个`@Component`注解就声明了一个类为 Spring Bean 呢？为什么你通过一个 `@Value`注解就读取到配置文件中的值呢？究竟是怎么起作用的呢？
+Why is it that when you use Spring, a `@Component` annotation declares a class as a Spring Bean? Why can you read values from a configuration file using a `@Value` annotation? How does this work?
 
-这些都是因为你可以基于反射分析类，然后获取到类/属性/方法/方法的参数上的注解。你获取到注解之后，就可以做进一步的处理。
+All of this is because you can analyze classes based on reflection and retrieve annotations from classes, properties, methods, and their parameters. Once you retrieve the annotations, you can perform further processing.
 
-## 谈谈反射机制的优缺点
+## Discussing the Advantages and Disadvantages of Reflection Mechanism
 
-**优点**：可以让咱们的代码更加灵活、为各种框架提供开箱即用的功能提供了便利
+**Advantages**: Allows our code to be more flexible and provides convenience for various frameworks to offer out-of-the-box functionality.
 
-**缺点**：让我们在运行时有了分析操作类的能力，这同样也增加了安全问题。比如可以无视泛型参数的安全检查（泛型参数的安全检查发生在编译时）。另外，反射的性能也要稍差点，不过，对于框架来说实际是影响不大的。相关阅读：[Java Reflection: Why is it so slow?](https://stackoverflow.com/questions/1392351/java-reflection-why-is-it-so-slow)
+**Disadvantages**: Gives us the ability to analyze operational classes at runtime, which also increases security issues. For example, it can bypass safety checks for generic parameters (safety checks for generic parameters occur at compile time). Additionally, the performance of reflection is somewhat lower, but it does not significantly affect the frameworks in practice. Related reading: [Java Reflection: Why is it so slow?](https://stackoverflow.com/questions/1392351/java-reflection-why-is-it-so-slow)
 
-## 反射实战
+## Reflection Practice
 
-### 获取 Class 对象的四种方式
+### Four Ways to Obtain Class Objects
 
-如果我们动态获取到这些信息，我们需要依靠 Class 对象。Class 类对象将一个类的方法、变量等信息告诉运行的程序。Java 提供了四种方式获取 Class 对象:
+If we want to dynamically obtain this information, we need to rely on the Class object. The Class object provides information about a class's methods, variables, and other details to the running program. Java provides four ways to obtain a Class object:
 
-**1. 知道具体类的情况下可以使用：**
+**1. When you know the specific class:**
 
 ```java
 Class alunbarClass = TargetObject.class;
 ```
 
-但是我们一般是不知道具体类的，基本都是通过遍历包下面的类来获取 Class 对象，通过此方式获取 Class 对象不会进行初始化
+However, we usually do not know the specific class and typically obtain Class objects by traversing through the classes in a package. Obtaining a Class object in this way does not involve initialization.
 
-**2. 通过 `Class.forName()`传入类的全路径获取：**
+**2. Use `Class.forName()` to get the full path of the class:**
 
 ```java
 Class alunbarClass1 = Class.forName("cn.javaguide.TargetObject");
 ```
 
-**3. 通过对象实例`instance.getClass()`获取：**
+**3. Obtain via an object instance using `instance.getClass()`:**
 
 ```java
 TargetObject o = new TargetObject();
 Class alunbarClass2 = o.getClass();
 ```
 
-**4. 通过类加载器`xxxClassLoader.loadClass()`传入类路径获取:**
+**4. Obtain via class loader using `xxxClassLoader.loadClass()`:**
 
 ```java
 ClassLoader.getSystemClassLoader().loadClass("cn.javaguide.TargetObject");
 ```
 
-通过类加载器获取 Class 对象不会进行初始化，意味着不进行包括初始化等一系列步骤，静态代码块和静态对象不会得到执行
+Obtaining a Class object through the class loader does not involve initialization, meaning it does not perform a series of steps including initialization, and static code blocks and static objects will not execute.
 
-### 反射的一些基本操作
+### Some Basic Operations of Reflection
 
-1. 创建一个我们要使用反射操作的类 `TargetObject`。
+1. Create a class we want to use reflection with called `TargetObject`.
 
 ```java
 package cn.javaguide;
@@ -116,7 +114,7 @@ public class TargetObject {
 }
 ```
 
-2. 使用反射操作这个类的方法以及属性
+2. Use reflection to operate on the methods and properties of this class.
 
 ```java
 package cn.javaguide;
@@ -128,12 +126,12 @@ import java.lang.reflect.Method;
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchFieldException {
         /**
-         * 获取 TargetObject 类的 Class 对象并且创建 TargetObject 类实例
+         * Obtain the Class object of TargetObject and create an instance of TargetObject
          */
         Class<?> targetClass = Class.forName("cn.javaguide.TargetObject");
         TargetObject targetObject = (TargetObject) targetClass.newInstance();
         /**
-         * 获取 TargetObject 类中定义的所有方法
+         * Get all methods defined in the TargetObject class
          */
         Method[] methods = targetClass.getDeclaredMethods();
         for (Method method : methods) {
@@ -141,7 +139,7 @@ public class Main {
         }
 
         /**
-         * 获取指定方法并调用
+         * Obtain a specific method and invoke it
          */
         Method publicMethod = targetClass.getDeclaredMethod("publicMethod",
                 String.class);
@@ -149,26 +147,25 @@ public class Main {
         publicMethod.invoke(targetObject, "JavaGuide");
 
         /**
-         * 获取指定参数并对参数进行修改
+         * Obtain a specific parameter and modify it
          */
         Field field = targetClass.getDeclaredField("value");
-        //为了对类中的参数进行修改我们取消安全检查
+        // To modify the parameter in the class, we bypass the security check
         field.setAccessible(true);
         field.set(targetObject, "JavaGuide");
 
         /**
-         * 调用 private 方法
+         * Invoke the private method
          */
         Method privateMethod = targetClass.getDeclaredMethod("privateMethod");
-        //为了调用private方法我们取消安全检查
+        // To invoke the private method, we bypass the security check
         privateMethod.setAccessible(true);
         privateMethod.invoke(targetObject);
     }
 }
-
 ```
 
-输出内容：
+Output:
 
 ```plain
 publicMethod
@@ -177,8 +174,8 @@ I love JavaGuide
 value is JavaGuide
 ```
 
-**注意** : 有读者提到上面代码运行会抛出 `ClassNotFoundException` 异常，具体原因是你没有下面把这段代码的包名替换成自己创建的 `TargetObject` 所在的包 。
-可以参考：<https://www.cnblogs.com/chanshuyi/p/head_first_of_reflection.html> 这篇文章。
+**Note**: Some readers have mentioned that the above code will throw a `ClassNotFoundException`. The reason is that you have not replaced the package name in the following line of code with the package where your created `TargetObject` resides.
+You can refer to: <https://www.cnblogs.com/chanshuyi/p/head_first_of_reflection.html> for this article.
 
 ```java
 Class<?> targetClass = Class.forName("cn.javaguide.TargetObject");

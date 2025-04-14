@@ -1,139 +1,139 @@
 ---
-title: 字符集详解
-category: 数据库
+title: Character Set Explained
+category: Database
 tag:
-  - 数据库基础
+  - Database Basics
 ---
 
-MySQL 字符编码集中有两套 UTF-8 编码实现：**`utf8`** 和 **`utf8mb4`**。
+MySQL's character encoding includes two implementations of UTF-8 encoding: **`utf8`** and **`utf8mb4`**.
 
-如果使用 **`utf8`** 的话，存储 emoji 符号和一些比较复杂的汉字、繁体字就会出错。
+If you use **`utf8`**, storing emoji symbols and some more complex Chinese characters or traditional characters will lead to errors.
 
-为什么会这样呢？这篇文章可以从源头给你解答。
+Why does this happen? This article will provide you with an explanation from the source.
 
-## 字符集是什么？
+## What is a character set?
 
-字符是各种文字和符号的统称，包括各个国家文字、标点符号、表情、数字等等。 **字符集** 就是一系列字符的集合。字符集的种类较多，每个字符集可以表示的字符范围通常不同，就比如说有些字符集是无法表示汉字的。
+Characters are the general term for various letters and symbols, including letters from different countries, punctuation marks, emojis, numbers, and so on. A **character set** is a collection of a series of characters. There are many types of character sets, and the range of characters that each set can represent is usually different; for example, some character sets cannot represent Chinese characters.
 
-**计算机只能存储二进制的数据，那英文、汉字、表情等字符应该如何存储呢？**
+**Computers can only store binary data; how should characters like English, Chinese, and emojis be stored?**
 
-我们要将这些字符和二进制的数据一一对应起来，比如说字符“a”对应“01100001”，反之，“01100001”对应 “a”。我们将字符对应二进制数据的过程称为"**字符编码**"，反之，二进制数据解析成字符的过程称为“**字符解码**”。
+We need to establish a correspondence between these characters and binary data, for example, the character "a" corresponds to "01100001," and conversely, "01100001" corresponds to "a." The process of mapping characters to binary data is called "**character encoding**," and the process of interpreting binary data back into characters is called "**character decoding**."
 
-## 字符编码是什么？
+## What is character encoding?
 
-字符编码是一种将字符集中的字符与计算机中的二进制数据相互转换的方法，可以看作是一种映射规则。也就是说，字符编码的目的是为了让计算机能够存储和传输各种文字信息。
+Character encoding is a method that converts characters in a character set to binary data in a computer and vice versa, which can be seen as a mapping rule. In other words, the purpose of character encoding is to enable computers to store and transmit various texts.
 
-每种字符集都有自己的字符编码规则，常用的字符集编码规则有 ASCII 编码、 GB2312 编码、GBK 编码、GB18030 编码、Big5 编码、UTF-8 编码、UTF-16 编码等。
+Each character set has its own character encoding rules. Common character set encoding rules include ASCII encoding, GB2312 encoding, GBK encoding, GB18030 encoding, Big5 encoding, UTF-8 encoding, UTF-16 encoding, and so on.
 
-## 有哪些常见的字符集？
+## What are some common character sets?
 
-常见的字符集有：ASCII、GB2312、GB18030、GBK、Unicode……。
+Common character sets include: ASCII, GB2312, GB18030, GBK, Unicode, etc.
 
-不同的字符集的主要区别在于：
+The main differences among different character sets are:
 
-- 可以表示的字符范围
-- 编码方式
+- The range of characters they can represent
+- Encoding methods
 
 ### ASCII
 
-**ASCII** (**A**merican **S**tandard **C**ode for **I**nformation **I**nterchange，美国信息交换标准代码) 是一套主要用于现代美国英语的字符集（这也是 ASCII 字符集的局限性所在）。
+**ASCII** (**A**merican **S**tandard **C**ode for **I**nformation **I**nterchange) is a character set primarily for modern American English (this is also the limitation of the ASCII character set).
 
-**为什么 ASCII 字符集没有考虑到中文等其他字符呢？** 因为计算机是美国人发明的，当时，计算机的发展还处于比较雏形的时代，还未在其他国家大规模使用。因此，美国发布 ASCII 字符集的时候没有考虑兼容其他国家的语言。
+**Why wasn't the ASCII character set designed to accommodate other characters, such as Chinese?** Because computers were invented by Americans, and at the time, the development of computers was still in a relatively primitive stage and had not been used extensively in other countries. Therefore, when the ASCII character set was published in the U.S., compatibility with other countries' languages was not considered.
 
-ASCII 字符集至今为止共定义了 128 个字符，其中有 33 个控制字符（比如回车、删除）无法显示。
+The ASCII character set currently defines 128 characters, 33 of which are control characters (such as carriage return and delete) and cannot be displayed.
 
-一个 ASCII 码长度是一个字节也就是 8 个 bit，比如“a”对应的 ASCII 码是“01100001”。不过，最高位是 0 仅仅作为校验位，其余 7 位使用 0 和 1 进行组合，所以，ASCII 字符集可以定义 128（2^7）个字符。
+An ASCII code has a length of one byte, which is 8 bits in total; for example, the ASCII code for "a" is "01100001." However, the highest bit is 0, merely used for parity, while the remaining 7 bits use 0 and 1 combinations, so the ASCII character set can define 128 (2^7) characters.
 
-由于，ASCII 码可以表示的字符实在是太少了。后来，人们对其进行了扩展得到了 **ASCII 扩展字符集** 。ASCII 扩展字符集使用 8 位（bits）表示一个字符，所以，ASCII 扩展字符集可以定义 256（2^8）个字符。
+However, the number of characters represented by ASCII is quite limited. Later on, people expanded it to create the **ASCII extended character set**. The ASCII extended character set uses 8 bits to represent a character, allowing it to define 256 (2^8) characters.
 
-![ASCII字符编码](https://oss.javaguide.cn/github/javaguide/csdn/c1c6375d08ca268690cef2b13591a5b4.png)
+![ASCII Character Encoding](https://oss.javaguide.cn/github/javaguide/csdn/c1c6375d08ca268690cef2b13591a5b4.png)
 
 ### GB2312
 
-我们上面说了，ASCII 字符集是一种现代美国英语适用的字符集。因此，很多国家都捣鼓了一个适合自己国家语言的字符集。
+As mentioned above, the ASCII character set is suitable mainly for modern American English. Consequently, many countries have developed character sets suitable for their own languages.
 
-GB2312 字符集是一种对汉字比较友好的字符集，共收录 6700 多个汉字，基本涵盖了绝大部分常用汉字。不过，GB2312 字符集不支持绝大部分的生僻字和繁体字。
+The GB2312 character set is a character set that is friendly to Chinese characters, encompassing over 6700 Chinese characters, covering most commonly used Chinese characters. However, the GB2312 character set does not support most rare characters and traditional Chinese characters.
 
-对于英语字符，GB2312 编码和 ASCII 码是相同的，1 字节编码即可。对于非英字符，需要 2 字节编码。
+For English characters, GB2312 encoding is the same as ASCII code and requires 1 byte of encoding. Non-English characters require 2 bytes of encoding.
 
 ### GBK
 
-GBK 字符集可以看作是 GB2312 字符集的扩展，兼容 GB2312 字符集，共收录了 20000 多个汉字。
+The GBK character set can be seen as an extension of the GB2312 character set, and it is compatible with the GB2312 character set and includes over 20,000 Chinese characters.
 
-GBK 中 K 是汉语拼音 Kuo Zhan（扩展）中的“Kuo”的首字母。
+The 'K' in GBK stands for "Kuo Zhan" (扩展), which means "expansion" in Chinese.
 
 ### GB18030
 
-GB18030 完全兼容 GB2312 和 GBK 字符集，纳入中国国内少数民族的文字，且收录了日韩汉字，是目前为止最全面的汉字字符集，共收录汉字 70000 多个。
+GB18030 is fully compatible with the GB2312 and GBK character sets, incorporates the characters of China's ethnic minorities, and includes Japanese and Korean Chinese characters, making it the most comprehensive Chinese character set to date, encompassing over 70,000 Chinese characters.
 
 ### BIG5
 
-BIG5 主要针对的是繁体中文，收录了 13000 多个汉字。
+BIG5 is mainly targeted at traditional Chinese, containing over 13,000 Chinese characters.
 
 ### Unicode & UTF-8
 
-为了更加适合本国语言，诞生了很多种字符集。
+To better suit local languages, a variety of character sets have been born.
 
-我们上面也说了不同的字符集可以表示的字符范围以及编码规则存在差异。这就导致了一个非常严重的问题：**使用错误的编码方式查看一个包含字符的文件就会产生乱码现象。**
+As we mentioned before, there are differences in the range of characters that different character sets can represent and their encoding rules. This leads to a very serious problem: **using the wrong encoding method to view a file containing characters can lead to garbled text.**
 
-就比如说你使用 UTF-8 编码方式打开 GB2312 编码格式的文件就会出现乱码。示例：“牛”这个汉字 GB2312 编码后的十六进制数值为 “C5A3”，而 “C5A3” 用 UTF-8 解码之后得到的却是 “ţ”。
+For example, opening a file encoded in GB2312 using UTF-8 will result in garbled text. For instance, the hexadecimal value of the Chinese character "牛" in GB2312 encoding is "C5A3," but when "C5A3" is decoded using UTF-8, the result is "ţ."
 
-你可以通过这个网站在线进行编码和解码：<https://www.haomeili.net/HanZi/ZiFuBianMaZhuanHuan>
+You can perform encoding and decoding online using this website: <https://www.haomeili.net/HanZi/ZiFuBianMaZhuanHuan>
 
-![](https://oss.javaguide.cn/github/javaguide/csdn/836c49b117ee4408871b0020b74c991d.png)
+![](https://oss.javaguide.cn/javaguide/csdn/836c49b117ee4408871b0020b74c991d.png)
 
-这样我们就搞懂了乱码的本质：**编码和解码时用了不同或者不兼容的字符集** 。
+Thus, we understand the essence of garbled text: **different or incompatible character sets are used during encoding and decoding.**
 
 ![](https://oss.javaguide.cn/javaguide/a8808cbabeea49caa3af27d314fa3c02-1.jpg)
 
-为了解决这个问题，人们就想：“如果我们能够有一种字符集将世界上所有的字符都纳入其中就好了！”。
+To resolve this issue, people thought, "If we could have a character set that includes all characters in the world, that would be great!"
 
-然后，**Unicode** 带着这个使命诞生了。
+Then, **Unicode** was born with this mission.
 
-Unicode 字符集中包含了世界上几乎所有已知的字符。不过，Unicode 字符集并没有规定如何存储这些字符（也就是如何使用二进制数据表示这些字符）。
+The Unicode character set contains almost all known characters in the world. However, Unicode does not stipulate how these characters should be stored (that is, how to represent these characters using binary data).
 
-然后，就有了 **UTF-8**（**8**-bit **U**nicode **T**ransformation **F**ormat）。类似的还有 UTF-16、 UTF-32。
+Thus, **UTF-8** (**8**-bit **U**nicode **T**ransformation **F**ormat) came into existence. Similar formats include UTF-16, UTF-32.
 
-UTF-8 使用 1 到 4 个字节为每个字符编码， UTF-16 使用 2 或 4 个字节为每个字符编码，UTF-32 固定位 4 个字节为每个字符编码。
+UTF-8 uses 1 to 4 bytes to encode each character, UTF-16 uses 2 or 4 bytes for each character, and UTF-32 uses a fixed 4 bytes for each character.
 
-UTF-8 可以根据不同的符号自动选择编码的长短，像英文字符只需要 1 个字节就够了，这一点 ASCII 字符集一样 。因此，对于英语字符，UTF-8 编码和 ASCII 码是相同的。
+UTF-8 can automatically choose the encoding length based on different symbols: English characters only require 1 byte, just like the ASCII character set. Therefore, for English characters, UTF-8 encoding is the same as ASCII code.
 
-UTF-32 的规则最简单，不过缺陷也比较明显，对于英文字母这类字符消耗的空间是 UTF-8 的 4 倍之多。
+UTF-32 has the simplest rules, but also a significant downside; for characters like English letters, it consumes four times the space of UTF-8.
 
-**UTF-8** 是目前使用最广的一种字符编码。
+**UTF-8** is currently the most widely used character encoding.
 
 ![](https://oss.javaguide.cn/javaguide/1280px-Utf8webgrowth.svg.png)
 
-## MySQL 字符集
+## MySQL Character Set
 
-MySQL 支持很多种字符集的方式，比如 GB2312、GBK、BIG5、多种 Unicode 字符集（UTF-8 编码、UTF-16 编码、UCS-2 编码、UTF-32 编码等等）。
+MySQL supports many character sets, such as GB2312, GBK, BIG5, and various Unicode character sets (UTF-8 encoding, UTF-16 encoding, UCS-2 encoding, UTF-32 encoding, etc.).
 
-### 查看支持的字符集
+### Viewing Supported Character Sets
 
-你可以通过 `SHOW CHARSET` 命令来查看，支持 like 和 where 子句。
+You can view supported character sets using the `SHOW CHARSET` command, which supports like and where clauses.
 
 ![](https://oss.javaguide.cn/javaguide/image-20211008164229671.png)
 
-### 默认字符集
+### Default Character Set
 
-在 MySQL5.7 中，默认字符集是 `latin1` ；在 MySQL8.0 中，默认字符集是 `utf8mb4`
+In MySQL 5.7, the default character set is `latin1`; in MySQL 8.0, the default character set is `utf8mb4`.
 
-### 字符集的层次级别
+### Hierarchical Levels of Character Sets
 
-MySQL 中的字符集有以下的层次级别：
+MySQL character sets have the following hierarchical levels:
 
-- `server`（MySQL 实例级别）
-- `database`（库级别）
-- `table`（表级别）
-- `column`（字段级别）
+- `server` (MySQL instance level)
+- `database` (database level)
+- `table` (table level)
+- `column` (field level)
 
-它们的优先级可以简单的认为是从上往下依次增大，也即 `column` 的优先级会大于 `table` 等其余层次的。如指定 MySQL 实例级别字符集是`utf8mb4`，指定某个表字符集是`latin1`，那么这个表的所有字段如果不指定的话，编码就是`latin1`。
+Their priority can be simply considered increasing from top to bottom, meaning that the `column` priority is higher than that of `table` and other levels. For example, if the MySQL instance level character set is `utf8mb4` and a specific table's character set is `latin1`, then all fields in that table will default to `latin1` unless otherwise specified.
 
 #### server
 
-不同版本的 MySQL 其 `server` 级别的字符集默认值不同，在 MySQL5.7 中，其默认值是 `latin1` ；在 MySQL8.0 中，其默认值是 `utf8mb4` 。
+The default values for the `server` level character set vary by MySQL version. In MySQL 5.7, the default value is `latin1`; in MySQL 8.0, it is `utf8mb4`.
 
-当然也可以通过在启动 `mysqld` 时指定 `--character-set-server` 来设置 `server` 级别的字符集。
+You can also specify the `--character-set-server` option when starting `mysqld` to set the `server` level character set.
 
 ```bash
 mysqld
@@ -142,22 +142,22 @@ mysqld --character-set-server=utf8mb4 \
   --collation-server=utf8mb4_0900_ai_ci
 ```
 
-或者如果你是通过源码构建的方式启动的 MySQL，你可以在 `cmake` 命令中指定选项：
+Alternatively, if you start MySQL using the source build method, you can specify options in the `cmake` command:
 
 ```sh
 cmake . -DDEFAULT_CHARSET=latin1
-或者
+or
 cmake . -DDEFAULT_CHARSET=latin1 \
   -DDEFAULT_COLLATION=latin1_german1_ci
 ```
 
-此外，你也可以在运行时改变 `character_set_server` 的值，从而达到修改 `server` 级别的字符集的目的。
+In addition, you can also change the value of `character_set_server` at runtime to modify the `server` level character set.
 
-`server` 级别的字符集是 MySQL 服务器的全局设置，它不仅会作为创建或修改数据库时的默认字符集（如果没有指定其他字符集），还会影响到客户端和服务器之间的连接字符集，具体可以查看 [MySQL Connector/J 8.0 - 6.7 Using Character Sets and Unicode](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-charsets.html)。
+The `server` level character set is a global setting for the MySQL server. It serves as the default character set when creating or modifying databases (if no other character set is specified) and will also affect the character set used for communication between client and server. For more details, see [MySQL Connector/J 8.0 - 6.7 Using Character Sets and Unicode](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-charsets.html).
 
 #### database
 
-`database` 级别的字符集是我们在创建数据库和修改数据库时指定的：
+The `database` level character set is specified when creating and modifying databases:
 
 ```sql
 CREATE DATABASE db_name
@@ -169,9 +169,9 @@ ALTER DATABASE db_name
     [[DEFAULT] COLLATE collation_name]
 ```
 
-如前面所说，如果在执行上述语句时未指定字符集，那么 MySQL 将会使用 `server` 级别的字符集。
+As mentioned before, if the character set is not specified when executing the above statements, MySQL will use the `server` level character set.
 
-可以通过下面的方式查看某个数据库的字符集：
+You can check the character set of a specific database using the following commands:
 
 ```sql
 USE db_name;
@@ -185,7 +185,7 @@ FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'db_name';
 
 #### table
 
-`table` 级别的字符集是在创建表和修改表时指定的：
+The `table` level character set is specified when creating and modifying tables:
 
 ```sql
 CREATE TABLE tbl_name (column_list)
@@ -197,11 +197,11 @@ ALTER TABLE tbl_name
     [COLLATE collation_name]
 ```
 
-如果在创建表和修改表时未指定字符集，那么将会使用 `database` 级别的字符集。
+If no character set is specified when creating or modifying a table, the `database` level character set will be used.
 
 #### column
 
-`column` 级别的字符集同样是在创建表和修改表时指定的，只不过它是定义在列中。下面是个例子：
+The `column` level character set is also specified during table creation and modification, but it is defined within the column definition. Here is an example:
 
 ```sql
 CREATE TABLE t1
@@ -212,19 +212,19 @@ CREATE TABLE t1
 );
 ```
 
-如果未指定列级别的字符集，那么将会使用表级别的字符集。
+If no character set is specified at the column level, the table-level character set will be used.
 
-### 连接字符集
+### Connection Character Set
 
-前面说到了字符集的层次级别，它们是和存储相关的。而连接字符集涉及的是和 MySQL 服务器的通信。
+Earlier, we discussed the hierarchical levels of character sets, which are related to storage. The connection character set involves communication with the MySQL server.
 
-连接字符集与下面这几个变量息息相关：
+The connection character set is closely related to the following variables:
 
-- `character_set_client` ：描述了客户端发送给服务器的 SQL 语句使用的是什么字符集。
-- `character_set_connection` ：描述了服务器接收到 SQL 语句时使用什么字符集进行翻译。
-- `character_set_results` ：描述了服务器返回给客户端的结果使用的是什么字符集。
+- `character_set_client`: Describes which character set is used for SQL statements sent from the client to the server.
+- `character_set_connection`: Describes which character set the server uses to translate SQL statements upon receipt.
+- `character_set_results`: Describes the character set used for results returned from the server to the client.
 
-它们的值可以通过下面的 SQL 语句查询：
+The values of these variables can be queried using the following SQL statements:
 
 ```sql
 SELECT * FROM performance_schema.session_variables
@@ -238,61 +238,61 @@ WHERE VARIABLE_NAME IN (
 SHOW SESSION VARIABLES LIKE 'character\_set\_%';
 ```
 
-如果要想修改前面提到的几个变量的值，有以下方式：
+If you want to modify the values of the previously mentioned variables, you can do so in the following ways:
 
-1、修改配置文件
+1. Modify the configuration file
 
 ```properties
 [mysql]
-# 只针对MySQL客户端程序
+# Only for MySQL client programs
 default-character-set=utf8mb4
 ```
 
-2、使用 SQL 语句
+2. Use SQL statements
 
 ```sql
 set names utf8mb4
-# 或者一个个进行修改
+# Or modify each one individually
 # SET character_set_client = utf8mb4;
 # SET character_set_results = utf8mb4;
 # SET collation_connection = utf8mb4;
 ```
 
-### JDBC 对连接字符集的影响
+### JDBC and Connection Character Set
 
-不知道你们有没有碰到过存储 emoji 表情正常，但是使用类似 Navicat 之类的软件的进行查询的时候，发现 emoji 表情变成了问号的情况。这个问题很有可能就是 JDBC 驱动引起的。
+Have you ever encountered a situation where emojis are stored correctly, but when querying with software like Navicat, the emojis appear as question marks? This issue is likely caused by the JDBC driver.
 
-根据前面的内容，我们知道连接字符集也是会影响我们存储的数据的，而 JDBC 驱动会影响连接字符集。
+From the previous content, we know that the connection character set also affects the data we store, and the JDBC driver impacts the connection character set.
 
-`mysql-connector-java` （JDBC 驱动）主要通过这几个属性影响连接字符集：
+The `mysql-connector-java` (JDBC driver) mainly affects the connection character set through the following properties:
 
 - `characterEncoding`
 - `characterSetResults`
 
-以 `DataGrip 2023.1.2` 来说，在它配置数据源的高级对话框中，可以看到 `characterSetResults` 的默认值是 `utf8` ，在使用 `mysql-connector-java 8.0.25` 时，连接字符集最后会被设置成 `utf8mb3` 。那么这种情况下 emoji 表情就会被显示为问号，并且当前版本驱动还不支持把 `characterSetResults` 设置为 `utf8mb4` ，不过换成 `mysql-connector-java driver 8.0.29` 却是允许的。
+For example, in `DataGrip 2023.1.2`, in the advanced dialog for configuring data sources, the default value for `characterSetResults` is `utf8`. When using `mysql-connector-java 8.0.25`, the connection character set ends up being set to `utf8mb3`. In this case, emojis will be displayed as question marks, and the current version of the driver does not support setting `characterSetResults` to `utf8mb4`. However, switching to `mysql-connector-java driver 8.0.29` allows this.
 
-具体可以看一下 StackOverflow 的 [DataGrip MySQL stores emojis correctly but displays them as?](https://stackoverflow.com/questions/54815419/datagrip-mysql-stores-emojis-correctly-but-displays-them-as)这个回答。
+For specifics, you can read the StackOverflow answer [DataGrip MySQL stores emojis correctly but displays them as?](https://stackoverflow.com/questions/54815419/datagrip-mysql-stores-emojis-correctly-but-displays-them-as).
 
-### UTF-8 使用
+### Using UTF-8
 
-通常情况下，我们建议使用 UTF-8 作为默认的字符编码方式。
+Generally, we recommend using UTF-8 as the default character encoding method.
 
-不过，这里有一个小坑。
+However, there is a small pitfall.
 
-MySQL 字符编码集中有两套 UTF-8 编码实现：
+MySQL's character encoding includes two implementations of UTF-8 encoding:
 
-- **`utf8`**：`utf8`编码只支持`1-3`个字节 。 在 `utf8` 编码中，中文是占 3 个字节，其他数字、英文、符号占一个字节。但 emoji 符号占 4 个字节，一些较复杂的文字、繁体字也是 4 个字节。
-- **`utf8mb4`**：UTF-8 的完整实现，正版！最多支持使用 4 个字节表示字符，因此，可以用来存储 emoji 符号。
+- **`utf8`**: The `utf8` encoding supports only `1-3` bytes. In `utf8`, Chinese characters occupy 3 bytes, while numbers, English characters, and symbols occupy 1 byte each. However, emoji characters take up 4 bytes, as do some more complex characters and traditional Chinese characters.
+- **`utf8mb4`**: The complete implementation of UTF-8, the "real" deal! It supports up to 4 bytes per character, making it suitable for storing emoji symbols.
 
-**为什么有两套 UTF-8 编码实现呢？** 原因如下：
+**Why are there two implementations of UTF-8?** The reason is as follows:
 
 ![](https://oss.javaguide.cn/javaguide/image-20211008164542347.png)
 
-因此，如果你需要存储`emoji`类型的数据或者一些比较复杂的文字、繁体字到 MySQL 数据库的话，数据库的编码一定要指定为`utf8mb4` 而不是`utf8` ，要不然存储的时候就会报错了。
+As a result, if you need to store `emoji` data or some more complex characters or traditional Chinese characters in a MySQL database, the database's encoding must be specified as `utf8mb4`, not `utf8`, otherwise, an error will occur during storage.
 
-演示一下吧！（环境：MySQL 5.7+）
+Let’s demonstrate! (Environment: MySQL 5.7+)
 
-建表语句如下，我们指定数据库 CHARSET 为 `utf8` 。
+Here is the create table statement, where we specify the database CHARSET as `utf8`.
 
 ```sql
 CREATE TABLE `user` (
@@ -303,31 +303,30 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
 
-当我们执行下面的 insert 语句插入数据到数据库时，果然报错！
+When we execute the following insert statement to insert data into the database, an error indeed occurs!
 
 ```sql
 INSERT INTO `user` (`id`, `name`, `phone`, `password`)
 VALUES
  ('A00003', 'guide哥😘😘😘', '181631312312', '123456');
-
 ```
 
-报错信息如下：
+The reported error message is as follows:
 
 ```plain
 Incorrect string value: '\xF0\x9F\x98\x98\xF0\x9F...' for column 'name' at row 1
 ```
 
-## 参考
+## References
 
-- 字符集和字符编码（Charset & Encoding）：<https://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html>
-- 十分钟搞清字符集和字符编码：<http://cenalulu.github.io/linux/character-encoding/>
-- Unicode-维基百科：<https://zh.wikipedia.org/wiki/Unicode>
-- GB2312-维基百科：<https://zh.wikipedia.org/wiki/GB_2312>
-- UTF-8-维基百科：<https://zh.wikipedia.org/wiki/UTF-8>
-- GB18030-维基百科: <https://zh.wikipedia.org/wiki/GB_18030>
-- MySQL8 文档：<https://dev.mysql.com/doc/refman/8.0/en/charset.html>
-- MySQL5.7 文档：<https://dev.mysql.com/doc/refman/5.7/en/charset.html>
-- MySQL Connector/J 文档：<https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-charsets.html>
+- Character set and character encoding (Charset & Encoding): <https://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html>
+- Clarifying character sets and character encoding in ten minutes: <http://cenalulu.github.io/linux/character-encoding/>
+- Unicode - Wikipedia: <https://zh.wikipedia.org/wiki/Unicode>
+- GB2312 - Wikipedia: <https://zh.wikipedia.org/wiki/GB_2312>
+- UTF-8 - Wikipedia: <https://zh.wikipedia.org/wiki/UTF-8>
+- GB18030 - Wikipedia: <https://zh.wikipedia.org/wiki/GB_18030>
+- MySQL 8 Documentation: <https://dev.mysql.com/doc/refman/8.0/en/charset.html>
+- MySQL 5.7 Documentation: <https://dev.mysql.com/doc/refman/5.7/en/charset.html>
+- MySQL Connector/J Documentation: <https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-charsets.html>
 
 <!-- @include: @article-footer.snippet.md -->

@@ -1,150 +1,150 @@
 ---
-title: 常见加密算法总结
-category: 系统设计
+title: Summary of Common Encryption Algorithms
+category: System Design
 tag:
-  - 安全
+  - Security
 ---
 
-加密算法是一种用数学方法对数据进行变换的技术，目的是保护数据的安全，防止被未经授权的人读取或修改。加密算法可以分为三大类：对称加密算法、非对称加密算法和哈希算法（也叫摘要算法）。
+Encryption algorithms are mathematical methods used to transform data with the aim of protecting its security and preventing unauthorized individuals from reading or altering it. Encryption algorithms can be divided into three main categories: symmetric encryption algorithms, asymmetric encryption algorithms, and hash algorithms (also known as digest algorithms).
 
-日常开发中常见的需要用到加密算法的场景：
+Common scenarios in daily development where encryption algorithms are needed include:
 
-1. 保存在数据库中的密码需要加盐之后使用哈希算法（比如 BCrypt）进行加密。
-2. 保存在数据库中的银行卡号、身份号这类敏感数据需要使用对称加密算法（比如 AES）保存。
-3. 网络传输的敏感数据比如银行卡号、身份号需要用 HTTPS + 非对称加密算法（如 RSA）来保证传输数据的安全性。
-4. ……
+1. Passwords stored in databases need to be salted and then encrypted using hash algorithms (such as BCrypt).
+1. Sensitive data such as bank card numbers and ID numbers stored in databases should be saved using symmetric encryption algorithms (such as AES).
+1. Sensitive data transmitted over the network, such as bank card numbers and ID numbers, needs to be secured using HTTPS and asymmetric encryption algorithms (like RSA) to ensure the safety of the transmitted data.
+1. ……
 
-ps: 严格上来说，哈希算法其实不属于加密算法，只是可以用到某些加密场景中（例如密码加密），两者可以看作是并列关系。加密算法通常指的是可以将明文转换为密文，并且能够通过某种方式（如密钥）再将密文还原为明文的算法。而哈希算法是一种单向过程，它将输入信息转换成一个固定长度的、看似随机的哈希值，但这个过程是不可逆的，也就是说，不能从哈希值还原出原始信息。
+P.S.: Strictly speaking, hash algorithms do not belong to encryption algorithms; they can only be used in certain encryption scenarios (for example, password encryption). The two can be seen as parallel. Encryption algorithms typically refer to those that can convert plaintext into ciphertext and can subsequently restore the ciphertext back to plaintext through a method (such as a key). Hash algorithms, on the other hand, are a one-way process that converts input data into a fixed-length, seemingly random hash value; this process is irreversible, meaning the original information cannot be restored from the hash value.
 
-## 哈希算法
+## Hash Algorithms
 
-哈希算法也叫散列函数或摘要算法，它的作用是对任意长度的数据生成一个固定长度的唯一标识，也叫哈希值、散列值或消息摘要（后文统称为哈希值）。
+Hash algorithms are also called hash functions or digest algorithms. They generate a fixed-length unique identifier from data of any length, known as a hash value, hash code, or message digest (collectively referred to as hash value in the following text).
 
-![哈希算法效果演示](https://oss.javaguide.cn/github/javaguide/system-design/security/encryption-algorithms/hash-function-effect-demonstration.png)
+![Hash Algorithm Effect Demonstration](https://oss.javaguide.cn/github/javaguide/system-design/security/encryption-algorithms/hash-function-effect-demonstration.png)
 
-哈希算法的是不可逆的，你无法通过哈希之后的值再得到原值。
+Hash algorithms are irreversible; you cannot retrieve the original value from the hash result.
 
-哈希值的作用是可以用来验证数据的完整性和一致性。
+The purpose of a hash value is to verify the integrity and consistency of data.
 
-举两个实际的例子：
+Here are two practical examples:
 
-- 保存密码到数据库时使用哈希算法进行加密，可以通过比较用户输入密码的哈希值和数据库保存的哈希值是否一致，来判断密码是否正确。
-- 我们下载一个文件时，可以通过比较文件的哈希值和官方提供的哈希值是否一致，来判断文件是否被篡改或损坏；
+- When saving a password to a database, you can check if the hash value of the user's input password matches the hash value stored in the database to determine if the password is correct.
+- When downloading a file, you can compare the hash value of the file with the official hash value to check if the file has been tampered with or corrupted.
 
-这种算法的特点是不可逆：
+The characteristics of this algorithm include irreversibility:
 
-- 不能从哈希值还原出原始数据。
-- 原始数据的任何改变都会导致哈希值的巨大变化。
+- You cannot restore the original data from the hash value.
+- Any change to the original data will result in a significant change in the hash value.
 
-哈希算法可以简单分为两类：
+Hash algorithms can be simply divided into two categories:
 
-1. **加密哈希算法**：安全性较高的哈希算法，它可以提供一定的数据完整性保护和数据防篡改能力，能够抵御一定的攻击手段，安全性相对较高，但性能较差，适用于对安全性要求较高的场景。例如 SHA2、SHA3、SM3、RIPEMD-160、BLAKE2、SipHash 等等。
-2. **非加密哈希算法**：安全性相对较低的哈希算法，易受到暴力破解、冲突攻击等攻击手段的影响，但性能较高，适用于对安全性没有要求的业务场景。例如 CRC32、MurMurHash3、SipHash 等等。
+1. **Cryptographic Hash Algorithms**: These are hash algorithms with higher security that provide certain data integrity protection and data tampering resistance. They can withstand certain types of attacks, but their performance can be poor, making them suitable for scenarios requiring high security. Examples include SHA2, SHA3, SM3, RIPEMD-160, BLAKE2, SipHash, etc.
+1. **Non-Cryptographic Hash Algorithms**: These hash algorithms have relatively lower security and are more susceptible to brute-force attacks and collision attacks, but their performance is higher and they are suitable for business scenarios where security is not a requirement, such as CRC32, MurMurHash3, SipHash, etc.
 
-除了这两种之外，还有一些特殊的哈希算法，例如安全性更高的**慢哈希算法**。
+In addition to these two categories, there are some special hash algorithms, such as **slow hash algorithms** with higher security.
 
-常见的哈希算法有：
+Common hash algorithms include:
 
-- MD（Message Digest，消息摘要算法）：MD2、MD4、MD5 等，已经不被推荐使用。
-- SHA（Secure Hash Algorithm，安全哈希算法）：SHA-1 系列安全性低，SHA2，SHA3 系列安全性较高。
-- 国密算法：例如 SM2、SM3、SM4，其中 SM2 为非对称加密算法，SM4 为对称加密算法，SM3 为哈希算法（安全性及效率和 SHA-256 相当，但更适合国内的应用环境）。
-- Bcrypt（密码哈希算法）：基于 Blowfish 加密算法的密码哈希算法，专门为密码加密而设计，安全性高，属于慢哈希算法。
-- MAC（Message Authentication Code，消息认证码算法）：HMAC 是一种基于哈希的 MAC，可以与任何安全的哈希算法结合使用，例如 SHA-256。
-- CRC：（Cyclic Redundancy Check，循环冗余校验）：CRC32 是一种 CRC 算法，它的特点是生成 32 位的校验值，通常用于数据完整性校验、文件校验等场景。
-- SipHash：加密哈希算法，它的设计目的是在速度和安全性之间达到一个平衡，用于防御[哈希泛洪 DoS 攻击](https://aumasson.jp/siphash/siphashdos_29c3_slides.pdf)。Rust 默认使用 SipHash 作为哈希算法，从 Redis4.0 开始，哈希算法被替换为 SipHash。
-- MurMurHash：经典快速的非加密哈希算法，目前最新的版本是 MurMurHash3，可以生成 32 位或者 128 位哈希值；
+- MD (Message Digest, message digest algorithm): MD2, MD4, MD5, etc., which are no longer recommended for use.
+- SHA (Secure Hash Algorithm, secure hash algorithm): SHA-1 series has lower security, while SHA2 and SHA3 series have higher security.
+- National encryption algorithms: such as SM2, SM3, SM4, where SM2 is an asymmetric encryption algorithm, SM4 is a symmetric encryption algorithm, and SM3 is a hash algorithm (security and efficiency comparable to SHA-256 but more suitable for domestic applications).
+- Bcrypt (password hash algorithm): A password hash algorithm based on the Blowfish encryption algorithm, designed specifically for password encryption, which offers high security and belongs to the slow hash algorithms.
+- MAC (Message Authentication Code, message authentication code algorithm): HMAC is a type of MAC based on hash that can be used in conjunction with any secure hash algorithm like SHA-256.
+- CRC: (Cyclic Redundancy Check): CRC32 is a CRC algorithm characterized by the generation of a 32-bit checksum, commonly used in data integrity checking, file verification, etc.
+- SipHash: is a cryptographic hash algorithm designed to achieve a balance between speed and security, used to defend against [hash flooding DoS attacks](https://aumasson.jp/siphash/siphashdos_29c3_slides.pdf). Rust uses SipHash as the default hash algorithm, replacing the hash algorithm with SipHash starting from Redis 4.0.
+- MurMurHash: A classic fast non-cryptographic hash algorithm, with the latest version being MurMurHash3, which can generate 32-bit or 128-bit hash values;
 - ……
 
-哈希算法一般是不需要密钥的，但也存在部分特殊哈希算法需要密钥。例如，MAC 和 SipHash 就是一种基于密钥的哈希算法，它在哈希算法的基础上增加了一个密钥，使得只有知道密钥的人才能验证数据的完整性和来源。
+Hash algorithms generally do not require keys, but there are some special hash algorithms that do. For example, MAC and SipHash are key-based hash algorithms that add a key to the hash algorithm, such that only individuals who know the key can verify the data's integrity and origin.
 
 ### MD
 
-MD 算法有多个版本，包括 MD2、MD4、MD5 等，其中 MD5 是最常用的版本，它可以生成一个 128 位（16 字节）的哈希值。从安全性上说：MD5 > MD4 > MD2。除了这些版本，还有一些基于 MD4 或 MD5 改进的算法，如 RIPEMD、HAVAL 等。
+The MD algorithm consists of several versions, including MD2, MD4, MD5, etc., with MD5 being the most commonly used. From a security standpoint: MD5 > MD4 > MD2. In addition to these versions, there are also some algorithms based on improvements to MD4 or MD5, such as RIPEMD, HAVAL, etc.
 
-即使是最安全 MD 算法 MD5 也存在被破解的风险，攻击者可以通过暴力破解或彩虹表攻击等方式，找到与原始数据相同的哈希值，从而破解数据。
+Even the safest MD algorithm, MD5, carries the risk of being compromised. Attackers may find a hash value matching the original data through brute-force approaches or rainbow table attacks.
 
-为了增加破解难度，通常可以选择加盐。盐（Salt）在密码学中，是指通过在密码任意固定位置插入特定的字符串，让哈希后的结果和使用原始密码的哈希结果不相符，这种过程称之为“加盐”。
+To increase the difficulty of cracking, you can choose to add salt. Salt in cryptography refers to inserting a specific string at a fixed position in the password, making the hash result different from using the original password’s hash; this process is called "salting."
 
-加盐之后就安全了吗？并不一定，这只是增加了破解难度，不代表无法破解。而且，MD5 算法本身就存在弱碰撞（Collision）问题，即多个不同的输入产生相同的 MD5 值。
+Is it safe after salting? Not necessarily. This simply increases the difficulty of cracking, not guaranteeing that it is unbreakable. Additionally, the MD5 algorithm itself has a weak collision problem, whereby different inputs can produce the same MD5 value.
 
-因此，MD 算法已经不被推荐使用，建议使用更安全的哈希算法比如 SHA-2、Bcrypt。
+Thus, the MD algorithm is no longer recommended for use; it is advisable to use more secure hash algorithms like SHA-2 or Bcrypt.
 
-Java 提供了对 MD 算法系列的支持，包括 MD2、MD5。
+Java provides support for the MD algorithm series, including MD2 and MD5.
 
-MD5 代码示例（未加盐）：
+MD5 code example (without salt):
 
 ```java
-String originalString = "Java学习 + 面试指南：javaguide.cn";
-// 创建MD5摘要对象
+String originalString = "Java study + Interview guide: javaguide.cn";
+// Create an MD5 digest object
 MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 messageDigest.update(originalString.getBytes(StandardCharsets.UTF_8));
-// 计算哈希值
+// Calculate hash value
 byte[] result = messageDigest.digest();
-// 将哈希值转换为十六进制字符串
+// Convert hash value to hexadecimal string
 String hexString = new HexBinaryAdapter().marshal(result);
 System.out.println("Original String: " + originalString);
 System.out.println("MD5 Hash: " + hexString.toLowerCase());
 ```
 
-输出：
+Output:
 
 ```bash
-Original String: Java学习 + 面试指南：javaguide.cn
+Original String: Java study + Interview guide: javaguide.cn
 MD5 Hash: fb246796f5b1b60d4d0268c817c608fa
 ```
 
 ### SHA
 
-SHA（Secure Hash Algorithm）系列算法是一组密码哈希算法，用于将任意长度的数据映射为固定长度的哈希值。SHA 系列算法由美国国家安全局（NSA）于 1993 年设计，目前共有 SHA-1、SHA-2、SHA-3 三种版本。
+The SHA (Secure Hash Algorithm) series consists of a group of cryptographic hash algorithms designed to map data of any length to a fixed-length hash value. The SHA series algorithms were designed by the National Security Agency (NSA) in 1993 and currently include three versions: SHA-1, SHA-2, and SHA-3.
 
-SHA-1 算法将任意长度的数据映射为 160 位的哈希值。然而，SHA-1 算法存在一些严重的缺陷，比如安全性低，容易受到碰撞攻击和长度扩展攻击。因此，SHA-1 算法已经不再被推荐使用。 SHA-2 家族（如 SHA-256、SHA-384、SHA-512 等）和 SHA-3 系列是 SHA-1 算法的替代方案，它们都提供了更高的安全性和更长的哈希值长度。
+The SHA-1 algorithm maps data of any length to a 160-bit hash value. However, SHA-1 has some significant deficiencies, such as low security and susceptibility to collision attacks and length extension attacks. Therefore, the SHA-1 algorithm is no longer recommended for use. The SHA-2 family (e.g., SHA-256, SHA-384, SHA-512) and the SHA-3 series are alternatives to SHA-1, offering higher security and longer hash values.
 
-SHA-2 家族是在 SHA-1 算法的基础上改进而来的，它们采用了更复杂的运算过程和更多的轮次，使得攻击者更难以通过预计算或巧合找到碰撞。
+The SHA-2 family was improved based on the SHA-1 algorithm, utilizing more complex operations and multiple rounds, making it more challenging for attackers to find collisions through pre-computation or coincidence.
 
-为了寻找一种更安全和更先进的密码哈希算法，美国国家标准与技术研究院（National Institute of Standards and Technology，简称 NIST）在 2007 年公开征集 SHA-3 的候选算法。NIST 一共收到了 64 个算法方案，经过多轮的评估和筛选，最终在 2012 年宣布 Keccak 算法胜出，成为 SHA-3 的标准算法（SHA-3 与 SHA-2 算法没有直接的关系）。 Keccak 算法具有与 MD 和 SHA-1/2 完全不同的设计思路，即海绵结构（Sponge Construction），使得传统攻击方法无法直接应用于 SHA-3 的攻击中（能够抵抗目前已知的所有攻击方式包括碰撞攻击、长度扩展攻击、差分攻击等）。
+To seek a more secure and advanced cryptographic hash algorithm, the National Institute of Standards and Technology (NIST) publicly solicited candidate algorithms for SHA-3 in 2007. NIST received a total of 64 algorithm proposals, which underwent multiple rounds of evaluation and screening, ultimately announcing that the Keccak algorithm won in 2012, becoming the SHA-3 standard algorithm (SHA-3 is not directly related to the SHA-2 algorithm). The Keccak algorithm utilizes a substantially different design approach from MD and SHA-1/2, specifically a sponge structure, making traditional attack methods inapplicable to SHA-3 attacks (capable of resisting all known attack vectors, including collision attacks, length extension attacks, differential attacks, etc.).
 
-由于 SHA-2 算法还没有出现重大的安全漏洞，而且在软件中的效率更高，所以大多数人还是倾向于使用 SHA-2 算法。
+Since the SHA-2 algorithm has not shown significant security vulnerabilities and exhibits higher efficiency in software, most people still prefer using the SHA-2 algorithm.
 
-相比 MD5 算法，SHA-2 算法之所以更强，主要有两个原因：
+Compared to the MD5 algorithm, the two main reasons why SHA-2 is stronger are:
 
-- 哈希值长度更长：例如 SHA-256 算法的哈希值长度为 256 位，而 MD5 算法的哈希值长度为 128 位，这就提高了攻击者暴力破解或者彩虹表攻击的难度。
-- 更强的碰撞抗性：SHA 算法采用了更复杂的运算过程和更多的轮次，使得攻击者更难以通过预计算或巧合找到碰撞。目前还没有找到任何两个不同的数据，它们的 SHA-256 哈希值相同。
+- Longer hash value length: For example, the SHA-256 algorithm's hash value length is 256 bits, while the MD5 algorithm's hash value length is 128 bits, thereby increasing the difficulty for attackers in conducting brute-force or rainbow table attacks.
+- Stronger collision resistance: The SHA algorithm employs more complex operations and more rounds, making it difficult for attackers to find collisions through pre-computation or coincidence. There are currently no known examples of two different data producing the same SHA-256 hash.
 
-当然，SHA-2 也不是绝对安全的，也有被暴力破解或者彩虹表攻击的风险，所以，在实际的应用中，加盐还是必不可少的。
+Of course, SHA-2 is not absolutely secure and also carries risks of brute-force attacks or rainbow table attacks; thus, in practical applications, salting is still essential.
 
-Java 提供了对 SHA 算法系列的支持，包括 SHA-1、SHA-256、SHA-384 和 SHA-512。
+Java provides support for the SHA algorithm series, including SHA-1, SHA-256, SHA-384, and SHA-512.
 
-SHA-256 代码示例（未加盐）：
+SHA-256 code example (without salt):
 
 ```java
-String originalString = "Java学习 + 面试指南：javaguide.cn";
-// 创建SHA-256摘要对象
+String originalString = "Java study + Interview guide: javaguide.cn";
+// Create a SHA-256 digest object
 MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 messageDigest.update(originalString.getBytes());
-// 计算哈希值
+// Calculate hash value
 byte[] result = messageDigest.digest();
-// 将哈希值转换为十六进制字符串
+// Convert hash value to hexadecimal string
 String hexString = new HexBinaryAdapter().marshal(result);
 System.out.println("Original String: " + originalString);
 System.out.println("SHA-256 Hash: " + hexString.toLowerCase());
 ```
 
-输出：
+Output:
 
 ```bash
-Original String: Java学习 + 面试指南：javaguide.cn
+Original String: Java study + Interview guide: javaguide.cn
 SHA-256 Hash: 184eb7e1d7fb002444098c9bde3403c6f6722c93ecfac242c0e35cd9ed3b41cd
 ```
 
 ### Bcrypt
 
-Bcrypt 算法是一种基于 Blowfish 加密算法的密码哈希算法，专门为密码加密而设计，安全性高。
+Bcrypt is a password hash algorithm based on the Blowfish encryption algorithm, specifically designed for password encryption, offering high security.
 
-由于 Bcrypt 采用了 salt（盐） 和 cost（成本） 两种机制，它可以有效地防止彩虹表攻击和暴力破解攻击，从而保证密码的安全性。salt 是一个随机生成的字符串，用于和密码混合，增加密码的复杂度和唯一性。cost 是一个数值参数，用于控制 Bcrypt 算法的迭代次数，增加密码哈希的计算时间和资源消耗。
+Bcrypt effectively prevents rainbow table attacks and brute-force attacks, ensuring password security through two mechanisms: salt (a randomly generated string used to mix with the password, increasing its complexity and uniqueness) and cost (a numeric parameter controlling the number of iterations in the Bcrypt algorithm, increasing the time and resource consumption for password hashing).
 
-Bcrypt 算法可以根据实际情况进行调整加密的复杂度，可以设置不同的 cost 值和 salt 值，从而满足不同的安全需求，灵活性很高。
+The complexity of encryption can be adjusted according to actual circumstances, allowing different cost and salt values to meet varied security requirements, providing high flexibility.
 
-Java 应用程序的安全框架 Spring Security 支持多种密码编码器，其中 `BCryptPasswordEncoder` 是官方推荐的一种，它使用 BCrypt 算法对用户的密码进行加密存储。
+The Spring Security framework of Java applications supports various password encoders, among which the `BCryptPasswordEncoder` is recommended for encrypting and storing user passwords.
 
 ```java
 @Bean
@@ -153,98 +153,98 @@ public PasswordEncoder passwordEncoder(){
 }
 ```
 
-## 对称加密
+## Symmetric Encryption
 
-对称加密算法是指加密和解密使用同一个密钥的算法，也叫共享密钥加密算法。
+Symmetric encryption algorithms refer to those that use the same key for encryption and decryption, also known as shared key encryption algorithms.
 
-![对称加密](https://oss.javaguide.cn/github/javaguide/system-design/security/encryption-algorithms/symmetric-encryption.png)
+![Symmetric Encryption](https://oss.javaguide.cn/github/javaguide/system-design/security/encryption-algorithms/symmetric-encryption.png)
 
-常见的对称加密算法有 DES、3DES、AES 等。
+Common symmetric encryption algorithms include DES, 3DES, AES, etc.
 
-### DES 和 3DES
+### DES and 3DES
 
-DES（Data Encryption Standard）使用 64 位的密钥(有效秘钥长度为 56 位,8 位奇偶校验位)和 64 位的明文进行加密。
+DES (Data Encryption Standard) uses a 64-bit key (with an effective key length of 56 bits and 8 bits for parity) and a 64-bit plaintext for encryption.
 
-虽然 DES 一次只能加密 64 位，但我们只需要把明文划分成 64 位一组的块，就可以实现任意长度明文的加密。如果明文长度不是 64 位的倍数，必须进行填充，常用的模式有 PKCS5Padding, PKCS7Padding, NOPADDING。
+Although DES can only encrypt 64 bits at a time, you can divide plaintext into blocks of 64 bits to encrypt data of any length. If the plaintext length is not a multiple of 64 bits, padding must be performed; common padding modes include PKCS5Padding, PKCS7Padding, and NOPADDING.
 
-DES 加密算法的基本思想是将 64 位的明文分成两半，然后对每一半进行多轮的变换，最后再合并成 64 位的密文。这些变换包括置换、异或、选择、移位等操作，每一轮都使用了一个子密钥，而这些子密钥都是由同一个 56 位的主密钥生成的。DES 加密算法总共进行了 16 轮变换，最后再进行一次逆置换，得到最终的密文。
+The basic idea of the DES encryption algorithm is to divide the 64-bit plaintext into two halves, then undergo multiple rounds of transformations on each half, and finally merge them into a 64-bit ciphertext. These transformations include permutation, XOR, selection, shift operations, etc., with each round using a sub-key generated from the same 56-bit master key. The DES encryption algorithm undergoes 16 rounds of transformation before a final inverse permutation yields the final ciphertext.
 
-![DES（Data Encryption Standard）](https://oss.javaguide.cn/github/javaguide/system-design/security/des-steps.jpg)
+![DES (Data Encryption Standard)](https://oss.javaguide.cn/github/javaguide/system-design/security/des-steps.jpg)
 
-这是一个经典的对称加密算法，但也有明显的缺陷，即 56 位的密钥安全性不足，已被证实可以在短时间内破解。
+This is a classic symmetric encryption algorithm, but it has obvious weaknesses; the 56-bit key security is insufficient and has been demonstrated to be crackable in a short period.
 
-为了提高 DES 算法的安全性，人们提出了一些变种或者替代方案，例如 3DES（Triple DES）。
+In order to improve the security of the DES algorithm, variations or alternatives were proposed, such as 3DES (Triple DES).
 
-3DES（Triple DES）是 DES 向 AES 过渡的加密算法，它使用 2 个或者 3 个 56 位的密钥对数据进行三次加密。3DES 相当于是对每个数据块应用三次 DES 的对称加密算法。
+3DES (Triple DES) is an encryption algorithm transitioning from DES to AES. It uses 2 or 3 56-bit keys to encrypt data three times. 3DES effectively applies the symmetric encryption algorithm three times to each data block.
 
-为了兼容普通的 DES，3DES 并没有直接使用 加密->加密->加密 的方式，而是采用了加密->解密->加密 的方式。当三种密钥均相同时，前两步相互抵消，相当于仅实现了一次加密，因此可实现对普通 DES 加密算法的兼容。3DES 比 DES 更为安全，但其处理速度不高。
+To ensure compatibility with standard DES, 3DES does not directly employ the method of encrypt-encrypt-encrypt; instead, it uses encrypt-decrypt-encrypt. When all three keys are the same, the first two steps cancel each other out, effectively resulting in a single encryption, ensuring compatibility with standard DES. 3DES is more secure than DES but has a slower processing speed.
 
 ### AES
 
-AES（Advanced Encryption Standard）算法是一种更先进的对称密钥加密算法，它使用 128 位、192 位或 256 位的密钥对数据进行加密或解密，密钥越长，安全性越高。
+AES (Advanced Encryption Standard) is a more advanced symmetric key encryption algorithm that uses keys of 128-bit, 192-bit, or 256-bit lengths for encrypting or decrypting data, with longer keys providing higher security.
 
-AES 也是一种分组(或者叫块)密码，分组长度只能是 128 位，也就是说，每个分组为 16 个字节。AES 加密算法有多种工作模式（mode of operation），如：ECB、CBC、OFB、CFB、CTR、XTS、OCB、GCM（目前使用最广泛的模式）。不同的模式参数和加密流程不同，但是核心仍然是 AES 算法。
+AES is also a block cipher, where the block length must be 128 bits, meaning each block consists of 16 bytes. AES has various modes of operation, such as ECB, CBC, OFB, CFB, CTR, XTS, OCB, GCM (currently the most widely used mode). Different modes involve different parameters and encryption processes, but the core still relies on the AES algorithm.
 
-和 DES 类似，对于不是 128 位倍数的明文需要进行填充，常用的填充模式有 PKCS5Padding, PKCS7Padding, NOPADDING。不过，AES-GCM 是流加密算法，可以对任意长度的明文进行加密，所以对应的填充模式为 NoPadding，即无需填充。
+Similar to DES, for plaintext that is not a multiple of 128 bits, padding is necessary; common padding modes include PKCS5Padding, PKCS7Padding, and NOPADDING. However, AES-GCM is a stream encryption algorithm capable of encrypting plaintext of any length, making its corresponding padding mode NoPadding, which means no padding is needed.
 
-AES 的速度比 3DES 快，而且更安全。
+AES operates faster than 3DES and is also more secure.
 
-![AES（Advanced Encryption Standard）](https://oss.javaguide.cn/github/javaguide/system-design/security/aes-steps.jpg)
+![AES (Advanced Encryption Standard)](https://oss.javaguide.cn/github/javaguide/system-design/security/aes-steps.jpg)
 
-DES 算法和 AES 算法简单对比（图片来自于：[RSA vs. AES Encryption: Key Differences Explained](https://cheapsslweb.com/blog/rsa-vs-aes-encryption)）：
+Comparison of DES and AES algorithms (image from: [RSA vs. AES Encryption: Key Differences Explained](https://cheapsslweb.com/blog/rsa-vs-aes-encryption)):
 
-![DES 和 AES 对比](https://oss.javaguide.cn/github/javaguide/system-design/security/des-vs-aes.png)
+![Comparison of DES and AES](https://oss.javaguide.cn/github/javaguide/system-design/security/des-vs-aes.png)
 
-基于 Java 实现 AES 算法代码示例：
+Java implementation of AES algorithm code example:
 
 ```java
 private static final String AES_ALGORITHM = "AES";
-// AES密钥
+// AES secret key
 private static final String AES_SECRET_KEY = "4128D9CDAC7E2F82951CBAF7FDFE675B";
-// AES加密模式为GCM，填充方式为NoPadding
-// AES-GCM 是流加密（Stream cipher）算法，所以对应的填充模式为 NoPadding，即无需填充。
+// AES encryption mode is GCM, padding is NoPadding
+// AES-GCM is a stream cipher algorithm, thus its corresponding padding mode is NoPadding, meaning no padding is necessary.
 private static final String AES_TRANSFORMATION = "AES/GCM/NoPadding";
-// 加密器
+// Encryptor
 private static Cipher encryptionCipher;
-// 解密器
+// Decryptor
 private static Cipher decryptionCipher;
 
 /**
- * 完成一些初始化工作
+ * Initialize certain configurations
  */
 public static void init() throws Exception {
-    // 将AES密钥转换为SecretKeySpec对象
+    // Convert the AES key into a SecretKeySpec object
     SecretKeySpec secretKeySpec = new SecretKeySpec(AES_SECRET_KEY.getBytes(), AES_ALGORITHM);
-    // 使用指定的AES加密模式和填充方式获取对应的加密器并初始化
+    // Get the appropriate encryptor instance for the specified AES encryption mode and padding, and initialize it
     encryptionCipher = Cipher.getInstance(AES_TRANSFORMATION);
     encryptionCipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
-    // 使用指定的AES加密模式和填充方式获取对应的解密器并初始化
+    // Get the appropriate decryptor instance for the specified AES encryption mode and padding, and initialize it
     decryptionCipher = Cipher.getInstance(AES_TRANSFORMATION);
     decryptionCipher.init(Cipher.DECRYPT_MODE, secretKeySpec, new GCMParameterSpec(128, encryptionCipher.getIV()));
 }
 
 /**
- * 加密
+ * Encrypt
  */
 public static String encrypt(String data) throws Exception {
     byte[] dataInBytes = data.getBytes();
-    // 加密数据
+    // Encrypt data
     byte[] encryptedBytes = encryptionCipher.doFinal(dataInBytes);
     return Base64.getEncoder().encodeToString(encryptedBytes);
 }
 
 /**
- * 解密
+ * Decrypt
  */
 public static String decrypt(String encryptedData) throws Exception {
     byte[] dataInBytes = Base64.getDecoder().decode(encryptedData);
-    // 解密数据
+    // Decrypt data
     byte[] decryptedBytes = decryptionCipher.doFinal(dataInBytes);
     return new String(decryptedBytes, StandardCharsets.UTF_8);
 }
 
 public static void main(String[] args) throws Exception {
-    String originalString = "Java学习 + 面试指南：javaguide.cn";
+    String originalString = "Java study + Interview guide: javaguide.cn";
     init();
     String encryptedData = encrypt(originalString);
     String decryptedData = decrypt(encryptedData);
@@ -254,53 +254,53 @@ public static void main(String[] args) throws Exception {
 }
 ```
 
-输出：
+Output:
 
 ```bash
-Original String: Java学习 + 面试指南：javaguide.cn
+Original String: Java study + Interview guide: javaguide.cn
 AES Encrypted Data : E1qTkK91suBqToag7WCyoFP9uK5hR1nSfM6p+oBlYj71bFiIVnk5TsQRT+zpjv8stha7oyKi3jQ=
-AES Decrypted Data : Java学习 + 面试指南：javaguide.cn
+AES Decrypted Data : Java study + Interview guide: javaguide.cn
 ```
 
-## 非对称加密
+## Asymmetric Encryption
 
-非对称加密算法是指加密和解密使用不同的密钥的算法，也叫公开密钥加密算法。这两个密钥互不相同，一个称为公钥，另一个称为私钥。公钥可以公开给任何人使用，私钥则要保密。
+Asymmetric encryption algorithms use different keys for encryption and decryption, also known as public key encryption algorithms. These two keys are distinct: one is called the public key, and the other is called the private key. The public key can be shared with anyone, while the private key must be kept confidential.
 
-如果用公钥加密数据，只能用对应的私钥解密（加密）；如果用私钥加密数据，只能用对应的公钥解密（签名）。这样就可以实现数据的安全传输和身份认证。
+If data is encrypted using the public key, it can only be decrypted with the corresponding private key (encryption); if data is encrypted using the private key, it can only be decrypted using the corresponding public key (signature). This enables secure data transmission and identity verification.
 
-![非对称加密](https://oss.javaguide.cn/github/javaguide/system-design/security/encryption-algorithms/asymmetric-encryption.png)
+![Asymmetric Encryption](https://oss.javaguide.cn/github/javaguide/system-design/security/encryption-algorithms/asymmetric-encryption.png)
 
-常见的非对称加密算法有 RSA、DSA、ECC 等。
+Common asymmetric encryption algorithms include RSA, DSA, ECC, etc.
 
 ### RSA
 
-RSA（Rivest–Shamir–Adleman algorithm）算法是一种基于大数分解的困难性的非对称加密算法，它需要选择两个大素数作为私钥的一部分，然后计算出它们的乘积作为公钥的一部分（寻求两个大素数比较简单，而将它们的乘积进行因式分解却极其困难）。RSA 算法原理的详细介绍，可以参考这篇文章：[你真的了解 RSA 加密算法吗？ - 小傅哥](https://www.cnblogs.com/xiaofuge/p/16954187.html)。
+RSA (Rivest–Shamir–Adleman algorithm) is an asymmetric encryption algorithm based on the difficulty of large number factorization. It requires selecting two large prime numbers as part of the private key, then computing their product as part of the public key (finding two large prime numbers is relatively simple, but factoring their product is extremely difficult). For a detailed introduction to the principles of RSA, you can refer to this article: [Do You Really Understand the RSA Encryption Algorithm? - Xiaofuge](https://www.cnblogs.com/xiaofuge/p/16954187.html).
 
-RSA 算法的安全性依赖于大数分解的难度，目前已经有 512 位和 768 位的 RSA 公钥被成功分解，因此建议使用 2048 位或以上的密钥长度。
+The security of the RSA algorithm depends on the difficulty of large number factorization; it is recommended to use a key length of 2048 bits or more since keys of 512 bits and 768 bits have already been successfully factored.
 
-RSA 算法的优点是简单易用，可以用于数据加密和数字签名；缺点是运算速度慢，不适合大量数据的加密。
+The strengths of RSA lie in its simplicity and usability for both data encryption and digital signatures; however, its weaknesses include slower operational speed, making it unsuitable for encrypting large amounts of data.
 
-RSA 算法是是目前应用最广泛的非对称加密算法，像 SSL/TLS、SSH 等协议中就用到了 RSA 算法。
+RSA is currently the most widely used asymmetric encryption algorithm, utilized in protocols like SSL/TLS and SSH.
 
-![HTTPS 证书签名算法中带RSA 加密的SHA-256 ](https://oss.javaguide.cn/github/javaguide/system-design/security/encryption-algorithms/https-rsa-sha-256.png)
+![HTTPS Certificate Signing Algorithm with RSA and SHA-256](https://oss.javaguide.cn/github/javaguide/system-design/security/encryption-algorithms/https-rsa-sha-256.png)
 
-基于 Java 实现 RSA 算法代码示例：
+Java implementation of RSA algorithm code example:
 
 ```java
 private static final String RSA_ALGORITHM = "RSA";
 
 /**
- * 生成RSA密钥对
+ * Generate RSA key pair
  */
 public static KeyPair generateKeyPair() throws NoSuchAlgorithmException {
     KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(RSA_ALGORITHM);
-    // 密钥大小为2048位
+    // Key size of 2048 bits
     keyPairGenerator.initialize(2048);
     return keyPairGenerator.generateKeyPair();
 }
 
 /**
- * 使用公钥加密数据
+ * Encrypt data using the public key
  */
 public static String encrypt(String data, PublicKey publicKey) throws Exception {
     Cipher cipher = Cipher.getInstance(RSA_ALGORITHM);
@@ -310,7 +310,7 @@ public static String encrypt(String data, PublicKey publicKey) throws Exception 
 }
 
 /**
- * 使用私钥解密数据
+ * Decrypt data using the private key
  */
 public static String decrypt(String encryptedData, PrivateKey privateKey) throws Exception {
     byte[] decodedData = Base64.getDecoder().decode(encryptedData);
@@ -324,7 +324,7 @@ public static void main(String[] args) throws Exception {
     KeyPair keyPair = generateKeyPair();
     PublicKey publicKey = keyPair.getPublic();
     PrivateKey privateKey = keyPair.getPrivate();
-    String originalString = "Java学习 + 面试指南：javaguide.cn";
+    String originalString = "Java study + Interview guide: javaguide.cn";
     String encryptedData = encrypt(originalString, publicKey);
     String decryptedData = decrypt(encryptedData, privateKey);
     System.out.println("Original String: " + originalString);
@@ -333,43 +333,43 @@ public static void main(String[] args) throws Exception {
 }
 ```
 
-输出：
+Output:
 
 ```bash
-Original String: Java学习 + 面试指南：javaguide.cn
+Original String: Java study + Interview guide: javaguide.cn
 RSA Encrypted Data : T9ey/CEPUAhZm4UJjuVNIg8RPd1fQ32S9w6+rvOKxmuMumkJY2daFfWuCn8A73Mk5bL6TigOJI0GHfKOt/W2x968qLM3pBGCcPX17n4pR43f32IIIz9iPdgF/INOqDxP5ZAtCDvTiuzcSgDHXqiBSK5TDjtj7xoGjfudYAXICa8pWitnqDgJYoo2J0F8mKzxoi8D8eLE455MEx8ZT1s7FUD/z7/H8CfShLRbO9zq/zFI06TXn123ufg+F4lDaq/5jaIxGVEUB/NFeX4N6OZCFHtAV32mw71BYUadzI9TgvkkUr1rSKmQ0icNhnRdKedJokGUh8g9QQ768KERu92Ibg==
-RSA Decrypted Data : Java学习 + 面试指南：javaguide.cn
+RSA Decrypted Data : Java study + Interview guide: javaguide.cn
 ```
 
 ### DSA
 
-DSA（Digital Signature Algorithm）算法是一种基于离散对数的困难性的非对称加密算法，它需要选择一个素数 q 和一个 q 的倍数 p 作为私钥的一部分，然后计算出一个模 p 的原根 g 和一个模 q 的整数 y 作为公钥的一部分。DSA 算法的安全性依赖于离散对数的难度，目前已经有 1024 位的 DSA 公钥被成功破解，因此建议使用 2048 位或以上的密钥长度。
+DSA (Digital Signature Algorithm) is an asymmetric encryption algorithm based on the difficulty of discrete logarithms, requiring the selection of a prime number q and a multiple p of q as part of the private key. It then computes a primitive root modulo p, g, and an integer modulo q, y, as part of the public key. The security of the DSA algorithm relies on the difficulty of discrete logarithms; it is currently recommended to use key lengths of 2048 bits or more as 1024-bit DSA public keys have been successfully broken.
 
-DSA 算法的优点是数字签名速度快，适合生成数字证书；缺点是不能用于数据加密，且签名过程需要随机数。
+The strengths of DSA include faster digital signature generation, making it suitable for creating digital certificates; the weaknesses include its unsuitability for data encryption and the requirement of using random numbers during the signing process.
 
-DSA 算法签名过程：
+The DSA algorithm signing process is as follows:
 
-1. 使用消息摘要算法对要发送的数据进行加密，生成一个信息摘要，也就是一个短的、唯一的、不可逆的数据表示。
-2. 发送方用自己的 DSA 私钥对信息摘要再进行加密，形成一个数字签名，也就是一个可以证明数据来源和完整性的数据附加。
-3. 将原始数据和数字签名一起通过互联网传送给接收方。
-4. 接收方用发送方的公钥对数字签名进行解密，得到信息摘要。同时，接收方也用消息摘要算法对收到的原始数据进行加密，得到另一个信息摘要。接收方将两个信息摘要进行比较，如果两者一致，则说明在传送过程中数据没有被篡改或损坏；否则，则说明数据已经失去了安全性和保密性。
+1. Use a message digest algorithm to hash the data to be sent, generating a message digest, which is a short, unique, irreversible representation of the data.
+1. The sender encrypts the message digest with their DSA private key, creating a digital signature, which serves as proof of data origin and integrity.
+1. The original data and digital signature are transmitted over the internet to the receiver.
+1. The receiver decrypts the digital signature using the sender's public key to retrieve the message digest. Additionally, the receiver hashes the received original data to create another message digest. The receiver compares both message digests; if they match, the data has remained unaltered; otherwise, it indicates a loss of security and confidentiality.
 
-![DSA 算法签名过程](https://oss.javaguide.cn/github/javaguide/system-design/security/encryption-algorithms/dsa-algorithm-signing-process.png)
+![DSA Algorithm Signing Process](https://oss.javaguide.cn/github/javaguide/system-design/security/encryption-algorithms/dsa-algorithm-signing-process.png)
 
-## 总结
+## Conclusion
 
-这篇文章介绍了三种加密算法：哈希算法、对称加密算法和非对称加密算法。
+This article introduced three types of encryption algorithms: hash algorithms, symmetric encryption algorithms, and asymmetric encryption algorithms.
 
-- 哈希算法是一种用数学方法对数据生成一个固定长度的唯一标识的技术，可以用来验证数据的完整性和一致性，常见的哈希算法有 MD、SHA、MAC 等。
-- 对称加密算法是一种加密和解密使用同一个密钥的算法，可以用来保护数据的安全性和保密性，常见的对称加密算法有 DES、3DES、AES 等。
-- 非对称加密算法是一种加密和解密使用不同的密钥的算法，可以用来实现数据的安全传输和身份认证，常见的非对称加密算法有 RSA、DSA、ECC 等。
+- Hash algorithms use mathematical methods to generate a fixed-length unique identifier for data, verifying its integrity and consistency. Common hash algorithms include MD, SHA, MAC, etc.
+- Symmetric encryption algorithms use the same key for encryption and decryption to protect data's security and confidentiality. Common symmetric encryption algorithms include DES, 3DES, AES, etc.
+- Asymmetric encryption algorithms use different keys for encryption and decryption to enable secure data transmission and identity verification. Common asymmetric encryption algorithms include RSA, DSA, ECC, etc.
 
-## 参考
+## References
 
-- 深入理解完美哈希 - 腾讯技术工程：<https://mp.weixin.qq.com/s/M8Wcj8sZ7UF1CMr887Puog>
-- 写给开发人员的实用密码学（二）—— 哈希函数：<https://thiscute.world/posts/practical-cryptography-basics-2-hash/>
-- 奇妙的安全旅行之 DSA 算法：<https://zhuanlan.zhihu.com/p/347025157>
-- AES-GCM 加密简介：<https://juejin.cn/post/6844904122676690951>
-- Java AES 256 GCM Encryption and Decryption Example | JCE Unlimited Strength：<https://www.javainterviewpoint.com/java-aes-256-gcm-encryption-and-decryption/>
+- Deep Understanding of Perfect Hashing - Tencent Technology Engineering: <https://mp.weixin.qq.com/s/M8Wcj8sZ7UF1CMr887Puog>
+- Practical Cryptography for Developers (Part II) - Hash Functions: <https://thiscute.world/posts/practical-cryptography-basics-2-hash/>
+- The Wonderful Security Journey of DSA Algorithm: <https://zhuanlan.zhihu.com/p/347025157>
+- Introduction to AES-GCM Encryption: <https://juejin.cn/post/6844904122676690951>
+- Java AES 256 GCM Encryption and Decryption Example | JCE Unlimited Strength: <https://www.javainterviewpoint.com/java-aes-256-gcm-encryption-and-decryption/>
 
 <!-- @include: @article-footer.snippet.md -->

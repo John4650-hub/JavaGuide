@@ -1,67 +1,67 @@
 ---
-title: 面试太紧张怎么办？
-category: 面试准备
+title: What to Do If You're Too Nervous for an Interview?
+category: Interview Preparation
 icon: security-fill
 ---
 
-很多小伙伴在第一次技术面试时都会感到紧张甚至害怕，面试结束后还会有种“懵懵的”感觉。我也经历过类似的状况，可以说是深有体会。其实，**紧张是很正常的**——它代表你对面试的重视，也来自于对未知结果的担忧。但如果过度紧张，反而会影响你的临场发挥。
+Many friends feel nervous or even scared during their first technical interview, and afterward, they often feel a bit "dazed." I have experienced similar situations, and I can relate. In fact, **feeling nervous is very normal**—it shows that you care about the interview and stems from worries about uncertain outcomes. However, if you become overly nervous, it can negatively impact your performance on the spot.
 
-下面，我就分享一些自己的心得，帮大家更好地应对面试中的紧张情绪。
+Here, I will share some of my insights to help everyone better cope with nervous emotions during interviews.
 
-## 试着接受紧张情绪，调整心态
+## Try to Accept Nervous Feelings and Adjust Your Mindset
 
-首先要明白，紧张是正常情绪，特别是初次或前几次面试时，多少都会有点忐忑。不要过分排斥这种情绪，可以适当地“拥抱”它：
+First, it’s important to understand that feeling nervous is a normal emotion, especially during your first or few interviews. It’s natural to feel a bit anxious. Don’t overly reject this emotion; you can appropriately "embrace" it:
 
-- **搞清楚面试的本质**：面试本质上是一场与面试官的深入交流，是一个双向选择的过程。面试失败并不意味着你的价值和努力被否定，而可能只是因为你与目标岗位暂时不匹配，或者仅仅是一次 KPI 面试，这家公司可能压根就没有真正的招聘需求。失败的原因也可能是某些知识点、项目经验或表达方式未能充分展现出你的能力。即便这次面试未通过，也不妨碍你继续尝试其他公司，完全不慌！
-- **不要害怕面试官**：很多求职者平时和同学朋友交流沟通的蛮好，一到面试就害怕了。面试官和求职者双方是平等的，以后说不定就是同事关系。也不要觉得面试官就很厉害，实际上，面试官的水平也参差不齐。他们提出的问题，可能自己也没有完全理解。
-- **给自己积极的心理暗示**：告诉自己“有点紧张没关系，这只能让我更专注，心跳加快是我在给自己打气，我一定可以回答的很好！”。
+- **Understand the essence of the interview**: Essentially, an interview is an in-depth conversation with the interviewer and a two-way selection process. Failing an interview does not mean your value and efforts are denied; it may just be that you are not temporarily aligned with the desired position, or it could simply be a KPI interview where the company might not have an actual recruitment need. The reason for failure might also be that certain knowledge points, project experiences, or expressive methods did not adequately showcase your abilities. Even if this interview doesn’t go well, it doesn’t prevent you from applying to other companies—don’t panic at all!
+- **Don’t be afraid of the interviewer**: Many job seekers communicate well with classmates and friends, but they feel apprehensive during the interview. The relationship between the interviewer and the job seeker is equal, and they may even become colleagues in the future. Also, don’t think that the interviewer is exceptionally skilled; in reality, their levels can vary widely. They may not fully comprehend the questions they are asking.
+- **Give yourself positive psychological hints**: Tell yourself, "It's okay to be a bit nervous; this will only help me focus more. My quickened heartbeat is just my way of motivating myself, and I am definitely going to answer well!".
 
-## 提前准备，减少不确定性
+## Prepare in Advance to Reduce Uncertainty
 
-**不确定性越多，越容易紧张。** 如果你能够在面试前做充分的准备，很多“未知”就会消失，紧张情绪自然会减轻很多。
+**The more uncertainty there is, the easier it is to feel nervous.** If you can prepare thoroughly before the interview, many "unknowns" will disappear, and your nervousness will naturally diminish.
 
-### 认真准备技术面试
+### Prepare for the Technical Interview
 
-- **优先梳理核心知识点**：比如计算基础、数据库、Java 基础、Java 集合、并发编程、SpringBoot（这里以 Java 后端方向为例）等。如果时间不够，可以分轻重缓急，有重点地复习。强烈推荐阅读一下 [Java 面试重点总结(重要)](https://javaguide.cn/interview-preparation/key-points-of-interview.html)这篇文章。
-- **精心准备项目经历**：认真思考你简历上最重要的项目（面试以前两个项目为主，尤其是第一个），它们的技术难点、业务逻辑、架构设计，以及可能被面试官深挖的点。把你的思考总结成可能出现的面试问题，并尝试回答。
+- **Prioritize core knowledge points**: For example, fundamentals of computing, databases, Java basics, Java collections, concurrent programming, SpringBoot (using Java backend as an example). If time is limited, prioritize your review based on importance. I highly recommend reading the article [Key Points of Java Interviews (Important)](https://javaguide.cn/interview-preparation/key-points-of-interview.html).
+- **Carefully prepare your project experience**: Think deeply about the most important projects on your resume (focus on the two most recent projects before the interview, especially the first one), including their technical challenges, business logic, architecture designs, and potential points the interviewer may delve into. Summarize your thinking into possible interview questions and try to answer them.
 
-### 模拟面试和自测
+### Simulate Interviews and Self-Test
 
-- **约朋友或同学互相提问**：以真实的面试场景来进行演练，并及时对回答进行诊断和反馈。
-- **线上练习**：很多平台都提供 AI 模拟面试，能比较真实地模拟面试官提问情境。
-- **面经**：平时可以多看一些前辈整理的面经，尤其是目标岗位或目标公司的面经，总结高频考点和常见问题。
-- **技术面试题自测**：在 [《Java 面试指北》](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html) 的 「技术面试题自测篇」 ，我总结了 Java 面试中最重要的知识点的最常见的面试题并按照面试提问的方式展现出来。其中，每一个问题都有提示和重要程度说明，非常适合用来自测。
+- **Ask friends or classmates to interview each other**: Perform exercises in a real interview setting and diagnose and provide feedback on your answers promptly.
+- **Online practice**: Many platforms offer AI simulation interviews that can realistically simulate the questioning scenario of an interviewer.
+- **Interview experiences**: Frequently read interview experiences compiled by predecessors, especially for your target position or company, summarizing high-frequency examination points and common questions.
+- **Self-test on technical interview questions**: In the [“Java Interview Guide”](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html) under the "Technical Interview Questions Self-Test" section, I summarized the most commonly asked interview questions related to the most important knowledge points in Java interviews and presented them in interview questioning format. Each question includes hints and importance levels, making it very suitable for self-testing.
 
-[《Java 面试指北》](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html) 的 「技术面试题自测篇」概览：
+Overview of the "Technical Interview Questions Self-Test" in the [“Java Interview Guide”](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html):
 
-![技术面试题自测篇](https://oss.javaguide.cn/javamianshizhibei/technical-interview-questions-self-test.png)
+![Technical Interview Questions Self-Test](https://oss.javaguide.cn/javamianshizhibei/technical-interview-questions-self-test.png)
 
-### 多表达
+### Express Yourself More
 
-平时要多说，多表达出来，不要只是在心里面想，不然真正面试的时候会发现想的和说的不太一样。
+Make it a habit to talk more and express your thoughts, rather than just thinking about them. Otherwise, you may find that what you think and what you say are different during the actual interview.
 
-我前面推荐的模拟面试和自测，有一部分原因就是为了能够多多表达。
+The simulations and self-tests I recommended earlier are partly aimed at helping you express yourself more.
 
-### 多面试
+### Attend More Interviews
 
-- **先小厂后大厂**：可以先去一些规模较小或者对你来说压力没那么大的公司试试手，积累一些实战经验，增加一些信心；等熟悉了面试流程、能够更从容地回答问题后，再去挑战自己心仪的大厂或热门公司。
-- **积累“失败经验”**：不要怕被拒，有些时候被拒绝却能从中学到更多。多复盘，多思考到底是哪个环节出了问题，再用更好的状态迎接下一次面试。
+- **Start with smaller companies and then move to larger ones**: You can first try companies that are smaller or less stressful for you to gain practical experience and build confidence. After becoming familiar with the interview process and feeling more at ease answering questions, you can challenge yourself with your desired larger companies or popular firms.
+- **Gather "failure experiences"**: Don’t fear rejection; sometimes, being turned down can teach you a lot more. Reflect and analyze what went wrong in which stage, and then approach the next interview with an improved mindset.
 
-### 保证休息
+### Ensure Rest
 
-- **留出充裕时间**：面试前尽量不要排太多事情，保证自己能有个好状态去参加面试。
-- **保证休息**：充足睡眠有助于情绪稳定，也能让你在面试时更清晰地思考问题。
+- **Allow enough time**: Try not to schedule too many things before the interview to ensure you are in a good state for the interview.
+- **Ensure adequate rest**: Sufficient sleep helps stabilize emotions and allows you to think more clearly during the interview.
 
-## 遇到不会的问题不要慌
+## Don’t Panic When Encountering Unknown Questions
 
-一场面试，不太可能面试官提的每一个问题你都能轻松应对，除非这场面试非常简单。
+In an interview, it’s unlikely that you can handle every question posed by the interviewer with ease, unless the interview is very simple.
 
-在面试过程中，遇到不会的问题，首先要做的是快速回顾自己过往的知识，看是否能找到突破口。如果实在没有思路的话，可以真诚地向面试要一些提示比如谈谈你对这个问题的理解以及困惑点。一定不要觉得向面试官要提示很可耻，只要沟通没问题，这其实是很正常的。最怕的就是自己不会，还乱回答一通，这样会让面试官觉得你技术态度有问题。
+During the interview process, if you encounter a question you don't know, the first thing to do is quickly review your past knowledge to see if you can find a breakthrough. If you truly have no idea, don’t hesitate to ask the interviewer for some hints, such as discussing your understanding of the question and what confuses you. Do not feel embarrassed to ask for hints; as long as communication is smooth, it’s quite normal. The worst thing is to not know the answer and respond randomly, which can make the interviewer feel you have a problem with your technical attitude.
 
-## 面试结束后的复盘
+## Review After the Interview
 
-很多人关注面试前的准备，却忽略了面试后的复盘，这一步真的非常非常非常重要：
+Many people focus on preparation before the interview but overlook the importance of reviewing afterward; this step is truly very, very, very important:
 
-1. **记录面试中的问题**：无论回答得好坏，都把它们写下来。如果问到了一些没想过的问题，可以认真思考并在面试后补上答案。
-2. **反思自己的表现**：有没有遇到卡壳的地方？是知识没准备到还是过于紧张导致表达混乱？下次如何改进？
-3. **持续完善自己的“面试题库”**：把新的问题补充进去，不断拓展自己的知识面，也逐步降低对未知问题的恐惧感。
+1. **Record the questions during the interview**: Regardless of how well you answered, write them down. If you were asked questions you hadn’t considered, think carefully about them and supplement your answers after the interview.
+1. **Reflect on your performance**: Did you encounter any blocks? Was it due to insufficient knowledge preparation or was it too much nervousness that led to confused expression? How can you improve next time?
+1. **Continuously improve your "interview question bank"**: Add new questions, progressively expand your knowledge base, and gradually reduce your fear of unknown questions.

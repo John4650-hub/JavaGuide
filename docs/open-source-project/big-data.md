@@ -1,11 +1,11 @@
 ---
-title: Java 优质开源大数据项目
-category: 开源项目
+title: Quality Open Source Big Data Projects
+category: Open Source Projects
 icon: big-data
 ---
 
-- **[Spark](https://github.com/apache/spark)** :Spark 是用于大规模数据处理的统一分析引擎。
-- **[Flink](https://github.com/apache/flink "flink")**：Apache Flink 是一个框架和分布式处理引擎，用于在*无边界和有边界*数据流上进行有状态的计算。Flink 能在所有常见集群环境中运行，并能以内存速度和任意规模进行计算。
-- **[HBase](https://hbase.apache.org/)**：HBase – Hadoop Database，是一个高可靠性、高性能、面向列、可伸缩的分布式存储系统，利用 HBase 技术可在廉价 PC Server 上搭建起大规模结构化存储集群。
-- **[Flume](https://flume.apache.org/)** :Apache Flume 是一个分布式的、可靠的、可用的，从多种不同的源收集、聚集、移动大量日志数据到集中数据存储的系统。
-- **[Storm](https://storm.apache.org/)** : 一个分布式，高容错的实时计算系统。
+- **[Spark](https://github.com/apache/spark)**: Spark is a unified analytics engine for large-scale data processing.
+- **[Flink](https://github.com/apache/flink "flink")**: Apache Flink is a framework and distributed processing engine for stateful computations over *bounded and unbounded* data streams. Flink can run in all common cluster environments and can perform computations at in-memory speed and any scale.
+- **[HBase](https://hbase.apache.org/)**: HBase – Hadoop Database, is a highly reliable, high-performance, column-oriented, scalable distributed storage system. Using HBase technology, large-scale structured storage clusters can be built on inexpensive PC servers.
+- **[Flume](https://flume.apache.org/)**: Apache Flume is a distributed, reliable, and available system for collecting, aggregating, and moving large amounts of log data from various sources to centralized data storage.
+- **[Storm](https://storm.apache.org/)**: A distributed, fault-tolerant real-time computation system.

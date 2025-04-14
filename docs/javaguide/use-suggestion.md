@@ -1,27 +1,27 @@
 ---
-title: 使用建议
-category: 走近项目
+title: Suggestions for Use
+category: Getting to Know the Project
 icon: star
 ---
 
-**对于不准备面试的同学来说** ，本文档倾向于给你提供一个比较详细的学习路径，目录清晰，让你对于 Java 整体的知识体系有一个清晰认识。你可以跟着视频、书籍或者官方文档学习完某个知识点之后，然后来这里找对应的总结，帮助你更好地掌握对应的知识点。甚至说，你在有编程基础的情况下，想要学习某个知识点的话，可以直接看我的总结，这样学习效率会非常高。
+**For students not preparing for interviews**, this document aims to provide you with a detailed learning path. The structure is clear and will give you a comprehensive understanding of the overall knowledge system of Java. You can follow videos, books, or official documentation to learn specific knowledge points, and then come here for corresponding summaries to help you better master those points. In fact, if you already have a programming background and want to learn a specific point, you can refer directly to my summaries, which will greatly enhance your learning efficiency.
 
-**对于准备面试的同学来说** ，本文档涵盖 Java 程序员所需要掌握的核心知识的常见面试问题总结。
+**For students preparing for interviews**, this document covers common interview questions summarizing the core knowledge that Java programmers need to master.
 
-大部分人看 JavaGuide 应该都是为了准备技术八股文。**那如何才能更高效地准备技术八股文？**
+Most people read JavaGuide to prepare for technical interviews. **So how can you prepare for technical interviews more efficiently?**
 
-对于技术八股文来说，尽量不要死记硬背，这种方式非常枯燥且对自身能力提升有限！但是！想要一点不背是不太现实的，只是说要结合实际应用场景和实战来理解记忆。
+When it comes to technical interviews, try not to memorize things verbatim, as this method is very dull and has limited benefits for your self-improvement! However, it is unrealistic to avoid memorization altogether; instead, you should understand and remember in the context of practical application and real-world situations.
 
-我一直觉得面试八股文最好是和实际应用场景和实战相结合。很多同学现在的方向都错了，上来就是直接背八股文，硬生生学成了文科，那当然无趣了。
+I have always believed that the best way to prepare for interviews is to combine the scripted answers with real-world applications and practical experience. Many students are going in the wrong direction; they dive in and start memorizing scripted responses, which turns their learning into a mere academic exercise, devoid of interest.
 
-举个例子：你的项目中需要用到 Redis 来做缓存，你对照着官网简单了解并实践了简单使用 Redis 之后，你去看了 Redis 对应的八股文。你发现 Redis 可以用来做限流、分布式锁，于是你去在项目中实践了一下并掌握了对应的八股文。紧接着，你又发现 Redis 内存不够用的情况下，还能使用 Redis Cluster 来解决，于是你就又去实践了一下并掌握了对应的八股文。
+For example: if your project needs to use Redis for caching, after briefly understanding and practicing basic usage based on the official website, you review the corresponding scripted answers for Redis. You discover that Redis can be used for rate limiting and distributed locks, so you practice this in your project and master the corresponding scripted responses. Next, you realize that when Redis runs out of memory, you can use Redis Cluster to address this issue, so you practice it again and master the related scripts.
 
-而且， **面试中有水平的面试官都是根据你的项目经历来顺带着问一些技术八股文** 。
+Moreover, **interviewers who are skilled will usually ask about the scripted responses in conjunction with your project experience**.
 
-举个例子：你的项目用到了消息队列，那面试官可能就会问你：为什么使用消息队列？项目中什么模块用到了消息队列？如何保证消息不丢失？如何保证消息的顺序性?（结合你使用的具体的消息队列来准备）……。
+For example: if your project utilized a message queue, the interviewer might ask you: Why use a message queue? Which modules in the project utilized the message queue? How do you ensure messages are not lost? How do you ensure message order? (Prepare this based on the specific message queue you used) ….
 
-**一定要记住你的主要目标是理解和记关键词，而不是像背课文一样一字一句地记下来！**
+**Always remember that your main goal is to understand and grasp key terms, rather than memorizing them word-for-word as if reciting a text!**
 
-另外，记录博客或者用自己的理解把对应的知识点讲给别人听也是一个不错的选择。
+Additionally, maintaining a blog or explaining the corresponding knowledge points using your own understanding to others is also a good choice.
 
-最后，准备技术面试的同学一定要定期复习（自测的方式非常好），不然确实会遗忘的。
+Finally, students preparing for technical interviews must review regularly (self-testing is a great method); otherwise, you will indeed forget the material.

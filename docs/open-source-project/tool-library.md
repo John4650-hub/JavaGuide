@@ -1,77 +1,77 @@
 ---
-title: Java 优质开源工具类
-category: 开源项目
+title: Java High-Quality Open Source Utility Classes
+category: Open Source Projects
 icon: codelibrary-fill
 ---
 
-## 代码质量
+## Code Quality
 
-- [Lombok](https://github.com/rzwitserloot/lombok) :一个能够简化 Java 代码的强大工具库。通过使用 Lombok 的注解，我们可以自动生成常用的代码逻辑，例如 `getter`、`setter`、`equals`、`hashCode`、`toString` 方法，以及构造器、日志变量等内容。
-- [Guava](https://github.com/google/guava "guava")： Google 开发的一组功能强大的核心库，扩展了 Java 的标准库功能。它提供了许多有用的工具类和集合类型，例如 `Multimap`（多值映射）、`Multiset`（多重集合）、`BiMap`（双向映射）和不可变集合，此外还包含图形处理库和并发工具。Guava 还支持 I/O 操作、哈希算法、字符串处理、缓存等多种实用功能。
-- [Hutool](https://github.com/looly/hutool "hutool") : 一个全面且用户友好的 Java 工具库，旨在通过最小的依赖简化开发任务。它封装了许多实用的功能，例如文件操作、缓存、加密/解密、日志、文件操作。
+- [Lombok](https://github.com/rzwitserloot/lombok): A powerful utility library that simplifies Java code. By using Lombok's annotations, we can automatically generate common code logic such as `getter`, `setter`, `equals`, `hashCode`, `toString` methods, as well as constructors, log variables, and more.
+- [Guava](https://github.com/google/guava "guava"): A powerful core library developed by Google that extends the functionality of the Java standard library. It provides many useful utility classes and collection types, such as `Multimap`, `Multiset`, `BiMap`, and immutable collections. Additionally, it includes libraries for graphical processing and concurrency utilities. Guava also supports I/O operations, hash algorithms, string processing, caching, and various other practical functions.
+- [Hutool](https://github.com/looly/hutool "hutool"): A comprehensive and user-friendly Java utility library designed to simplify development tasks with minimal dependencies. It encapsulates many practical functions, such as file operations, caching, encryption/decryption, logging, and file manipulation.
 
-## 问题排查和性能优化
+## Problem Diagnosis and Performance Optimization
 
-- [Arthas](https://github.com/alibaba/arthas "arthas")：Alibaba 开源的 Java 诊断工具，可以实时监控和诊断 Java 应用程序。它提供了丰富的命令和功能，用于分析应用程序的性能问题，包括启动过程中的资源消耗和加载时间。
-- [Async Profiler](https://github.com/async-profiler/async-profiler)：低开销的异步 Java 性能分析工具，用于收集和分析应用程序的性能数据。
-- [Spring Boot Startup Report](https://github.com/maciejwalkowiak/spring-boot-startup-report)：用于生成 Spring Boot 应用程序启动报告的工具。它可以提供详细的启动过程信息，包括每个 bean 的加载时间、自动配置的耗时等，帮助你分析和优化启动过程。
-- [Spring Startup Analyzer](https://github.com/linyimin0812/spring-startup-analyzer/blob/main/README_ZH.md)：采集 Spring 应用启动过程数据，生成交互式分析报告(HTML)，用于分析 Spring 应用启动卡点，支持 Spring Bean 异步初始化，减少优化 Spring 应用启动时间。UI 参考[Spring Boot Startup Report](https://github.com/maciejwalkowiak/spring-boot-startup-report)实现。
+- [Arthas](https://github.com/alibaba/arthas "arthas"): An open-source Java diagnostic tool from Alibaba that can monitor and diagnose Java applications in real-time. It provides a rich set of commands and functions to analyze performance issues in applications, including resource consumption and loading time during startup.
+- [Async Profiler](https://github.com/async-profiler/async-profiler): A low-overhead asynchronous Java performance profiling tool used to collect and analyze application performance data.
+- [Spring Boot Startup Report](https://github.com/maciejwalkowiak/spring-boot-startup-report): A tool used to generate startup reports for Spring Boot applications. It provides detailed information about the startup process, including loading times for each bean and duration of auto-configuration, helping you analyze and optimize the startup process.
+- [Spring Startup Analyzer](https://github.com/linyimin0812/spring-startup-analyzer/blob/main/README_ZH.md): Captures startup data of Spring applications and generates interactive analysis reports (HTML) to analyze bottlenecks during the Spring application startup, supporting asynchronous initialization of Spring Beans to reduce startup time. The UI is inspired by the [Spring Boot Startup Report](https://github.com/maciejwalkowiak/spring-boot-startup-report).
 
-## 文档处理
+## Document Processing
 
-### 文档解析
+### Document Parsing
 
-- [Tika](https://github.com/apache/tika)：Apache Tika 工具包能够检测并提取来自超过一千种不同文件类型（如 PPT、XLS 和 PDF）的元数据和文本内容。
+- [Tika](https://github.com/apache/tika): The Apache Tika toolkit can detect and extract metadata and text content from over a thousand different file types (such as PPT, XLS, and PDF).
 
 ### Excel
 
-- [EasyExcel](https://github.com/alibaba/easyexcel) :快速、简单避免 OOM 的 Java 处理 Excel 工具。不过，这个个项目不再维护，迁移至了 [FastExcel](https://github.com/fast-excel/fastexcel)。
-- [Excel Spring Boot Starter](https://github.com/pig-mesh/excel-spring-boot-starter)：基于 FastExcel 实现的 Spring Boot Starter，用于简化 Excel 的读写操作。
-- [Excel Streaming Reader](https://github.com/monitorjbl/excel-streaming-reader)：Excel 流式代码风格读取工具（只支持读取 XLSX 文件），基于 Apache POI 封装，同时保留标准 POI API 的语法。
-- [MyExcel](https://github.com/liaochong/myexcel)：一个集导入、导出、加密 Excel 等多项功能的工具包。
+- [EasyExcel](https://github.com/alibaba/easyexcel): A fast and simple Java tool for processing Excel that avoids OOM errors. However, this project is no longer maintained and has been migrated to [FastExcel](https://github.com/fast-excel/fastexcel).
+- [Excel Spring Boot Starter](https://github.com/pig-mesh/excel-spring-boot-starter): A Spring Boot Starter based on FastExcel that simplifies reading and writing Excel files.
+- [Excel Streaming Reader](https://github.com/monitorjbl/excel-streaming-reader): An Excel streaming utility that supports reading XLSX files, based on Apache POI, while retaining the standard POI API syntax.
+- [MyExcel](https://github.com/liaochong/myexcel): A toolkit that integrates multiple functions such as importing, exporting, and encrypting Excel files.
 
 ### Word
 
-- [poi-tl](https://github.com/Sayi/poi-tl)：基于 Apache POI 的 Word 模板引擎，可以根据 Word 模板和数据生成 Word 文档，所见即所得！
+- [poi-tl](https://github.com/Sayi/poi-tl): A Word template engine based on Apache POI that can generate Word documents based on Word templates and data, providing a WYSIWYG experience!
 
 ### JSON
 
-- [JsonPath](https://github.com/json-path/JsonPath)：处理 JSON 数据的工具库。
+- [JsonPath](https://github.com/json-path/JsonPath): A utility library for processing JSON data.
 
 ### PDF
 
-对于简单的 PDF 创建需求，OpenPDF 是一个不错的选择，它开源免费，API 简单易用。对于需要解析、转换和提取文本等操作的复杂场景，可以选择 Apache PDFBox。当然了，复杂场景如果不介意 LGPL 许可也可以选择 iText。
+For simple PDF creation needs, OpenPDF is a great choice as it is open-source and free with a simple API. For complex scenarios requiring parsing, conversion, and text extraction operations, Apache PDFBox is recommended. If you don't mind LGPL licensing for complex scenarios, iText can also be considered.
 
-- [x-easypdf](https://gitee.com/dromara/x-easypdf)：一个用搭积木的方式构建 PDF 的框架（基于 pdfbox/fop），支持 PDF 导出和编辑，适合简单的 PDF 文档生成场景。
-- [iText](https://github.com/itext/itext7)：一个用于创建、编辑和增强 PDF 文档的 Java 库。iText 7 社区版采用 AGPL 许可证，如果你的项目是闭源商业项目，需要购买商业许可证。 iText 5 仍然是 LGPL 许可，可以免费用于商业用途，但已经停止维护。
-- [OpenPDF](https://github.com/LibrePDF/OpenPDF)：完全开源免费 (LGPL/MPL 双重许可)，基于 iText 的一个分支，可以作为 iText 的替代品，简单易用，但功能相比于 iText 更少一些（对于大多数场景已经足够）。
-- [Apache PDFBox](https://github.com/apache/pdfbox) :完全开源免费 (Apache 许可证)，功能强大，支持 PDF 的创建、解析、转换和提取文本等。不过，由于其功能过于丰富，因此 API 设计相对复杂，学习难度会大一些。
-- [FOP](https://xmlgraphics.apache.org/fop/) : Apache FOP 用于将 XSL-FO（Extensible Stylesheet Language Formatting Objects）格式化对象转换为多种输出格式，最常见的是 PDF。
+- [x-easypdf](https://gitee.com/dromara/x-easypdf): A framework for building PDFs in a modular way (based on pdfbox/fop) that supports PDF exporting and editing, suitable for simple PDF document generation scenarios.
+- [iText](https://github.com/itext/itext7): A Java library for creating, editing, and enhancing PDF documents. iText 7 community edition is licensed under AGPL; if your project is a closed-source commercial project, you will need to purchase a commercial license. iText 5 is still LGPL licensed, allowing free commercial use but has stopped maintenance.
+- [OpenPDF](https://github.com/LibrePDF/OpenPDF): Completely open-source and free (LGPL/MPL dual license), based on a fork of iText, it can serve as an alternative to iText, being simple and easy to use, but with fewer features compared to iText (sufficient for most scenarios).
+- [Apache PDFBox](https://github.com/apache/pdfbox): Completely open-source and free (Apache License), highly powerful, supporting PDF creation, parsing, conversion, and text extraction. However, due to its extensive features, the API design is relatively complex, which may increase the learning difficulty.
+- [FOP](https://xmlgraphics.apache.org/fop/): Apache FOP is used to render XSL-FO (Extensible Stylesheet Language Formatting Objects) into various output formats, with PDF being the most common.
 
-## 图片处理
+## Image Processing
 
-- [Thumbnailator](https://github.com/coobird/thumbnailator)：一个图像处理工具库，主要功能是缩放图像、添加水印、旋转图像、调整图片大小以及区域裁剪。
-- [Imglib](https://github.com/nackily/imglib)：一个轻量级的 JAVA 图像处理库，致力于简化对图像的常见处理，主要提供三部分的能力：图像收集、图像处理（基于 Thumbnailator 实现）、聚合与分裂。
+- [Thumbnailator](https://github.com/coobird/thumbnailator): An image processing utility library primarily for resizing images, adding watermarks, rotating images, adjusting image sizes, and area cropping.
+- [Imglib](https://github.com/nackily/imglib): A lightweight Java image processing library aimed at simplifying common image processing tasks, primarily offering three capabilities: image collection, image processing (based on Thumbnailator), aggregation, and splitting.
 
-## 验证码
+## Captcha
 
-- [EasyCaptcha](https://gitee.com/whvse/EasyCaptcha)：Java 图形验证码，支持 gif、中文、算术等类型，可用于 Java Web、JavaSE 等项目。
-- [AJ-Captcha](https://gitee.com/anji-plus/captcha)：行为验证码(滑动拼图、点选文字)，前后端(java)交互。
-- [tianai-captcha](https://gitee.com/tianai/tianai-captcha)：好看又好用的滑块验证码。
+- [EasyCaptcha](https://gitee.com/whvse/EasyCaptcha): A Java graphical captcha supporting types such as gif, Chinese characters, and arithmetic, usable in Java Web, JavaSE, and other projects.
+- [AJ-Captcha](https://gitee.com/anji-plus/captcha): Behavioral captcha (sliding puzzle, text selection) with frontend and backend (Java) interaction.
+- [tianai-captcha](https://gitee.com/tianai/tianai-captcha): A visually appealing and easy-to-use sliding block captcha.
 
-## 短信&邮件
+## SMS & Email
 
-- [SMS4J](https://github.com/dromara/SMS4J)：短信聚合框架，解决接入多个短信 SDK 的繁琐流程。
-- [Simple Java Mail](https://github.com/bbottema/simple-java-mail)：最简单的 Java 轻量级邮件库，同时能够发送复杂的电子邮件。
+- [SMS4J](https://github.com/dromara/SMS4J): An SMS aggregation framework that simplifies the process of integrating multiple SMS SDKs.
+- [Simple Java Mail](https://github.com/bbottema/simple-java-mail): The simplest lightweight Java email library capable of sending complex emails.
 
-## 在线支付
+## Online Payments
 
-- [Jeepay](https://gitee.com/jeequan/jeepay)：一套适合互联网企业使用的开源支付系统，已实现交易、退款、转账、分账等接口，支持服务商特约商户和普通商户接口。已对接微信，支付宝，云闪付官方接口，支持聚合码支付。
-- [YunGouOS-PAY-SDK](https://gitee.com/YunGouOS/YunGouOS-PAY-SDK)：YunGouOS 微信支付接口、微信官方个人支付接口、非二维码收款，非第四方清算。个人用户可提交资料开通微信支付商户，完成对接。
-- [IJPay](https://gitee.com/javen205/IJPay)：聚合支付，IJPay 让支付触手可及，封装了微信支付、QQ 支付、支付宝支付、京东支付、银联支付、PayPal 支付等常用的支付方式以及各种常用的接口。
+- [Jeepay](https://gitee.com/jeequan/jeepay): An open-source payment system suitable for internet enterprises that has implemented interfaces for transactions, refunds, transfers, and profit sharing, supporting both service provider special merchant and ordinary merchant interfaces. It has integrated official interfaces for WeChat, Alipay, and UnionPay, supporting aggregated code payments.
+- [YunGouOS-PAY-SDK](https://gitee.com/YunGouOS/YunGouOS-PAY-SDK): YunGouOS WeChat payment interface, official WeChat personal payment interface, non-QR code collection, and non-fourth-party clearance. Individual users can submit materials to open WeChat payment merchants for integration.
+- [IJPay](https://gitee.com/javen205/IJPay): A payment aggregation library that makes payments accessible and wraps common payment methods such as WeChat Pay, QQ Pay, Alipay, JD Pay, UnionPay, and PayPal with various commonly used interfaces.
 
-## 其他
+## Others
 
-- [oshi](https://github.com/oshi/oshi "oshi")：一款为 Java 语言提供的基于 JNA 的（本机）操作系统和硬件信息库。
-- [ip2region](https://github.com/lionsoul2014/ip2region) :最自由的 ip 地址查询库，ip 到地区的映射库，提供 Binary,B 树和纯内存三种查询算法，妈妈再也不用担心我的 ip 地址定位。
-- [agrona](https://github.com/real-logic/agrona)：Java 高性能数据结构（`Buffers`、`Lists`、`Maps`、`Scalable Timer Wheel`……）和实用方法。
+- [oshi](https://github.com/oshi/oshi "oshi"): A library providing (native) operating system and hardware information for the Java language, based on JNA.
+- [ip2region](https://github.com/lionsoul2014/ip2region): The most flexible IP address query library mapping IPs to regions, offering three query algorithms: Binary, B-Tree, and pure memory, so mom no longer needs to worry about my IP address being located.
+- [agrona](https://github.com/real-logic/agrona): High-performance Java data structures (`Buffers`, `Lists`, `Maps`, `Scalable Timer Wheel`, etc.) and utility methods.

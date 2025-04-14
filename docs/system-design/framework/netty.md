@@ -1,11 +1,7 @@
 ---
-title: Netty常见面试题总结(付费)
-category: 框架
-icon: "network"
+title: Summary of Common Netty Interview Questions (Paid)
+category: Framework
+icon: network
 ---
 
-**Netty** 相关的面试题为我的[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了[《Java 面试指北》](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html)中。
-
-<!-- @include: @planet.snippet.md -->
-
-<!-- @include: @article-footer.snippet.md -->
+The interview questions related to **Netty** are exclusive content for my [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) (click the link to see a detailed introduction and how to join), and have been organized into [“Java Interview Guide”](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html).

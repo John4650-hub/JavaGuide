@@ -1,10 +1,10 @@
 ---
-title: 系统设计常见面试题总结(付费)
-category: Java面试指北
-icon: "design"
+title: Summary of Common System Design Interview Questions (Paid)
+category: Java Interview Guide
+icon: design
 ---
 
-**系统设计** 相关的面试题为我的[知识星球](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html)（点击链接即可查看详细介绍以及加入方法）专属内容，已经整理到了[《Java 面试指北》](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html)中。
+**System Design** related interview questions are exclusive content for my [Knowledge Planet](https://javaguide.cn/about-the-author/zhishixingqiu-two-years.html) (click the link to view detailed introduction and joining methods), and have been organized in the [“Java Interview Guide”](https://javaguide.cn/zhuanlan/java-mian-shi-zhi-bei.html).
 
 ![](https://oss.javaguide.cn/javamianshizhibei/system-design-questions.png)
 

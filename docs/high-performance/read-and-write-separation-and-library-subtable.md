@@ -1,291 +1,291 @@
 ---
-title: 读写分离和分库分表详解
-category: 高性能
+title: Explanation of Read-Write Separation and Database Sharding
+category: High Performance
 head:
-  - - meta
-    - name: keywords
-      content: 读写分离,分库分表,主从复制
-  - - meta
-    - name: description
-      content: 读写分离主要是为了将对数据库的读写操作分散到不同的数据库节点上。 这样的话，就能够小幅提升写性能，大幅提升读性能。 读写分离基于主从复制，MySQL 主从复制是依赖于 binlog 。分库就是将数据库中的数据分散到不同的数据库上。分表就是对单表的数据进行拆分，可以是垂直拆分，也可以是水平拆分。引入分库分表之后，需要系统解决事务、分布式 id、无法 join 操作问题。
+  -   - meta
+      - name: keywords
+        content: read-write separation, database sharding, master-slave replication
+  -   - meta
+      - name: description
+        content: The main purpose of read-write separation is to distribute read and write operations on the database across different database nodes. This can slightly enhance write performance and significantly improve read performance. Read-write separation is based on master-slave replication, and MySQL master-slave replication relies on binlog. Database sharding involves distributing data from a database across different databases. Table sharding involves splitting data from a single table, which can be vertical or horizontal. After introducing database sharding, the system needs to resolve transactional issues, distributed IDs, and the inability to perform join operations.
 ---
 
-## 读写分离
+## Read-Write Separation
 
-### 什么是读写分离？
+### What is Read-Write Separation?
 
-见名思意，根据读写分离的名字，我们就可以知道：**读写分离主要是为了将对数据库的读写操作分散到不同的数据库节点上。** 这样的话，就能够小幅提升写性能，大幅提升读性能。
+As the name implies, **read-write separation mainly aims to distribute read and write operations on the database across different database nodes.** This allows for a slight improvement in write performance and a significant enhancement in read performance.
 
-我简单画了一张图来帮助不太清楚读写分离的小伙伴理解。
+I created a simple diagram to help those who are not very clear about read-write separation understand better.
 
-![读写分离示意图](https://oss.javaguide.cn/github/javaguide/high-performance/read-and-write-separation-and-library-subtable/read-and-write-separation.png)
+![Read-Write Separation Diagram](https://oss.javaguide.cn/github/javaguide/high-performance/read-and-write-separation-and-library-subtable/read-and-write-separation.png)
 
-一般情况下，我们都会选择一主多从，也就是一台主数据库负责写，其他的从数据库负责读。主库和从库之间会进行数据同步，以保证从库中数据的准确性。这样的架构实现起来比较简单，并且也符合系统的写少读多的特点。
+Generally, we choose one master and multiple slaves, meaning one master database is responsible for writing while the other slave databases handle reading. There will be data synchronization between the master and slave databases to ensure data accuracy in the slave databases. This architecture is relatively simple to implement and aligns with the system's characteristic of having more reads than writes.
 
-### 如何实现读写分离？
+### How to Implement Read-Write Separation?
 
-不论是使用哪一种读写分离具体的实现方案，想要实现读写分离一般包含如下几步：
+Regardless of the specific implementation方案 for read-write separation, it generally involves the following steps:
 
-1. 部署多台数据库，选择其中的一台作为主数据库，其他的一台或者多台作为从数据库。
-2. 保证主数据库和从数据库之间的数据是实时同步的，这个过程也就是我们常说的**主从复制**。
-3. 系统将写请求交给主数据库处理，读请求交给从数据库处理。
+1. Deploy multiple databases, selecting one as the master database and one or more as slave databases.
+1. Ensure real-time data synchronization between the master and slave databases, which we commonly refer to as **master-slave replication**.
+1. The system delegates write requests to the master database and read requests to the slave databases.
 
-落实到项目本身的话，常用的方式有两种：
+For project implementation, there are two commonly used methods:
 
-**1. 代理方式**
+**1. Proxy Approach**
 
-![代理方式实现读写分离](https://oss.javaguide.cn/github/javaguide/high-performance/read-and-write-separation-and-library-subtable/read-and-write-separation-proxy.png)
+![Proxy Approach for Read-Write Separation](https://oss.javaguide.cn/github/javaguide/high-performance/read-and-write-separation-and-library-subtable/read-and-write-separation-proxy.png)
 
-我们可以在应用和数据中间加了一个代理层。应用程序所有的数据请求都交给代理层处理，代理层负责分离读写请求，将它们路由到对应的数据库中。
+We can add a proxy layer between the application and the database. All data requests from the application are handled by the proxy layer, which is responsible for separating read and write requests and routing them to the corresponding databases.
 
-提供类似功能的中间件有 **MySQL Router**（官方， MySQL Proxy 的替代方案）、**Atlas**（基于 MySQL Proxy）、**MaxScale**、**MyCat**。
+Middleware that provides similar functionality includes **MySQL Router** (official, an alternative to MySQL Proxy), **Atlas** (based on MySQL Proxy), **MaxScale**, and **MyCat**.
 
-关于 MySQL Router 多提一点：在 MySQL 8.2 的版本中，MySQL Router 能自动分辨对数据库读写/操作并把这些操作路由到正确的实例上。这是一项有价值的功能，可以优化数据库性能和可扩展性，而无需在应用程序中进行任何更改。具体介绍可以参考官方博客：[MySQL 8.2 – transparent read/write splitting](https://blogs.oracle.com/mysql/post/mysql-82-transparent-readwrite-splitting)。
+One point to highlight about MySQL Router: In the MySQL 8.2 version, MySQL Router can automatically distinguish between read and write operations on the database and route these operations to the correct instances. This is a valuable feature that can optimize database performance and scalability without requiring any changes to the application. For more details, you can refer to the official blog: [MySQL 8.2 – transparent read/write splitting](https://blogs.oracle.com/mysql/post/mysql-82-transparent-readwrite-splitting).
 
-**2. 组件方式**
+**2. Component Approach**
 
-在这种方式中，我们可以通过引入第三方组件来帮助我们读写请求。
+In this method, we can introduce third-party components to assist with read and write requests.
 
-这也是我比较推荐的一种方式。这种方式目前在各种互联网公司中用的最多的，相关的实际的案例也非常多。如果你要采用这种方式的话，推荐使用 `sharding-jdbc` ，直接引入 jar 包即可使用，非常方便。同时，也节省了很多运维的成本。
+This is also a method I highly recommend. It is widely used in various internet companies, and there are many practical cases related to it. If you choose to adopt this method, I recommend using `sharding-jdbc`, which can be easily implemented by directly adding the jar package, making it very convenient. Additionally, it saves a lot of operational costs.
 
-你可以在 shardingsphere 官方找到 [sharding-jdbc 关于读写分离的操作](https://shardingsphere.apache.org/document/legacy/3.x/document/cn/manual/sharding-jdbc/usage/read-write-splitting/)。
+You can find the [operations regarding read-write separation for sharding-jdbc](https://shardingsphere.apache.org/document/legacy/3.x/document/cn/manual/sharding-jdbc/usage/read-write-splitting/) on the official shardingsphere documentation.
 
-### 主从复制原理是什么？
+### What is the Principle of Master-Slave Replication?
 
-MySQL binlog(binary log 即二进制日志文件) 主要记录了 MySQL 数据库中数据的所有变化(数据库执行的所有 DDL 和 DML 语句)。因此，我们根据主库的 MySQL binlog 日志就能够将主库的数据同步到从库中。
+MySQL binlog (binary log) mainly records all changes in data within the MySQL database (all DDL and DML statements executed by the database). Therefore, we can synchronize data from the master database to the slave database based on the MySQL binlog logs from the master database.
 
-更具体和详细的过程是这个样子的（图片来自于：[《MySQL Master-Slave Replication on the Same Machine》](https://www.toptal.com/mysql/mysql-master-slave-replication-tutorial)）：
+The specific and detailed process is as follows (image from: [“MySQL Master-Slave Replication on the Same Machine”](https://www.toptal.com/mysql/mysql-master-slave-replication-tutorial)):
 
-![MySQL主从复制](https://oss.javaguide.cn/java-guide-blog/78816271d3ab52424bfd5ad3086c1a0f.png)
+![MySQL Master-Slave Replication](https://oss.javaguide.cn/java-guide-blog/78816271d3ab52424bfd5ad3086c1a0f.png)
 
-1. 主库将数据库中数据的变化写入到 binlog
-2. 从库连接主库
-3. 从库会创建一个 I/O 线程向主库请求更新的 binlog
-4. 主库会创建一个 binlog dump 线程来发送 binlog ，从库中的 I/O 线程负责接收
-5. 从库的 I/O 线程将接收的 binlog 写入到 relay log 中。
-6. 从库的 SQL 线程读取 relay log 同步数据到本地（也就是再执行一遍 SQL ）。
+1. The master database writes changes in the database to the binlog
+1. The slave database connects to the master database
+1. The slave database creates an I/O thread to request the updated binlog from the master database
+1. The master database creates a binlog dump thread to send the binlog, and the I/O thread in the slave is responsible for receiving it
+1. The I/O thread in the slave writes the received binlog to the relay log
+1. The SQL thread in the slave reads the relay log and synchronizes the data locally (essentially executing the SQL again).
 
-怎么样？看了我对主从复制这个过程的讲解，你应该搞明白了吧!
+So, do you understand the process of master-slave replication after my explanation?
 
-你一般看到 binlog 就要想到主从复制。当然，除了主从复制之外，binlog 还能帮助我们实现数据恢复。
+Whenever you see binlog, you should think of master-slave replication. Of course, aside from master-slave replication, binlog can also help us achieve data recovery.
 
-🌈 拓展一下：
+🌈 Here's an extension:
 
-不知道大家有没有使用过阿里开源的一个叫做 canal 的工具。这个工具可以帮助我们实现 MySQL 和其他数据源比如 Elasticsearch 或者另外一台 MySQL 数据库之间的数据同步。很显然，这个工具的底层原理肯定也是依赖 binlog。canal 的原理就是模拟 MySQL 主从复制的过程，解析 binlog 将数据同步到其他的数据源。
+I wonder if any of you have used an open-source tool from Alibaba called canal. This tool can help us synchronize data between MySQL and other data sources, such as Elasticsearch or another MySQL database. Obviously, the underlying principle of this tool also relies on binlog. The principle of canal is to simulate the master-slave replication process of MySQL, parsing the binlog to synchronize data to other data sources.
 
-另外，像咱们常用的分布式缓存组件 Redis 也是通过主从复制实现的读写分离。
+Additionally, commonly used distributed caching components like Redis also achieve read-write separation through master-slave replication.
 
-🌕 简单总结一下：
+🌕 In summary:
 
-**MySQL 主从复制是依赖于 binlog 。另外，常见的一些同步 MySQL 数据到其他数据源的工具（比如 canal）的底层一般也是依赖 binlog 。**
+**MySQL master-slave replication relies on binlog. Furthermore, some common tools for synchronizing MySQL data to other data sources (like canal) typically also depend on binlog.**
 
-### 如何避免主从延迟？
+### How to Avoid Master-Slave Lag?
 
-读写分离对于提升数据库的并发非常有效，但是，同时也会引来一个问题：主库和从库的数据存在延迟，比如你写完主库之后，主库的数据同步到从库是需要时间的，这个时间差就导致了主库和从库的数据不一致性问题。这也就是我们经常说的 **主从同步延迟** 。
+Read-write separation is very effective for improving database concurrency. However, it also brings a problem: there is lag between the master and slave databases, meaning after writing to the master database, it takes time to synchronize data to the slave database. This time difference leads to inconsistency between the data in the master and slave databases, which we often refer to as **master-slave synchronization lag**.
 
-如果我们的业务场景无法容忍主从同步延迟的话，应该如何避免呢（注意：我这里说的是避免而不是减少延迟）？
+If our business scenario cannot tolerate master-slave synchronization lag, how can we avoid it? (Note: I'm talking about avoiding rather than just reducing lag.)
 
-这里提供两种我知道的方案（能力有限，欢迎补充），你可以根据自己的业务场景参考一下。
+Here are two solutions I know of (limited capabilities, welcome to add more), which you can refer to based on your business scenarios.
 
-#### 强制将读请求路由到主库处理
+#### Force Read Requests to Route to the Master Database
 
-既然你从库的数据过期了，那我就直接从主库读取嘛！这种方案虽然会增加主库的压力，但是，实现起来比较简单，也是我了解到的使用最多的一种方式。
+Since the data in the slave database is stale, I will just read directly from the master database! This solution may increase the load on the master database, but it is relatively simple to implement and is one of the most commonly used methods I know of.
 
-比如 `Sharding-JDBC` 就是采用的这种方案。通过使用 Sharding-JDBC 的 `HintManager` 分片键值管理器，我们可以强制使用主库。
+For example, `Sharding-JDBC` employs this solution. By using the `HintManager` shard key manager of Sharding-JDBC, we can force routes to the master database.
 
 ```java
 HintManager hintManager = HintManager.getInstance();
 hintManager.setMasterRouteOnly();
-// 继续JDBC操作
+// Continue JDBC operations
 ```
 
-对于这种方案，你可以将那些必须获取最新数据的读请求都交给主库处理。
+For this solution, you can pass all read requests that must obtain the latest data to the master database.
 
-#### 延迟读取
+#### Delayed Reading
 
-还有一些朋友肯定会想既然主从同步存在延迟，那我就在延迟之后读取啊，比如主从同步延迟 0.5s,那我就 1s 之后再读取数据。这样多方便啊！方便是方便，但是也很扯淡。
+Some friends might think, if there is lag in master-slave synchronization, why not read after a delay? For instance, if the master-slave synchronization lag is 0.5s, then I will read the data after 1s. This seems convenient! It is convenient, but also quite nonsensical.
 
-不过，如果你是这样设计业务流程就会好很多：对于一些对数据比较敏感的场景，你可以在完成写请求之后，避免立即进行请求操作。比如你支付成功之后，跳转到一个支付成功的页面，当你点击返回之后才返回自己的账户。
+However, if you design your business process this way, it will be much better: for scenarios where data is very sensitive, you can avoid performing request operations immediately after completing write requests. For example, after a successful payment, you could redirect to a payment success page, and only return to your accounts when you click back.
 
-#### 总结
+#### Summary
 
-关于如何避免主从延迟，我们这里介绍了两种方案。实际上，延迟读取这种方案没办法完全避免主从延迟，只能说可以减少出现延迟的概率而已，实际项目中一般不会使用。
+Regarding how to avoid master-slave lag, we discussed two solutions here. In fact, the delayed reading solution cannot completely avoid master-slave lag; it can only reduce the probability of lag occurring, and in actual projects, it is generally not used.
 
-总的来说，要想不出现延迟问题，一般还是要强制将那些必须获取最新数据的读请求都交给主库处理。如果你的项目的大部分业务场景对数据准确性要求不是那么高的话，这种方案还是可以选择的。
+Overall, to avoid lag issues, you usually need to force those read requests that must obtain the latest data to be handled by the master database. If the majority of your project's business scenarios do not require high data accuracy, this solution is still a valid option.
 
-### 什么情况下会出现主从延迟？如何尽量减少延迟？
+### In What Situations Does Master-Slave Lag Occur? How to Minimize Lag?
 
-我们在上面的内容中也提到了主从延迟以及避免主从延迟的方法，这里我们再来详细分析一下主从延迟出现的原因以及应该如何尽量减少主从延迟。
+We have mentioned master-slave lag and methods to avoid it previously; here we will analyze the reasons for master-slave lag and how to minimize it.
 
-要搞懂什么情况下会出现主从延迟，我们需要先搞懂什么是主从延迟。
+To understand in what situations master-slave lag occurs, we first need to understand what master-slave lag is.
 
-MySQL 主从同步延时是指从库的数据落后于主库的数据，这种情况可能由以下两个原因造成：
+MySQL master-slave synchronization lag refers to the situation where the data in the slave database is behind that in the master database. This situation might be caused by the following two reasons:
 
-1. 从库 I/O 线程接收 binlog 的速度跟不上主库写入 binlog 的速度，导致从库 relay log 的数据滞后于主库 binlog 的数据；
-2. 从库 SQL 线程执行 relay log 的速度跟不上从库 I/O 线程接收 binlog 的速度，导致从库的数据滞后于从库 relay log 的数据。
+1. The speed of the slave I/O thread receiving the binlog is slower than that of the master database writing the binlog, leading to the relay log data in the slave being lagged behind the binlog data in the master.
+1. The speed at which the slave SQL thread executes the relay log is slower than that at which the slave I/O thread receives the binlog, causing the slave’s data to lag behind the relay log.
 
-与主从同步有关的时间点主要有 3 个：
+Three main time points related to master-slave synchronization are:
 
-1. 主库执行完一个事务，写入 binlog，将这个时刻记为 T1；
-2. 从库 I/O 线程接收到 binlog 并写入 relay log 的时刻记为 T2；
-3. 从库 SQL 线程读取 relay log 同步数据本地的时刻记为 T3。
+1. The master database finishes a transaction, writes to the binlog, and we mark this moment as T1.
+1. The slave's I/O thread receives the binlog and writes it to the relay log, we mark this moment as T2.
+1. The slave's SQL thread reads from the relay log and synchronizes data locally at the moment marked T3.
 
-结合我们上面讲到的主从复制原理，可以得出：
+Combining what we discussed about master-slave replication principles, we can conclude:
 
-- T2 和 T1 的差值反映了从库 I/O 线程的性能和网络传输的效率，这个差值越小说明从库 I/O 线程的性能和网络传输效率越高。
-- T3 和 T2 的差值反映了从库 SQL 线程执行的速度，这个差值越小，说明从库 SQL 线程执行速度越快。
+- The difference between T2 and T1 reflects the performance of the slave's I/O thread and the efficiency of network transmission—the smaller this difference, the better the performance and network efficiency of the slave's I/O thread.
+- The difference between T3 and T2 reflects the speed of the slave's SQL thread executing—the smaller this difference, the faster the execution speed of the slave's SQL thread.
 
-那什么情况下会出现出从延迟呢？这里列举几种常见的情况：
+So in what situations can there be slave lag? Here are a few common situations:
 
-1. **从库机器性能比主库差**：从库接收 binlog 并写入 relay log 以及执行 SQL 语句的速度会比较慢（也就是 T2-T1 和 T3-T2 的值会较大），进而导致延迟。解决方法是选择与主库一样规格或更高规格的机器作为从库，或者对从库进行性能优化，比如调整参数、增加缓存、使用 SSD 等。
-2. **从库处理的读请求过多**：从库需要执行主库的所有写操作，同时还要响应读请求，如果读请求过多，会占用从库的 CPU、内存、网络等资源，影响从库的复制效率（也就是 T2-T1 和 T3-T2 的值会较大，和前一种情况类似）。解决方法是引入缓存（推荐）、使用一主多从的架构，将读请求分散到不同的从库，或者使用其他系统来提供查询的能力，比如将 binlog 接入到 Hadoop、Elasticsearch 等系统中。
-3. **大事务**：运行时间比较长，长时间未提交的事务就可以称为大事务。由于大事务执行时间长，并且从库上的大事务会比主库上的大事务花费更多的时间和资源，因此非常容易造成主从延迟。解决办法是避免大批量修改数据，尽量分批进行。类似的情况还有执行时间较长的慢 SQL ，实际项目遇到慢 SQL 应该进行优化。
-4. **从库太多**：主库需要将 binlog 同步到所有的从库，如果从库数量太多，会增加同步的时间和开销（也就是 T2-T1 的值会比较大，但这里是因为主库同步压力大导致的）。解决方案是减少从库的数量，或者将从库分为不同的层级，让上层的从库再同步给下层的从库，减少主库的压力。
-5. **网络延迟**：如果主从之间的网络传输速度慢，或者出现丢包、抖动等问题，那么就会影响 binlog 的传输效率，导致从库延迟。解决方法是优化网络环境，比如提升带宽、降低延迟、增加稳定性等。
-6. **单线程复制**：MySQL5.5 及之前，只支持单线程复制。为了优化复制性能，MySQL 5.6 引入了 **多线程复制**，MySQL 5.7 还进一步完善了多线程复制。
-7. **复制模式**：MySQL 默认的复制是异步的，必然会存在延迟问题。全同步复制不存在延迟问题，但性能太差了。半同步复制是一种折中方案，相对于异步复制，半同步复制提高了数据的安全性，减少了主从延迟（还是有一定程度的延迟）。MySQL 5.5 开始，MySQL 以插件的形式支持 **semi-sync 半同步复制**。并且，MySQL 5.7 引入了 **增强半同步复制** 。
-8. ……
+1. **Slave Machine Has Inferior Performance Compared to Master**: The slave's speed in receiving the binlog and writing it to the relay log, as well as executing SQL statements, will be slower (meaning the values of T2-T1 and T3-T2 will be large), causing lag. The solution is to select a slave machine with specifications equivalent to or greater than that of the master or optimize the performance of the slave, such as adjusting parameters, increasing cache, using SSDs, etc.
+1. **Excessive Read Requests to the Slave**: The slave must execute all write operations from the master while also responding to read requests; if there are too many read requests, they will consume the slave's CPU, memory, and network resources, affecting the slave's replication efficiency (again, T2-T1 and T3-T2 values will be large, similar to the previous situation). Solutions include introducing caching (recommended), using a one-master multi-slave architecture to distribute read requests across different slaves, or employing other systems to provide querying capabilities, such as integrating the binlog with Hadoop, Elasticsearch, etc.
+1. **Large Transactions**: Long-running transactions that have not been committed for a long time can be termed large transactions. Because large transactions take longer to execute, and those on the slave will take more time and resources than those on the master, they are likely to cause master-slave lag. The solution is to avoid making batch modifications to data and try to do so in smaller increments. Similar issues may arise with long-running slow SQL queries; optimization should be done for slow SQL in actual projects.
+1. **Too Many Slaves**: The master needs to synchronize the binlog to all slaves; if there are too many slaves, it will increase synchronization time and overhead (where T2-T1 will be comparatively larger, caused by heavier synchronization pressure on the master). The solution is to minimize the number of slaves or to organize slaves into different tiers, with upper-level slaves synchronizing data to lower-level slaves, thus reducing the master’s pressure.
+1. **Network Delay**: If the transmission speed between the master and slaves is slow, or issues like packet loss and jitter occur, it can affect the efficiency of binlog transmission, leading to slave delay. Solutions include optimizing the network environment, such as increasing bandwidth, reducing latency, and improving stability.
+1. **Single-threaded Replication**: Up until MySQL 5.5, only single-threaded replication was supported. To optimize replication performance, MySQL 5.6 introduced **multi-threaded replication**, with further enhancements in MySQL 5.7.
+1. **Replication Mode**: MySQL's default replication is asynchronous, which inherently leads to lag issues. Fully synchronous replication has no lag but offers poor performance. Semi-synchronous replication is a compromise that enhances data safety compared to asynchronous replication while reducing master-slave lag (yet some lag remains). Since MySQL 5.5, MySQL has supported **semi-synchronous replication** in the form of plugins, and MySQL 5.7 introduced **enhanced semi-synchronous replication**.
+1. ……
 
-[《MySQL 实战 45 讲》](https://time.geekbang.org/column/intro/100020801?code=ieY8HeRSlDsFbuRtggbBQGxdTh-1jMASqEIeqzHAKrI%3D)这个专栏中的[读写分离有哪些坑？](https://time.geekbang.org/column/article/77636)这篇文章也有对主从延迟解决方案这一话题进行探讨，感兴趣的可以阅读学习一下。
+The article [“What Pitfalls Are There in Read-Write Separation?”](https://time.geekbang.org/column/article/77636) in the series [“45 Talks on MySQL Practice”](https://time.geekbang.org/column/intro/100020801?code=ieY8HeRSlDsFbuRtggbBQGxdTh-1jMASqEIeqzHAKrI%3D) also discusses solutions to master-slave lag; interested readers can refer to it for further learning.
 
-## 分库分表
+## Database Sharding
 
-读写分离主要应对的是数据库读并发，没有解决数据库存储问题。试想一下：**如果 MySQL 一张表的数据量过大怎么办?**
+Read-write separation mainly addresses read concurrency in databases without solving storage issues. Just imagine: **What if the data volume of a single table in MySQL is too large?**
 
-换言之，**我们该如何解决 MySQL 的存储压力呢？**
+In other words, **how do we alleviate storage pressure on MySQL?**
 
-答案之一就是 **分库分表**。
+One answer is **database sharding.**
 
-### 什么是分库？
+### What is Database Sharding?
 
-**分库** 就是将数据库中的数据分散到不同的数据库上，可以垂直分库，也可以水平分库。
+**Database sharding** means distributing data from the database across different databases, which can occur through vertical or horizontal sharding.
 
-**垂直分库** 就是把单一数据库按照业务进行划分，不同的业务使用不同的数据库，进而将一个数据库的压力分担到多个数据库。
+**Vertical sharding** divides a single database according to business needs, with different businesses utilizing separate databases to distribute the pressure of one database across multiple databases.
 
-举个例子：说你将数据库中的用户表、订单表和商品表分别单独拆分为用户数据库、订单数据库和商品数据库。
+For instance, you can separate user tables, order tables, and product tables into individual user databases, order databases, and product databases.
 
-![垂直分库](./images/read-and-write-separation-and-library-subtable/vertical-slicing-database.png)
+![Vertical Sharding](./images/read-and-write-separation-and-library-subtable/vertical-slicing-database.png)
 
-**水平分库** 是把同一个表按一定规则拆分到不同的数据库中，每个库可以位于不同的服务器上，这样就实现了水平扩展，解决了单表的存储和性能瓶颈的问题。
+**Horizontal sharding** distributes the same table across different databases based on specific rules. Each database may reside on different servers, achieving horizontal scalability and resolving storage and performance bottlenecks of a single table.
 
-举个例子：订单表数据量太大，你对订单表进行了水平切分（水平分表），然后将切分后的 2 张订单表分别放在两个不同的数据库。
+For example, if the data volume of the order table is excessively large, you can horizontally segment the order table (horizontal partitioning) and place the resulting two order tables in two different databases.
 
-![水平分库](./images/read-and-write-separation-and-library-subtable/horizontal-slicing-database.png)
+![Horizontal Sharding](./images/read-and-write-separation-and-library-subtable/horizontal-slicing-database.png)
 
-### 什么是分表？
+### What is Table Sharding?
 
-**分表** 就是对单表的数据进行拆分，可以是垂直拆分，也可以是水平拆分。
+**Table sharding** means splitting the data of a single table, which can also be done through vertical or horizontal methods.
 
-**垂直分表** 是对数据表列的拆分，把一张列比较多的表拆分为多张表。
+**Vertical table sharding** involves dividing the columns of a data table, breaking a table with many columns into multiple tables.
 
-举个例子：我们可以将用户信息表中的一些列单独抽出来作为一个表。
+For example, some columns from the user information table can be separated into their own table.
 
-**水平分表** 是对数据表行的拆分，把一张行比较多的表拆分为多张表，可以解决单一表数据量过大的问题。
+**Horizontal table sharding** divides the rows of a data table, breaking a table with a large number of rows into multiple tables to alleviate the impact of excessive data volume on performance.
 
-举个例子：我们可以将用户信息表拆分成多个用户信息表，这样就可以避免单一表数据量过大对性能造成影响。
+For example, user information tables can be partitioned into multiple tables, which can avoid performance impacts caused by excessive data in a single table.
 
-水平拆分只能解决单表数据量大的问题，为了提升性能，我们通常会选择将拆分后的多张表放在不同的数据库中。也就是说，水平分表通常和水平分库同时出现。
+Horizontal partitioning can only address the issue of a single table having a large volume of data. To enhance performance, we generally opt to distribute the resulting multiple tables across different databases; that is, horizontal table sharding often coexists with horizontal database sharding.
 
-![分表](./images/read-and-write-separation-and-library-subtable/two-forms-of-sub-table.png)
+![Table Sharding](./images/read-and-write-separation-and-library-subtable/two-forms-of-sub-table.png)
 
-### 什么情况下需要分库分表？
+### When Should We Consider Database Sharding?
 
-遇到下面几种场景可以考虑分库分表：
+Consider database sharding in the following scenarios:
 
-- 单表的数据达到千万级别以上，数据库读写速度比较缓慢。
-- 数据库中的数据占用的空间越来越大，备份时间越来越长。
-- 应用的并发量太大（应该优先考虑其他性能优化方法，而非分库分表）。
+- If the data in a single table exceeds tens of millions, and the database read/write speed is sluggish.
+- If the data in the database takes up an increasingly large amount of space, resulting in longer backup times.
+- If the application's concurrency is excessively high (alternative performance optimization methods should be prioritized over sharding).
 
-不过，分库分表的成本太高，如非必要尽量不要采用。而且，并不一定是单表千万级数据量就要分表，毕竟每张表包含的字段不同，它们在不错的性能下能够存放的数据量也不同，还是要具体情况具体分析。
+However, the cost of database sharding is quite high, so it should be avoided unless necessary. Moreover, it’s not always the case that a table with tens of millions of records must be sharded; since every table contains different fields, the volume of data each can hold under acceptable performance varies, necessitating analysis of the specific situation.
 
-之前看过一篇文章分析 “[InnoDB 中高度为 3 的 B+ 树最多可以存多少数据](https://juejin.cn/post/7165689453124517896)”，写的挺不错，感兴趣的可以看看。
+I previously read an article analyzing “[How much data can a B+ tree with a height of 3 in InnoDB store](https://juejin.cn/post/7165689453124517896)”, which is quite well written, and I recommend taking a look if interested.
 
-### 常见的分片算法有哪些？
+### What are Common Sharding Algorithms?
 
-分片算法主要解决了数据被水平分片之后，数据究竟该存放在哪个表的问题。
+Sharding algorithms mainly address the question of where data should be stored after being horizontally partitioned.
 
-常见的分片算法有：
+Common sharding algorithms include:
 
-- **哈希分片**：求指定分片键的哈希，然后根据哈希值确定数据应被放置在哪个表中。哈希分片比较适合随机读写的场景，不太适合经常需要范围查询的场景。哈希分片可以使每个表的数据分布相对均匀，但对动态伸缩（例如新增一个表或者库）不友好。
-- **范围分片**：按照特定的范围区间（比如时间区间、ID 区间）来分配数据，比如 将 `id` 为 `1~299999` 的记录分到第一个表， `300000~599999` 的分到第二个表。范围分片适合需要经常进行范围查找且数据分布均匀的场景，不太适合随机读写的场景（数据未被分散，容易出现热点数据的问题）。
-- **映射表分片**：使用一个单独的表（称为映射表）来存储分片键和分片位置的对应关系。映射表分片策略可以支持任何类型的分片算法，如哈希分片、范围分片等。映射表分片策略是可以灵活地调整分片规则，不需要修改应用程序代码或重新分布数据。不过，这种方式需要维护额外的表，还增加了查询的开销和复杂度。
-- **一致性哈希分片**：将哈希空间组织成一个环形结构，将分片键和节点（数据库或表）都映射到这个环上，然后根据顺时针的规则确定数据或请求应该分配到哪个节点上，解决了传统哈希对动态伸缩不友好的问题。
-- **地理位置分片**：很多 NewSQL 数据库都支持地理位置分片算法，也就是根据地理位置（如城市、地域）来分配数据。
-- **融合算法分片**：灵活组合多种分片算法，比如将哈希分片和范围分片组合。
+- **Hash-based Sharding**: Calculate the hash of a specified sharding key and determine which table the data should be placed in according to the hash value. Hash sharding is more suitable for scenarios requiring random read/write and less suitable for frequent range queries. Hash sharding can help ensure even distribution of data across tables but is unfriendly to dynamic scaling (e.g., adding a new table or database).
+- **Range-based Sharding**: Allocate data according to specific range intervals (e.g., a time interval, ID interval). For instance, records with `id` values from `1 to 299999` go to the first table, while `300000 to 599999` go to the second table. Range sharding is suitable for scenarios requiring frequent range searches and where data distribution is even, but it’s less suitable for random read/write (data isn’t dispersed leading to hot data issues).
+- **Mapping Table Sharding**: Use a single separate table (referred to as a mapping table) to store the correspondence between the sharding key and the sharding location. Mapping table sharding can support any type of sharding algorithm, such as hash sharding, range sharding, etc. This strategy allows flexible adjustment of sharding rules without requiring changes to application code or redistributing data. However, this method necessitates maintaining an additional table and increases query overhead and complexity.
+- **Consistent Hash Sharding**: Organizes the hash space into a circular structure, mapping both sharding keys and nodes (databases or tables) onto this circle, then determining to which node data or requests should be assigned based on a clockwise rule, thus solving the traditional hash’s unfriendly nature towards dynamic scaling.
+- **Geographic Location Sharding**: Many NewSQL databases support geographic location sharding algorithms, which distribute data based on geographical locations (e.g., city, region).
+- **Hybrid Algorithm Sharding**: Flexibly combine multiple sharding algorithms, such as combining hash and range sharding.
 - ……
 
-### 分片键如何选择？
+### How to Choose a Sharding Key?
 
-分片键（Sharding Key）是数据分片的关键字段。分片键的选择非常重要，它关系着数据的分布和查询效率。一般来说，分片键应该具备以下特点：
+The sharding key is the crucial field for data partitioning. The selection of an appropriate sharding key is highly important, as it directly affects data distribution and query efficiency. Generally speaking, a sharding key should have the following characteristics:
 
-- 具有共性，即能够覆盖绝大多数的查询场景，尽量减少单次查询所涉及的分片数量，降低数据库压力；
-- 具有离散性，即能够将数据均匀地分散到各个分片上，避免数据倾斜和热点问题；
-- 具有稳定性，即分片键的值不会发生变化，避免数据迁移和一致性问题；
-- 具有扩展性，即能够支持分片的动态增加和减少，避免数据重新分片的开销。
+- **Universality**: It should cover the vast majority of query scenarios, minimizing the number of shards involved in a single query, thus reducing database pressure.
+- **Discreteness**: It should evenly distribute data across all shards to avoid data skew and hot spot issues.
+- **Stability**: The value of the sharding key should remain unchanged to prevent data migration and consistency issues.
+- **Scalability**: It should allow for dynamic addition and removal of shards to avoid the overhead of data re-sharding.
 
-实际项目中，分片键很难满足上面提到的所有特点，需要权衡一下。并且，分片键可以是表中多个字段的组合，例如取用户 ID 后四位作为订单 ID 后缀。
+In actual projects, it's challenging for a sharding key to fulfill all the aforementioned characteristics, requiring some trade-offs. Additionally, the sharding key can be a combination of multiple fields in a table, such as taking the last four digits of a user ID as a suffix for an order ID.
 
-### 分库分表会带来什么问题呢？
+### What Issues Can Database Sharding Bring?
 
-记住，你在公司做的任何技术决策，不光是要考虑这个技术能不能满足我们的要求，是否适合当前业务场景，还要重点考虑其带来的成本。
+Remember, any technical decision you make at your company should consider not just whether this technology can fulfill our requirements and is suited to the current business scenario, but also consider the costs it incurs.
 
-引入分库分表之后，会给系统带来什么挑战呢？
+What challenges can arise in the system after introducing database sharding?
 
-- **join 操作**：同一个数据库中的表分布在了不同的数据库中，导致无法使用 join 操作。这样就导致我们需要手动进行数据的封装，比如你在一个数据库中查询到一个数据之后，再根据这个数据去另外一个数据库中找对应的数据。不过，很多大厂的资深 DBA 都是建议尽量不要使用 join 操作。因为 join 的效率低，并且会对分库分表造成影响。对于需要用到 join 操作的地方，可以采用多次查询业务层进行数据组装的方法。不过，这种方法需要考虑业务上多次查询的事务性的容忍度。
-- **事务问题**：同一个数据库中的表分布在了不同的数据库中，如果单个操作涉及到多个数据库，那么数据库自带的事务就无法满足我们的要求了。这个时候，我们就需要引入分布式事务了。关于分布式事务常见解决方案总结，网站上也有对应的总结：<https://javaguide.cn/distributed-system/distributed-transaction.html> 。
-- **分布式 ID**：分库之后， 数据遍布在不同服务器上的数据库，数据库的自增主键已经没办法满足生成的主键唯一了。我们如何为不同的数据节点生成全局唯一主键呢？这个时候，我们就需要为我们的系统引入分布式 ID 了。关于分布式 ID 的详细介绍&实现方案总结，可以看我写的这篇文章：[分布式 ID 介绍&实现方案总结](https://javaguide.cn/distributed-system/distributed-id.html)。
-- **跨库聚合查询问题**：分库分表会导致常规聚合查询操作，如 group by，order by 等变得异常复杂。这是因为这些操作需要在多个分片上进行数据汇总和排序，而不是在单个数据库上进行。为了实现这些操作，需要编写复杂的业务代码，或者使用中间件来协调分片间的通信和数据传输。这样会增加开发和维护的成本，以及影响查询的性能和可扩展性。
+- **Join Operations**: When tables from the same database are distributed across different databases, it becomes impossible to use join operations. This leads to a need for manual data encapsulation; for instance, you might query a piece of data in one database and then look for corresponding data in another database using that data. However, many experienced DBAs in large companies suggest avoiding join operations whenever possible since join operations are inefficient and can negatively impact database sharding. For places where join operations are needed, you could resort to multiple queries at the business layer to assemble the data. However, this method must consider the transactional tolerance of multiple queries from a business standpoint.
+- **Transactional Issues**: When tables from the same database are distributed across different databases, standard transactions won't suffice if an individual operation involves multiple databases. In such cases, we need to introduce distributed transactions. There are several common solutions for distributed transaction issues summarized on various websites: <https://javaguide.cn/distributed-system/distributed-transaction.html>.
+- **Distributed IDs**: Once sharding is implemented, data is spread across different servers, making it impossible for the database's auto-increment primary key to ensure unique primary key generation. How do we generate global unique primary keys for different data nodes? At this point, we need to introduce distributed IDs into our system. For a detailed introduction and implementation summary of distributed IDs, check out this article I wrote: [Introduction to Distributed IDs & Implementation Summary](https://javaguide.cn/distributed-system/distributed-id.html).
+- **Cross-Database Aggregation Query Issues**: Database sharding can complicate conventional aggregation query operations, such as group by and order by. This is because these operations require data aggregation and sorting across multiple shards rather than within a single database. Implementing these operations necessitates writing complex business code or using middleware to coordinate communication and data transmission between shards, leading to increased development and maintenance costs, as well as affecting query performance and scalability.
 - ……
 
-另外，引入分库分表之后，一般需要 DBA 的参与，同时还需要更多的数据库服务器，这些都属于成本。
+Moreover, introducing database sharding typically requires DBA involvement and a greater number of database servers, all of which contribute to cost.
 
-### 分库分表有没有什么比较推荐的方案？
+### Are There Any Recommended Solutions for Database Sharding?
 
-Apache ShardingSphere 是一款分布式的数据库生态系统， 可以将任意数据库转换为分布式数据库，并通过数据分片、弹性伸缩、加密等能力对原有数据库进行增强。
+Apache ShardingSphere is a distributed database ecosystem that can transform any database into a distributed database and enhance the original database's functionality through data partitioning, elastic scaling, encryption, and other capabilities.
 
-ShardingSphere 项目（包括 Sharding-JDBC、Sharding-Proxy 和 Sharding-Sidecar）是当当捐入 Apache 的，目前主要由京东数科的一些巨佬维护。
+The ShardingSphere project (including Sharding-JDBC, Sharding-Proxy, and Sharding-Sidecar) was donated to Apache by Dangdang and is currently maintained by several prominent figures from JD Digits.
 
-ShardingSphere 绝对可以说是当前分库分表的首选！ShardingSphere 的功能完善，除了支持读写分离和分库分表，还提供分布式事务、数据库治理、影子库、数据加密和脱敏等功能。
+ShardingSphere is undoubtedly the top choice for database sharding! ShardingSphere's functionality is comprehensive; it supports read-write separation and database sharding while also providing distributed transactions, database governance, shadow libraries, data encryption, and desensitization functionalities.
 
-ShardingSphere 提供的功能如下：
+The capabilities offered by ShardingSphere include:
 
-![ShardingSphere 提供的功能](https://oss.javaguide.cn/github/javaguide/high-performance/shardingsphere-features.png)
+![ShardingSphere Features](https://oss.javaguide.cn/github/javaguide/high-performance/shardingsphere-features.png)
 
-ShardingSphere 的优势如下（摘自 ShardingSphere 官方文档：<https://shardingsphere.apache.org/document/current/cn/overview/>）：
+ShardingSphere's advantages include (extracted from the ShardingSphere official documentation: <https://shardingsphere.apache.org/document/current/cn/overview/>):
 
-- 极致性能：驱动程序端历经长年打磨，效率接近原生 JDBC，性能极致。
-- 生态兼容：代理端支持任何通过 MySQL/PostgreSQL 协议的应用访问，驱动程序端可对接任意实现 JDBC 规范的数据库。
-- 业务零侵入：面对数据库替换场景，ShardingSphere 可满足业务无需改造，实现平滑业务迁移。
-- 运维低成本：在保留原技术栈不变前提下，对 DBA 学习、管理成本低，交互友好。
-- 安全稳定：基于成熟数据库底座之上提供增量能力，兼顾安全性及稳定性。
-- 弹性扩展：具备计算、存储平滑在线扩展能力，可满足业务多变的需求。
-- 开放生态：通过多层次（内核、功能、生态）插件化能力，为用户提供可定制满足自身特殊需求的独有系统。
+- **Ultimate performance**: The driver has undergone extensive refinement over years, achieving efficiency close to native JDBC performance.
+- **Ecosystem compatibility**: The proxy supports access from any application through MySQL/PostgreSQL protocol, while the driver can interface with any database implementing JDBC standards.
+- **Zero-invasion for business**: For scenarios requiring database replacement, ShardingSphere allows for smooth business migration without requiring any alterations to existing applications.
+- **Low operational costs**: It maintains low learning and management costs for DBAs while retaining the original technology stack, ensuring user-friendly interaction.
+- **Safe and stable**: It provides incremental capabilities based on mature database foundations while balancing security and stability.
+- **Elastic scalability**: It has the capacity for smooth online expansion of computing and storage, meeting diverse business demands.
+- **Open ecosystem**: It offers customizable solutions for users’ unique needs through multi-layered (core, functionalities, ecosystem) plugin capabilities.
 
-另外，ShardingSphere 的生态体系完善，社区活跃，文档完善，更新和发布比较频繁。
+Additionally, ShardingSphere has a complete ecosystem, an active community, comprehensive documentation, with frequent updates and releases.
 
-不过，还是要多提一句：**现在很多公司都是用的类似于 TiDB 这种分布式关系型数据库，不需要我们手动进行分库分表（数据库层面已经帮我们做了），也不需要解决手动分库分表引入的各种问题，直接一步到位，内置很多实用的功能（如无感扩容和缩容、冷热存储分离）！如果公司条件允许的话，个人也是比较推荐这种方式！**
+However, it’s worth reiterating: **Many companies are currently using distributed relational databases like TiDB that eliminate the need for manual sharding (the database layer takes care of this), and they do not have to deal with the various issues that arise from manual sharding. This provides a seamless solution with many built-in practical features (such as seamless expansion and reduction, and cold/hot storage separation)! If conditions allow within the company, I personally recommend this approach!**
 
-### 分库分表后，数据怎么迁移呢？
+### How to Migrate Data After Database Sharding?
 
-分库分表之后，我们如何将老库（单库单表）的数据迁移到新库（分库分表后的数据库系统）呢？
+After implementing database sharding, how can we migrate data from the old database (single database, single table) to the new database (the database system after sharding)?
 
-比较简单同时也是非常常用的方案就是**停机迁移**，写个脚本老库的数据写到新库中。比如你在凌晨 2 点，系统使用的人数非常少的时候，挂一个公告说系统要维护升级预计 1 小时。然后，你写一个脚本将老库的数据都同步到新库中。
+A simple and commonly used method is **downtime migration**, where you write a script to transfer data from the old database to the new one. For instance, at 2 AM when system usage is minimal, you can put up a notice stating that the system will undergo maintenance and upgrade for about an hour. Then, you can write a script that synchronizes all data from the old database to the new database.
 
-如果你不想停机迁移数据的话，也可以考虑**双写方案**。双写方案是针对那种不能停机迁移的场景，实现起来要稍微麻烦一些。具体原理是这样的：
+If you prefer not to have downtime during the migration process, you could consider a **dual-write approach**. The dual-write approach is designed for scenarios where downtime migration is not possible and is somewhat more complex. The specific principle is as follows:
 
-- 我们对老库的更新操作（增删改），同时也要写入新库（双写）。如果操作的数据不存在于新库的话，需要插入到新库中。 这样就能保证，咱们新库里的数据是最新的。
-- 在迁移过程，双写只会让被更新操作过的老库中的数据同步到新库，我们还需要自己写脚本将老库中的数据和新库的数据做比对。如果新库中没有，那咱们就把数据插入到新库。如果新库有，旧库没有，就把新库对应的数据删除（冗余数据清理）。
-- 重复上一步的操作，直到老库和新库的数据一致为止。
+- For updates (insertions, deletions, modifications) in the old database, you also write to the new database (dual writing). If the data being operated on does not exist in the new database, it needs to be inserted. This ensures that the new database contains the latest data.
+- During the migration, dual writing will only synchronize data that has been updated from the old database to the new database, you’ll also need to write a script to compare the data between the old and new databases. If any data is missing in the new database, insert it. If the new database has data that isn’t in the old database, delete the corresponding redundant entries in the new database.
+- Repeat the above operation until the data in the old and new databases are consistent.
 
-想要在项目中实施双写还是比较麻烦的，很容易会出现问题。我们可以借助上面提到的数据库同步工具 Canal 做增量数据迁移（还是依赖 binlog，开发和维护成本较低）。
+Implementing dual writing can be quite tricky in a project, and problems can easily arise. We could use the aforementioned database synchronization tool Canal for incremental data migration (which still relies on binlog, minimizing development and maintenance costs).
 
-## 总结
+## Summary
 
-- 读写分离主要是为了将对数据库的读写操作分散到不同的数据库节点上。 这样的话，就能够小幅提升写性能，大幅提升读性能。
-- 读写分离基于主从复制，MySQL 主从复制是依赖于 binlog 。
-- **分库** 就是将数据库中的数据分散到不同的数据库上。**分表** 就是对单表的数据进行拆分，可以是垂直拆分，也可以是水平拆分。
-- 引入分库分表之后，需要系统解决事务、分布式 id、无法 join 操作问题。
-- 现在很多公司都是用的类似于 TiDB 这种分布式关系型数据库，不需要我们手动进行分库分表（数据库层面已经帮我们做了），也不需要解决手动分库分表引入的各种问题，直接一步到位，内置很多实用的功能（如无感扩容和缩容、冷热存储分离）！如果公司条件允许的话，个人也是比较推荐这种方式！
-- 如果必须要手动分库分表的话，ShardingSphere 是首选！ShardingSphere 的功能完善，除了支持读写分离和分库分表，还提供分布式事务、数据库治理等功能。另外，ShardingSphere 的生态体系完善，社区活跃，文档完善，更新和发布比较频繁。
+- Read-write separation mainly aims to distribute read and write operations on the database across different database nodes. This can slightly improve write performance and significantly enhance read performance.
+- Read-write separation is based on master-slave replication, with MySQL master-slave replication relying on binlog.
+- **Database sharding** involves distributing data across multiple databases. **Table sharding** refers to splitting data from a single table, which can be vertical or horizontal.
+- After introducing database sharding, the system needs to address transactional issues, distributed IDs, and the inability to perform join operations.
+- Many companies currently utilize distributed relational databases like TiDB, where manual sharding is unnecessary (the database layer handles it), and companies are spared from resolving the various issues introduced by manual sharding, enjoying many built-in practical features (like seamless scaling and cold/hot storage separation)! If company conditions allow, I personally recommend this option!
+- If manual sharding is necessary, ShardingSphere is the first choice! ShardingSphere's functionality is comprehensive; in addition to supporting read-write separation and database sharding, it also provides distributed transactions, database governance, among other features. Additionally, ShardingSphere has a robust ecosystem, an active community, comprehensive documentation, with frequent updates and releases.
 
 <!-- @include: @article-footer.snippet.md -->

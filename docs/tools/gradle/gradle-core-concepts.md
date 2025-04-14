@@ -1,91 +1,91 @@
 ---
-title: Gradle核心概念总结
-category: 开发工具
+title: Summary of Core Concepts of Gradle
+category: Development Tools
 head:
-  - - meta
-    - name: keywords
-      content: Gradle,Groovy,Gradle Wrapper,Gradle 包装器,Gradle 插件
-  - - meta
-    - name: description
-      content: Gradle 就是一个运行在 JVM 上的自动化的项目构建工具，用来帮助我们自动构建项目。
+  -   - meta
+      - name: keywords
+        content: Gradle, Groovy, Gradle Wrapper, Gradle packaging, Gradle plugins
+  -   - meta
+      - name: description
+        content: Gradle is an automation project build tool that runs on JVM, designed to help us automate project builds.
 ---
 
-> 这部分内容主要根据 Gradle 官方文档整理，做了对应的删减，主要保留比较重要的部分，不涉及实战，主要是一些重要概念的介绍。
+> This content is primarily organized based on the official Gradle documentation, with corresponding reductions made to retain the most important parts. It does not involve practical applications, and is mainly focused on introducing key concepts.
 
-Gradle 这部分内容属于可选内容，可以根据自身需求决定是否学习，目前国内还是使用 Maven 普遍一些。
+The content on Gradle is optional, and you can decide whether to learn it based on your own needs. Currently, Maven is still more commonly used domestically.
 
-## Gradle 介绍
+## Introduction to Gradle
 
-Gradle 官方文档是这样介绍的 Gradle 的：
+The official Gradle documentation describes Gradle as follows:
 
 > Gradle is an open-source [build automation](https://en.wikipedia.org/wiki/Build_automation) tool flexible enough to build almost any type of software. Gradle makes few assumptions about what you’re trying to build or how to build it. This makes Gradle particularly flexible.
 >
-> Gradle 是一个开源的构建自动化工具，它足够灵活，可以构建几乎任何类型的软件。Gradle 对你要构建什么或者如何构建它做了很少的假设。这使得 Gradle 特别灵活。
+> Gradle is an open-source build automation tool that is flexible enough to build almost any type of software. Gradle makes few assumptions about what you want to build or how to build it, making it especially flexible.
 
-简单来说，Gradle 就是一个运行在 JVM 上的自动化的项目构建工具，用来帮助我们自动构建项目。
+In simple terms, Gradle is an automation project build tool that runs on JVM, designed to help us automate project builds.
 
-对于开发者来说，Gradle 的主要作用主要有 3 个：
+For developers, the main purposes of Gradle are threefold:
 
-1. **项目构建**：提供标准的、跨平台的自动化项目构建方式。
-2. **依赖管理**：方便快捷的管理项目依赖的资源（jar 包），避免资源间的版本冲突问题。
-3. **统一开发结构**：提供标准的、统一的项目结构。
+1. **Project Building**: Provides a standard, cross-platform automated project building method.
+1. **Dependency Management**: Conveniently and quickly manages project dependencies (JAR packages), avoiding version conflicts between resources.
+1. **Unified Development Structure**: Provides a standard and unified project structure.
 
-Gradle 构建脚本是使用 Groovy 或 Kotlin 语言编写的，表达能力非常强，也足够灵活。
+Gradle build scripts are written in Groovy or Kotlin, offering strong expressiveness and flexibility.
 
-## Groovy 介绍
+## Introduction to Groovy
 
-Gradle 是运行在 JVM 上的一个程序，它可以使用 Groovy 来编写构建脚本。
+Gradle is a program that runs on JVM, and it can use Groovy to write build scripts.
 
-Groovy 是运行在 JVM 上的脚本语言，是基于 Java 扩展的动态语言，它的语法和 Java 非常的相似，可以使用 Java 的类库。Groovy 可以用于面向对象编程，也可以用作纯粹的脚本语言。在语言的设计上它吸纳了 Java、Python、Ruby 和 Smalltalk 语言的优秀特性，比如动态类型转换、闭包和元编程支持。
+Groovy is a scripting language that runs on JVM, which is a dynamically typed language based on Java extensions. Its syntax is very similar to Java and it can use Java libraries. Groovy can be used for object-oriented programming as well as for pure scripting. In its design, it incorporates the excellent features of Java, Python, Ruby, and Smalltalk languages, such as dynamic type conversion, closures, and metaprogramming support.
 
-我们可以用学习 Java 的方式去学习 Groovy ，学习成本相对来说还是比较低的，即使开发过程中忘记 Groovy 语法，也可以用 Java 语法继续编码。
+We can learn Groovy in a way similar to learning Java, making the learning cost relatively low. Even if you forget Groovy syntax during development, you can continue coding using Java syntax.
 
-基于 JVM 的语言有很多种比如 Groovy，Kotlin，Java，Scala，他们最终都会编译生成 Java 字节码文件并在 JVM 上运行。
+There are many JVM-based languages such as Groovy, Kotlin, Java, and Scala, all of which will eventually compile to Java bytecode and run on JVM.
 
-## Gradle 优势
+## Advantages of Gradle
 
-Gradle 是新一代的构建系统，具有高效和灵活等诸多优势，广泛用于 Java 开发。不仅 Android 将其作为官方构建系统, 越来越多的 Java 项目比如 Spring Boot 也慢慢迁移到 Gradle。
+Gradle is a new-generation build system that offers many advantages like efficiency and flexibility, widely used in Java development. Not only does Android adopt it as the official build system, but more and more Java projects like Spring Boot are also gradually migrating to Gradle.
 
-- 在灵活性上，Gradle 支持基于 Groovy 语言编写脚本，侧重于构建过程的灵活性，适合于构建复杂度较高的项目，可以完成非常复杂的构建。
-- 在粒度性上，Gradle 构建的粒度细化到了每一个 task 之中。并且它所有的 Task 源码都是开源的，在我们掌握了这一整套打包流程后，我们就可以通过去修改它的 Task 去动态改变其执行流程。
-- 在扩展性上，Gradle 支持插件机制，所以我们可以复用这些插件，就如同复用库一样简单方便。
+- In terms of flexibility, Gradle supports writing scripts in Groovy, emphasizing the flexibility of the build process, making it suitable for projects with high complexity, capable of handling very complex builds.
+- In terms of granularity, Gradle's builds are refined down to each task. Furthermore, all Task source codes are open-source, and once we master the entire packaging process, we can dynamically change the execution flow by modifying its Task.
+- In terms of extensibility, Gradle supports a plugin mechanism, allowing us to reuse these plugins as simply and conveniently as reusing libraries.
 
-## Gradle Wrapper 介绍
+## Introduction to Gradle Wrapper
 
-Gradle 官方文档是这样介绍的 Gradle Wrapper 的：
+The official Gradle documentation describes Gradle Wrapper as follows:
 
 > The recommended way to execute any Gradle build is with the help of the Gradle Wrapper (in short just “Wrapper”). The Wrapper is a script that invokes a declared version of Gradle, downloading it beforehand if necessary. As a result, developers can get up and running with a Gradle project quickly without having to follow manual installation processes saving your company time and money.
 >
-> 执行 Gradle 构建的推荐方法是借助 Gradle Wrapper(简而言之就是“Wrapper”)。Wrapper 它是一个脚本，调用了已经声明的 Gradle 版本，如果需要的话，可以预先下载它。因此，开发人员可以快速启动并运行 Gradle 项目，而不必遵循手动安装过程，从而为公司节省时间和金钱。
+> The recommended method for executing Gradle builds is to use Gradle Wrapper (simply “Wrapper”). The Wrapper is a script that calls a specified Gradle version, downloading it beforehand if necessary. Thus, developers can quickly start and run Gradle projects without having to follow manual installation processes, saving time and money for the company.
 
-我们可以称 Gradle Wrapper 为 Gradle 包装器，它将 Gradle 再次包装，让所有的 Gradle 构建方法在 Gradle 包装器的帮助下运行。
+We can call Gradle Wrapper the Gradle packaging tool, which re-packages Gradle, allowing all Gradle build methods to run with the help of the Gradle packaging tool.
 
-Gradle Wrapper 的工作流程图如下（图源[Gradle Wrapper 官方文档介绍](https://docs.gradle.org/current/userguide/gradle_wrapper.html)）：
+The workflow diagram of Gradle Wrapper is as follows (image source: [Gradle Wrapper official documentation](https://docs.gradle.org/current/userguide/gradle_wrapper.html)):
 
-![包装器工作流程](https://oss.javaguide.cn/github/javaguide/csdn/efa7a0006b04051e2b84cd116c6ccdfc.png)
+![Wrapper Workflow](https://oss.javaguide.cn/github/javaguide/csdn/efa7a0006b04051e2b84cd116c6ccdfc.png)
 
-整个流程主要分为下面 3 步：
+The entire process mainly consists of the following three steps:
 
-1. 首先当我们刚创建的时候，如果指定的版本没有被下载，就先会去 Gradle 的服务器中下载对应版本的压缩包；
-2. 下载完成后需要先进行解压缩并且执行批处理文件；
-3. 后续项目每次构建都会重用这个解压过的 Gradle 版本。
+1. Initially, when we create it, if the specified version has not been downloaded, it will first download the corresponding version zip package from Gradle's server;
+1. After the download is complete, it needs to be unzipped and the batch file executed;
+1. Subsequent builds of the project will reuse this unzipped version of Gradle.
 
-Gradle Wrapper 会给我们带来下面这些好处：
+Gradle Wrapper provides us with the following benefits:
 
-1. 在给定的 Gradle 版本上标准化项目，从而实现更可靠和健壮的构建。
-2. 可以让我们的电脑中不安装 Gradle 环境也可以运行 Gradle 项目。
-3. 为不同的用户和执行环境（例如 IDE 或持续集成服务器）提供新的 Gradle 版本就像更改 Wrapper 定义一样简单。
+1. Standardizes the project on the specified Gradle version, resulting in more reliable and robust builds.
+1. Allows running Gradle projects without installing the Gradle environment on our computers.
+1. Providing new Gradle versions for different users and execution environments (such as IDEs or continuous integration servers) is as simple as changing the Wrapper definition.
 
-### 生成 Gradle Wrapper
+### Generating Gradle Wrapper
 
-如果想要生成 Gradle Wrapper 的话，需要本地配置好 Gradle 环境变量。Gradle 中已经内置了 Wrapper Task，在项目根目录执行执行`gradle wrapper`命令即可帮助我们生成 Gradle Wrapper。
+To generate the Gradle Wrapper, you need to configure the Gradle environment variables locally. Gradle has a built-in Wrapper Task, and executing the `gradle wrapper` command in the project's root directory will help us generate the Gradle Wrapper.
 
-执行命令 `gradle wrapper` 命令时可以指定一些参数来控制 wrapper 的生成。具体有如下两个配置参数：
+When executing the `gradle wrapper` command, you can specify some parameters to control the generation of the wrapper. There are two specific configuration parameters as follows:
 
-- `--gradle-version` 用于指定使用的 Gradle 的版本
-- `--gradle-distribution-url` 用于指定下载 Gradle 版本的 URL，该值的规则是 `http://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip`
+- `--gradle-version` is used to specify the version of Gradle to be used.
+- `--gradle-distribution-url` is used to specify the URL for downloading the Gradle version. The pattern for this value is `http://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip`.
 
-执行`gradle wrapper`命令之后，Gradle Wrapper 就生成完成了，项目根目录中生成如下文件：
+After executing the `gradle wrapper` command, the Gradle Wrapper will be generated, creating the following files in the project root directory:
 
 ```plain
 ├── gradle
@@ -96,14 +96,14 @@ Gradle Wrapper 会给我们带来下面这些好处：
 └── gradlew.bat
 ```
 
-每个文件的含义如下：
+The meaning of each file is as follows:
 
-- `gradle-wrapper.jar`：包含了 Gradle 运行时的逻辑代码。
-- `gradle-wrapper.properties`：定义了 Gradle 的版本号和 Gradle 运行时的行为属性。
-- `gradlew`：Linux 平台下，用于执行 Gralde 命令的包装器脚本。
-- `gradlew.bat`：Windows 平台下，用于执行 Gralde 命令的包装器脚本。
+- `gradle-wrapper.jar`: Contains the runtime logic code of Gradle.
+- `gradle-wrapper.properties`: Defines the Gradle version number and runtime behavior attributes of Gradle.
+- `gradlew`: The wrapper script for executing Gradle commands on Linux platforms.
+- `gradlew.bat`: The wrapper script for executing Gradle commands on Windows platforms.
 
-`gradle-wrapper.properties` 文件的内容如下：
+The content of the `gradle-wrapper.properties` file is as follows:
 
 ```properties
 distributionBase=GRADLE_USER_HOME
@@ -113,34 +113,34 @@ zipStoreBase=GRADLE_USER_HOME
 zipStorePath=wrapper/dists
 ```
 
-- `distributionBase`：Gradle 解包后存储的父目录。
-- `distributionPath`：`distributionBase`指定目录的子目录。`distributionBase+distributionPath`就是 Gradle 解包后的存放的具体目录。
-- `distributionUrl`：Gradle 指定版本的压缩包下载地址。
-- `zipStoreBase`：Gradle 压缩包下载后存储父目录。
-- `zipStorePath`：`zipStoreBase`指定目录的子目录。`zipStoreBase+zipStorePath`就是 Gradle 压缩包的存放位置。
+- `distributionBase`: The parent directory where Gradle is stored after unpacking.
+- `distributionPath`: The subdirectory of the directory specified by `distributionBase`. `distributionBase+distributionPath` is the concrete directory where Gradle is stored after unpacking.
+- `distributionUrl`: The download address for the specified version of the Gradle zip package.
+- `zipStoreBase`: The parent directory where the Gradle zip package is stored after downloading.
+- `zipStorePath`: The subdirectory of the directory specified by `zipStoreBase`. `zipStoreBase+zipStorePath` is where the Gradle zip package is stored.
 
-### 更新 Gradle Wrapper
+### Updating Gradle Wrapper
 
-更新 Gradle Wrapper 有 2 种方式：
+There are two ways to update the Gradle Wrapper:
 
-1. 接修改`distributionUrl`字段，然后执行 Gradle 命令。
-2. 执行 gradlew 命令`gradlew wrapper –-gradle-version [version]`。
+1. Change the `distributionUrl` field and then execute the Gradle command.
+1. Execute the `gradlew` command: `gradlew wrapper --gradle-version [version]`.
 
-下面的命令会将 Gradle 版本升级为 7.6。
+The following command will upgrade the Gradle version to 7.6.
 
 ```shell
 gradlew wrapper --gradle-version 7.6
 ```
 
-`gradle-wrapper.properties` 文件中的 `distributionUrl` 属性也发生了改变。
+The `distributionUrl` property in the `gradle-wrapper.properties` file will also change.
 
 ```properties
 distributionUrl=https\://services.gradle.org/distributions/gradle-7.6-all.zip
 ```
 
-### 自定义 Gradle Wrapper
+### Customizing Gradle Wrapper
 
-Gradle 已经内置了 Wrapper Task，因此构建 Gradle Wrapper 会生成 Gradle Wrapper 的属性文件，这个属性文件可以通过自定义 Wrapper Task 来设置。比如我们想要修改要下载的 Gralde 版本为 7.6，可以这么设置：
+Gradle has a built-in Wrapper Task, so building the Gradle Wrapper will generate a property file for the Gradle Wrapper that can be set through a custom Wrapper Task. For example, if we want to change the Gradle version to 7.6, we can set it like this:
 
 ```javascript
 task wrapper(type: Wrapper) {
@@ -148,7 +148,7 @@ task wrapper(type: Wrapper) {
 }
 ```
 
-也可以设置 Gradle 发行版压缩包的下载地址和 Gradle 解包后的本地存储路径等配置。
+You can also set the download address for the Gradle distribution zip package and the local storage path after unpacking Gradle, etc.
 
 ```groovy
 task wrapper(type: Wrapper) {
@@ -158,76 +158,76 @@ task wrapper(type: Wrapper) {
 }
 ```
 
-`distributionUrl` 属性可以设置为本地的项目目录，你也可以设置为网络地址。
+The `distributionUrl` property can be set to a local project directory, or you can set it to a network address.
 
-## Gradle 任务
+## Gradle Tasks
 
-在 Gradle 中，任务(Task)是构建执行的单个工作单元。
+In Gradle, a task is a single unit of work executed during the build.
 
-Gradle 的构建是基于 Task 进行的，当你运行项目的时候，实际就是在执行了一系列的 Task 比如编译 Java 源码的 Task、生成 jar 文件的 Task。
+Gradle's build is based on tasks, and when you run a project, you are actually executing a series of tasks such as compiling Java source tasks and generating JAR file tasks.
 
-Task 的声明方式如下（还有其他几种声明方式）：
+The declaration of a task is as follows (there are other declaration methods as well):
 
 ```groovy
-// 声明一个名字为 helloTask 的 Task
-task helloTask{
-     doLast{
-       println "Hello"
-     }
+// Declare a task named helloTask
+task helloTask {
+    doLast {
+        println "Hello"
+    }
 }
 ```
 
-创建一个 Task 后，可以根据需要给 Task 添加不同的 Action，上面的“doLast”就是给队列尾增加一个 Action。
+After creating a task, you can add different actions to the task as needed. The above `doLast` adds an action to the end of the queue.
 
 ```groovy
- //在Action 队列头部添加Action
- Task doFirst(Action<? super Task> action);
- Task doFirst(Closure action);
+// Add an action at the beginning of the Action queue
+Task doFirst(Action<? super Task> action);
+Task doFirst(Closure action);
 
- //在Action 队列尾部添加Action
- Task doLast(Action<? super Task> action);
- Task doLast(Closure action);
+// Add an action at the end of the Action queue
+Task doLast(Action<? super Task> action);
+Task doLast(Closure action);
 
- //删除所有的Action
- Task deleteAllActions();
+// Remove all actions
+Task deleteAllActions();
 ```
 
-一个 Task 中可以有多个 Acton，从队列头部开始向队列尾部执行 Acton。
+A task can have multiple actions, executed in order from the head of the queue to the tail.
 
-Action 代表的是一个个函数、方法，每个 Task 都是一堆 Action 按序组成的执行图。
+An Action represents a function or method; each task is an execution graph composed of a series of actions in sequence.
 
-Task 声明依赖的关键字是`dependsOn`，支持声明一个或多个依赖：
+The keyword for declaring task dependencies is `dependsOn`, which supports specifying one or more dependencies:
 
 ```groovy
 task first {
- doLast {
+    doLast {
         println "+++++first+++++"
     }
 }
 task second {
- doLast {
+    doLast {
         println "+++++second+++++"
     }
 }
 
-// 指定多个 task 依赖
-task print(dependsOn :[second,first]) {
- doLast {
-      logger.quiet "指定多个task依赖"
+// Specify multiple task dependencies
+task print(dependsOn: [second, first]) {
+    doLast {
+        logger.quiet "Specifying multiple task dependencies"
     }
 }
 
-// 指定一个 task 依赖
-task third(dependsOn : print) {
- doLast {
-      println '+++++third+++++'
+// Specify a single task dependency
+task third(dependsOn: print) {
+    doLast {
+        println '+++++third+++++'
     }
 }
 ```
 
-执行 Task 之前，会先执行它的依赖 Task。
+Before executing a task, its dependency tasks will be executed first.
 
-我们还可以设置默认 Task，脚本中我们不调用默认 Task ，也会执行。
+We can also set default tasks, which will be executed even if we do not call the default tasks in the script.
 
 ```groovy
 defaultTasks 'clean', 'run'
@@ -245,7 +245,7 @@ task run {
 }
 ```
 
-Gradle 本身也内置了很多 Task 比如 copy（复制文件）、delete（删除文件）。
+Gradle also has many built-in tasks, such as copy (copy files) and delete (delete files).
 
 ```groovy
 task deleteFile(type: Delete) {
@@ -253,54 +253,54 @@ task deleteFile(type: Delete) {
 }
 ```
 
-## Gradle 插件
+## Gradle Plugins
 
-Gradle 提供的是一套核心的构建机制，而 Gradle 插件则是运行在这套机制上的一些具体构建逻辑，其本质上和 `.gradle` 文件是相同。你可以将 Gradle 插件看作是封装了一系列 Task 并执行的工具。
+Gradle provides a core set of build mechanisms, while Gradle plugins represent specific build logic that runs on this mechanism. Essentially, Gradle plugins are similar to `.gradle` files, and you can think of them as tools that encapsulate a series of tasks and execute them.
 
-Gradle 插件主要分为两类：
+Gradle plugins can be mainly divided into two categories:
 
-- 脚本插件：脚本插件就是一个普通的脚本文件，它可以被导入都其他构建脚本中。
-- 二进制插件 / 对象插件：在一个单独的插件模块中定义，其他模块通过 Plugin ID 应用插件。因为这种方式发布和复用更加友好，我们一般接触到的 Gradle 插件都是指二进制插件的形式。
+- Script plugins: Simple script files that can be imported into other build scripts.
+- Binary plugins/object plugins: Defined in a separate plugin module, with other modules applying plugins through Plugin IDs. Because this method is more friendly for publishing and reusing, the Gradle plugins we generally encounter refer to binary plugins.
 
-虽然 Gradle 插件与 .gradle 文件本质上没有区别，`.gradle` 文件也能实现 Gradle 插件类似的功能。但是，Gradle 插件使用了独立模块封装构建逻辑，无论是从开发开始使用来看，Gradle 插件的整体体验都更友好。
+Although the essence of Gradle plugins and `.gradle` files is the same, and `.gradle` files can also achieve functionalities similar to Gradle plugins, Gradle plugins feature independent modules for encapsulating build logic, which enhances the overall experience during development and usage.
 
-- **逻辑复用：** 将相同的逻辑提供给多个相似项目复用，减少重复维护类似逻辑开销。当然 .gradle 文件也能做到逻辑复用，但 Gradle 插件的封装性更好；
-- **组件发布：** 可以将插件发布到 Maven 仓库进行管理，其他项目可以使用插件 ID 依赖。当然 .gradle 文件也可以放到一个远程路径被其他项目引用；
-- **构建配置：** Gradle 插件可以声明插件扩展来暴露可配置的属性，提供定制化能力。当然 .gradle 文件也可以做到，但实现会麻烦些。
+- **Logic Reuse:** Providing the same logic to multiple similar projects to reduce the overhead of maintaining similar logic. Although `.gradle` files can also achieve logic reuse, the encapsulation of Gradle plugins is better.
+- **Component Publishing:** Plugins can be published to Maven repositories for management, allowing other projects to use them via Plugin IDs. Although `.gradle` files can also be referenced from a remote path, plugins offer a cleaner approach.
+- **Build Configuration:** Gradle plugins can declare plugin extensions to expose configurable attributes, providing customization capabilities. Although `.gradle` files can achieve this, implementation can be more cumbersome.
 
-## Gradle 构建生命周期
+## Gradle Build Lifecycle
 
-Gradle 构建的生命周期有三个阶段：**初始化阶段，配置阶段**和**运行阶段**。
+The lifecycle of a Gradle build consists of three phases: **Initialization Phase, Configuration Phase**, and **Execution Phase**.
 
 ![](https://oss.javaguide.cn/github/javaguide/csdn/dadbdf59fccd9a2ebf60a2d018541e52.png)
 
-在初始化阶段与配置阶段之间、配置阶段结束之后、执行阶段结束之后，我们都可以加一些定制化的 Hook。
+Custom hooks can be added between the initialization and configuration phases, after the configuration phase, and after the execution phase.
 
 ![](https://oss.javaguide.cn/github/javaguide/csdn/5c297ccc4dac83229ff3e19caee9d1d2.png)
 
-### 初始化阶段
+### Initialization Phase
 
-Gradle 支持单项目和多项目构建。在初始化阶段，Gradle 确定哪些项目将参与构建，并为每个项目创建一个 [Project 实例](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html) 。本质上也就是执行 `settings.gradle` 脚本，从而读取整个项目中有多少个 Project 实例。
+Gradle supports single-project and multi-project builds. During the initialization phase, Gradle determines which projects will participate in the build and creates a [Project instance](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html) for each project. Essentially, this executes the `settings.gradle` script, reading how many Project instances are present in the project.
 
-### 配置阶段
+### Configuration Phase
 
-在配置阶段，Gradle 会解析每个工程的 `build.gradle` 文件，创建要执行的任务子集和确定各种任务之间的关系，以供执行阶段按照顺序执行，并对任务的做一些初始化配置。
+During the configuration phase, Gradle parses the `build.gradle` files of each project, creates a subset of tasks to be executed, and determines the relationships between various tasks, so that they can be executed in order during the execution phase, initializing configurations for the tasks.
 
-每个 `build.gradle` 对应一个 Project 对象，配置阶段执行的代码包括 `build.gradle` 中的各种语句、闭包以及 Task 中的配置语句。
+Each `build.gradle` corresponds to a Project object, and the code executed during the configuration phase includes various statements, closures, and configuration statements in Tasks from the `build.gradle`.
 
-在配置阶段结束后，Gradle 会根据 Task 的依赖关系会创建一个 **有向无环图** 。
+At the end of the configuration phase, Gradle creates a **Directed Acyclic Graph** based on the task dependencies.
 
-### 运行阶段
+### Execution Phase
 
-在运行阶段，Gradle 根据配置阶段创建和配置的要执行的任务子集，执行任务。
+During the execution phase, Gradle executes the tasks that were created and configured in the configuration phase.
 
-## 参考
+## References
 
-- Gradle 官方文档：<https://docs.gradle.org/current/userguide/userguide.html>
-- Gradle 入门教程：<https://www.imooc.com/wiki/gradlebase>
-- Groovy 快速入门看这篇就够了：<https://cloud.tencent.com/developer/article/1358357>
-- 【Gradle】Gradle 的生命周期详解：<https://juejin.cn/post/7067719629874921508>
-- 手把手带你自定义 Gradle 插件 —— Gradle 系列(2)：<https://www.cnblogs.com/pengxurui/p/16281537.html>
-- Gradle 爬坑指南 -- 理解 Plugin、Task、构建流程：<https://juejin.cn/post/6889090530593112077>
+- Gradle Official Documentation: <https://docs.gradle.org/current/userguide/userguide.html>
+- Gradle Beginner's Tutorial: <https://www.imooc.com/wiki/gradlebase>
+- Quick Start with Groovy: <https://cloud.tencent.com/developer/article/1358357>
+- Detailed Explanation of Gradle Life Cycle: <https://juejin.cn/post/7067719629874921508>
+- Hands-On Custom Gradle Plugin – Gradle Series (2): <https://www.cnblogs.com/pengxurui/p/16281537.html>
+- Gradle Pitfall Guide – Understanding Plugin, Task, Build Process: <https://juejin.cn/post/6889090530593112077>
 
 <!-- @include: @article-footer.snippet.md -->

@@ -1,18 +1,18 @@
 ---
-title: 常见面试题自测(付费)
-category: 知识星球
+title: Common Interview Questions Self-Assessment (Paid)
+category: Knowledge Planet
 icon: security-fill
 ---
 
-面试之前，强烈建议大家多拿常见的面试题来进行自测，检查一下自己的掌握情况，这是一种非常实用的备战技术面试的小技巧。
+Before the interview, it is highly recommended that everyone take common interview questions for self-assessment to check their grasp of the subject. This is a very practical technique for preparing for technical interviews.
 
-在 **[《Java 面试指北》](../zhuanlan/java-mian-shi-zhi-bei.md)** 的 **「技术面试题自测篇」** ，我总结了 Java 面试中最重要的知识点的最常见的面试题并按照面试提问的方式展现出来。
+In **[“Java Interview Guide”](../zhuanlan/java-mian-shi-zhi-bei.md)**, under the section **“Technical Interview Questions Self-Assessment”**, I have summarized the most common interview questions related to the most important knowledge points in Java interviews and presented them in the format of interview questions.
 
 ![](https://oss.javaguide.cn/xingqiu/image-20220628102643202.png)
 
-每一道用于自测的面试题我都会给出重要程度，方便大家在时间比较紧张的时候根据自身情况来选择性自测。并且，我还会给出提示，方便你回忆起对应的知识点。
+For each self-assessment interview question, I provide an importance level, making it easier for everyone to choose selectively based on their circumstances when time is tight. Additionally, I will provide hints to help you recall the corresponding knowledge points.
 
-在面试中如果你实在没有头绪的话，一个好的面试官也是会给你提示的。
+If you really have no clue during the interview, a good interviewer will also give you hints.
 
 ![](https://oss.javaguide.cn/xingqiu/image-20220628102848236.png)
 

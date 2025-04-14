@@ -1,20 +1,20 @@
 ---
-title: Async 注解原理分析
-category: 框架
+title: Analysis of Async Annotation Principles
+category: Framework
 tag:
   - Spring
 ---
 
-`@Async` 注解由 Spring 框架提供，被该注解标注的类或方法会在 **异步线程** 中执行。这意味着当方法被调用时，调用者将不会等待该方法执行完成，而是可以继续执行后续的代码。
+The `@Async` annotation is provided by the Spring framework, and classes or methods marked with this annotation will be executed in **asynchronous threads**. This means that when the method is called, the caller will not wait for the method to complete; instead, it can continue executing subsequent code.
 
-`@Async` 注解的使用非常简单，需要两个步骤：
+Using the `@Async` annotation is very simple and requires two steps:
 
-1. 在启动类上添加注解 `@EnableAsync` ，开启异步任务。
-2. 在需要异步执行的方法或类上添加注解 `@Async` 。
+1. Add the `@EnableAsync` annotation to the startup class to enable asynchronous tasks.
+1. Add the `@Async` annotation to the methods or classes that need to be executed asynchronously.
 
 ```java
 @SpringBootApplication
-// 开启异步任务
+// Enable asynchronous tasks
 @EnableAsync
 public class YourApplication {
 
@@ -23,55 +23,55 @@ public class YourApplication {
     }
 }
 
-// 异步服务类
+// Asynchronous service class
 @Service
 public class MyService {
 
-    // 推荐使用自定义线程池，这里只是演示基本用法
+    // It's recommended to use a custom thread pool; here it's just demonstrating basic usage
     @Async
     public CompletableFuture<String> doSomethingAsync() {
 
-        // 这里会有一些业务耗时操作
+        // Here will be some time-consuming business operations
         // ...
-        // 使用 CompletableFuture 可以更方便地处理异步任务的结果，避免阻塞主线程
+        // Using CompletableFuture makes it easier to handle the results of asynchronous tasks and avoids blocking the main thread
         return CompletableFuture.completedFuture("Async Task Completed");
     }
 
 }
 ```
 
-接下来，我们一起来看看 `@Async` 的底层原理。
+Next, let's take a look at the underlying principles of `@Async`.
 
-## @Async 原理分析
+## Analysis of @Async Principles
 
-`@Async` 可以异步执行任务，本质上是使用 **动态代理** 来实现的。通过 Spring 中的后置处理器 `BeanPostProcessor` 为使用 `@Async` 注解的类创建动态代理，之后 `@Async` 注解方法的调用会被动态代理拦截，在拦截器中将方法的执行封装为异步任务提交给线程池处理。
+The `@Async` can execute tasks asynchronously and is essentially implemented using **dynamic proxies**. Through Spring's `BeanPostProcessor`, a dynamic proxy is created for classes using the `@Async` annotation. Afterwards, the invocation of `@Async` annotated methods will be intercepted by the dynamic proxy, and the execution of the methods will be encapsulated as asynchronous tasks submitted to the thread pool for processing.
 
-接下来，我们来详细分析一下。
+Now, let's analyze this in detail.
 
-### 开启异步
+### Enabling Asynchronous Processing
 
-使用 `@Async` 之前，需要在启动类上添加 `@EnableAsync` 来开启异步，`@EnableAsync` 注解如下：
+Before using `@Async`, you need to add `@EnableAsync` to the startup class to enable asynchronous processing. The `@EnableAsync` annotation is defined as follows:
 
-```JAVA
-// 省略其他注解 ...
+```java
+// Omitting other annotations ...
 @Import(AsyncConfigurationSelector.class)
 public @interface EnableAsync { /* ... */ }
 ```
 
-在 `@EnableAsync` 注解上通过 `@Import` 注解引入了 `AsyncConfigurationSelector` ，因此 Spring 会去加载通过 `@Import` 注解引入的类。
+The `@EnableAsync` annotation imports `AsyncConfigurationSelector` through the `@Import` annotation, so Spring will load the classes introduced by the `@Import` annotation.
 
-`AsyncConfigurationSelector` 类实现了 `ImportSelector` 接口，因此在该类中会重写 `selectImports()` 方法来自定义加载 Bean 的逻辑，如下：
+The `AsyncConfigurationSelector` class implements the `ImportSelector` interface, and therefore overrides the `selectImports()` method to define the logic for loading beans, as follows:
 
-```JAVA
+```java
 public class AsyncConfigurationSelector extends AdviceModeImportSelector<EnableAsync> {
 	@Override
 	@Nullable
 	public String[] selectImports(AdviceMode adviceMode) {
 		switch (adviceMode) {
-   // 基于 JDK 代理织入的通知
+   // Notifications woven based on JDK proxy
 			case PROXY:
 				return new String[] {ProxyAsyncConfiguration.class.getName()};
-   // 基于 AspectJ 织入的通知
+   // Notifications woven based on AspectJ
 			case ASPECTJ:
 				return new String[] {ASYNC_EXECUTION_ASPECT_CONFIGURATION_CLASS_NAME};
 			default:
@@ -81,11 +81,11 @@ public class AsyncConfigurationSelector extends AdviceModeImportSelector<EnableA
 }
 ```
 
-在 `selectImports()` 方法中，会根据通知的不同类型来选择加载不同的类，其中 `adviceMode` 默认值为 `PROXY` 。
+In the `selectImports()` method, different classes are chosen to be loaded based on the type of advice, where the default value of `adviceMode` is `PROXY`.
 
-这里以基于 JDK 代理的通知为例，此时会加载 `ProxyAsyncConfiguration` 类，如下：
+Taking the notification based on JDK proxy as an example, the `ProxyAsyncConfiguration` class will be loaded as follows:
 
-```JAVA
+```java
 @Configuration
 @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 public class ProxyAsyncConfiguration extends AbstractAsyncConfiguration {
@@ -93,7 +93,7 @@ public class ProxyAsyncConfiguration extends AbstractAsyncConfiguration {
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public AsyncAnnotationBeanPostProcessor asyncAdvisor() {
 		 // ...
-  // 加载后置处理器
+  // Load the post-processor
 		AsyncAnnotationBeanPostProcessor bpp = new AsyncAnnotationBeanPostProcessor();
 
   // ...
@@ -102,26 +102,26 @@ public class ProxyAsyncConfiguration extends AbstractAsyncConfiguration {
 }
 ```
 
-### 后置处理器
+### Post-Processor
 
-在 `ProxyAsyncConfiguration` 类中，会通过 `@Bean` 注解加载一个后置处理器 `AsyncAnnotationBeanPostProcessor` ，这个后置处理器是使 `@Async` 注解起作用的关键。
+In the `ProxyAsyncConfiguration` class, a post-processor `AsyncAnnotationBeanPostProcessor` is loaded via the `@Bean` annotation. This post-processor is key to making the `@Async` annotation work.
 
-如果某一个类或者方法上使用了 `@Async` 注解，`AsyncAnnotationBeanPostProcessor` 处理器就会为该类创建一个动态代理。
+If a class or method uses the `@Async` annotation, the `AsyncAnnotationBeanPostProcessor` processor will create a dynamic proxy for that class.
 
-该类的方法在执行时，会被代理对象的拦截器所拦截，其中被 `@Async` 注解标记的方法会异步执行。
+When the method of that class is executed, it will be intercepted by the interceptor of the proxy object, and methods marked with the `@Async` annotation will be executed asynchronously.
 
-`AsyncAnnotationBeanPostProcessor` 代码如下：
+Here's the code for `AsyncAnnotationBeanPostProcessor`:
 
-```JAVA
+```java
 public class AsyncAnnotationBeanPostProcessor extends AbstractBeanFactoryAwareAdvisingPostProcessor {
 	@Override
 	public void setBeanFactory(BeanFactory beanFactory) {
 		super.setBeanFactory(beanFactory);
-  // 创建 AsyncAnnotationAdvisor，它是一个 Advisor
-  // 用于拦截带有 @Async 注解的方法并将这些方法异步执行。
+  // Create AsyncAnnotationAdvisor, which is an Advisor
+  // For intercepting methods marked with @Async and executing them asynchronously.
 		AsyncAnnotationAdvisor advisor = new AsyncAnnotationAdvisor(this.executor, this.exceptionHandler);
-  // 如果设置了自定义的 asyncAnnotationType，则将其设置到 advisor 中。
-  // asyncAnnotationType 用于指定自定义的异步注解，例如 @MyAsync。
+  // If a custom asyncAnnotationType is set, it will be set to the advisor.
+  // asyncAnnotationType is used to specify a custom asynchronous annotation, such as @MyAsync.
 		if (this.asyncAnnotationType != null) {
 			advisor.setAsyncAnnotationType(this.asyncAnnotationType);
 		}
@@ -131,73 +131,73 @@ public class AsyncAnnotationBeanPostProcessor extends AbstractBeanFactoryAwareAd
 }
 ```
 
-`AsyncAnnotationBeanPostProcessor` 的父类实现了 `BeanFactoryAware` 接口，因此在该类中重写了 `setBeanFactory()` 方法作为扩展点，来加载 `AsyncAnnotationAdvisor` 。
+The `AsyncAnnotationBeanPostProcessor` class's parent class implements the `BeanFactoryAware` interface, so the `setBeanFactory()` method is overridden as an extension point to load `AsyncAnnotationAdvisor`.
 
-#### 创建 Advisor
+#### Creating an Advisor
 
-`Advisor` 是 `Spring AOP` 对 `Advice` 和 `Pointcut` 的抽象。`Advice` 为执行的通知逻辑，`Pointcut` 为通知执行的切入点。
+An `Advisor` is an abstraction of `Advice` and `Pointcut` in `Spring AOP`. `Advice` is the notification logic executed, while `Pointcut` is the join point at which the advice is applied.
 
-在后置处理器 `AsyncAnnotationBeanPostProcessor` 中会去创建 `AsyncAnnotationAdvisor` ， 在它的构造方法中，会构建对应的 `Advice` 和 `Pointcut` ，如下：
+In the post-processor `AsyncAnnotationBeanPostProcessor`, `AsyncAnnotationAdvisor` will be created. In its constructor, the corresponding `Advice` and `Pointcut` will be constructed as follows:
 
-```JAVA
+```java
 public class AsyncAnnotationAdvisor extends AbstractPointcutAdvisor implements BeanFactoryAware {
 
-    private Advice advice; // 异步执行的 Advice
-    private Pointcut pointcut; // 匹配 @Async 注解方法的切点
+    private Advice advice; // Advice for asynchronous execution
+    private Pointcut pointcut; // Pointcut for matching methods annotated with @Async
 
-    // 构造函数
-    public AsyncAnnotationAdvisor(/* 参数省略 */) {
-        // 1. 创建 Advice，负责异步执行逻辑
+    // Constructor
+    public AsyncAnnotationAdvisor(/* parameters omitted */) {
+        // 1. Create Advice responsible for asynchronous execution logic
         this.advice = buildAdvice(executor, exceptionHandler);
-        // 2. 创建 Pointcut，选择要被增强的目标方法
+        // 2. Create Pointcut, selecting target methods to be enhanced
         this.pointcut = buildPointcut(asyncAnnotationTypes);
     }
 
-    // 创建 Advice
-    protected Advice buildAdvice(/* 参数省略 */) {
-        // 创建处理异步执行的拦截器
+    // Create Advice
+    protected Advice buildAdvice(/* parameters omitted */) {
+        // Create interceptor for handling asynchronous execution
         AnnotationAsyncExecutionInterceptor interceptor = new AnnotationAsyncExecutionInterceptor(null);
-        // 使用执行器和异常处理器配置拦截器
+        // Configure interceptor using executor and exception handler
         interceptor.configure(executor, exceptionHandler);
         return interceptor;
     }
 
-    // 创建 Pointcut
+    // Create Pointcut
     protected Pointcut buildPointcut(Set<Class<? extends Annotation>> asyncAnnotationTypes) {
         ComposablePointcut result = null;
         for (Class<? extends Annotation> asyncAnnotationType : asyncAnnotationTypes) {
-            // 1. 类级别切点：如果类上有注解则匹配
+            // 1. Class-level pointcut: matches if there is an annotation on the class
             Pointcut cpc = new AnnotationMatchingPointcut(asyncAnnotationType, true);
-            // 2. 方法级别切点：如果方法上有注解则匹配
+            // 2. Method-level pointcut: matches if there is an annotation on the method
             Pointcut mpc = new AnnotationMatchingPointcut(null, asyncAnnotationType, true);
 
             if (result == null) {
                 result = new ComposablePointcut(cpc);
             } else {
-                // 使用 union 合并之前的切点
+                // Use union to merge previous pointcuts
                 result.union(cpc);
             }
-            // 将方法级别切点添加到组合切点
+            // Add method-level pointcut to the composite pointcut
             result = result.union(mpc);
         }
-        // 返回组合切点，如果没有提供注解类型则返回 Pointcut.TRUE
+        // Return composite pointcut; if no annotation type is provided, return Pointcut.TRUE
         return (result != null ? result : Pointcut.TRUE);
     }
 }
 ```
 
-`AsyncAnnotationAdvisor` 的核心在于构建 `Advice` 和 `Pointcut` ：
+The core of `AsyncAnnotationAdvisor` lies in building the `Advice` and `Pointcut`:
 
-- 构建 `Advice` ：会创建 `AnnotationAsyncExecutionInterceptor` 拦截器，在拦截器的 `invoke()` 方法中会执行通知的逻辑。
-- 构建 `Pointcut` ：由 `ClassFilter` 和 `MethodMatcher` 组成，用于匹配哪些方法需要执行通知（ `Advice` ）的逻辑。
+- Building `Advice`: A `AnnotationAsyncExecutionInterceptor` interceptor is created, and the notification logic will be executed in the interceptor's `invoke()` method.
+- Building `Pointcut`: Composed of `ClassFilter` and `MethodMatcher` to determine which methods need to execute the notification (`Advice`) logic.
 
-#### 后置处理逻辑
+#### Post-Processing Logic
 
-`AsyncAnnotationBeanPostProcessor` 后置处理器中实现的 `postProcessAfterInitialization()` 方法在其父类 `AbstractAdvisingBeanPostProcessor` 中，在 `Bean` 初始化之后，会进入到 `postProcessAfterInitialization()` 方法进行后置处理。
+The `postProcessAfterInitialization()` method implemented in the `AsyncAnnotationBeanPostProcessor` post-processor is in its parent class `AbstractAdvisingBeanPostProcessor`. After the bean initialization, it will enter the `postProcessAfterInitialization()` method for post-processing.
 
-在后置处理方法中，会判断 `Bean` 是否符合后置处理器中 `Advisor` 通知的条件，如果符合，则创建代理对象。如下：
+In the post-processing method, it will determine whether the bean meets the conditions for advisory notifications. If they match, a proxy object will be created. As follows:
 
-```JAVA
+```java
 // AbstractAdvisingBeanPostProcessor
 public Object postProcessAfterInitialization(Object bean, String beanName) {
 	if (this.advisor == null || bean instanceof AopInfrastructureBean) {
@@ -215,29 +215,29 @@ public Object postProcessAfterInitialization(Object bean, String beanName) {
 			return bean;
 		}
 	}
- // 判断给定的 Bean 是否符合后置处理器中 Advisor 通知的条件，符合的话，就创建代理对象。
+ // Check if the given bean meets the conditions in the post-processor for advisory notifications. If so, create a proxy object.
 	if (isEligible(bean, beanName)) {
 		ProxyFactory proxyFactory = prepareProxyFactory(bean, beanName);
 		if (!proxyFactory.isProxyTargetClass()) {
 			evaluateProxyInterfaces(bean.getClass(), proxyFactory);
 		}
-  // 添加 Advisor。
+  // Add Advisor.
 		proxyFactory.addAdvisor(this.advisor);
 		customizeProxyFactory(proxyFactory);
-  // 返回代理对象。
+  // Return proxy object.
 		return proxyFactory.getProxy(getProxyClassLoader());
 	}
 	return bean;
 }
 ```
 
-### @Async 注解方法的拦截
+### Interception of Methods with @Async Annotation
 
-`@Async` 注解方法的执行会在 `AnnotationAsyncExecutionInterceptor` 中被拦截，在 `invoke()` 方法中执行拦截器的逻辑。此时会将 `@Async` 注解标注的方法封装为异步任务，交给执行器来执行。
+The execution of methods with the `@Async` annotation will be intercepted in the `AnnotationAsyncExecutionInterceptor`, where the interceptor's logic will be executed in the `invoke()` method. At this point, the methods annotated with `@Async` will be encapsulated as asynchronous tasks and submitted to the executor for execution.
 
-`invoke()` 方法在 `AnnotationAsyncExecutionInterceptor` 的父类 `AsyncExecutionInterceptor` 中定义，如下：
+The `invoke()` method is defined in the parent class `AsyncExecutionInterceptor`, as follows:
 
-```JAVA
+```java
 public class AsyncExecutionInterceptor extends AsyncExecutionAspectSupport implements MethodInterceptor, Ordered {
 	@Override
 	@Nullable
@@ -246,15 +246,15 @@ public class AsyncExecutionInterceptor extends AsyncExecutionAspectSupport imple
 		Method specificMethod = ClassUtils.getMostSpecificMethod(invocation.getMethod(), targetClass);
 		final Method userDeclaredMethod = BridgeMethodResolver.findBridgedMethod(specificMethod);
 
-  // 1、确定异步任务执行器
+  // 1. Determine the asynchronous task executor
 		AsyncTaskExecutor executor = determineAsyncExecutor(userDeclaredMethod);
 
-  // 2、将要执行的方法封装为 Callable 异步任务
+  // 2. Encapsulate the method to be executed as a Callable asynchronous task
 		Callable<Object> task = () -> {
 			try {
-    // 2.1、执行方法
+    // 2.1 Execute the method
 				Object result = invocation.proceed();
-    // 2.2、如果方法返回值是 Future 类型，阻塞等待结果
+    // 2.2 If the method's return value is of Future type, block and wait for the result
 				if (result instanceof Future) {
 					return ((Future<?>) result).get();
 				}
@@ -267,44 +267,44 @@ public class AsyncExecutionInterceptor extends AsyncExecutionAspectSupport imple
 			}
 			return null;
 		};
-		// 3、提交任务
+		// 3. Submit the task
 		return doSubmit(task, executor, invocation.getMethod().getReturnType());
 	}
 }
 ```
 
-在 `invoke()` 方法中，主要有 3 个步骤：
+In the `invoke()` method, there are mainly 3 steps:
 
-1. 确定执行异步任务的执行器。
-2. 将 `@Async` 注解标注的方法封装为 `Callable` 异步任务。
-3. 将任务提交给执行器执行。
+1. Determine the executor for executing the asynchronous task.
+1. Package the method marked with `@Async` as a `Callable` asynchronous task.
+1. Submit the task to the executor for execution.
 
-#### 1、获取异步任务执行器
+#### 1. Getting the Asynchronous Task Executor
 
-在 `determineAsyncExecutor()` 方法中，会获取异步任务的执行器（即执行异步任务的 **线程池** ）。代码如下：
+In the `determineAsyncExecutor()` method, the executor for the asynchronous task (i.e., the thread pool) will be obtained. The code is as follows:
 
-```JAVA
-// 确定异步任务的执行器
+```java
+// Determine the executor for the asynchronous task
 protected AsyncTaskExecutor determineAsyncExecutor(Method method) {
- // 1、先从缓存中获取。
+ // 1. First attempt to get it from the cache.
 	AsyncTaskExecutor executor = this.executors.get(method);
 	if (executor == null) {
 		Executor targetExecutor;
-  // 2、获取执行器的限定符。
+  // 2. Get the qualifier of the executor.
 		String qualifier = getExecutorQualifier(method);
 		if (StringUtils.hasLength(qualifier)) {
-   // 3、根据限定符获取对应的执行器。
+   // 3. Obtain the corresponding executor based on the qualifier.
 			targetExecutor = findQualifiedExecutor(this.beanFactory, qualifier);
 		}
 		else {
-   // 4、如果没有限定符，则使用默认的执行器。即 Spring 提供的默认线程池：SimpleAsyncTaskExecutor。
+   // 4. If there is no qualifier, use the default executor provided by Spring: SimpleAsyncTaskExecutor.
 			targetExecutor = this.defaultExecutor.get();
 		}
 		if (targetExecutor == null) {
 			return null;
 		}
-  // 5、将执行器包装为 TaskExecutorAdapter 适配器。
-  // TaskExecutorAdapter 是 Spring 对于 JDK 线程池做的一层抽象，还是继承自 JDK 的线程池 Executor。这里可以不用管太多，只要知道它是线程池就可以了。
+  // 5. Wrap the executor as a TaskExecutorAdapter adapter.
+  // TaskExecutorAdapter is an abstraction for JDK thread pools provided by Spring, still inheriting from JDK's Executor thread pool. You don't need to worry too much about this; just know it's a thread pool.
 		executor = (targetExecutor instanceof AsyncListenableTaskExecutor ?
 				(AsyncListenableTaskExecutor) targetExecutor : new TaskExecutorAdapter(targetExecutor));
 		this.executors.put(method, executor);
@@ -313,32 +313,32 @@ protected AsyncTaskExecutor determineAsyncExecutor(Method method) {
 }
 ```
 
-在 `determineAsyncExecutor()` 方法中确定了异步任务的执行器（线程池），主要是通过 `@Async` 注解的 `value` 值来获取执行器的限定符，根据限定符再去 `BeanFactory` 中查找对应的执行器就可以了。
+In the `determineAsyncExecutor()` method, the executor for the asynchronous task (thread pool) is determined mainly through the `value` of the `@Async` annotation to get the qualifier of the executor and then find the corresponding executor in the `BeanFactory.`
 
-如果在 `@Async` 注解中没有指定线程池，则会通过 `this.defaultExecutor.get()` 来获取默认的线程池，其中 `defaultExecutor` 在下边方法中进行赋值：
+If no thread pool is specified in the `@Async` annotation, it will get the default thread pool through `this.defaultExecutor.get()`, which is assigned in the following method:
 
-```JAVA
+```java
 // AsyncExecutionInterceptor
 protected Executor getDefaultExecutor(@Nullable BeanFactory beanFactory) {
- // 1、尝试从 beanFactory 中获取线程池。
+ // 1. Try to get the thread pool from the beanFactory.
 	Executor defaultExecutor = super.getDefaultExecutor(beanFactory);
- // 2、如果 beanFactory 中没有，则创建 SimpleAsyncTaskExecutor 线程池。
+ // 2. If there's none in the beanFactory, create a SimpleAsyncTaskExecutor thread pool.
 	return (defaultExecutor != null ? defaultExecutor : new SimpleAsyncTaskExecutor());
 }
 ```
 
-其中 `super.getDefaultExecutor()` 会在 `beanFactory` 中尝试获取 `Executor` 类型的线程池。代码如下：
+In which, `super.getDefaultExecutor()` will try to obtain the `Executor` type thread pool from the `beanFactory`. The code is as follows:
 
-```JAVA
+```java
 protected Executor getDefaultExecutor(@Nullable BeanFactory beanFactory) {
 	if (beanFactory != null) {
 		try {
-   // 1、从 beanFactory 中获取 TaskExecutor 类型的线程池。
+   // 1. Get the TaskExecutor type thread pool from the beanFactory.
 			return beanFactory.getBean(TaskExecutor.class);
 		}
 		catch (NoUniqueBeanDefinitionException ex) {
 			try {
-				// 2、如果有多个，则尝试从 beanFactory 中获取执行名称的 Executor 线程池。
+				// 2. If there are multiple, attempt to get the executor thread pool by execution name from the beanFactory.
 				return beanFactory.getBean(DEFAULT_TASK_EXECUTOR_BEAN_NAME, Executor.class);
 			}
 			catch (NoSuchBeanDefinitionException ex2) {
@@ -349,7 +349,7 @@ protected Executor getDefaultExecutor(@Nullable BeanFactory beanFactory) {
 		}
 		catch (NoSuchBeanDefinitionException ex) {
 			try {
-    // 3、如果没有，则尝试从 beanFactory 中获取执行名称的 Executor 线程池。
+    // 3. If none exist, attempt to get the executor thread pool by execution name from the beanFactory.
 				return beanFactory.getBean(DEFAULT_TASK_EXECUTOR_BEAN_NAME, Executor.class);
 			}
 			catch (NoSuchBeanDefinitionException ex2) {
@@ -361,140 +361,140 @@ protected Executor getDefaultExecutor(@Nullable BeanFactory beanFactory) {
 }
 ```
 
-在 `getDefaultExecutor()` 中，如果从 `beanFactory` 获取线程池失败的话，则会创建 `SimpleAsyncTaskExecutor` 线程池。
+In `getDefaultExecutor()`, if it fails to get the thread pool from the `beanFactory`, it will create a `SimpleAsyncTaskExecutor` thread pool.
 
-该线程池的在每次执行异步任务时，都会创建一个新的线程去执行任务，并不会对线程进行复用，从而导致异步任务执行的开销很大。一旦在 `@Async` 注解标注的方法某一瞬间并发量剧增，应用就会大量创建线程，从而影响服务质量甚至出现服务不可用。
+This thread pool will create a new thread for each asynchronous task execution, without reusing threads, leading to substantial overhead for executing asynchronous tasks. If the concurrency spikes at any moment in methods marked with `@Async`, the application will create a vast number of threads, thereby affecting service quality or even causing service outages.
 
-同一时刻如果向 `SimpleAsyncTaskExecutor` 线程池提交 10000 个任务，那么该线程池就会创建 10000 个线程，其的 `execute()` 方法如下：
+If 10,000 tasks are submitted to the `SimpleAsyncTaskExecutor` thread pool at the same time, the thread pool will create 10,000 threads. Its `execute()` method is as follows:
 
-```JAVA
-// SimpleAsyncTaskExecutor：execute() 内部会调用 doExecute()
+```java
+// SimpleAsyncTaskExecutor: The execute() method internally calls doExecute()
 protected void doExecute(Runnable task) {
-    // 创建新线程
+    // Create a new thread
     Thread thread = (this.threadFactory != null ? this.threadFactory.newThread(task) : createThread(task));
     thread.start();
 }
 ```
 
-**建议：在使用 `@Async` 时需要自己指定线程池，避免 Spring 默认线程池带来的风险。**
+**Recommendation: When using `@Async`, be sure to specify your own thread pool to avoid the risks of Spring's default thread pool.**
 
-在 `@Async` 注解中的 `value` 指定了线程池的限定符，根据限定符可以获取 **自定义的线程池** 。获取限定符的代码如下：
+The `value` in the `@Async` annotation specifies the qualifier of the thread pool, and based on the qualifier, a **custom thread pool** can be obtained. The code to obtain the qualifier is as follows:
 
-```JAVA
+```java
 // AnnotationAsyncExecutionInterceptor
 protected String getExecutorQualifier(Method method) {
-	// 1.从方法上获取 Async 注解。
+	// 1. Get the Async annotation from the method.
 	Async async = AnnotatedElementUtils.findMergedAnnotation(method, Async.class);
- // 2. 如果方法上没有找到 @Async 注解，则尝试从方法所在的类上获取 @Async 注解。
+ // 2. If no @Async annotation is found on the method, try to get the @Async annotation from the class where the method is defined.
 	if (async == null) {
 		async = AnnotatedElementUtils.findMergedAnnotation(method.getDeclaringClass(), Async.class);
 	}
- // 3. 如果找到了 @Async 注解，则获取注解的 value 值并返回，作为线程池的限定符。
- //    如果 "value" 属性值为空字符串，则使用默认的线程池。
- //    如果没有找到 @Async 注解，则返回 null，同样使用默认的线程池。
+ // 3. If the @Async annotation is found, get its value and return it as the thread pool's qualifier.
+ //    If the value attribute is an empty string, it will use the default thread pool.
+ //    If the @Async annotation is not found, null will be returned, hence using the default thread pool.
 	return (async != null ? async.value() : null);
 }
 ```
 
-#### 2、将方法封装为异步任务
+#### 2. Encapsulating the Method as an Asynchronous Task
 
-在 `invoke()` 方法获取执行器之后，会将方法封装为异步任务，代码如下：
+After obtaining the executor in the `invoke()` method, the method is encapsulated as an asynchronous task, as follows:
 
-```JAVA
-// 将要执行的方法封装为 Callable 异步任务
+```java
+// Encapsulate the method to be executed as a Callable asynchronous task
 Callable<Object> task = () -> {
     try {
-        // 2.1、执行被拦截的方法 (proceed() 方法是 AOP 中的核心方法，用于执行目标方法)
+        // 2.1 Execute the intercepted method (the proceed() method is the core method in AOP for executing the target method)
         Object result = invocation.proceed();
 
-        // 2.2、如果被拦截方法的返回值是 Future 类型，则需要阻塞等待结果，
-        //     并将 Future 的结果作为异步任务的结果返回。 这是为了处理异步方法嵌套调用的情况。
-        //     例如，一个异步方法内部调用了另一个异步方法，则需要等待内部异步方法执行完成，
-        //     才能返回最终的结果。
+        // 2.2 If the intercepted method's return value is of Future type, it needs to block and wait for the result,
+        //     and return the result of Future as the result of the asynchronous task. This is to handle nested calls of asynchronous methods.
+        //     For instance, if an asynchronous method calls another asynchronous method internally, it should wait for the inner asynchronous method to complete
+        //     before returning the final result.
         if (result instanceof Future) {
-            return ((Future<?>) result).get(); // 阻塞等待 Future 的结果
+            return ((Future<?>) result).get(); // Blocking wait for the Future result
         }
     }
     catch (ExecutionException ex) {
-        // 2.3、处理 ExecutionException 异常。 ExecutionException 是 Future.get() 方法抛出的异常，
-        handleError(ex.getCause(), userDeclaredMethod, invocation.getArguments()); // 处理原始异常
+        // 2.3 Handle ExecutionException. ExecutionException is an exception thrown by Future.get().
+        handleError(ex.getCause(), userDeclaredMethod, invocation.getArguments()); // Handle the original exception
     }
     catch (Throwable ex) {
-        // 2.4、处理其他类型的异常。 将异常、被拦截的方法和方法参数作为参数调用 handleError() 方法进行处理。
+        // 2.4 Handle other types of exceptions. Pass the exception, intercepted method, and method parameters to the handleError() method for handling.
         handleError(ex, userDeclaredMethod, invocation.getArguments());
     }
-    // 2.5、如果方法返回值不是 Future 类型，或者发生异常，则返回 null。
+    // 2.5 If the method return value is not of Future type or an exception occurs, return null.
     return null;
 };
 ```
 
-相比于 `Runnable` ，`Callable` 可以返回结果，并且抛出异常。
+Compared to `Runnable`, `Callable` can return results and throw exceptions.
 
-将 `invocation.proceed()` 的执行（原方法的执行）封装为 `Callable` 异步任务。这里仅仅当 `result` （方法返回值）类型为 `Future` 才返回，如果是其他类型则直接返回 `null` 。
+The execution of `invocation.proceed()` (the execution of the original method) is encapsulated as a `Callable` asynchronous task. Here, it only returns when `result` (the method return value) is of `Future` type; otherwise, it returns `null`.
 
-因此使用 `@Async` 注解标注的方法如果使用 `Future` 类型之外的返回值，则无法获取方法的执行结果。
+Therefore, if the return value of the method annotated with `@Async` is defined as something other than `Future`, it will not be able to obtain the execution result of the method.
 
-#### 3、提交异步任务
+#### 3. Submitting the Asynchronous Task
 
-在 `AsyncExecutionInterceptor # invoke()` 中将要执行的方法封装为 Callable 任务之后，就会将任务交给执行器来执行。提交相关的代码如下：
+After the method is encapsulated as a `Callable` task in the `AsyncExecutionInterceptor # invoke()`, the task is submitted to the executor for execution. The related code for submission is as follows:
 
-```JAVA
+```java
 protected Object doSubmit(Callable<Object> task, AsyncTaskExecutor executor, Class<?> returnType) {
-    // 根据方法的返回值类型，选择不同的异步执行方式并返回结果。
-    // 1. 如果方法返回值是 CompletableFuture 类型
+    // Depending on the return type of the method, choose different asynchronous execution methods and return results.
+    // 1. If the method return value is of CompletableFuture type
     if (CompletableFuture.class.isAssignableFrom(returnType)) {
-        // 使用 CompletableFuture.supplyAsync() 方法异步执行任务。
+        // Use CompletableFuture.supplyAsync() method to execute the task asynchronously.
         return CompletableFuture.supplyAsync(() -> {
             try {
                 return task.call();
             }
             catch (Throwable ex) {
-                throw new CompletionException(ex); // 将异常包装为 CompletionException，以便在 future.get() 时抛出
+                throw new CompletionException(ex); // Wrap the exception in a CompletionException, so it throws during future.get()
             }
         }, executor);
     }
-    // 2. 如果方法返回值是 ListenableFuture 类型
+    // 2. If the method return value is of ListenableFuture type
     else if (ListenableFuture.class.isAssignableFrom(returnType)) {
-        // 将 AsyncTaskExecutor 强制转换为 AsyncListenableTaskExecutor，
-        // 并调用 submitListenable() 方法提交任务。
-        // AsyncListenableTaskExecutor 是 ListenableFuture 的专用异步执行器，
-        // 它可以返回一个 ListenableFuture 对象，允许添加回调函数来监听任务的完成。
+        // Cast the AsyncTaskExecutor to AsyncListenableTaskExecutor,
+        // and call the submitListenable() method to submit the task.
+        // AsyncListenableTaskExecutor is a specialized asynchronous executor for ListenableFuture,
+        // allowing callbacks to be added to listen for task completion.
         return ((AsyncListenableTaskExecutor) executor).submitListenable(task);
     }
-    // 3. 如果方法返回值是 Future 类型
+    // 3. If the method return value is of Future type
     else if (Future.class.isAssignableFrom(returnType)) {
-        // 直接调用 AsyncTaskExecutor 的 submit() 方法提交任务，并返回一个 Future 对象。
+        // Call the submit() method of AsyncTaskExecutor directly to submit the task and return a Future object.
         return executor.submit(task);
     }
-    // 4. 如果方法返回值是 void 或其他类型
+    // 4. If the method return value is void or another type
     else {
-        // 直接调用 AsyncTaskExecutor 的 submit() 方法提交任务。
-        // 由于方法返回值是 void，因此不需要返回任何结果，直接返回 null。
+        // Submit the task directly through the AsyncTaskExecutor.
+        // Since the return value of the method is void, there's no need to return any result, just return null.
         executor.submit(task);
         return null;
     }
 }
 ```
 
-在 `doSubmit()` 方法中，会根据 `@Async` 注解标注方法的返回值不同，来选择不同的任务提交方式，最后任务会由执行器（线程池）执行。
+In the `doSubmit()` method, it selects different task submission methods based on the return value of the method marked with the `@Async` annotation, and finally the task is executed by the executor (thread pool).
 
-### 总结
+### Summary
 
-![Async原理总结](./images/async/async.png)
+![Async Principle Summary](./images/async/async.png)
 
-理解 `@Async` 原理的核心在于理解 `@EnableAsync` 注解，该注解开启了异步任务的功能。
+Understanding the core of the `@Async` principle focuses on understanding the `@EnableAsync` annotation, which enables asynchronous task functionality.
 
-主要流程如上图，会通过后置处理器来创建代理对象，之后代理对象中 `@Async` 方法的执行会走到 `Advice` 内部的拦截器中，之后将方法封装为异步任务，并提交线程池进行处理。
+The main process is shown in the figure above: a post-processor is used to create a proxy object, after which the execution of methods in the proxy object marked with `@Async` will go through the interceptor in the `Advice`, encapsulating the methods as asynchronous tasks, and submitting them to the thread pool for processing.
 
-## @Async 使用建议
+## Suggestions for Using @Async
 
-### 自定义线程池
+### Custom Thread Pool
 
-如果没有显式地配置线程池，在 `@Async` 底层会先在 `BeanFactory` 中尝试获取线程池，如果获取不到，则会创建一个 `SimpleAsyncTaskExecutor` 实现。`SimpleAsyncTaskExecutor` 本质上不算是一个真正的线程池，因为它对于每个请求都会启动一个新线程而不重用现有线程，这会带来一些潜在的问题，例如资源消耗过大。
+If a thread pool is not explicitly configured, the underlying implementation of `@Async` will first attempt to get the thread pool from the `BeanFactory`. If it fails, it will create a `SimpleAsyncTaskExecutor` implementation. The `SimpleAsyncTaskExecutor` is not a true thread pool because it creates a new thread for each request without reusing existing threads, which can lead to potential issues, such as excessive resource consumption.
 
-具体线程池获取可以参考这篇文章：[浅析 Spring 中 Async 注解底层异步线程池原理｜得物技术](https://mp.weixin.qq.com/s/FySv5L0bCdrlb5MoSfQtAA)。
+For specific details on obtaining a thread pool, you can refer to this article: [An Analysis of the Underlying Asynchronous Thread Pool Principle of the Async Annotation in Spring｜DeWu Technology](https://mp.weixin.qq.com/s/FySv5L0bCdrlb5MoSfQtAA).
 
-一定要显式配置一个线程池，推荐`ThreadPoolTaskExecutor`。并且，还可以根据任务的性质和需求，为不同的异步方法指定不同的线程池。
+Always explicitly configure a thread pool, and `ThreadPoolTaskExecutor` is recommended. Additionally, you can specify different thread pools for different asynchronous methods based on the nature and requirements of the tasks.
 
 ```java
 @Configuration
@@ -525,7 +525,7 @@ public class AsyncConfig {
 }
 ```
 
-`@Async` 注解中指定线程池的 Bean 名称：
+Specify the bean name of the thread pool in the `@Async` annotation:
 
 ```java
 @Service
@@ -533,52 +533,52 @@ public class AsyncService {
 
     @Async("executor1")
     public void performTask1() {
-        // 任务1的逻辑
+        // Logic for Task 1
         System.out.println("Executing Task1 with Executor1");
     }
 
     @Async("executor2")
     public void performTask2() {
-        // 任务2的逻辑
+        // Logic for Task 2
         System.out.println("Executing Task2 with Executor2");
     }
 }
 ```
 
-### 避免 @Async 注解失效
+### Avoiding @Async Annotation Failure
 
-`@Async` 注解会在以下几个场景失效，需要注意：
+The `@Async` annotation can fail to function in the following situations, so please be cautious:
 
-**1、同一类中调用异步方法**
+**1. Calling Asynchronous Methods from Within the Same Class**
 
-如果你在同一个类内部调用一个`@Async`注解的方法，那这个方法将不会异步执行。
+If you call a method annotated with `@Async` directly through `this` reference in the same class, that method will not execute asynchronously.
 
 ```java
 @Service
 public class MyService {
 
     public void myMethod() {
-        // 直接通过 this 引用调用，绕过了 Spring 的代理机制，异步执行失效
+        // Calling via this reference bypasses the Spring proxy mechanism, causing async execution to fail
         asyncMethod();
     }
 
     @Async
     public void asyncMethod() {
-        // 异步执行的逻辑
+        // Logic for asynchronous execution
     }
 }
 ```
 
-这是因为 Spring 的异步机制是通过 **代理** 实现的，而在同一个类内部的方法调用会绕过 Spring 的代理机制，也就是绕过了代理对象，直接通过 this 引用调用的。由于没有经过代理，所有的代理相关的处理（即将任务提交线程池异步执行）都不会发生。
+This is because Spring's asynchronous mechanism is implemented through **proxies**, and method calls within the same class bypass the Spring proxy mechanism, meaning they go directly through the `this` reference. Since it doesn't go through the proxy, all proxy-related processes (i.e., task submission to the thread pool for asynchronous execution) won't occur.
 
-为了避免这个问题，比较推荐的做法是将异步方法移至另一个 Spring Bean 中。
+To avoid this issue, it's recommended to move the asynchronous method to another Spring Bean.
 
 ```java
 @Service
 public class AsyncService {
     @Async
     public void asyncMethod() {
-        // 异步执行的逻辑
+        // Logic for asynchronous execution
     }
 }
 
@@ -593,15 +593,15 @@ public class MyService {
 }
 ```
 
-**2、使用 static 关键字修饰异步方法**
+**2. Using the static Keyword to Modify Asynchronous Methods**
 
-如果`@Async`注解的方法被 `static` 关键字修饰，那这个方法将不会异步执行。
+If a method annotated with `@Async` is modified with the `static` keyword, that method will not execute asynchronously.
 
-这是因为 Spring 的异步机制是通过代理实现的，由于静态方法不属于实例而是属于类且不参与继承，Spring 的代理机制（无论是基于 JDK 还是 CGLIB）无法拦截静态方法来提供如异步执行这样的增强功能。
+This is because Spring's asynchronous mechanism relies on proxying, and static methods do not belong to instances but to classes and do not participate in inheritance. Therefore, Spring's proxy mechanism (either based on JDK or CGLIB) cannot intercept static methods for enhancements like asynchronous execution.
 
-篇幅问题，这里没有进一步详细介绍，不了解的代理机制的朋友，可以看看我写的 [Java 代理模式详解](https://javaguide.cn/java/basis/proxy.html)这篇文章。
+Due to space limitations, further elaboration is not provided here. Friends who do not understand the proxy mechanism may refer to my article [Java Proxy Pattern Explained in Detail](https://javaguide.cn/java/basis/proxy.html).
 
-如果你需要异步执行一个静态方法的逻辑，可以考虑设计一个非静态的包装方法，这个包装方法使用 `@Async` 注解，并在其内部调用静态方法
+If you need to asynchronously execute logic of a static method, you might consider designing a non-static wrapper method, which uses the `@Async` annotation and calls the static method inside it.
 
 ```java
 @Service
@@ -609,21 +609,21 @@ public class AsyncService {
 
     @Async
     public void asyncWrapper() {
-        // 调用静态方法
+        // Call the static method
         SClass.staticMethod();
     }
 }
 
 public class SClass {
     public static void staticMethod() {
-        // 执行一些操作
+        // Execute some operation
     }
 }
 ```
 
-**3、忘记开启异步支持**
+**3. Forgetting to Enable Asynchronous Support**
 
-Spring Boot 默认情况下不启用异步支持，确保在主配置类 `Application` 上添加`@EnableAsync`注解以启用异步功能。
+By default, Spring Boot does not enable asynchronous support. Ensure to add the `@EnableAsync` annotation on the main configuration class `Application` to enable asynchronous functionality.
 
 ```java
 @SpringBootApplication
@@ -635,24 +635,24 @@ public class Application {
 }
 ```
 
-**4、`@Async` 注解的方法所在的类必须是 Spring Bean**
+**4. @Async Annotated Methods Must Be in Spring Beans**
 
-`@Async` 注解的方法必须位于 Spring 管理的 Bean 中，只有这样，Spring 才能在创建 Bean 时应用代理，代理能够拦截方法调用并实现异步执行的逻辑。如果该方法不在 Spring 管理的 bean 中，Spring 就无法创建必要的代理，`@Async` 注解就不会产生任何效果。
+Methods annotated with `@Async` must be located within Spring-managed beans. Only then can Spring apply proxies during bean creation, allowing the proxy to intercept method calls and implement asynchronous execution logic. If the method is not within a Spring-managed bean, Spring cannot create the necessary proxy, and the `@Async` annotation will have no effect.
 
-### 返回值类型
+### Return Value Type
 
-建议将 `@Async` 注解方法的返回值类型定义为 `void` 和 `Future` 。
+It is recommended to define the return value type of methods annotated with `@Async` as `void` or `Future`.
 
-- 如果不需要获取异步方法返回的结果，将返回值类型定义为 `void` 。
-- 如果需要获取异步方法返回的结果，将返回值类型定义为 `Future`（例如`CompletableFuture` 、 `ListenableFuture` ）。
+- If you don't need to get the results returned by the asynchronous method, define the return type as `void`.
+- If you need to get the result returned by the asynchronous method, define the return type as `Future` (e.g., `CompletableFuture`, `ListenableFuture`).
 
-如果将 `@Async` 注解方法的返回值定义为其他类型（如 `Object` 、 `String` 等等），则无法获取方法返回值。
+If you define the return value of a method with the `@Async` annotation as any type other than these (like `Object`, `String`, etc.), you won't be able to retrieve the method's return value.
 
-这种设计符合异步编程的基本原则，即调用者不应立即期待一个结果，而是应该能够在未来某个时间点获取结果。如果返回类型是 `Future`，调用者可以使用这个返回的 `Future` 对象来查询任务的状态，取消任务，或者在任务完成时获取结果。
+This design conforms to the basic principle of asynchronous programming, where the caller should not expect an immediate result but should be able to obtain it at a later point in time. If the return type is `Future`, the caller can use this returned `Future` object to query the task's status, cancel the task, or retrieve the result when the task completes.
 
-### 处理异步方法中的异常
+### Handling Exceptions in Asynchronous Methods
 
-异步方法中抛出的异常默认不会被调用者捕获。为了管理这些异常，建议使用`CompletableFuture`的异常处理功能，或者配置一个全局的`AsyncUncaughtExceptionHandler`来处理没有正确捕获的异常。
+Exceptions thrown in asynchronous methods are not captured by the caller by default. To manage these exceptions, it's advisable to use the exception-handling features of `CompletableFuture` or to configure a global `AsyncUncaughtExceptionHandler` to handle uncaught exceptions.
 
 ```java
 @Configuration
@@ -666,37 +666,37 @@ public class AsyncConfig implements AsyncConfigurer{
 
 }
 
-// 自定义异常处理器
+// Custom exception handler
 class CustomAsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
 
     @Override
     public void handleUncaughtException(Throwable ex, Method method, Object... params) {
-        // 日志记录或其他处理逻辑
+        // Logging or other handling logic
     }
 }
 ```
 
-### 未考虑事务管理
+### Not Considering Transaction Management
 
-`@Async`注解的方法需要事务支持时，务必在该异步方法上独立使用。
+If methods annotated with `@Async` require transaction support, make sure to use the `@Transactional` annotation independently on that asynchronous method.
 
 ```java
 @Service
 public class AsyncTransactionalService {
 
     @Async
-    // Propagation.REQUIRES_NEW 表示 Spring 在执行异步方法时开启一个新的、与当前事务无关的事务
+    // Propagation.REQUIRES_NEW indicates that Spring starts a new transaction, unrelated to the current transaction, when executing the asynchronous method
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void asyncTransactionalMethod() {
-        // 这里的操作会在新的事务中执行
-        // 执行一些数据库操作
+        // The operations here will be executed in a new transaction
+        // Execute some database operations
     }
 }
 ```
 
-### 未指定异步方法执行顺序
+### Not Specifying the Execution Order of Asynchronous Methods
 
-`@Async`注解的方法执行是非阻塞的，它们可能以任意顺序完成。如果需要按照特定的顺序处理结果，你可以将方法的返回值设定为 `Future` 或 `CompletableFuture` ，通过返回值对象来实现一个方法在另一个方法完成后再执行。
+Methods annotated with `@Async` execute in a non-blocking manner, and they may complete in any order. If you need to process results in a specific order, you can set the return value of the method to `Future` or `CompletableFuture`, achieving execution of one method after another's completion.
 
 ```java
 @Async
@@ -710,7 +710,7 @@ public CompletableFuture<String> processDataAsync(String data) {
 }
 ```
 
-`processDataAsync` 方法在 `fetchDataAsync`后执行：
+The `processDataAsync` method executes after `fetchDataAsync`:
 
 ```java
 CompletableFuture<String> dataFuture = asyncService.fetchDataAsync();
@@ -718,4 +718,4 @@ dataFuture.thenCompose(data -> asyncService.processDataAsync(data))
           .thenAccept(result -> System.out.println(result));
 ```
 
-##
+## 

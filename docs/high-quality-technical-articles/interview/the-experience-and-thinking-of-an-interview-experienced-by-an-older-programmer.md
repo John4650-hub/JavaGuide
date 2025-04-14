@@ -1,362 +1,362 @@
 ---
-title: 一位大龄程序员所经历的面试的历炼和思考
-category: 技术文章精选集
-author: 琴水玉
+title: The Trials and Reflections of a Middle-aged Programmer in Interviews
+category: Selected Technical Articles
+author: Qin Shuiyu
 tag:
-  - 面试
+  - Interview
 ---
 
-> **推荐语**：本文的作者，今年 36 岁，已有 8 年 JAVA 开发经验。在阿里云三年半，有赞四年半，已是标准的大龄程序员了。在这篇文章中，作者给出了一些关于面试和个人能力提升的一些小建议，非常实用！
+> **Recommendation**: The author of this article is 36 years old this year and has 8 years of experience in JAVA development. With three and a half years at Alibaba Cloud and four and a half years at Youzan, he is a typical middle-aged programmer. In this article, the author provides some practical advice regarding interviews and personal skills enhancement!
 >
-> **内容概览**：
+> **Content Overview**:
 >
-> 1. 个人介绍，是对自己的一个更为清晰、深入和全面的认识契机。
-> 2. 简历是充分展示自己的浓缩精华，也是重新审视自己和过往经历的契机。不仅仅是简要介绍技能和经验，更要最大程度凸显自己的优势领域（差异化）。
-> 3. 我个人是不赞成海投的，而倾向于定向投。找准方向投，虽然目标更少，但更有效率。
-> 4. 技术探索，一定要先理解原理。原理不懂，就会浮于表层，不能真正掌握它。技术原理探究要掌握到什么程度？数据结构与算法设计、考量因素、技术机制、优化思路。要在脑中回放，直到一切细节而清晰可见。如果能够清晰有条理地表述出来，就更好了。技术原理探究，一定要看源码。看了源码与没看源码是有区别的。没看源码，虽然说得出来，但终是隔了一层纸；看了源码，才捅破了那层纸，有了自己的理解，也就能说得更加有底气了。当然，也可能是我缺乏演戏的本领。
-> 5. 要善于从失败中学习。正是在杭州四个月空档期的持续学习、思考、积累和提炼，以及面试失败的反思、不断调整对策、完善准备、改善原有的短板，采取更为合理的方式，才在回武汉的短短两个周内拿到比较满意的 offer 。
-> 6. 面试是通过沟通来理解双方的过程。面试中的问题，千变万化，但有一些问题是需要提前准备好的。
+> 1. Personal introduction is an opportunity for a clearer, deeper, and comprehensive understanding of oneself.
+> 1. A resume is a condensed essence of showcasing oneself and a chance to re-evaluate oneself and past experiences. It's not just about a brief introduction of skills and experiences, but also about highlighting one’s areas of advantage (differentiation) to the maximum extent.
+> 1. Personally, I do not support mass job applications but prefer targeted applications. Finding the right direction to apply may result in fewer targets, but it is more efficient.
+> 1. Technical exploration must start with understanding the principles. If you do not understand the principles, you will remain superficial and unable to truly grasp it. To what extent should one understand the technical principles? Data structure and algorithm design, considerations, technical mechanisms, optimization ideas. One must replay it in their mind until all details are clear. The ability to present it clearly and coherently is even better. Exploring technical principles must include reading source code. There is a difference between having read the source code and not having done so. If you haven't read the source code, you may articulate it, but there's still a layer of separation; having read the source code breaks through that layer, leads to personal understanding, and allows one to express it more confidently. Of course, it might be that I lack the ability to act.
+> 1. Learn to be good at learning from failures. It was during a four-month learning, thinking, accumulating, and refining period in Hangzhou, along with reflections on interview failures, constant adjustments of strategies, improving preparations, and enhancing previous shortcomings that I managed to receive a satisfactory offer within just two weeks of returning to Wuhan.
+> 1. An interview is a process of understanding both parties through communication. The questions during an interview can vary widely, but there are certain questions that need to be prepared in advance.
 >
-> **原文地址**：<https://www.cnblogs.com/lovesqcc/p/14354921.html>
+> **Original Article Link**: <https://www.cnblogs.com/lovesqcc/p/14354921.html>
 
-从每一段经历中学习，在每一件事情中修行。善于从挫折中学习。
+Learn from every experience, and practice in everything. Be good at learning from setbacks.
 
-## 引子
+## Prologue
 
-我今年 36 岁，已有 8 年 JAVA 开发经验。在阿里云三年半，有赞四年半，已是标准的大龄程序员了。
+I am 36 years old this year with 8 years of JAVA development experience. I spent three and a half years at Alibaba Cloud and four and a half years at Youzan, making me a typical middle-aged programmer.
 
-在多年的读书、学习和思考中，我的价值观、人生观和世界观也逐步塑造成型。我意识到自己的志趣在于做教育文化方面，因此在半冲动之下，8 月份下旬，裸辞去找工作了。有限理性难以阻挡冲动的个性。不建议裸辞，做事应该有规划、科学合理。
+Through many years of reading, learning, and thinking, my values, outlook on life, and worldview have gradually taken shape. I realized that my interest lies in education and culture, so impulsively, in late August, I quit my job to find new opportunities. Limited rationality could not restrain my impulsive nature. I do not recommend quitting without a plan; there should be a scientific and rational approach to work.
 
-尽管我最初认为自己“有理想有目标有意愿有能力”，找一份教育开发的工作应该不难，但事实上我还是过于乐观了。现实很快给我泼了一瓢瓢冷水。我屡战屡败，又屡败屡战。惊讶地发现自己还有这个韧性。面试是一项历炼，如果没有被失败击倒，那么从中会生长出一份韧性，这种韧性能让人走得更远。谁没有经历过失败的历练呢？失败是最伟大的导师了，如果你愿意跟他学一学的话。
+Although I initially believed that I “had ideals, goals, willingness, and capability,” finding a job in educational development should not be too difficult, but in reality, I was overly optimistic. The reality quickly showered me with cold water. I faced repeated defeats but continued to fight. I was surprised to find that I had this resilience. The interview process is a trial; if you are not defeated by failure, a resilience will grow from it, allowing one to go further. Who hasn’t gone through the trials of failure? Failure is the greatest teacher if you are willing to learn from it.
 
-在面试的过程中，我很快发现自己的劣势：
+During the interview process, I quickly discovered my disadvantages:
 
-- 投入精力做业务，技术深度不够，对原理的理解局限于较浅的层次；
-- 视野不够开阔，局限于自己所做的订单业务线，对其它关联业务线（比如商品、营销、支付等）了解不够；
-- 思维不够开阔，大部分时间投入在开发和测试上，对运维、产品、业务、商业层面思考都思考不多；
-- 缺乏管理经验，年龄偏大；这两项劣势我一度低估，但逐渐凸显出来，甚至让我一度不自信，但最终我还是走出来了。
+- I invested energy into business, but my technical depth was insufficient, and my understanding of principles was limited to a shallow level;
+- My perspective was not broad enough, limited to the order business line I worked on, and I did not understand other associated business lines (like products, marketing, payment, etc.) well;
+- My thinking was not expansive; I spent most of my time on development and testing, with little thought on operations, products, business, or commercial aspects;
+- I lacked management experience and was older; I once underestimated these two disadvantages, but they gradually became evident, leading to a loss of confidence, yet I ultimately pulled through.
 
-但我也有自己的优势。职业竞争的基本法则是稀缺性和差异化。能够解决大型项目的架构设计和攻克技术难题，精通某个高端技术领域是稀缺性体现；而能够做事能做到缜密周全精细化，有高并发大流量系统开发经验，则是差异性体现。稀缺性是上策，差异化是中策，而降格以求就是下策了。
+But I also had my advantages. The fundamental law of professional competition is scarcity and differentiation. The ability to solve large project architecture designs and tackle technical challenges reflects scarcity; being able to do meticulous, thorough work, along with experience in high-concurrency, high-traffic system development reflects differentiation. Scarcity is the best strategy, differentiation is a middle-ground strategy, while compromising is the worst strategy.
 
-我缺乏稀缺性优势，但还有一点差异化优势：
+I may lack the advantage of scarcity, but I do have some points of differentiation:
 
-- 对每一份工作都很踏实，时间均在 3 年 - 5 年之间，有一点大厂光环，能获得更多面试机会（虽然不一定能面上）；
-- 坚持写博客，孜孜不倦地追求软件开发的“道”，时常思考记录开发中遇到的问题及解决方案；
-- 做事认真严谨，能够从整体分析和思考问题，也很注重基础提升；
-- 对工程质量、性能优化、稳定性建设、业务配置化设计有实践经验；
-- 大流量微服务系统的长期开发维护经验。
+- I approach every job diligently, typically spending 3 to 5 years in each position, which gives me some prestige from large companies, leading to more interview opportunities (though it doesn't guarantee I will pass);
+- I persist in writing blogs, tirelessly pursuing the "way" of software development, often reflecting on and recording problems and solutions encountered during development;
+- I work seriously and rigorously, able to analyze and think about problems from a holistic perspective, while also paying attention to foundational improvements;
+- I have practical experience in engineering quality, performance optimization, stability construction, and business configuration design;
+- I have long-term development and maintenance experience in high-traffic microservice systems.
 
-我投出简历的公司并不多。在不多的面试中，我逐渐意识到网上的“斩获几十家大厂 offer”的说法并不可信。理由如下：
+I didn’t send out many resumes. In the few interviews I had, I gradually realized that the claim of “landing offers from dozens of major companies” online is not credible. Here are the reasons:
 
-- 如果能真斩获大量大厂 offer ，面试的级别很大概率是初级工程师。要知道面试 4 年以上的工程师，面试的深度和广度令人发指，从基础的算法、到各种中间件的原理机制到实际运维架构，无所不包，真个是沉浸在“技术的海洋”，除非一个人的背景和实力非常强大，平时也做了非常深且广的沉淀；
-- 一个背景和实力非常强大的人，是不会有兴趣去投入这么多精力去面各种公司，仅仅是为了吹嘘自己有多能耐；实力越强的人，他会有自己的选择逻辑，投的简历会更定向精准。话说，他为什么不花更多精力投入在那些能够让他有最大化收益的优秀企业呢？
-- 培训机构做的广告。因为他们最清楚新手需要的是信心，哪怕是伪装出来的信心。
+- If one truly landed a large number of offers, the interview level is likely that of a junior engineer. To interview for a position as a senior engineer after over four years of experience involves extreme depth and breadth, encompassing everything from basic algorithms to various middleware principles and mechanisms, as well as practical operation architecture—it's an immersion in the “ocean of technology.” Unless a person's background and strength are very strong, and they have also done very deep and broad accumulation;
+- A person with a strong background and strength wouldn't be interested in spending so much energy interviewing various companies just to boast about their capabilities; stronger individuals will have their own logic for choosing, and their resumes will be more targeted. Why wouldn’t they invest more energy in excellent companies that maximize their benefits?
+- Advertisements by training institutions. They know very well that what new people need is confidence, even if it’s a fabricated confidence.
 
-好了，闲话不多说了。我讲讲自己在面试中所经受的历练和思考吧。
+Alright, enough of the small talk. Let me talk about what I have undergone and reflected upon in interviews.
 
-## 准备工作
+## Preparation
 
-人生或许很长，但面试的时间很短，最长不过一小时或一个半小时。别人如何在短短一小时内能够更清晰地认识长达三十多年的你呢？这就需要你做大量细致的准备工作了。在某种程度上，面试与舞蹈有异曲同工之妙：台上五分钟，台下十年功。
+Life may be long, but the interview time is short, at most one hour or an hour and a half. How can others gain a clearer understanding of you, someone with over thirty years of life experience, in just one hour? This requires you to do a lot of detailed preparatory work. To some extent, interviews share similarities with dancing: five minutes on stage requires ten years of practice offstage.
 
-准备工作主要包括简历准备、个人介绍、公司了解、技术探索、表述能力、常见问题、中高端职位、好的心态。准备工作是对自身和对外部世界的一次全面深入的重新认知。
+The preparation work mainly includes resume preparation, personal introduction, understanding of the company, technical exploration, communication skills, common questions, mid-senior level positions, and maintaining a positive mindset. This preparation is a comprehensive and in-depth re-evaluation of oneself and the external world.
 
-初期，我以为自己准备很充分，简历改改就完事了。随着一次次受挫，才发现自己的准备很不充分。在现在的我看来，准备七分，应变三分。准备，就是要知己知彼，知道对方会问哪些问题（通常是系统/项目/技术的深度和广度）、自己应当如何作答；应变，就是当自己遇到不会、不懂、不知道的问题时，如何合理地展示自己的解决思路，以及根据面试中答不上来的问题查漏补缺，夯实基础。
+Initially, I thought I was well-prepared, simply tweaking my old resume. But with repeated setbacks, I discovered my preparation was insufficient. Now I believe that preparation is 70%, adaptability is 30%. Preparation means knowing oneself and the opponent, being aware of what questions will be asked (usually regarding system/project/technology depth and breadth), and understanding how to respond; adaptability involves reasonably demonstrating one’s problem-solving thoughts when faced with questions that are unknown or unclear, as well as identifying gaps based on unanswered questions during the interview and reinforcing the fundamentals.
 
-这个过程，实际上也是学习的过程。持续的反思和提炼、学习新的内容、重新认识自己和过往经历等。
+This process is essentially a learning journey—continuous reflection and refinement, learning new content, and reevaluating oneself and past experiences.
 
-### 简历准备
+### Resume Preparation
 
-最开始，我做得比较简单。把以前的简历拿出来，添加上新的工作经历，略作修改，但整体上模板基本不变。
+At first, I kept it rather simple. I took out my previous resume, added new work experiences, made slight modifications, yet the overall template remained largely unchanged.
 
-在基本面上，我做的是较为细致的，诚实地写上了自己擅长和熟悉的技能和经验经历，排版也尽力做得整洁美观（学过一些 UI 设计）。不浮夸也不故作谦虚。
+On a basic level, I did it relatively carefully, honestly listing my familiar and proficient skills and experiences, and I tried my best to make it neat and visually appealing (having studied some UI design). Not overly extravagant or pretentious.
 
-在扩展面上，我做的还是不够的。有一天，一位猎头打电话给我，问：“你最大的优势是什么？”。我顿时说不上来。当时也未多加思考。在后续面试屡遭失败之后，一度有些不自信之后，我开始仔细思考自己的优势来。然后将“对工程质量、性能优化、稳定性建设、业务配置化设计有深入思考和实践经验”写在了“技能素养”栏的第一行，因为这确实是我所做过的、最实在且脚踏实地的且具备概括性的。
+However, on the expansion level, I wasn't doing enough. One day, a headhunter called and asked me, “What is your greatest advantage?” I was momentarily at a loss for words. At that time, I didn't think much about it. After experiencing failures in subsequent interviews and feeling a bit insecure, I began to think carefully about my advantages. I then wrote “in-depth thought and practical experience in engineering quality, performance optimization, stability construction, and business configuration design” at the top of the "Skills and Qualifications" section, as this truly reflected what I had done, which was practical, grounded, and summarizable.
 
-有时，简历内容的编排顺序也很重要。之前，我把掌握的语言及技术写在前面，而“项目管理能力和团队影响力”之类的写在后面。但投年糕妈妈之后，未有面试直接被拉到不合适里面，受到了刺激，我意识到或许是对方觉得我管理经验不足。因此，刻意将“项目管理能力和团队影响力”提到了前面，表示自己是重视管理方面的，不过，投过新的简历之后，没有回应。我意识到，这样的编排顺序可能会让人误解我是管理能力偏重的（事实上有一位 HR 问我是不是还在写代码），但实际上管理方面我是欠缺的，最后，我还是调回了原来的顺序，凸出自己“工程师的本色”。后面，我又做了一些语句的编排上的修改。
+Sometimes, the order of the content in the resume is also very important. Previously, I listed the languages and technologies I mastered at the beginning, while placing “project management skills and team influence” at the end. However, after applying to Nian Gao Mama, I didn’t receive an interview and was triggered; I realized that the company might have considered my management experience insufficient. Therefore, I deliberately moved “project management skills and team influence” to the forefront, indicating that I valued management aspects. However, upon sending out the new resume, I received no response. I realized that such a rearrangement might mislead people into thinking I leaned towards management skills (in fact, one HR even asked me if I was still writing code). But in reality, I lacked in management, so eventually, I reverted to the original order, highlighting my “essence as an engineer.” Subsequently, I made further modifications to the phrasing.
 
-随着面试的进展，有时，也会发现自己的简历上写得不够或者以前做得不够的地方。比如，在订单导出这段经历里，我只是写了大幅提升性能和稳定性，显得定性描述化，因此，我添加了一些量化的东西（2w 阻塞 => 300w+，1w/1min）作为证实；比如，8 月份离职，到 12 月份面试的时候，有一段空档期，有些企业会问到这个。因此，我索性加了一句话，说明这段时间我在干些啥；比如，代表性系统和项目，每一个系统和项目的价值和意义（不一定写在上面，但是心里要有数）。功夫要下足。
+As the interviews progressed, I sometimes found my resume lacking or that I hadn’t previously elaborated enough. For example, in the experience section regarding order exports, I only wrote about a significant improvement in performance and stability, making it seem qualitative. Therefore, I added some quantitative elements (2w blocks => 300w+, 1w/1min) for validation; for instance, after leaving my job in August and interviewing in December, there was a gap period, and some companies would inquire about it. Consequently, I added a statement explaining what I had been doing during this time; for example, representative systems and projects, knowing the value and significance of each system/project (though not necessarily needing to write it down, it’s important to have a clear understanding internally). One must put in the effort.
 
-再比如，我很详细地写了有赞的工作经历及经验，但阿里云的那段基本没动。而有些企业对这段经历更感兴趣，我却觉得没太多可说的，留在脑海里的只有少量印象深刻的东西，以及一些博客文章的记录，相比这段工作经历来说显得太单薄。这里实质上不是简历的问题，而是过往经历复盘的问题。建议，在每个项目结束后，都要写个自我复盘。避免时间将这些可贵的经历冲淡。
+For instance, I detailed my work experiences and knowledge at Youzan, but the section for Alibaba Cloud remained largely untouched. However, some companies were more interested in that experience, while I felt there wasn’t much to say, and only a few memories remained vividly, along with some records of blog articles which seemed too scant compared to that work experience. Here, it wasn’t actually a resume issue, but a matter of retrospection regarding past experiences. It is advisable to write a self-review after each project ends, to avoid allowing time to dilute these valuable experiences.
 
-每个人其实都有很多可说的东西，但记录下来的又有多少呢？值得谈道的有多少呢？过往不努力，面试徒伤悲。
+Everyone actually has a lot to talk about, but how much is genuinely recorded? How much is worth discussing? Failing to put in effort in the past will lead to suffering in the interview.
 
-**简历更新的心得**：
+**Insights on Updating the Resume**:
 
-- 简历是充分展示自己的浓缩精华，也是重新审视自己和过往经历的契机；
-- 不仅仅是简要介绍技能和经验，更要最大程度凸显自己的优势领域（差异化）；
-- 增强工作经历的表述，凸显贡献，赢得别人的认可；
-- 复盘并记录每一个项目中的收获，为跳槽和面试打下好的铺垫。
+- A resume is a concentrated essence for showcasing oneself and an opportunity to re-evaluate oneself and past experiences;
+- Not only should it briefly introduce skills and experiences, but it should also highlight one’s advantageous areas (differentiation) to the maximum extent;
+- Enhance the description of work experience to emphasize contributions and gain recognition from others;
+- Reflect and document the gains from every project to lay a solid foundation for job-hopping and interviews.
 
-### 个人介绍
+### Personal Introduction
 
-面试前通常会要求做个简要的个人介绍。个人介绍通常作为进入面试的前奏曲和缓冲阶段，缓和下紧张气氛。
+Interviews usually require a brief personal introduction. The personal introduction often serves as a prelude and buffer stage for entering the interview, easing the tension.
 
-我最开始的个人介绍，个性啊业余生活啊工作经历啊志趣啊等等，似乎不知道该说些什么。实际上，个人介绍是一个充分展示自己的主页。主页应当让自己最最核心的优势一目了然（需要挖掘自己的经历并仔细提炼）。我现在的个人介绍一般会包括：个性（比如偏安静）、做事风格（工作认真严谨、注重质量、善于整体思考）、最大优势（owner 意识、执行力、工程把控能力）、工作经历简述（在每个公司的工作负责什么、贡献了什么、收获了什么）。个人介绍简明扼要，无需赘言。
+Initially, my personal introductions covered aspects like personality, hobbies, work experience, aspirations, etc., but I seemed unsure of what to say. In reality, the personal introduction is a chance to fully showcase oneself. The introduction should clearly highlight one's core advantages (it requires excavating one’s experiences and refining them). My current personal introduction generally includes: personality (e.g., relatively quiet), working style (diligent and meticulous, with an emphasis on quality and holistic thinking), greatest advantage (owner mentality, execution capability, engineering control capability), and a brief summary of work experience (responsibilities at each company, contributions, and gains). The personal introduction should be concise and to the point.
 
-个人介绍，是对自己的一个更为清晰、深入和全面的认识契机。
+The personal introduction is an opportunity for a clearer, deeper, and comprehensive understanding of oneself.
 
-### 公司了解
+### Understanding the Company
 
-很多人可能跟我一样，对公司业务了解甚少，就直接投出去了。这样其实是不合理的。首先，我个人是不赞成海投的，而倾向于定向投。找准方向投，虽然目标更少，但更有效率。这跟租房一样，我一般在豆瓣上租房，虽然目标源少，但逮着一个就是好运。
+Many people, like me, may know little about the company’s business yet directly submit applications. This is actually unreasonable. I personally do not support mass applications but prefer targeted ones. Finding the right direction is more efficient, even if it results in fewer targets. It’s like renting a house—I usually look for places on Douban. Although there are fewer sources, finding the right one is a stroke of luck.
 
-投一家公司，是因为这家公司符合意向，值得争取，而不是因为这是一家公司。就像找对象，不是为了找一个女人。要确定这家公司是否符合意向，就应当多去了解这家公司：主营业务、未来发展及规划、所在行业及地位、财务状况、业界及网络评价等。
+Choosing a company to apply to should be because it aligns with your intentions and is worth pursuing, not just because it is a company. Just like seeking a partner, it’s not just about finding a woman. To determine whether a company meets your intentions, one should understand more about the company: its main business, future development and plans, its industry and position, financial status, and industry reputation and evaluations.
 
-在面试的过程中适当谈到公司的业务及思考，是可加分项。亦可用于“你有什么想问的？”的提问。
+Bringing in discussions about the company’s business and thoughts during the interview can be a plus point. This can also be used in the “Do you have any questions?” area.
 
-### 技术探索
+### Technical Exploration
 
-技术能力是一个技术人的基本素养。因此，我觉得，无论未来做什么工作，技术能力过硬，总归是最不可或缺的不可忽视的。
+Technical capability is a fundamental quality for a technical person. Therefore, I believe that regardless of the future job, strong technical competency is ultimately indispensable and cannot be overlooked.
 
-原理和设计思想是软件技术中最为精髓的东西。一般软件技术可以分为两个方面：
+Principles and design ideas are the most essential aspects of software technology. Generally, software technology can be divided into two aspects:
 
-- 原理：事物如何工作的基本规律和流程；
-- 架构：如何组织大规模逻辑的艺术。
+- Principles: the basic laws and processes of how things work;
+- Architecture: the art of organizing large-scale logic.
 
-**技术探索，一定要先理解原理。原理不懂，就会浮于表层，不能真正掌握它。技术原理探究要掌握到什么程度？数据结构与算法设计、考量因素、技术机制、优化思路。要在脑中回放，直到一切细节而清晰可见。如果能够清晰有条理地表述出来，就更好了。**
+**Technical exploration must start with understanding principles. If you do not understand the principles, you will remain superficial and cannot truly grasp it. To what extent should one master technical principles? Data structure and algorithm design, factors to consider, technical mechanisms, optimization ideas. One must replay them in their mind until all details are clear. Being able to articulate it clearly and coherently is even better.**
 
-**技术原理探究，一定要看源码。看了源码与没看源码是有区别的。没看源码，虽然说得出来，但终是隔了一层纸；看了源码，才捅破了那层纸，有了自己的理解，也就能说得更加有底气了。当然，也可能是我缺乏演戏的本领。**
+**Exploring technical principles includes examining source code. There is a distinct difference between having read the source code and not having done so. If you haven’t read the source code, you might be able to articulate, but there’s still a layer of separation; having read the source code breaks through that layer, allowing for personal understanding, and one can articulate with greater confidence. Of course, this may also reflect a lack of acting ability on my part.**
 
-我个人不太赞成刷题式面试。虽然刷题确实是进厂的捷径，但也有缺点：
+I personally do not strongly support question-centric interviews. While practicing questions can be a shortcut for entering the industry, it comes with disadvantages:
 
-- 它依然是别人的知识体系，而不是自己总结的知识体系；
-- 技术探究是为了未来的工作准备，而不是为了应对一时之需，否则即使进去了还是会处于麻痹状态。
+- It remains someone else's knowledge system rather than one's own summarized knowledge system;
+- Technical exploration is to prepare for future work instead of responding to immediate needs; otherwise, even if you get in, you might still remain in a state of numbness.
 
-经过系统的整理，我逐步形成了适合自己的技术体系结构：[“互联网应用服务端的常用技术思想与机制纲要”](https://www.cnblogs.com/lovesqcc/p/13633409.html) 。在这个基础上，再博采众长，看看面试题进行自测和查漏补缺，是更恰当的方式。我会在这个体系上深耕细作。
+Through systematic organization, I gradually formed a technical system structure suitable for myself: [“Common Technical Thoughts and Mechanisms in Internet Application Server”](https://www.cnblogs.com/lovesqcc/p/13633409.html). On this basis, reviewing interview questions for self-testing and addressing gaps is a more appropriate approach. I will delve deeply into this system.
 
-### 表述能力
+### Communication Skills
 
-目前，绝大多数企业的主要面试形式是通过口头沟通进行的，少部分企业可能有笔试或机试。口头沟通的形式是有其局限性的。对表述能力的要求比较高，而对专业能力的凸显并不明显。一个人掌握的专业和经验的深度和广度，很难通过几分钟的表述呈现出来。往往深度和广度越大，反而越难表述。而技术人员往往疏于表达。
+Currently, the main form of interviews in most companies is conducted via oral communication, with only a small fraction having written or online tests. The limitations of oral communication are evident. The demand for communication skills is quite high while the emphasis on showcasing professional capabilities is not as prominent. It is challenging to present the depth and breadth of a person’s expertise and experiences through a few minutes of expression. Often, the greater the depth and breadth, the more difficult it is to articulate. Technical staff often neglect expression.
 
-我平时写得多说得少，说起来不利索。有时没讲清楚背景，就直接展开，兼之啰嗦、跳跃和回旋往复（这种方式可能更适合写小说），让面试官有时摸不着头脑。表述的条理性和清晰性也是很重要的。不妨自己测试一下：Dubbo 的架构设计是怎样的？ Redis 的持久化机制是怎样的？然后自己回答试试看。
+I usually write more and speak less, and when I speak, I am not fluent. Sometimes I would dive in without clarifying the background and instead become verbose, jumping around in my exposition (this approach might be more suitable for writing novels), which leaves interviewers confused at times. The coherence and clarity of expression are crucial. You might as well test yourself: What is the architectural design of Dubbo? What is the persistence mechanism of Redis? Then try answering it.
 
-表述能力的基本法则：
+Basic rules for communication skills:
 
-- 先总后分，先整体后局部；
-- 先说基本思路，然后说优化；
-- 体现互动。先综述，然后向面试官询问要听哪方面，再分述。避免自己一脑瓜子倾倒出来，让面试官猝不及防；系统设计的场景题，多问一些要求，比如时间要求、空间要求、要支持多大数据量或并发量、是否要考虑某些情况等。
+- Start with the main point and then detail; first the overall view, then the specifics;
+- Present the basic idea before discussing optimizations;
+- Reflect interaction. Begin with an overview, then ask the interviewer what they'd like to hear about, followed by detailed exposition. Avoid dumping all your thoughts at once, catching the interviewer off guard; for scenario-based system design questions, ask clarifying requirements, such as time constraints, space requirements, data volume or concurrency considerations, and whether to consider specific situations.
 
-### 常见问题
+### Common Questions
 
-面试是通过沟通来理解双方的过程。面试中的问题，千变万化，但有一些问题是需要提前准备好的。
+The interview is a process of understanding both parties through communication. The questions during interviews can vary widely, but there are several questions that need to be prepared in advance.
 
-比如“灵魂 N 问”：
+For example, the “soul questions”:
 
-- 你为什么从 XXX 离职？
-- 你的期望薪资是多少？
-- 你有一段空档期，能解释下怎么回事么？
-- 你的职业规划是怎样的？
+- Why did you leave XXX?
+- What is your expected salary?
+- You have a gap period; can you explain what happened?
+- What are your career plans?
 
-高频技术问题：
+High-frequency technical questions:
 
-- 基础：数据结构与算法、网络；
-- 微服务：技术体系、组件、基础设施等；
-- Dubbo：Dubbo 整体架构、扩展机制、服务暴露、引用、调用、优雅停机等；
-- MySQL：索引与事务的实现原理、SQL 优化、分库分表；
-- Redis : 数据结构、缓存、分布式锁、持久化机制、复制机制；
-- 分布式：分布式事务、一致性问题；
-- 消息中间件：原理、对比；
-- 架构：架构设计方法、架构经验、设计模式；
-- 性能优化：JVM、GC、应用层面的性能优化；
-- 并发基础：ConcurrentHashMap, AQS, CAS，线程池等；
-- 高并发：IO 多路复用；缓存问题及方案；
-- 稳定性：稳定性的思想及经验；
-- 生产问题：工具及排查方法。
+- Basics: Data structures and algorithms, networks;
+- Microservices: Technical systems, components, infrastructure, etc.;
+- Dubbo: Overall architecture, extension mechanisms, service exposure, referencing, calling, graceful shutdown, etc.;
+- MySQL: Indexing and transaction implementation principles, SQL optimization, partitioning;
+- Redis: Data structures, caching, distributed locks, persistence mechanisms, replication mechanisms;
+- Distributed: Distributed transactions, consistency issues;
+- Message middleware: Principles, comparisons;
+- Architecture: Architectural design methodologies, architecture experience, design patterns;
+- Performance optimization: JVM, GC, application-level performance optimization;
+- Concurrency basics: ConcurrentHashMap, AQS, CAS, thread pools, etc.;
+- High concurrency: IO multiplexing; cache issues and solutions;
+- Stability: Thoughts and experiences on stability;
+- Production issues: Tools and troubleshooting methods.
 
-### 中高端职位
+### Mid-Senior Level Positions
 
-说起来，我这人可能有点不太自信。我是怀着“踏实做一个工程师”的思想投简历的。
+It might seem that I am not particularly confident. I apply with the mindset of “being a solid engineer.”
 
-对于大龄程序员，企业的期望更高。我的每一份“高级工程师”投递，自动被转换为“技术专家”或“架构师”。无力反驳，倍感压力。面试中高端职位，需要更多准备：
+For middle-aged programmers, companies have higher expectations. Each of my applications for “Senior Engineer” positions automatically translates to “Technical Expert” or “Architect.” I feel the pressure with no way to refute it. Interviews for mid-senior level positions require more preparation:
 
-- 你有带团队经历吗？
-- 在你 X 年的工作经历中，有多少时间用于架构设计？
-- 架构过程是怎样的？你有哪些架构设计思想或方法论？
+- Do you have experience leading a team?
+- How much of your X years of working experience has been spent on architecture design?
+- What does the architecture process look like? What architectural design ideas or methodologies do you have?
 
-如果不作准备，就被一下子问懵，乱了阵脚。实际上，我或许还是存着侥幸心理把“技术专家”和“架构师”岗位当做“高工”来面试的，也就无一不遭遇失败了。显然，我把次序弄反了：应当以“技术专家”和“架构师”的规格来面试高级工程师。
+If you are unprepared and suddenly thrown such questions, it would be easy to get flustered. In reality, I may have harbored a bit of luck, treating “Technical Expert” and “Architect” positions as “Senior Engineer” interviews, which led to a series of failures. Clearly, I reversed the order: I should be interviewing for senior engineer positions with the parameters of a “Technical Expert” or “Architect.”
 
-好吧，那就迎难而上吧！我不是惧怕挑战的人。
+Well then, let’s embrace the challenge! I am not one to shy away from challenges.
 
-此外，“技术专家”和“架构师”职位应当至少留一天的时间来准备。已经有丰富经验的技术专家和架构师可以忽略。
+Additionally, when preparing for “Technical Expert” and “Architect” roles, one should allocate at least a day for preparation. Those already possessing rich experiences may skip this.
 
-### 好的心态
+### Good Mindset
 
-保持好的心态也尤为重要。我经历了“乐观-不自信-重拾信心”的心态变化过程。
+Maintaining a good state of mind is also particularly important. I have gone through a process of mental changes: “optimism - insecurity - regaining confidence.”
 
-很长一段时间，由于“求成心切”，生怕某个技术问题回答不上来搞砸，因此小心谨慎，略显紧张，结果已经梳理好的往往说不清楚或者说得不够有条理。冲着“拿 offer ”的心态去面试，真的很难受，会觉得每场面试都很被动那么难过，甚至有点想要“降格以求”。
+For a long time, due to “desire for results,” I was cautious and somewhat nervous, fearing that I would fail to answer a technical question. As a result, I often struggled to articulate clearly or present structured thoughts. Approaching interviews with the mindset of “securing an offer” was indeed uncomfortable, making each interview feel quite passive and leading me to consider lowering my standards.
 
-有时，我在想：咋就混成这个样子了呢？按理来说，这个时候我应该有能力去追求自己喜爱的事业了啊！还是平时有点松懈了，视野狭窄，积累不够，导致今天的不利处境。
+At times, I wondered: How did I end up like this? By rights, at this time, I should have been capable of pursuing my beloved career! Perhaps I had been a bit lax previously, with a narrow vision and insufficient accumulation, leading to my current unfavorable situation.
 
-我是一个守时的人，也希望对方尽可能守时。杭州的面试官中，基本是守时的，即使迟到也在心理接受范围内，回武汉面试后，节奏就有点被少量企业带偏了。有一两次，我甚至不确定面试官什么时候进入会议。我想，难道这是人才应该受到的“礼待”吗？我有点被轻微冒犯的感觉了。不过我还是“很有涵养地”表示没事。但我始终觉得：面试官迟到，是对人才的不尊重。进入不尊重人才的公司，我是怀有疑虑的。良禽择木而栖，良臣择主而事。难道我能因为此刻的不利处境，而放弃一些基本的原则底线，而屈从于一份不尊重人才的 offer 吗？
+I am a punctual person and hope that others will be as well. Most interviewers in Hangzhou were punctual, and even if someone was late, it was within an acceptable psychological range. However, after returning to Wuhan for interviews, the pace seemed to be slightly thrown off by a few companies. There were one or two instances where I wasn't even sure when the interviewer would join the meeting. I wondered, is this the sort of “hospitality” talent should expect? I felt slightly offended. Nevertheless, I politely expressed that it was fine. Yet, I firmly believe: an interviewer being late is a disrespect to talent. I have reservations about entering companies that do not respect talent. A good bird chooses its tree to rest on, a good servant chooses their master to serve. Can I abandon some basic principles and bottom lines and succumb to an offer that disrespects talent simply because of my current unfavorable circumstance?
 
-我意识到：一个人应当用其实力去赢得对方的尊重和赏识，以后的合作才会更顺畅。不若，哪怕惜其无缘，亦不可强留。无论别人怎么存疑，心无旁骛地打磨实力，挖掘自己的才干和优势，终会发出自己的光芒。因此，我的心态顿时转变了：应当专注去沟通，与对方充分认识了解，赢得对方心服的认可，而不是拿到一张入门券，成为干活的工具。
+I realized: One should earn the respect and appreciation of others through their abilities so that future collaborations can proceed more smoothly. Rather than forcing someone to stay, it is better to let them go if things are not meant to be. Regardless of others’ doubts, one should focus on honing their capabilities, uncovering their talents and advantages, and they will ultimately shine. Therefore, my mindset shifted dramatically: I should focus on communicating, fully understanding and knowing the other party, to earn their genuine acknowledgment instead of merely obtaining a ticket to entry, becoming a tool for work.
 
-有一个“石头和玉”的小故事，把自己当做人才，并努力去提升自己，才能获得“人才的礼遇”；把自己当石头贱卖，放松努力，也就只能得到“石头的礼遇”。尽管一个人不一定马上就具备人才的能力，但在自己的内心里，就应当从人才的视角去观察待入职的企业，而不仅仅是为了找一份“赚更多钱”的工作。
+There is a little story about “stones and jade”: Treat yourself as a talent, and strive to improve yourself to gain the “treatment of talents”; Treat yourself as a stone and sell yourself cheap, relax in your efforts, and you will only receive the “treatment of stones.” Although one might not immediately possess the abilities of a talent, in one’s heart, one should start observing potential employers from the perspective of a talent, rather than solely looking for a job that pays “more money.”
 
-此外，焦虑也是不必要的。焦虑的实质是现实与目标的差距。一个人总可以评估目标的合理性及如何达成目标。如果目标过高，则适当调整目标级别；目标可行，则作出合理的决策，并通过持续的努力和恰当的出击来实现目标。决策、努力和出击能力都是可以持续修炼的。
+Moreover, anxiety is unnecessary. Anxiety essentially arises from the gap between reality and goals. One can always assess the rationality of their goals and how to achieve them. If the goals are too high, then appropriately adjust the goal level; if the goals are achievable, then make reasonable decisions and realize the goals through continuous effort and well-timed actions. Decision-making, effort, and action capabilities can all be continually cultivated.
 
-## 面试历炼
+## Interview Experiences
 
-技术人的面试还是更偏重于技术，因此，技术的深度和广度还是要好好准备的。面试官和候选人的处境是不一样的，一个面试官问的只是少量点，但是多个面试官合起来就是一个面。明白这一点，作为面试官的你就不要忘乎所以，以为自己就比候选人厉害。
+Technical interviews focus more on technical depth and breadth, so thorough preparation is still essential. The circumstances for interviewers and candidates differ; an interviewer only poses a few points, but collectively, many interviewers create a full picture. Once you understand this, do not become complacent and think you are superior to the candidates.
 
-我面的企业不多，因为我已经打算从事教育事业，用“志趣和驱动力”这项就直接过滤了很多企业的面试邀请。在杭州面试的基本是教育企业，连阿里华为等抛来的橄榄枝都婉拒了（尽管我也不一定能面上）。虽然做法有点“直男”，但投入最多精力于自己期望从事的行业和事业，才是值得的。
+I did not go through many companies for interviews, as I had already decided to pursue a career in education, directly filtering out numerous interview invitations based on my “interest and motivation.” Most of the interviews I had in Hangzhou were with educational companies, and I even declined offers from companies like Alibaba and Huawei (though I might not have made it).
 
-我所认为的教育事业，并不局限于现在常谈起的在线教育或 K12 教育，而是一个教育体系，任何可以更好滴起到教育效果的事业，包括而不限于教学、阅读、音乐、设计等。
+While my approach may seem “straightforward,” it is indeed worthwhile to invest most effort in the industry and career I wish to pursue.
 
-### 接力棒科技-高工
+What I consider education does not only include the commonly discussed online education or K12 education, but rather an educational system encompassing any effort that can better achieve educational outcomes, including but not limited to teaching, reading, music, and design.
 
-面的第一家。畅谈一番后，没音讯了。但我也没有太在意。面试官问的比较偏交易业务性的东西，较深的就是如何保证应用的数据一致性了。
+### Relays Technology - Senior Engineer
 
-此时的我，就像在路上扔了一颗探路的小石子，尚未意识到自己的处境。
+This was the first company I interviewed with. After an enjoyable discussion, I heard nothing further. However, I didn't pay too much attention to it. The interviewer asked mostly about transaction-related business aspects, with the deeper question being how to ensure data consistency across applications.
 
-### 网易云音乐-高工
+At this point, I feel like I threw down a small stone to explore the path ahead, still unaware of my circumstances.
 
-接着是网易云音乐。大厂就是大厂。一面问的尽是缓存、分布式锁、Dubbo、ZK， MQ 中间件相关的机制。很遗憾，由于我平时关于技术原理的沉淀还是很少，基本是“一问两不知”，挂得很出彩。
+### NetEase Cloud Music - Senior Engineer
 
-此时，我初步意识到自己的技术底子还很薄弱，也就开始了广阔的技术学习和夯实，自底向上地梳理原理和逻辑，系统地进行整理总结，最终初步形成了自己的互联网服务端技术知识体系结构。
+Next was NetEase Cloud Music. A large company is indeed a large company. The first interview was filled with questions on caching, distributed locks, Dubbo, ZK, and related mechanisms. Unfortunately, due to my limited depth of understanding of technical principles, I essentially hung up spectacularly with a “I only know bits and pieces” kind of performance.
 
-### 铭师堂-技术专家
+At this moment, I became acutely aware of the shortcomings in my technical foundation, prompting me to embark on broad technical learning and deepening my understanding of principles and logic, systematically organizing and summarizing my knowledge, ultimately forming my own internet server technology knowledge system.
 
-架构师面试的。问的相对多了一些，DB, Redis 等。反馈是技术还行，但缺乏管理经验。这是我第一次意识到大龄程序员缺乏管理经验的不利。中小企业的技术专家线招聘中，往往附加了管理经验的需求。应聘时要注意。
+### Ming Shitang - Technical Expert
 
-缺乏管理经验，该怎么办呢？思考过一段时间后，我的想法是：
+This interview was for an architect role. They asked a relatively broader range of questions, covering DB, Redis, etc. The feedback was that my technical skills were decent but I lacked management experience. This was the first time I realized that middle-aged programmers lacking management experience could be disadvantageous. When applying for technical expert roles in small and medium enterprises, the requirements often include management experience. This is something to be aware of during applications.
 
-- 改变能改变的，不能改变的，学习它。比如技术原理的学习是我能够改变的，但管理经验属于难以一时改变的，那就多了解点管理的基本理论吧。
-- 从经历中挖掘相关经验。虽然我没有正式带团队的实际经验，但是有带项目和带工程师，管控某个业务线的基本管理经验。多多挖掘自己的经历。
+What should I do if I lack management experience? After some reflection, my thoughts are:
 
-### 字节教育-高工
+- Change what can be changed, and learn from what cannot be changed. For instance, studying technical principles is something I can change, while management experience is harder to change instantly; thus, I should learn more about fundamental management theories.
+- Uncover relevant experiences from my history. Although I may not have formal experience leading a team, I do have experience managing projects and engineers, as well as basic management experience over a business line. I should unearth these experiences more.
 
-字节教育面试，我给自己挖了不少坑往里跳。
+### Byte Education - Senior Engineer
 
-比如面试官问，讲一个你比较成就感的项目经历。我选择的是近 4 年前的周期购项目。虽然这是我入职有赞的第一个有代表性的项目，但时间太久，又没有详细记录，很多技术细节遗忘不清晰了。我讲到当时印象比较深的“一体化”设计思想，却忘记了当时为什么会有这种思想（未做仔细记录）。
+During the Byte Education interview, I dug quite a few holes for myself.
 
-再比如，一个上课的场景题，我问是用 CS 架构还是 BS 架构？面试官说用 CS 架构吧。这不是给自己挖坑吗？明明自己不熟悉 CS 架构，何必问这个选择呢，不如直接按照 BS 架构来讲解。哎！
+For instance, when the interviewer asked me to talk about a project that I felt proud of, I chose a project from nearly four years ago: the cyclical purchasing project. Although this was my first representative project upon joining Youzan, the time lapse was too long, and I had not documented it thoroughly, forgetting many technical details. I highlighted the “integrated” design concept that left a lasting impression on me, but I failed to recall why this concept emerged (not having documented it carefully).
 
-字节教育给我的反馈是：业务 Sense 不错，系统设计能力有待提高。我觉得还是比较中肯的。因此，也开始注重系统设计实战方面的文章阅读和思考训练。
+Furthermore, during a scenario-based question regarding a class, I asked whether to use a CS or BS architecture. The interviewer said CS. Wasn’t that digging a hole for myself? Clearly, I wasn’t familiar with CS architecture; why not ask about BS architecture from the start? Sigh!
 
-经验是：
+The feedback from Byte Education stated I had good business sense but needed to improve my system design skills. I found it quite candid. Thus, I began to place more focus on reading articles and practicing thoughts on real-world system design.
 
-- 做项目时，要详细记录每个项目的技术栈、技术决策及原因、技术细节，为面试做好铺垫；
-- 提前准备好印象最深刻的最代表性的系统和项目，避免选择距离当前时间较久的缺乏详细记录的项目；
-- 选择熟悉的项目和架构，至少有好的第一印象，不然给面试官的印象就是你啥都不会。
+Lessons learned:
 
-### 咪咕数媒-架构师
+- When working on projects, diligently document the technology stack, design decisions and their rationale, and technical details to lay a foundation for interviews;
+- Prepare prominent and representative systems and projects in advance to avoid choosing ones that are too distant in time without detailed records;
+- Select familiar projects and architectures to create a good first impression; otherwise, the interviewer will think you don't possess relevant knowledge.
 
-好家伙，一下子 3 位面试官群面。可能我以前经历的太少了吧。似乎国企面试较高端职位，喜欢采取这种形式。兼听则明偏听则暗嘛。问的问题也很广泛，从 ES 的基本原理，到机房的数据迁移。有些技术机制虽然学习过，但不牢固，不清晰，答的也不好。比如 ES 的搜索原理优化，讲过倒排索引后，我对 Term Index 和 Trie 树 讲不清楚。这说明，知道并不代表真正理解了。只有能够清晰有条理地把思路和细节都讲清楚，才算是真正理解了。
+### Migu Digital Media - Architect
 
-印象深刻的是，有一个问题：你有哪些架构思想？这是第一次被问到架构设计方面的东西，我顿时有点慌乱。虽然平时多有思考，也有写过文章，却没有形成系统精炼的方法论，结果就是答的比较凌乱。
+This interview involved three interviewers simultaneously. Perhaps I had experienced too few interviews before. It seems that state-owned enterprises appreciate such formats for higher-level positions. Inquiry fosters insight while partiality leads to ignorance. The questions were quite broad, ranging from the basic principles of ES to data migration in server rooms. Some technical mechanisms, while I had studied them, were unclear in my mind, leading to poor responses. For example, when discussing ES's search principles optimizations, after mentioning inverted indices, I was unable to articulate Term Index and Trie trees. This indicated that knowing something does not equate to truly understanding it. Genuine understanding requires the ability to articulate thoughts and details clearly.
 
-### 涂鸦智能-高工
+What left a deep impression was one particular question: What architectural thoughts do you hold? This was my first experience being asked about architectural design concepts, and I suddenly felt a bit flustered. Although I frequently contemplate such issues and have written articles on them, I had not formed a systematic, refined methodology, resulting in a somewhat disorganized response.
 
-应聘涂鸦智能，是因为我觉得这家企业不错。优秀的企业至少应该多沟通一下，说不准以后有合作机会呢！看问题的思维要开阔一些，不能死守在自己想到的那一个事情上。
+### Tuya Smart - Senior Engineer
 
-涂鸦智能给我的整体观感还是不错的。面试官也很有礼貌有耐心，整体架构、技术和项目都问了很多，问到了我熟悉的地方，答得也还可以。也许我的经验正好是切中他们的需求吧。
+I applied to Tuya Smart because I found this company to be promising. An excellent company deserves at least a conversation; who knows? There might be opportunities for collaboration in the future! One's perspective on issues should be broad; one should not cling solely to their own ideas.
 
-若不是当时想做教育的执念特别强，我很大概率会入职涂鸦智能。物联网在我看来应该是很有趣的领域。
+Overall, my experience with Tuya Smart was positive. The interviewers were courteous and patient, covering the overall architecture, technologies, and projects extensively with questions that fell into my realm of expertise, to which I responded fairly well. Perhaps my experiences matched their needs perfectly.
 
-### 跟谁学-技术专家
+If it weren’t for my particular strong inclination towards education, it’s quite likely I would have joined Tuya Smart. In my view, the Internet of Things is an intriguing field.
 
-“跟谁学”基本能答上来。不过反馈是：对于提问抓重点的能力有所欠缺，对于技术的归纳整理也不够。我当时还有点不服气，认为自己写了那么多文章，也算是有不少思考，怎能算是总结不够呢？顶多是有技术盲点。技术犹如海洋，谁能没有盲点？
+### GoGo Learning - Technical Expert
 
-不过现在反观，确实距离自己应该有的程度不够。对技术原理机制和生产问题排查的总结不够，不够清晰细致；对设计实践的经验总结也不够，不够系统扎实。这个事情还要持续深入地去做。
+I was able to answer questions at GoGo Learning for the most part. However, the feedback pointed out that I lacked focus on what was being asked and that my technical summarization was insufficient. At that time, I felt a bit indignant, considering how many articles I had written—I thought I had done quite a lot of thinking; how could it be considered insufficient? It was merely a matter of technical blind spots. The sea of technology is vast; who can lack blind spots completely?
 
-此外，面得越多，越发现自己的表述能力确实有所欠缺。啰嗦、容易就一点展开说个没完、脱离背景直接说方案、跳跃、回旋往复，然后面试官很可能没耐心了。应该遵循“先总后分”、“基本思路-实现-优化”的一些基本逻辑来作答会更好一些。表述能力真的很重要，不可只顾着敲代码。还有每次面教育企业就不免紧张，生怕错过这个机会。
+However, upon reflection, I recognize that I indeed fell short of the requisite level of understanding. My summaries regarding technical principles and mechanisms, as well as troubleshooting in production situations, lack clarity and detail. This is something I need to work on continuously.
 
-这是第二家直接告诉我年龄与经验不匹配的企业，加深了我对年龄偏大的忧虑，以致于开始有点不自信了。
+Moreover, through more interviews, I noticed an evident deficiency in my communication skills. I tend to be verbose, tend to elaborate indefinitely on a minor point, often lose context while diving straight into solutions, and retreat into a pattern of circular reasoning, which can cause interviewers to lose patience. I should adhere to core logic like “start with the main point, then break it down,” as well as “basic idea—implementation—optimization” when responding. Communication skills are critical and cannot be neglected just because one focuses on coding. Each time I interview with an educational institution, I inevitably feel nervous, fearing I might miss the opportunity.
 
-那么我又是怎么重拾信心的呢？有一句老话：“留得青山在，不怕没柴烧”。就算我年龄比较大，如果我的技术能力打磨得足够硬朗，就不信找不到一家能够认可我的企业。大不了我去做开源项目好了。具备好的技术能力，并不一定就局限在企业的范围内去发挥作用，也没必要局限于那些被年龄偏见所蒙蔽的人的认知里。外界的认可固然重要，内在的可贵性却远胜于外在。
+This was the second company to directly point out that my age and experience did not match, heightening my concerns about being over-aged and causing me to lose a bit of confidence.
 
-### 亿童文教-架构师
+So, how did I regain confidence? There’s an old saying: “As long as the green hills remain, one need not worry about firewood.” Even if I am older, if I can polish my technical abilities to a high degree, I refuse to believe that I won’t find a company that recognizes my worth. At worst, I could work on open-source projects. Having strong technical abilities does not necessitate functioning exclusively within a corporate framework; neither should I confine myself to the views of those blinded by age prejudice. External validation is important, but internal value far outweighs anything superficial.
 
-也是采用的 3 人同时面试。主要问的是项目经历，技术方面问得倒不是深入。个人觉得答得还行。面试官也问了架构设计相关的问题，我答得一般。此时，我仍然没有意识到自己在以面“高级工程师”的规格来面试“架构师”岗位。
+### Yi Tong Wenchuang - Architect
 
-面试官比较温和，HR 也在积极联系和沟通，感觉还不错。只是，我没有主动去问反馈意见，也就没有下文了。
+This interview also involved three interviewers, mainly focusing on project experiences while the technical questions were not too deep. I felt I answered reasonably well. The interviewers also asked questions related to architectural design, and my responses were average. At that moment, I still had not realized that I was interviewing for an “Architect” position while presenting myself at the level of “Senior Engineer.”
 
-### 新东方-高工
+The interviewers were quite mild, and HR was actively in touch and communicating; the atmosphere felt positive. However, I did not proactively inquire about the feedback, so I did not hear back after that.
 
-面试新东方，主要是因为切中我做教育的期望，虽然职位需求是做信息管理系统，距离我理想中的业务还有一定距离。经过沟通了解，他们更需要的是对运维方面更熟悉的工程师，不过我正好对运维方面不太熟悉，平时关注不多，因此不太符合他们的真实招聘要求。面试官也是很温和的人，老家在宜昌，是我本科上大学的地方，面试体验不错。
+### New Oriental - Senior Engineer
 
-以后要花些时间学习一些运维相关的东西。作为一名优秀的工程师和合格的架构师，是要广泛学习和熟悉系统所采用的各种组件、中间件、运维部署等的。要有综观能力，不过我醒悟的可能有点迟。Better later than never.
+I interviewed with New Oriental mainly because it aligned with my ambition in education, even though the position was for an information management system, which differed somewhat from my ideal business focus. After discussing further, it turned out they were seeking engineers more familiar with operations, a domain in which I lack familiarity and attention. Thus, I didn’t quite meet their genuine recruitment expectations. The interviewer, who was warm, was originally from Yichang—my university town; the interview experience was great.
 
-### ZOOM-高工
+In the future, I need to dedicate time to learn about operational aspects. As an excellent engineer and a qualified architect, one should broadly learn and become familiar with various components, middleware, and operational deployments used in systems. One should possess an overarching view, although I might have realized this a bit late. Better late than never.
 
-ZOOM 的一位面试官或许是我见过的所有面试官中最差劲的。共有两位面试官，一位显得很有耐心，另一位则挺着胖胖的肚子，还打着哈欠，一副不怎么关心面试和候选人的样子。我心想，你要不想面，为啥还要来面呢？你以为候选人就低你一等么？换个位置我可以暴打你。不过我还是很有礼貌的，当做什么事也没发生。公司在挑人，候选人也在挑选公司。
+### ZOOM - Senior Engineer
 
-想想，ZOOM 还是疫情期间我们公司用过的远程通信会议软件。印象还不错，有这样的工程师和面试官藏于其中，我也是服了。难倒他是传说中的大大神？据我所知，国外对国内的互联网软件技术设施基本呈碾压态势，中国大部分企业所用的框架、中间件、基础设施等基本是拿国外的来用或者做定制化，真正有自研的很少，有什么好自满的呢？
+The interview with ZOOM left a rather sour impression. There were two interviewers present; one seemed very patient, while the other, portly and yawning, appeared somewhat uninterested in both the interview and the candidate. I thought to myself, if you don't feel like interviewing, why come at all? Do you think candidates are beneath you? I could easily dash you a smart retort. Nevertheless, I remained polite, acting as though nothing happened. The company is selecting talent, and candidates are also selecting companies.
 
-### 阿优文化-高工
+Reflecting back, ZOOM was the remote communication tool our company used during the pandemic, which left a good impression; discovering such engineers and interviewers within was quite surprising. Is he really that legendary? As far as I know, foreign technology in the realm of internet software basically crushes domestic options. Most Chinese companies use or customize foreign frameworks, middleware, and infrastructures; what boast is there to be had?
 
-阿优文化有四轮技术面。其中第一个技术面给我印象比较深刻。看上去，面试官对操作系统的原理机制特别擅长和熟悉。很多问题我都没答上来。本以为挂了，不过又给了扳回一局的机会。第二位面试问的项目经历和技术问题是我很熟悉的。第三位面试官问的比较广泛，有答的上来的，有答不上来的。不过面试官很耐心。第四位是技术总监，也问得很广泛细致。
+### Ayou Culture - Senior Engineer
 
-整体来说，面试氛围还是很宽松的。不过，阿优当时的招聘需求并不强烈，估计是希望后续有机会时再联系我。可惜我那时准备回武汉了。主要是考虑父母年事已高，希望能多陪陪父母。
+Ayou Culture had four rounds of technical interviews. The first technical interview left a strong impression on me. The interviewer seemed well-versed in the principles and mechanisms of operating systems, and I struggled to answer many questions. I initially thought I might fail the interview, but surprisingly, I was given another chance to prove myself. The second interviewer covered project experiences and technical questions, which I was quite familiar with. The third interviewer asked a range of questions, some of which I answered well, and some where I struggled. Fortunately, they were very patient.
 
-想想，我想问题做决策还是过于简单的，不会做很复杂的计算和权衡。
+Overall, the atmosphere during the interview was quite relaxed. However, at that time, Ayou’s hiring needs were not urgent; they likely hoped to reach out again when opportunities arose. Unfortunately, I was preparing to return to Wuhan at that time, mainly considering my elderly parents, and I wished to spend more time with them.
 
-### 小米-专家/架构
+Considering this, I realized my approach to problem-solving and decision-making was rather simplistic, lacking the ability to make more intricate calculations and balances.
 
-应聘小米，主要是因为职位与之前在有赞做的很相似，都是做交易中台相关。浏览小米官网之后，觉得他们做的事情很棒，可是与我想做教育文化事业的初衷不太贴合。
+### Xiaomi - Expert/Architect
 
-加入小米的意愿不太强烈，面试也就失去了大半动力。我这个性子还是要改一改。
+I applied to Xiaomi mainly because the position was very similar to my previous role at Youzan, both involving transaction platforms. After browsing their website, I found their work impressive, yet it didn’t align closely with my aspiration in educational culture.
 
-### 视觉中国-高工
+I lacked a strong desire to join Xiaomi, resulting in my dwindling motivation for the interview.
 
-围绕技术、项目和经历来问。总体来说，技术深度并不是太难，项目方面也涉及到了。人力面前辈很温和，我以为会针对自己的经历进行一番“轰炸”，结果是为前辈讲了讲有赞的产品服务和生意模式，然后略略带了下自己的一些经历。
+### Visual China - Senior Engineer
 
-### 科大讯飞-架构师
+They asked questions centered around technology, projects, and experiences. Overall, the depth of technical questions wasn’t too difficult, and they did involve project elements. The HR representative was pleasant, and instead of “bombarding” me regarding my experiences, I explained Youzan's product services and business model while slightly introducing my background.
 
-一二面，感觉面试官对安排的面试不太感兴趣。架构师，至少是一个对技术和设计能力非常高要求的职位。一面的技术和架构都问了些，二面总围绕我的背景和非技术相关的东西问，似乎对我的外在更关注，而对我自身的技术和设计能力不感兴趣。交流偏浅。
+### iFlytek - Architect
 
-能力固然有高下之分，但尊重人才的基本礼节却是不变的。尊重人才，是指聚焦人才的能力和才学，而不是一些与才学不甚相关的东西。
+In the first two interviews, I felt the interviewers were disinterested in the arrangements made for the interviews. An architect's role is one that demands very high technical and design capabilities. In the first interview, they asked several questions on technology and architecture; however, in the second round, most questions revolved around my background and non-technical aspects, seemingly focusing more on my outward attributes rather than my technical and design capabilities. The discussions felt superficial.
 
-### 青藤云-高工
+While abilities can differ in level, the fundamental etiquette of respecting talent remains unchanged. Respecting talent implies focusing on their abilities and skills, not on aspects unrelated to talent.
 
-青藤云的技术面试风格是温和的。感受到坦率交流的味道，被认可的感觉。感受到 HR 求才若渴的心情。和我之前认为的“应当用其实力去赢得对方的尊重和赏识”不谋而合。
+### Qingteng Cloud - Senior Engineer
 
-### 腾讯会议-高工
+The technical interview process at Qingteng Cloud was gentle. There was a sense of open and candid communication, and I felt valued. Their enthusiasm for hiring talent coincided with my previous belief in “earning respect and appreciation through abilities.”
 
-和腾讯面试官是用腾讯会议软件面试腾讯会议的职位。哈哈。由于网络不太稳定，面试过程充满了磕磕碰碰，一句话没说完整就听不清楚了。可想情况如何。但是我们都很有很有很有耐心，最终一起完成了一面。面试是双方智慧与力量的较量，更是双方一起去完成一件事情、发现彼此的合作。这样想来，传统的“单方考验筛选式”的面试观念需要革新。
+### Tencent Conference - Senior Engineer
 
-由于我已经拿到 offer , 且腾讯会议的事情并不太贴合自己的初衷，因此，我与腾讯方面沟通，停止了二面。
+I interviewed for a position at Tencent using Tencent's own meeting software. Due to unstable internet connections, the interview was riddled with interruptions, and I struggled to get through sentences clearly. Nevertheless, we remained patient and ultimately completed the interview. Interviews should be seen as a confrontation of wisdom and strength between both parties, and more importantly, as a cooperative endeavor to achieve something while discovering mutual collaboration potential. Hence, the traditional view of interviews as a singular testing mechanism requires reevaluation.
 
-### 最终选择
+Since I had already received an offer and this particular role did not align closely with my original intentions, I communicated with Tencent and decided to withdraw from further interviews.
 
-当拿到多个 offer 时，如何选择呢？我个人主要看重：
+### Final Choices
 
-1. 志趣与驱动力；
-2. 薪资待遇；
-3. 公司发展前景和个人发展空间；
-4. 工作氛围；
-5. 小而有战斗力的企业。
+When receiving multiple offers, how do I choose? Personally, I focus on:
 
-在视觉中国与青藤云之间如何选择？作个对比：
+1. Interests and motivations;
+1. Salary and benefits;
+1. Company development prospects and personal growth opportunities;
+1. Work environment;
+1. Small but capable enterprises.
 
-- 薪资待遇：两者的薪资待遇不相上下，也都是认可我的；视觉中国给出的是 Leader 的职位，而青藤云给出的是核心业务的承诺；
-- 工作氛围：青藤云应该更偏工程师文化氛围，而视觉中国更偏业务化；
-- 挑战性：青藤云的技术挑战更强，而视觉中国的业务挑战性更强；
-- 志趣与驱动力：视觉中国更符合我想做文化的事情，而青藤云安全并不贴合我想做教育文化事业的初衷，而且比较偏技术和底层（我更希望做一些人文性的事情）。但青藤云做的是关于安全的事情，安全是一件很有价值很有意义的事情。而且，以后安全也可以服务于教育行业。有点曲线救国的味道。尤其是创始人张福的理想主义信念“让安全之光照亮互联网的每个角落”及自己的身体力行，让人更有一些触动。最终，我觉得做安全比做图片版权保护稍胜出一小筹。
+How do I select between Visual China and Qingteng Cloud? Here's a comparison:
 
-此外，我觉得做教育，更适合自己的是编程教育，或者是工程师教育。我还想成为一名系统设计师。还需要积累更多生产实践经验。可以多与初中级工程师打交道，在企业内部做培训指导。或者工作之余录制视频，上传到 B 站，服务广大吃瓜群众。将来，我或许还会写一本关于编程设计的书，汇聚毕生所学。
+- Salary and benefits: Both offer competitive packages and recognize my potential; Visual China’s offer is for a Lead position, while Qingteng Cloud promises roles in core business;
+- Work environment: Qingteng Cloud should lean towards an engineering culture, while Visual China focuses more on business;
+- Challenge: Qingteng Cloud presents a more robust technical challenge, while Visual China poses a stronger business challenge;
+- Interests and motivations: Visual China aligns better with my desire to engage in cultural endeavors, while Qingteng Cloud does not closely fit my educational aspirations and leans more towards fundamental technical work (while I prefer more humanistic endeavors). However, Qingteng Cloud’s focus on safety is of great value and meaningful. Furthermore, safety in the future can serve the education sector, providing a sort of circumstantial rescue. Particularly, founder Zhang Fu’s idealistic belief “to let the light of security illuminate every corner of the internet” and his active pursuit inspire me. In the end, I feel that opting for safety slightly outweighs the notion of engaging in image copyright protection.
 
-因此，经过一天慎重的考虑，我决定，加入青藤云安全。当然，做这个选择的同时，也意味着我选择了一个更大的挑战：在安全方面我基本一穷二白，需要学习很多很多的知识和经验，对于我这个大龄程序员来说，是一项不小的挑战。
+Additionally, I think that education, as it suits me best, should focus on coding education or engineer education. I want to become a systems designer, requiring more practical production experience. I may interact more with junior to mid-level engineers, providing training and guidance within the company. Alternatively, during my spare time, I may record videos for Bilibili to serve a broader audience. In the future, I might even write a book on coding design, consolidating what I have learned throughout my life.
 
-## 小结
+Thus, after careful consideration over a day, I decided to join Qingteng Cloud Security. Of course, making this choice also means embracing a greater challenge: I am starting from nearly zero in security knowledge and must learn a vast array of knowledge and experience, which constitutes a significant challenge for me as a middle-aged programmer.
 
-很多事情都有解决的方法，即使“头疼的”大龄程序员找工作也不例外。确立明确清晰的目标、制定科学合理的决策、持续的努力、掌握基本面、恰当的出击，终能斩获胜利的果实。但要强调一下：功夫在平时。平时要是不累积好，面试的时候就要花更多时间去学习，会受挫、磕磕碰碰、过得也不太舒坦。还是平摊到平时比较好。此外，平时视野也要保持开阔，切忌在面试的时候才“幡然醒悟”。
+## Summary
 
-一个重要经验是，要善于从失败中学习。正是在杭州四个月空档期的持续学习、思考、积累和提炼，以及面试失败的反思、不断调整对策、完善准备、改善原有的短板，采取更为合理的方式，才在回武汉的短短两个周内拿到比较满意的 offer 。
+Many issues have solutions, and the plight of a “middle-aged programmer” seeking a job is no exception. By establishing clear and defined goals, making scientifically sound decisions, sustaining efforts, mastering the basics, and striking appropriately, one can ultimately reap the rewards of victory. However, it's crucial to emphasize: The effort must be made during normal times. If one neglects accumulation during regular moments, it leads to needing to spend even more time studying during interviews, facing setbacks, and experiencing a bumpy path, making it quite uncomfortable. It's always better to distribute effort over time. Additionally, maintaining an open perspective is essential—do not wait until interviews to have an epiphany.
 
-此外，值得提及的是，对于技术人员，写博客是一件很有价值的事情。面试通过沟通去了解对方，有其局限性所在。面试未能筛选出符合的人才其实是有比较大概率的：
+An important lesson is to learn from failures. The continuous learning, thinking, accumulating, and refining periods during a four-month gap in Hangzhou, alongside reflections on interview failures, constantly adjusting strategies, perfecting preparations, and enhancing previous shortcomings allowed me to receive a satisfactory offer within just two weeks upon returning to Wuhan.
 
-1. 面试的时间很短，即使是很有经验的面试官，也会看走眼（根本局限性）；
-2. 面试官问到的正好是自己不会的（运气问题）；
-3. 面试官情绪不好，没兴趣（运气问题）；
-4. 面试官自身的水平。
+Moreover, it’s worth mentioning that for technical personnel, writing blogs is an incredibly valuable endeavor. Interviews are limited by the communication format and cannot filter out candidates who may be suited for the role:
 
-因此，具备真才实学而被 PASS 掉，并不值得伤心。写博客的意义在于，有更多展示自己思考和平时工作的维度。
+1. The interview time is short—even experienced interviewers can overlook potential (a fundamental limitation);
+1. The interviewer may ask something for which the candidate is unprepared (an issue of luck);
+1. The interviewer could be in a bad mood and uninterested (another issue of luck);
+1. The interviewer’s own level of understanding.
 
-尊重人才的企业，一定是希望从多方面去认识候选人（在优点和缺点之间选择确认是否符合期望），包括博客；不尊重人才的企业，则会倾向于用偷懒的方法，对候选人真实的本领不在意，用一些外在的标准去快速过滤，固然高效，最终对人才的识别能力并不会有多大进步。
+Thus, possessing true skills yet being passed over should not lead to heartbreak. The value of writing blogs lies in providing additional dimensions through which to exhibit one’s thinking and day-to-day work.
 
-经过这一段面试的历炼，我觉得现在相比离职时的自己，又有了不少进步的。不说脱胎换骨，至少也是蜕了一层皮吧。差距，差距还是有的。起码面试那些知名大厂企业的技术专家和架构师还有差距。这与我平时工作的挑战性、认知视野的局限性及总结不足有关。下一次，我希望积蓄足够实力做到更好，和内心热爱的有价值有意义的事情再近一些些。
+Quality organizations looking to respect talent will seek to understand candidates from multiple perspectives (choosing between strengths and weaknesses to confirm fit), including blogs; while companies that do not respect talents will lean towards lazy methods that disregard the genuine abilities of candidates, using superficial standards for quick filtering—efficient, yes, but ultimately it doesn’t enhance their talent recognition capabilities.
 
-面试，其实也是一段工作经历。
+Having undergone this series of interview trials, I feel I have made quite a bit of progress compared to the person I was when I left. While not a complete transformation, at the very least, I have shed a layer of skin. There are still differences, particularly in interviewing for technical expert and architect positions in well-known large companies. This gap relates to the challenges faced in my daily work, the limitations of my cognitive horizons, and insufficient summarization. Next time, I hope to accumulate enough strength to perform even better, drawing closer to valuable endeavors that resonate with my heart.
 
-<!-- @include: @article-footer.snippet.md -->
+Interviews can also be regarded as an experience in one’s career.

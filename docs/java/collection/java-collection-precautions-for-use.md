@@ -1,23 +1,23 @@
 ---
-title: Java集合使用注意事项总结
+title: Summary of Java Collection Usage Precautions
 category: Java
 tag:
-  - Java集合
+  - Java Collections
 ---
 
-这篇文章我根据《阿里巴巴 Java 开发手册》总结了关于集合使用常见的注意事项以及其具体原理。
+In this article, I summarize common precautions and specific principles regarding the use of collections based on the "Alibaba Java Development Manual."
 
-强烈建议小伙伴们多多阅读几遍，避免自己写代码的时候出现这些低级的问题。
+I strongly recommend everyone to read this multiple times to avoid these basic issues when writing code.
 
-## 集合判空
+## Checking for Empty Collections
 
-《阿里巴巴 Java 开发手册》的描述如下：
+The description in the "Alibaba Java Development Manual" is as follows:
 
-> **判断所有集合内部的元素是否为空，使用 `isEmpty()` 方法，而不是 `size()==0` 的方式。**
+> **When checking if all elements within a collection are empty, use the `isEmpty()` method instead of `size() == 0`.**
 
-这是因为 `isEmpty()` 方法的可读性更好，并且时间复杂度为 `O(1)`。
+This is because the `isEmpty()` method is more readable and has a time complexity of `O(1)`.
 
-绝大部分我们使用的集合的 `size()` 方法的时间复杂度也是 `O(1)`，不过，也有很多复杂度不是 `O(1)` 的，比如 `java.util.concurrent` 包下的 `ConcurrentLinkedQueue`。`ConcurrentLinkedQueue` 的 `isEmpty()` 方法通过 `first()` 方法进行判断，其中 `first()` 方法返回的是队列中第一个值不为 `null` 的节点（节点值为`null`的原因是在迭代器中使用的逻辑删除）
+For most collections we use, the time complexity of the `size()` method is also `O(1)`. However, there are many that are not `O(1)`, such as `ConcurrentLinkedQueue` in the `java.util.concurrent` package. The `isEmpty()` method of `ConcurrentLinkedQueue` checks using the `first()` method, which returns the first node in the queue whose value is not `null` (the reason for node values being `null` is due to logical deletions used in iterators).
 
 ```java
 public boolean isEmpty() { return first() == null; }
@@ -27,8 +27,8 @@ Node<E> first() {
     for (;;) {
         for (Node<E> h = head, p = h, q;;) {
             boolean hasItem = (p.item != null);
-            if (hasItem || (q = p.next) == null) {  // 当前节点值不为空 或 到达队尾
-                updateHead(h, p);  // 将head设置为p
+            if (hasItem || (q = p.next) == null) {  // Current node's value is not null or reached the end of the queue
+                updateHead(h, p);  // Set head to p
                 return hasItem ? p : null;
             }
             else if (p == q) continue restartFromHead;
@@ -38,7 +38,7 @@ Node<E> first() {
 }
 ```
 
-由于在插入与删除元素时，都会执行`updateHead(h, p)`方法，所以该方法的执行的时间复杂度可以近似为`O(1)`。而 `size()` 方法需要遍历整个链表，时间复杂度为`O(n)`
+Since the `updateHead(h, p)` method is executed during the insertion and deletion of elements, its time complexity can be approximated to `O(1)`. However, the `size()` method requires traversing the entire linked list, with a time complexity of `O(n)`.
 
 ```java
 public int size() {
@@ -51,7 +51,7 @@ public int size() {
 }
 ```
 
-此外，在`ConcurrentHashMap` 1.7 中 `size()` 方法和 `isEmpty()` 方法的时间复杂度也不太一样。`ConcurrentHashMap` 1.7 将元素数量存储在每个`Segment` 中，`size()` 方法需要统计每个 `Segment` 的数量，而 `isEmpty()` 只需要找到第一个不为空的 `Segment` 即可。但是在`ConcurrentHashMap` 1.8 中的 `size()` 方法和 `isEmpty()` 都需要调用 `sumCount()` 方法，其时间复杂度与 `Node` 数组的大小有关。下面是 `sumCount()` 方法的源码：
+Additionally, in `ConcurrentHashMap` version 1.7, the time complexities of the `size()` and `isEmpty()` methods are different. `ConcurrentHashMap` version 1.7 stores the element count in each `Segment`, and the `size()` method needs to count each `Segment`, while `isEmpty()` just needs to find the first non-empty `Segment`. However, in `ConcurrentHashMap` version 1.8, both the `size()` and `isEmpty()` methods need to call the `sumCount()` method, which has a time complexity that relates to the size of the `Node` array. Below is the source code for the `sumCount()` method:
 
 ```java
 final long sumCount() {
@@ -65,13 +65,13 @@ final long sumCount() {
 }
 ```
 
-这是因为在并发的环境下，`ConcurrentHashMap` 将每个 `Node` 中节点的数量存储在 `CounterCell[]` 数组中。在 `ConcurrentHashMap` 1.7 中，将元素数量存储在每个`Segment` 中，`size()` 方法需要统计每个 `Segment` 的数量，而 `isEmpty()` 只需要找到第一个不为空的 `Segment` 即可。
+This is because in a concurrent environment, `ConcurrentHashMap` stores the count of nodes in each `Node` in a `CounterCell[]` array. In `ConcurrentHashMap` version 1.7, the element count is stored in each `Segment`, and the `size()` method needs to count each `Segment`, while `isEmpty()` only needs to find the first non-empty `Segment`.
 
-## 集合转 Map
+## Converting Collection to Map
 
-《阿里巴巴 Java 开发手册》的描述如下：
+The description in the "Alibaba Java Development Manual" is as follows:
 
-> **在使用 `java.util.stream.Collectors` 类的 `toMap()` 方法转为 `Map` 集合时，一定要注意当 value 为 null 时会抛 NPE 异常。**
+> **When using the `toMap()` method of the `java.util.stream.Collectors` class to convert to a Map collection, be aware that a NPE exception will be thrown if the value is null.**
 
 ```java
 class Person {
@@ -83,13 +83,13 @@ class Person {
 List<Person> bookList = new ArrayList<>();
 bookList.add(new Person("jack","18163138123"));
 bookList.add(new Person("martin",null));
-// 空指针异常
+// Null pointer exception
 bookList.stream().collect(Collectors.toMap(Person::getName, Person::getPhoneNumber));
 ```
 
-下面我们来解释一下原因。
+Let's explain the reason.
 
-首先，我们来看 `java.util.stream.Collectors` 类的 `toMap()` 方法 ，可以看到其内部调用了 `Map` 接口的 `merge()` 方法。
+First, we look at the `toMap()` method of the `java.util.stream.Collectors` class. It internally calls the `merge()` method of the `Map` interface.
 
 ```java
 public static <T, K, U, M extends Map<K, U>>
@@ -104,9 +104,9 @@ Collector<T, ?, M> toMap(Function<? super T, ? extends K> keyMapper,
 }
 ```
 
-`Map` 接口的 `merge()` 方法如下，这个方法是接口中的默认实现。
+The `merge()` method of the `Map` interface is as follows. This method is the default implementation in the interface.
 
-> 如果你还不了解 Java 8 新特性的话，请看这篇文章：[《Java8 新特性总结》](https://mp.weixin.qq.com/s/ojyl7B6PiHaTWADqmUq2rw) 。
+> If you are not familiar with the new features of Java 8, please read this article: [Summary of Java 8 New Features](https://mp.weixin.qq.com/s/ojyl7B6PiHaTWADqmUq2rw).
 
 ```java
 default V merge(K key, V value,
@@ -125,7 +125,7 @@ default V merge(K key, V value,
 }
 ```
 
-`merge()` 方法会先调用 `Objects.requireNonNull()` 方法判断 value 是否为空。
+The `merge()` method first calls the `Objects.requireNonNull()` method to check if the value is null.
 
 ```java
 public static <T> T requireNonNull(T obj) {
@@ -135,47 +135,47 @@ public static <T> T requireNonNull(T obj) {
 }
 ```
 
-## 集合遍历
+## Iterating Through Collections
 
-《阿里巴巴 Java 开发手册》的描述如下：
+The description in the "Alibaba Java Development Manual" is as follows:
 
-> **不要在 foreach 循环里进行元素的 `remove/add` 操作。remove 元素请使用 `Iterator` 方式，如果并发操作，需要对 `Iterator` 对象加锁。**
+> **Do not perform `remove/add` operations on elements within a foreach loop. To remove elements, use the `Iterator` approach. If concurrent operations are involved, you need to lock the `Iterator` object.**
 
-通过反编译你会发现 foreach 语法底层其实还是依赖 `Iterator` 。不过， `remove/add` 操作直接调用的是集合自己的方法，而不是 `Iterator` 的 `remove/add`方法
+By decompiling, you will find that the foreach syntax fundamentally relies on `Iterator`. However, the `remove/add` operations directly call the collection's own methods instead of the `Iterator`'s `remove/add` methods.
 
-这就导致 `Iterator` 莫名其妙地发现自己有元素被 `remove/add` ，然后，它就会抛出一个 `ConcurrentModificationException` 来提示用户发生了并发修改异常。这就是单线程状态下产生的 **fail-fast 机制**。
+This leads to the `Iterator` confusingly detecting that some elements have been `remove/add`, which will result in it throwing a `ConcurrentModificationException` to indicate that a concurrent modification exception has occurred. This is the **fail-fast mechanism** that arises in single-threaded contexts.
 
-> **fail-fast 机制**：多个线程对 fail-fast 集合进行修改的时候，可能会抛出`ConcurrentModificationException`。 即使是单线程下也有可能会出现这种情况，上面已经提到过。
+> **Fail-fast mechanism**: When multiple threads modify a fail-fast collection, a `ConcurrentModificationException` may be thrown. Even in a single-threaded context, such situations can occur, as previously mentioned.
 >
-> 相关阅读：[什么是 fail-fast](https://www.cnblogs.com/54chensongxia/p/12470446.html) 。
+> Related reading: [What is fail-fast](https://www.cnblogs.com/54chensongxia/p/12470446.html).
 
-Java8 开始，可以使用 `Collection#removeIf()`方法删除满足特定条件的元素,如
+Starting from Java 8, you can use the `Collection#removeIf()` method to remove elements that meet specific conditions, such as:
 
 ```java
 List<Integer> list = new ArrayList<>();
 for (int i = 1; i <= 10; ++i) {
     list.add(i);
 }
-list.removeIf(filter -> filter % 2 == 0); /* 删除list中的所有偶数 */
+list.removeIf(filter -> filter % 2 == 0); /* Removes all even numbers from list */
 System.out.println(list); /* [1, 3, 5, 7, 9] */
 ```
 
-除了上面介绍的直接使用 `Iterator` 进行遍历操作之外，你还可以：
+In addition to using `Iterator` for traversing, you can also:
 
-- 使用普通的 for 循环
-- 使用 fail-safe 的集合类。`java.util`包下面的所有的集合类都是 fail-fast 的，而`java.util.concurrent`包下面的所有的类都是 fail-safe 的。
-- ……
+- Use a standard for loop
+- Use fail-safe collection classes. All collection classes in the `java.util` package are fail-fast, whereas all classes in the `java.util.concurrent` package are fail-safe.
+- …
 
-## 集合去重
+## Removing Duplicates from Collections
 
-《阿里巴巴 Java 开发手册》的描述如下：
+The description in the "Alibaba Java Development Manual" is as follows:
 
-> **可以利用 `Set` 元素唯一的特性，可以快速对一个集合进行去重操作，避免使用 `List` 的 `contains()` 进行遍历去重或者判断包含操作。**
+> **You can utilize the unique feature of `Set` to quickly remove duplicates from a collection, avoiding the use of `List`'s `contains()` for traversal removal or inclusion checks.**
 
-这里我们以 `HashSet` 和 `ArrayList` 为例说明。
+Here we illustrate with `HashSet` and `ArrayList`.
 
 ```java
-// Set 去重代码示例
+// Set deduplication code example
 public static <T> Set<T> removeDuplicateBySet(List<T> data) {
 
     if (CollectionUtils.isEmpty(data)) {
@@ -184,7 +184,7 @@ public static <T> Set<T> removeDuplicateBySet(List<T> data) {
     return new HashSet<>(data);
 }
 
-// List 去重代码示例
+// List deduplication code example
 public static <T> List<T> removeDuplicateByList(List<T> data) {
 
     if (CollectionUtils.isEmpty(data)) {
@@ -199,12 +199,11 @@ public static <T> List<T> removeDuplicateByList(List<T> data) {
     }
     return result;
 }
-
 ```
 
-两者的核心差别在于 `contains()` 方法的实现。
+The core difference between the two lies in the implementation of the `contains()` method.
 
-`HashSet` 的 `contains()` 方法底部依赖的 `HashMap` 的 `containsKey()` 方法，时间复杂度接近于 O（1）（没有出现哈希冲突的时候为 O（1））。
+The `contains()` method of `HashSet` depends on the `containsKey()` method of `HashMap`, with a time complexity close to O(1) (when there are no hash collisions, it is O(1)).
 
 ```java
 private transient HashMap<E,Object> map;
@@ -213,9 +212,9 @@ public boolean contains(Object o) {
 }
 ```
 
-我们有 N 个元素插入进 Set 中，那时间复杂度就接近是 O (n)。
+If we insert N elements into the Set, the time complexity approaches O(n).
 
-`ArrayList` 的 `contains()` 方法是通过遍历所有元素的方法来做的，时间复杂度接近是 O(n)。
+The `contains()` method of `ArrayList` traverses all elements, with a time complexity close to O(n).
 
 ```java
 public boolean contains(Object o) {
@@ -233,16 +232,15 @@ public int indexOf(Object o) {
     }
     return -1;
 }
-
 ```
 
-## 集合转数组
+## Converting Collection to Array
 
-《阿里巴巴 Java 开发手册》的描述如下：
+The description in the "Alibaba Java Development Manual" is as follows:
 
-> **使用集合转数组的方法，必须使用集合的 `toArray(T[] array)`，传入的是类型完全一致、长度为 0 的空数组。**
+> **When converting a collection to an array, you must use the collection's `toArray(T[] array)`, passing a completely matching, length-zero empty array.**
 
-`toArray(T[] array)` 方法的参数是一个泛型数组，如果 `toArray` 方法中没有传递任何参数的话返回的是 `Object`类 型数组。
+The parameter for `toArray(T[] array)` is a generic array. If no parameters are passed to the `toArray` method, it returns an array of type `Object`.
 
 ```java
 String [] s= new String[]{
@@ -250,80 +248,81 @@ String [] s= new String[]{
 };
 List<String> list = Arrays.asList(s);
 Collections.reverse(list);
-//没有指定类型的话会报错
+// Will throw an error if type is not specified
 s=list.toArray(new String[0]);
 ```
 
-由于 JVM 优化，`new String[0]`作为`Collection.toArray()`方法的参数现在使用更好，`new String[0]`就是起一个模板的作用，指定了返回数组的类型，0 是为了节省空间，因为它只是为了说明返回的类型。详见：<https://shipilev.net/blog/2016/arrays-wisdom-ancients/>
+Due to JVM optimizations, using `new String[0]` as the parameter for `Collection.toArray()` is better now; `new String[0]` acts as a template, specifying the return type of the array, and 0 is for saving space as it is only to indicate the return type. See details: <https://shipilev.net/blog/2016/arrays-wisdom-ancients/>
 
-## 数组转集合
+## Converting Array to Collection
 
-《阿里巴巴 Java 开发手册》的描述如下：
+The description in the "Alibaba Java Development Manual" is as follows:
 
-> **使用工具类 `Arrays.asList()` 把数组转换成集合时，不能使用其修改集合相关的方法， 它的 `add/remove/clear` 方法会抛出 `UnsupportedOperationException` 异常。**
+> **When using the utility class `Arrays.asList()` to convert an array into a collection, you should not use its modifying methods; its `add/remove/clear` methods will throw an `UnsupportedOperationException`.**
 
-我在之前的一个项目中就遇到一个类似的坑。
+I encountered a similar pitfall in a previous project.
 
-`Arrays.asList()`在平时开发中还是比较常见的，我们可以使用它将一个数组转换为一个 `List` 集合。
+`Arrays.asList()` is quite common in everyday development, allowing us to convert an array into a `List` collection.
 
 ```java
 String[] myArray = {"Apple", "Banana", "Orange"};
 List<String> myList = Arrays.asList(myArray);
-//上面两个语句等价于下面一条语句
+// The above two statements are equivalent to the following one
 List<String> myList = Arrays.asList("Apple","Banana", "Orange");
 ```
 
-JDK 源码对于这个方法的说明：
+The JDK source code describes this method as:
 
 ```java
 /**
-  *返回由指定数组支持的固定大小的列表。此方法作为基于数组和基于集合的API之间的桥梁，
-  * 与 Collection.toArray()结合使用。返回的List是可序列化并实现RandomAccess接口。
+  * Returns a fixed-size list backed by the specified array. This method serves as a bridge between array-based and
+  * collection-based APIs, to be used together with Collection.toArray(). The returned List is serializable and implements
+  * RandomAccess interface.
   */
 public static <T> List<T> asList(T... a) {
     return new ArrayList<>(a);
 }
 ```
 
-下面我们来总结一下使用注意事项。
+Let's summarize the usage precautions.
 
-**1、`Arrays.asList()`是泛型方法，传递的数组必须是对象数组，而不是基本类型。**
+**1. `Arrays.asList()` is a generic method, and the passed array must be an object array, not a primitive type.**
 
 ```java
 int[] myArray = {1, 2, 3};
 List myList = Arrays.asList(myArray);
 System.out.println(myList.size());//1
-System.out.println(myList.get(0));//数组地址值
-System.out.println(myList.get(1));//报错：ArrayIndexOutOfBoundsException
+System.out.println(myList.get(0));//Array address value
+System.out.println(myList.get(1));//Error: ArrayIndexOutOfBoundsException
 int[] array = (int[]) myList.get(0);
 System.out.println(array[0]);//1
 ```
 
-当传入一个原生数据类型数组时，`Arrays.asList()` 的真正得到的参数就不是数组中的元素，而是数组对象本身！此时 `List` 的唯一元素就是这个数组，这也就解释了上面的代码。
+When a primitive type array is passed, the real parameter obtained by `Arrays.asList()` is the array object itself rather than the elements in the array! At this point, the only element in the `List` is this array, which explains the above code.
 
-我们使用包装类型数组就可以解决这个问题。
+Using a wrapper type array can solve this issue.
 
 ```java
 Integer[] myArray = {1, 2, 3};
 ```
 
-**2、使用集合的修改方法: `add()`、`remove()`、`clear()`会抛出异常。**
+**2. Using collection modification methods: `add()`, `remove()`, `clear()` will throw exceptions.**
 
 ```java
 List myList = Arrays.asList(1, 2, 3);
-myList.add(4);//运行时报错：UnsupportedOperationException
-myList.remove(1);//运行时报错：UnsupportedOperationException
-myList.clear();//运行时报错：UnsupportedOperationException
+myList.add(4);//Runtime error: UnsupportedOperationException
+myList.remove(1);//Runtime error: UnsupportedOperationException
+myList.clear();//Runtime error: UnsupportedOperationException
 ```
 
-`Arrays.asList()` 方法返回的并不是 `java.util.ArrayList` ，而是 `java.util.Arrays` 的一个内部类,这个内部类并没有实现集合的修改方法或者说并没有重写这些方法。
+The `Arrays.asList()` method does not return a `java.util.ArrayList`, but rather an internal class of `java.util.Arrays`, which does not implement or override the collection modification methods.
 
 ```java
 List myList = Arrays.asList(1, 2, 3);
 System.out.println(myList.getClass());//class java.util.Arrays$ArrayList
 ```
 
-下图是 `java.util.Arrays$ArrayList` 的简易源码，我们可以看到这个类重写的方法有哪些。
+The following diagram shows a simplified source code of `java.util.Arrays$ArrayList`, and we can see which methods this class overrides.
 
 ```java
   private static class ArrayList<E> extends AbstractList<E>
@@ -368,7 +367,7 @@ System.out.println(myList.getClass());//class java.util.Arrays$ArrayList
     }
 ```
 
-我们再看一下`java.util.AbstractList`的 `add/remove/clear` 方法就知道为什么会抛出 `UnsupportedOperationException` 了。
+Now looking at the `add/remove/clear` methods of `java.util.AbstractList` will explain why `UnsupportedOperationException` is thrown.
 
 ```java
 public E remove(int index) {
@@ -394,12 +393,12 @@ protected void removeRange(int fromIndex, int toIndex) {
 }
 ```
 
-**那我们如何正确的将数组转换为 `ArrayList` ?**
+**So how can we correctly convert an array to an `ArrayList`?**
 
-1、手动实现工具类
+1. Manually implement a utility class
 
 ```java
-//JDK1.5+
+// JDK1.5+
 static <T> List<T> arrayToList(final T[] array) {
   final List<T> l = new ArrayList<T>(array.length);
 
@@ -410,36 +409,36 @@ static <T> List<T> arrayToList(final T[] array) {
 }
 
 
-Integer [] myArray = { 1, 2, 3 };
+Integer[] myArray = { 1, 2, 3 };
 System.out.println(arrayToList(myArray).getClass());//class java.util.ArrayList
 ```
 
-2、最简便的方法
+2. The simplest method
 
 ```java
 List list = new ArrayList<>(Arrays.asList("a", "b", "c"))
 ```
 
-3、使用 Java8 的 `Stream`(推荐)
+3. Using Java 8's `Stream` (recommended)
 
 ```java
-Integer [] myArray = { 1, 2, 3 };
+Integer[] myArray = { 1, 2, 3 };
 List myList = Arrays.stream(myArray).collect(Collectors.toList());
-//基本类型也可以实现转换（依赖boxed的装箱操作）
-int [] myArray2 = { 1, 2, 3 };
+// Primitive types can also be converted (depending on boxing operations)
+int[] myArray2 = { 1, 2, 3 };
 List myList = Arrays.stream(myArray2).boxed().collect(Collectors.toList());
 ```
 
-4、使用 Guava
+4. Using Guava
 
-对于不可变集合，你可以使用[`ImmutableList`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/ImmutableList.java)类及其[`of()`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/ImmutableList.java#L101)与[`copyOf()`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/ImmutableList.java#L225)工厂方法：（参数不能为空）
+For immutable collections, you can use the [`ImmutableList`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/ImmutableList.java) class and its [`of()`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/ImmutableList.java#L101) and [`copyOf()`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/ImmutableList.java#L225) factory methods (parameters cannot be null):
 
 ```java
 List<String> il = ImmutableList.of("string", "elements");  // from varargs
 List<String> il = ImmutableList.copyOf(aStringArray);      // from array
 ```
 
-对于可变集合，你可以使用[`Lists`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/Lists.java)类及其[`newArrayList()`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/Lists.java#L87)工厂方法：
+For mutable collections, you can use the [`Lists`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/Lists.java) class and its [`newArrayList()`](https://github.com/google/guava/blob/master/guava/src/com/google/common/collect/Lists.java#L87) factory method:
 
 ```java
 List<String> l1 = Lists.newArrayList(anotherListOrCollection);    // from collection
@@ -447,14 +446,14 @@ List<String> l2 = Lists.newArrayList(aStringArray);               // from array
 List<String> l3 = Lists.newArrayList("or", "string", "elements"); // from varargs
 ```
 
-5、使用 Apache Commons Collections
+5. Using Apache Commons Collections
 
 ```java
 List<String> list = new ArrayList<String>();
 CollectionUtils.addAll(list, str);
 ```
 
-6、 使用 Java9 的 `List.of()`方法
+6. Using Java 9's `List.of()` method
 
 ```java
 Integer[] array = {1, 2, 3};

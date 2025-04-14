@@ -1,196 +1,196 @@
 ---
-title: 有了 HTTP 协议，为什么还要有 RPC ？
-category: 分布式
+title: With HTTP Protocol, Why is RPC Still Needed?
+category: Distributed
 tag:
   - rpc
 ---
 
-> 本文来自[小白 debug](https://juejin.cn/user/4001878057422087)投稿，原文：<https://juejin.cn/post/7121882245605883934> 。
+> This article is contributed by [Xiao Bai debug](https://juejin.cn/user/4001878057422087), original text: <https://juejin.cn/post/7121882245605883934>.
 
-我想起了我刚工作的时候，第一次接触 RPC 协议，当时就很懵，我 HTTP 协议用的好好的，为什么还要用 RPC 协议？
+I remember when I first started working and encountered RPC protocol for the first time. I was confused; I was using HTTP protocol just fine, so why do we need RPC protocol?
 
-于是就到网上去搜。
+So, I searched online.
 
-不少解释显得非常官方，我相信大家在各种平台上也都看到过，解释了又好像没解释，都在**用一个我们不认识的概念去解释另外一个我们不认识的概念**，懂的人不需要看，不懂的人看了还是不懂。
+Many explanations seemed very official. I'm sure everyone has seen them on various platforms, explaining but seemingly not explaining; they all used **one concept we don't understand to explain another concept we don't understand**. Those who understood didn't need to read it, and those who didn't understand remained confused.
 
-这种看了，又好像没看的感觉，云里雾里的很难受，**我懂**。
+That feeling of having read but not having grasped it is quite uncomfortable, **I understand**.
 
-为了避免大家有强烈的**审丑疲劳**，今天我们来尝试重新换个方式讲一讲。
+To avoid eliciting strong **aesthetic fatigue**, let's try to explain this in a different way today.
 
-## 从 TCP 聊起
+## Let's Start with TCP
 
-作为一个程序员，假设我们需要在 A 电脑的进程发一段数据到 B 电脑的进程，我们一般会在代码里使用 socket 进行编程。
+As a programmer, suppose we need to send some data from a process on computer A to a process on computer B, we typically use sockets in our code for programming.
 
-这时候，我们可选项一般也就**TCP 和 UDP 二选一。TCP 可靠，UDP 不可靠。** 除非是马总这种神级程序员（早期 QQ 大量使用 UDP），否则，只要稍微对可靠性有些要求，普通人一般无脑选 TCP 就对了。
+At this point, our options generally come down to **TCP or UDP**. TCP is reliable, while UDP is not. Unless someone like Ma Huateng, a legendary programmer (who heavily used UDP in early QQ), opts for UDP, most ordinary people tend to choose TCP without thinking if there's any requirement for reliability.
 
-类似下面这样。
+It looks something like this.
 
 ```ini
 fd = socket(AF_INET,SOCK_STREAM,0);
 ```
 
-其中`SOCK_STREAM`，是指使用**字节流**传输数据，说白了就是**TCP 协议**。
+Where `SOCK_STREAM` indicates the use of **byte stream** to transmit data, which simply means **TCP protocol**.
 
-在定义了 socket 之后，我们就可以愉快的对这个 socket 进行操作，比如用`bind()`绑定 IP 端口，用`connect()`发起建连。
+After defining the socket, we can happily perform operations on it, such as using `bind()` to bind the IP port and `connect()` to initiate a connection.
 
-![握手建立连接流程](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/f410977cda814d32b0eff3645c385a8a~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![Handshake Connection Process](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/f410977cda814d32b0eff3645c385a8a~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-在连接建立之后，我们就可以使用`send()`发送数据，`recv()`接收数据。
+Once the connection is established, we can use `send()` to send data and `recv()` to receive data.
 
-光这样一个纯裸的 TCP 连接，就可以做到收发数据了，那是不是就够了？
+A pure naked TCP connection can achieve data transmission; isn't that enough?
 
-不行，这么用会有问题。
+No, there are problems with using it this way.
 
-## 使用纯裸 TCP 会有什么问题
+## What are the Problems with Using Pure Naked TCP?
 
-八股文常背，TCP 是有三个特点，**面向连接**、**可靠**、基于**字节流**。
+It's often repeated that TCP has three characteristics: **connection-oriented**, **reliable**, and based on **byte stream**.
 
-![TCP是什么](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/acb4508111cb47d8a3df6734d04818bc~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![What is TCP](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/acb4508111cb47d8a3df6734d04818bc~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-这三个特点真的概括的 **非常精辟** ，这个八股文我们没白背。
+These three characteristics are indeed **very concise**; we didn’t memorize them for nothing.
 
-每个特点展开都能聊一篇文章，而今天我们需要关注的是 **基于字节流** 这一点。
+Each characteristic can be discussed in its own article, but today we need to focus on **byte stream**.
 
-字节流可以理解为一个双向的通道里流淌的二进制数据，也就是 **01 串** 。纯裸 TCP 收发的这些 01 串之间是 **没有任何边界** 的，你根本不知道到哪个地方才算一条完整消息。
+A byte stream can be understood as flowing binary data in a bidirectional channel, which is essentially a string of **01**. The 01 strings transmitted by pure naked TCP have **no boundaries** between them; you have no idea where a complete message starts and ends.
 
-![01二进制字节流](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/b82d4fcdd0c4491e979856c93c1750d7~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![Binary Byte Stream](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/b82d4fcdd0c4491e979856c93c1750d7~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-正因为这个没有任何边界的特点，所以当我们选择使用 TCP 发送 **"夏洛"和"特烦恼"** 的时候，接收端收到的就是 **"夏洛特烦恼"** ，这时候接收端没发区分你是想要表达 **"夏洛"+"特烦恼"** 还是 **"夏洛特"+"烦恼"** 。
+Because of this lack of boundaries, when we choose to send **"Xia Luo" and "Te Fan Nao"** over TCP, the receiving end gets **"Xia Luo Te Fan Nao."** At this point, the receiver cannot distinguish whether you meant to express **"Xia Luo" + "Te Fan Nao"** or **"Xia Luo Te" + "Fan Nao."**
 
-![消息对比](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/4e120d0f1152419585565f693e744a3a~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![Message Comparison](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/4e120d0f1152419585565f693e744a3a~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-这就是所谓的 **粘包问题**，之前也写过一篇专门的[文章](https://mp.weixin.qq.com/s/0-YBxU1cSbDdzcZEZjmQYA)聊过这个问题。
+This is known as the **sticky packet problem**, and I have previously written a dedicated [article](https://mp.weixin.qq.com/s/0-YBxU1cSbDdzcZEZjmQYA) discussing this issue.
 
-说这个的目的是为了告诉大家，纯裸 TCP 是不能直接拿来用的，你需要在这个基础上加入一些 **自定义的规则** ，用于区分 **消息边界** 。
+The point of mentioning this is to let everyone know that pure naked TCP cannot be used directly; you need to add some **custom rules** to distinguish **message boundaries.**
 
-于是我们会把每条要发送的数据都包装一下，比如加入 **消息头** ，消息头里写清楚一个完整的包长度是多少，根据这个长度可以继续接收数据，截取出来后它们就是我们真正要传输的 **消息体** 。
+So, we typically wrap each piece of data to be sent, such as adding a **message header** that clearly states the length of a complete packet. Based on this length, we can continue receiving data and extract it, which forms our actual **message body**.
 
-![消息边界长度标志](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/cb29659d4907446e9f70551c44c6369f~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![Message Boundary Length Indicator](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/cb29659d4907446e9f70551c44c6369f~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-而这里头提到的 **消息头** ，还可以放各种东西，比如消息体是否被压缩过和消息体格式之类的，只要上下游都约定好了，互相都认就可以了，这就是所谓的 **协议。**
+The mentioned **message header** can also contain various pieces of information, such as whether the message body is compressed and the format of the message body. As long as both ends agree on the protocol, it's fine.
 
-每个使用 TCP 的项目都可能会定义一套类似这样的协议解析标准，他们可能 **有区别，但原理都类似**。
+Every project using TCP may define a set of parsing standards similar to this; they may **differ but the principles are similar.**
 
-**于是基于 TCP，就衍生了非常多的协议，比如 HTTP 和 RPC。**
+**Thus, many protocols have emerged based on TCP, such as HTTP and RPC.**
 
-## HTTP 和 RPC
+## HTTP and RPC
 
-### RPC 其实是一种调用方式
+### RPC is Essentially a Calling Method
 
-我们回过头来看网络的分层图。
+Let’s turn back to the network layering diagram.
 
-![四层网络协议](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/04b603b5bd2443209233deea87816161~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![Four-Layer Network Protocol](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/04b603b5bd2443209233deea87816161~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-**TCP 是传输层的协议** ，而基于 TCP 造出来的 HTTP 和各类 RPC 协议，它们都只是定义了不同消息格式的 **应用层协议** 而已。
+**TCP is a transport layer protocol**, while HTTP and various RPC protocols built on TCP are merely **application layer protocols** that define different message formats.
 
-**HTTP**（**H**yper **T**ext **T**ransfer **P**rotocol）协议又叫做 **超文本传输协议** 。我们用的比较多，平时上网在浏览器上敲个网址就能访问网页，这里用到的就是 HTTP 协议。
+**HTTP** (Hyper Text Transfer Protocol) is commonly known as the **hypertext transfer protocol**. We use it quite often; when browsing the internet, we can access a webpage by typing a URL in the browser, which utilizes the HTTP protocol.
 
-![HTTP调用](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/8f07a5d1c72a4c4fa811c6c3b5aadd3d~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![HTTP Call](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/8f07a5d1c72a4c4fa811c6c3b5aadd3d~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-而 **RPC**（**R**emote **P**rocedure **C**all）又叫做 **远程过程调用**，它本身并不是一个具体的协议，而是一种 **调用方式** 。
+On the other hand, **RPC** (Remote Procedure Call) is also known as **remote procedure invocation**. It is not a specific protocol; it represents a **calling method**.
 
-举个例子，我们平时调用一个 **本地方法** 就像下面这样。
+For example, when we usually call a **local method**, it looks something like this.
 
 ```ini
- res = localFunc(req)
+res = localFunc(req)
 ```
 
-如果现在这不是个本地方法，而是个**远端服务器**暴露出来的一个方法`remoteFunc`，如果我们还能像调用本地方法那样去调用它，这样就可以**屏蔽掉一些网络细节**，用起来更方便，岂不美哉？
+If now this isn't a local method, but a method `remoteFunc` exposed by a **remote server**, and we can still call it just like a local method, it can **mask some network details**, making it more convenient, wouldn't that be great?
 
 ```ini
 res = remoteFunc(req)
 ```
 
-![RPC可以像调用本地方法那样调用远端方法](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/761da6c30af244e19b1c44075d8b4254~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![RPC Can Call Remote Methods Like Local Methods](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/761da6c30af244e19b1c44075d8b4254~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-基于这个思路，大佬们造出了非常多款式的 RPC 协议，比如比较有名的`gRPC`，`thrift`。
+Based on this idea, many different types of RPC protocols have been created, such as the well-known `gRPC` and `thrift`.
 
-值得注意的是，虽然大部分 RPC 协议底层使用 TCP，但实际上 **它们不一定非得使用 TCP，改用 UDP 或者 HTTP，其实也可以做到类似的功能。**
+It's important to note that although most RPC protocols use TCP underneath, in reality, **they don't have to use TCP; they could also use UDP or HTTP, achieving similar functionalities.**
 
-到这里，我们回到文章标题的问题。
+Now, let's return to the question posed in the article title.
 
-### 那既然有 RPC 了，为什么还要有 HTTP 呢？
+### If RPC Exists, Why is HTTP Still Needed?
 
-其实，TCP 是 **70 年** 代出来的协议，而 HTTP 是 **90 年代** 才开始流行的。而直接使用裸 TCP 会有问题，可想而知，这中间这么多年有多少自定义的协议，而这里面就有 **80 年代** 出来的`RPC`。
+In fact, TCP was a protocol developed in the **1970s**, while HTTP didn't begin to gain popularity until the **1990s**. Given that directly using naked TCP has its problems, it’s easy to see how many custom protocols have emerged over the years; and RPC was developed in the **1980s**.
 
-所以我们该问的不是 **既然有 HTTP 协议为什么要有 RPC** ，而是 **为什么有 RPC 还要有 HTTP 协议?**
+Therefore, we should not ask **why RPC exists alongside HTTP** but rather **why does HTTP still exist alongside RPC?**
 
-现在电脑上装的各种联网软件，比如 xx 管家，xx 卫士，它们都作为客户端（Client） 需要跟服务端（Server） 建立连接收发消息，此时都会用到应用层协议，在这种 Client/Server (C/S) 架构下，它们可以使用自家造的 RPC 协议，因为它只管连自己公司的服务器就 ok 了。
+Various networked applications installed on computers, such as xx Manager and xx Guardian, act as clients requiring connection to servers to send and receive messages; they utilize application layer protocols. In this Client/Server (C/S) architecture, they can use their own RPC protocols since they only need to connect to their company’s server.
 
-但有个软件不同，浏览器（Browser） ，不管是 Chrome 还是 IE，它们不仅要能访问自家公司的**服务器（Server）** ，还需要访问其他公司的网站服务器，因此它们需要有个统一的标准，不然大家没法交流。于是，HTTP 就是那个时代用于统一 **Browser/Server (B/S)** 的协议。
+However, one type of software is different: browsers (Browser). Whether it’s Chrome or IE, they need not only to access their own company’s **server** but also to reach websites hosted by other companies; therefore, they need a unified standard, otherwise, communication would be impossible. Consequently, HTTP serves as that standard for unifying **Browser/Server (B/S)** communication.
 
-也就是说在多年以前，**HTTP 主要用于 B/S 架构，而 RPC 更多用于 C/S 架构。但现在其实已经没分那么清了，B/S 和 C/S 在慢慢融合。** 很多软件同时支持多端，比如某度云盘，既要支持**网页版**，还要支持**手机端和 PC 端**，如果通信协议都用 HTTP 的话，那服务器只用同一套就够了。而 RPC 就开始退居幕后，一般用于公司内部集群里，各个微服务之间的通讯。
+In other words, many years ago, **HTTP was primarily used for B/S architecture, while RPC was more for C/S architecture. However, such distinctions have blurred over time; B/S and C/S are gradually merging.** Many applications now support multiple platforms, such as a certain cloud storage service needing both **web** and **mobile/PC** support. If communication protocols only used HTTP, the server would only need to deal with one set of protocols. Consequently, RPC has begun to take a backseat and is generally used for communication between various microservices within company internal clusters.
 
-那这么说的话，**都用 HTTP 得了，还用什么 RPC？**
+So that raises the question: **Why not just use HTTP; why use RPC at all?**
 
-仿佛又回到了文章开头的样子，那这就要从它们之间的区别开始说起。
+It feels like we're back at the beginning of the article, so we’ll need to discuss the differences between them.
 
-### HTTP 和 RPC 有什么区别
+### What Are the Differences Between HTTP and RPC?
 
-我们来看看 RPC 和 HTTP 区别比较明显的几个点。
+Let's look at a few points that clearly distinguish RPC from HTTP.
 
-#### 服务发现
+#### Service Discovery
 
-首先要向某个服务器发起请求，你得先建立连接，而建立连接的前提是，你得知道 **IP 地址和端口** 。这个找到服务对应的 IP 端口的过程，其实就是 **服务发现**。
+To initiate a request to a server, you must first establish a connection, and the prerequisite for establishing that connection is knowing the **IP address and port**. The process of finding the service's corresponding IP and port is known as **service discovery**.
 
-在 **HTTP** 中，你知道服务的域名，就可以通过 **DNS 服务** 去解析得到它背后的 IP 地址，默认 **80 端口**。
+In **HTTP**, if you know the domain name of the service, you can resolve the IP address behind it through **DNS services**, typically on the **default port 80**.
 
-而 **RPC** 的话，就有些区别，一般会有专门的中间服务去保存服务名和 IP 信息，比如 **Consul、Etcd、Nacos、ZooKeeper，甚至是 Redis**。想要访问某个服务，就去这些中间服务去获得 IP 和端口信息。由于 DNS 也是服务发现的一种，所以也有基于 DNS 去做服务发现的组件，比如 **CoreDNS**。
+In the case of **RPC**, there are some differences. Typically, there will be dedicated intermediary services responsible for storing service names and IP information, such as **Consul, Etcd, Nacos, ZooKeeper, or even Redis**. To access a certain service, you'd query these intermediary services to obtain the IP and port information. Since DNS also functions as a form of service discovery, there exist components that achieve service discovery based on DNS, such as **CoreDNS**.
 
-可以看出服务发现这一块，两者是有些区别，但不太能分高低。
+It's evident that the service discovery aspect does show some differences between the two, but they are not significantly superior or inferior to one another.
 
-#### 底层连接形式
+#### Underlying Connection Method
 
-以主流的 **HTTP1.1** 协议为例，其默认在建立底层 TCP 连接之后会一直保持这个连接（**keep alive**），之后的请求和响应都会复用这条连接。
+Taking the mainstream **HTTP/1.1** protocol as an example, its default behavior is to maintain a TCP connection once established (the **keep-alive** feature), allowing subsequent requests and responses to reuse this connection.
 
-而 **RPC** 协议，也跟 HTTP 类似，也是通过建立 TCP 长链接进行数据交互，但不同的地方在于，RPC 协议一般还会再建个 **连接池**，在请求量大的时候，建立多条连接放在池内，要发数据的时候就从池里取一条连接出来，用完放回去，下次再复用，可以说非常环保。
+On the other hand, **RPC protocols** also establish TCP long connections for data interactions, but unlike HTTP, RPC protocols typically create a **connection pool**. During times of high request volume, multiple connections are established and kept in the pool; when data needs to be sent, a connection is retrieved from the pool, used, and then returned for future reuse, which is quite efficient.
 
-![connection_pool](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/72fcad064c9e4103a11f1a2d579f79b2~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![Connection Pool](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/72fcad064c9e4103a11f1a2d579f79b2~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-由于连接池有利于提升网络请求性能，所以不少编程语言的网络库里都会给 HTTP 加个连接池，比如 Go 就是这么干的。
+Connection pools help improve network request performance, which is why many programming languages' network libraries introduce a connection pool for HTTP, as seen in Go.
 
-可以看出这一块两者也没太大区别，所以也不是关键。
+From this perspective, there isn’t a significant distinction in practices between them, so it’s not a key difference either.
 
-#### 传输的内容
+#### Content Being Transmitted
 
-基于 TCP 传输的消息，说到底，无非都是 **消息头 Header 和消息体 Body。**
+Messages transmitted using TCP ultimately consist of **header and body**.
 
-**Header** 是用于标记一些特殊信息，其中最重要的是 **消息体长度**。
+**Header** is used to denote certain special information, with the most important aspect being the **length of the message body**.
 
-**Body** 则是放我们真正需要传输的内容，而这些内容只能是二进制 01 串，毕竟计算机只认识这玩意。所以 TCP 传字符串和数字都问题不大，因为字符串可以转成编码再变成 01 串，而数字本身也能直接转为二进制。但结构体呢，我们得想个办法将它也转为二进制 01 串，这样的方案现在也有很多现成的，比如 **JSON，Protocol Buffers (Protobuf)** 。
+**Body** contains the actual content we need to transmit, which must be represented in binary as 01 strings since computers only recognize this format. Thus, TCP can handle strings and numbers without issue, because strings can be encoded as 01 strings, and numbers can be directly converted into binary. For structures, however, we need a method to convert them into binary 01 strings, and there are many existing solutions for this, such as **JSON** and **Protocol Buffers (Protobuf)**.
 
-这个将结构体转为二进制数组的过程就叫 **序列化** ，反过来将二进制数组复原成结构体的过程叫 **反序列化**。
+The process of converting a structure into a binary array is called **serialization**, while reverting a binary array back into a structure is called **deserialization**.
 
-![序列化和反序列化](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/d501dfc6f764430188ce61fda0f3e5d9~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![Serialization and Deserialization](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/d501dfc6f764430188ce61fda0f3e5d9~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-对于主流的 HTTP1.1，虽然它现在叫超文本协议，支持音频视频，但 HTTP 设计 初是用于做网页文本展示的，所以它传的内容以字符串为主。Header 和 Body 都是如此。在 Body 这块，它使用 **JSON** 来 **序列化** 结构体数据。
+For mainstream HTTP/1.1, although it is referred to as a hypertext protocol—supporting audio and video—HTTP was originally designed primarily for displaying web text, so the content it transmits is predominantly string-based. Both the header and body follow this pattern. In the body section, it employs **JSON** to **serialize** structured data.
 
-我们可以随便截个图直观看下。
+We can capture a snapshot for a more intuitive view.
 
-![HTTP报文](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/04e8a79ddb7247759df23f1132c01655~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![HTTP Message](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/04e8a79ddb7247759df23f1132c01655~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-可以看到这里面的内容非常多的冗余，显得非常啰嗦。最明显的，像 Header 里的那些信息，其实如果我们约定好头部的第几位是 `Content-Type`，就不需要每次都真的把 `Content-Type` 这个字段都传过来，类似的情况其实在 Body 的 JSON 结构里也特别明显。
+The content here exhibits significant redundancy and appears verbose. Most noticeably, information in the header (like `Content-Type`) could be effectively conveyed by agreeing on a specific bit's position in the header instead of transmitting the `Content-Type` field literally each time. Similar situations can also be observed in the body's JSON structure.
 
-而 RPC，因为它定制化程度更高，可以采用体积更小的 Protobuf 或其他序列化协议去保存结构体数据，同时也不需要像 HTTP 那样考虑各种浏览器行为，比如 302 重定向跳转啥的。**因此性能也会更好一些，这也是在公司内部微服务中抛弃 HTTP，选择使用 RPC 的最主要原因。**
+In contrast, RPC, due to its higher level of customization, can utilize smaller serialization formats like Protobuf to retain structured data, without needing to accommodate various browser behaviors (like 302 redirection). **Thus, its performance can be better, which is a major reason for opting for RPC instead of HTTP in internal microservice communications.**
 
-![HTTP原理](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/284c26bb7f2848889d1d9b95cf49decb~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![HTTP Principle](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/284c26bb7f2848889d1d9b95cf49decb~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-![RPC原理](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/edb050d383c644e895e505253f1c4d90~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
+![RPC Principle](https://oss.javaguide.cn/github/javaguide/distributed-system/rpc/edb050d383c644e895e505253f1c4d90~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp.png)
 
-当然上面说的 HTTP，其实 **特指的是现在主流使用的 HTTP1.1**，`HTTP2`在前者的基础上做了很多改进，所以 **性能可能比很多 RPC 协议还要好**，甚至连`gRPC`底层都直接用的`HTTP2`。
+It’s worth noting that the HTTP referred to here specifically denotes the currently mainstream HTTP/1.1. `HTTP/2` has made many improvements on top of this, so **its performance may exceed many RPC protocols**, with `gRPC` directly utilizing `HTTP/2` at its core.
 
-那么问题又来了。
+This prompts yet another question.
 
-### 为什么既然有了 HTTP2，还要有 RPC 协议？
+### Why, Since We've Emerged with HTTP/2, Do We Still Need RPC Protocols?
 
-这个是由于 HTTP2 是 2015 年出来的。那时候很多公司内部的 RPC 协议都已经跑了好些年了，基于历史原因，一般也没必要去换了。
+The reason is that HTTP/2 was introduced in 2015, by which time many internal RPC protocols had already been running for several years; thus, due to historical reasons, there typically wasn’t a pressing need to shift to alternatives.
 
-## 总结
+## Conclusion
 
-- 纯裸 TCP 是能收发数据，但它是个无边界的数据流，上层需要定义消息格式用于定义 **消息边界** 。于是就有了各种协议，HTTP 和各类 RPC 协议就是在 TCP 之上定义的应用层协议。
-- **RPC 本质上不算是协议，而是一种调用方式**，而像 gRPC 和 Thrift 这样的具体实现，才是协议，它们是实现了 RPC 调用的协议。目的是希望程序员能像调用本地方法那样去调用远端的服务方法。同时 RPC 有很多种实现方式，**不一定非得基于 TCP 协议**。
-- 从发展历史来说，**HTTP 主要用于 B/S 架构，而 RPC 更多用于 C/S 架构。但现在其实已经没分那么清了，B/S 和 C/S 在慢慢融合。** 很多软件同时支持多端，所以对外一般用 HTTP 协议，而内部集群的微服务之间则采用 RPC 协议进行通讯。
-- RPC 其实比 HTTP 出现的要早，且比目前主流的 HTTP1.1 性能要更好，所以大部分公司内部都还在使用 RPC。
-- **HTTP2.0** 在 **HTTP1.1** 的基础上做了优化，性能可能比很多 RPC 协议都要好，但由于是这几年才出来的，所以也不太可能取代掉 RPC。
+- Pure naked TCP can send and receive data, but it is a borderless data stream, requiring the upper layers to define a message format to establish **message boundaries**. Thus, various application layer protocols, including HTTP and various RPC protocols, are defined on top of TCP.
+- **RPC is not essentially a protocol but a method of invocation**, while implementations like gRPC and Thrift are the protocols that realize RPC calls. The goal is to allow programmers to invoke remote service methods like local methods. Moreover, there are various ways to implement RPC, **and it does not have to be based on the TCP protocol**.
+- From a historical development perspective, **HTTP was primarily used for B/S architecture, while RPC was more oriented towards C/S architecture. However, now the distinction has become less clear as B/S and C/S are gradually merging.** Many applications support multiple platforms, making HTTP generally suitable for external communications, while RPC protocols are used for communication within internal clusters.
+- RPC actually predates HTTP and tends to perform better than the currently mainstream HTTP/1.1, which is why most companies still utilize RPC internally.
+- **HTTP/2** has been optimized upon **HTTP/1.1**, potentially outperforming many RPC protocols; however, it was introduced only in recent years, making it more challenging to replace RPC quickly.
 
 <!-- @include: @article-footer.snippet.md -->

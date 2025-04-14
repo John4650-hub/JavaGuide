@@ -1,47 +1,47 @@
 ---
-title: Java并发常见面试题总结（上）
+title: Summary of Common Java Concurrency Interview Questions (Part 1)
 category: Java
 tag:
-  - Java并发
+  - Java Concurrency
 head:
-  - - meta
-    - name: keywords
-      content: 线程和进程,并发和并行,多线程,死锁,线程的生命周期
-  - - meta
-    - name: description
-      content: Java并发常见知识点和面试题总结（含详细解答），希望对你有帮助！
+  -   - meta
+      - name: keywords
+        content: threads and processes, concurrency and parallelism, multithreading, deadlock, thread lifecycle
+  -   - meta
+      - name: description
+        content: A summary of common knowledge points and interview questions in Java concurrency (including detailed answers), hope it helps you!
 ---
 
 <!-- @include: @small-advertisement.snippet.md -->
 
-## 线程
+## Threads
 
-### ⭐️什么是线程和进程?
+### ⭐️What are threads and processes?
 
-#### 何为进程?
+#### What is a process?
 
-进程是程序的一次执行过程，是系统运行程序的基本单位，因此进程是动态的。系统运行一个程序即是一个进程从创建，运行到消亡的过程。
+A process is the execution of a program and is the basic unit for the system to run programs; hence, a process is dynamic. When the system runs a program, it is a process from creation, execution, to termination.
 
-在 Java 中，当我们启动 main 函数时其实就是启动了一个 JVM 的进程，而 main 函数所在的线程就是这个进程中的一个线程，也称主线程。
+In Java, when we start the main function, we are actually starting a JVM process, and the thread where the main function resides is a thread within this process, also known as the main thread.
 
-如下图所示，在 Windows 中通过查看任务管理器的方式，我们就可以清楚看到 Windows 当前运行的进程（`.exe` 文件的运行）。
+As shown in the image below, we can clearly see the current processes running on Windows by checking the task manager (the execution of `.exe` files).
 
-![进程示例图片-Windows](https://oss.javaguide.cn/github/javaguide/java/%E8%BF%9B%E7%A8%8B%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87-Windows.png)
+![Process Example Image - Windows](https://oss.javaguide.cn/github/javaguide/java/%E8%BF%9B%E7%A8%8B%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87-Windows.png)
 
-#### 何为线程?
+#### What is a thread?
 
-线程与进程相似，但线程是一个比进程更小的执行单位。一个进程在其执行的过程中可以产生多个线程。与进程不同的是同类的多个线程共享进程的**堆**和**方法区**资源，但每个线程有自己的**程序计数器**、**虚拟机栈**和**本地方法栈**，所以系统在产生一个线程，或是在各个线程之间做切换工作时，负担要比进程小得多，也正因为如此，线程也被称为轻量级进程。
+A thread is similar to a process but is a smaller unit of execution than a process. A process can generate multiple threads during its execution. Unlike processes, multiple threads of the same type share the **heap** and **method area** resources of the process, but each thread has its own **program counter**, **Java virtual machine stack**, and **native method stack**. Thus, creating a thread or switching between threads imposes a much lower burden on the system than processes, which is why threads are also referred to as lightweight processes.
 
-Java 程序天生就是多线程程序，我们可以通过 JMX 来看看一个普通的 Java 程序有哪些线程，代码如下。
+Java programs are inherently multithreaded; we can use JMX to see what threads a typical Java program has, as illustrated in the code below.
 
 ```java
 public class MultiThread {
 	public static void main(String[] args) {
-		// 获取 Java 线程管理 MXBean
-	ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
-		// 不需要获取同步的 monitor 和 synchronizer 信息，仅获取线程和线程堆栈信息
+		// Get the Java thread management MXBean
+		ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+		// No need to get synchronized monitor and synchronizer information, just get thread and thread stack information
 		ThreadInfo[] threadInfos = threadMXBean.dumpAllThreads(false, false);
-		// 遍历线程信息，仅打印线程 ID 和线程名称信息
+		// Traverse thread information and only print thread ID and thread name information
 		for (ThreadInfo threadInfo : threadInfos) {
 			System.out.println("[" + threadInfo.getThreadId() + "] " + threadInfo.getThreadName());
 		}
@@ -49,267 +49,267 @@ public class MultiThread {
 }
 ```
 
-上述程序输出如下（输出内容可能不同，不用太纠结下面每个线程的作用，只用知道 main 线程执行 main 方法即可）：
+The output of the above program is as follows (the content may vary; do not worry too much about the function of each thread below; just know that the main thread executes the main method):
 
 ```plain
-[5] Attach Listener //添加事件
-[4] Signal Dispatcher // 分发处理给 JVM 信号的线程
-[3] Finalizer //调用对象 finalize 方法的线程
-[2] Reference Handler //清除 reference 线程
-[1] main //main 线程,程序入口
+[5] Attach Listener // Add Listener
+[4] Signal Dispatcher // Thread that dispatches signals to the JVM
+[3] Finalizer // Thread that calls the finalize method of an object
+[2] Reference Handler // Thread that cleans up references
+[1] main // Main thread, program entry point
 ```
 
-从上面的输出内容可以看出：**一个 Java 程序的运行是 main 线程和多个其他线程同时运行**。
+From the output, we can see that: **The execution of a Java program involves the simultaneous operation of the main thread and several other threads**.
 
-### Java 线程和操作系统的线程有啥区别？
+### What are the differences between Java threads and operating system threads?
 
-JDK 1.2 之前，Java 线程是基于绿色线程（Green Threads）实现的，这是一种用户级线程（用户线程），也就是说 JVM 自己模拟了多线程的运行，而不依赖于操作系统。由于绿色线程和原生线程比起来在使用时有一些限制（比如绿色线程不能直接使用操作系统提供的功能如异步 I/O、只能在一个内核线程上运行无法利用多核），在 JDK 1.2 及以后，Java 线程改为基于原生线程（Native Threads）实现，也就是说 JVM 直接使用操作系统原生的内核级线程（内核线程）来实现 Java 线程，由操作系统内核进行线程的调度和管理。
+Before JDK 1.2, Java threads were implemented using green threads, which are a type of user-level thread. This means that the JVM simulated multithreading without relying on the operating system. Due to some limitations of green threads compared to native threads (e.g., green threads cannot directly use operating system features like asynchronous I/O, and can only run on one kernel thread without utilizing multiple cores), from JDK 1.2 onwards, Java threads were changed to be implemented based on native threads, meaning that the JVM directly uses the operating system's native kernel-level threads to implement Java threads, with the operating system kernel managing thread scheduling.
 
-我们上面提到了用户线程和内核线程，考虑到很多读者不太了解二者的区别，这里简单介绍一下：
+We mentioned user threads and kernel threads earlier, and considering that many readers might not be familiar with the differences between them, here is a brief introduction:
 
-- 用户线程：由用户空间程序管理和调度的线程，运行在用户空间（专门给应用程序使用）。
-- 内核线程：由操作系统内核管理和调度的线程，运行在内核空间（只有内核程序可以访问）。
+- User Thread: A thread managed and scheduled by user-space programs, running in user space (specifically meant for application use).
+- Kernel Thread: A thread managed and scheduled by the operating system kernel, running in kernel space (which only kernel programs can access).
 
-顺便简单总结一下用户线程和内核线程的区别和特点：用户线程创建和切换成本低，但不可以利用多核。内核态线程，创建和切换成本高，可以利用多核。
+To summarize briefly, here are the differences and characteristics of user threads and kernel threads: User threads have low creation and switching costs but cannot utilize multiple cores. Kernel-level threads have high creation and switching costs but can utilize multiple cores.
 
-一句话概括 Java 线程和操作系统线程的关系：**现在的 Java 线程的本质其实就是操作系统的线程**。
+In short, the relationship between Java threads and operating system threads is: **The essence of current Java threads is essentially operating system threads**.
 
-线程模型是用户线程和内核线程之间的关联方式，常见的线程模型有这三种：
+Thread models are the relationships between user threads and kernel threads. The three common thread models are:
 
-1. 一对一（一个用户线程对应一个内核线程）
-2. 多对一（多个用户线程映射到一个内核线程）
-3. 多对多（多个用户线程映射到多个内核线程）
+1. One-to-One (one user thread corresponds to one kernel thread)
+1. Many-to-One (multiple user threads map to one kernel thread)
+1. Many-to-Many (multiple user threads map to multiple kernel threads)
 
-![常见的三种线程模型](https://oss.javaguide.cn/github/javaguide/java/concurrent/three-types-of-thread-models.png)
+![Common Three Thread Models](https://oss.javaguide.cn/github/javaguide/java/concurrent/three-types-of-thread-models.png)
 
-在 Windows 和 Linux 等主流操作系统中，Java 线程采用的是一对一的线程模型，也就是一个 Java 线程对应一个系统内核线程。Solaris 系统是一个特例（Solaris 系统本身就支持多对多的线程模型），HotSpot VM 在 Solaris 上支持多对多和一对一。具体可以参考 R 大的回答: [JVM 中的线程模型是用户级的么？](https://www.zhihu.com/question/23096638/answer/29617153)。
+In mainstream operating systems like Windows and Linux, Java threads employ a one-to-one thread model, meaning one Java thread corresponds to one system kernel thread. The Solaris system is an exception (as it natively supports a many-to-many threading model), with HotSpot VM supporting both many-to-many and one-to-one threading on Solaris. For specific details, refer to R's answer: [Is the thread model in the JVM user-level?](https://www.zhihu.com/question/23096638/answer/29617153).
 
-### ⭐️请简要描述线程与进程的关系,区别及优缺点？
+### ⭐️Please briefly describe the relationship, differences, and advantages/disadvantages of threads and processes.
 
-下图是 Java 内存区域，通过下图我们从 JVM 的角度来说一下线程和进程之间的关系。
+The image below shows the Java memory area, and from this image, we can discuss the relationship between threads and processes from the perspective of the JVM.
 
-![Java 运行时数据区域（JDK1.8 之后）](https://oss.javaguide.cn/github/javaguide/java/jvm/java-runtime-data-areas-jdk1.8.png)
+![Java Runtime Data Areas (Post JDK 1.8)](https://oss.javaguide.cn/github/javaguide/java/jvm/java-runtime-data-areas-jdk1.8.png)
 
-从上图可以看出：一个进程中可以有多个线程，多个线程共享进程的**堆**和**方法区 (JDK1.8 之后的元空间)**资源，但是每个线程有自己的**程序计数器**、**虚拟机栈** 和 **本地方法栈**。
+From the image, we can see that a process can have multiple threads, and those threads share the **heap** and **method area (meta space after JDK 1.8)** resources of the process. However, each thread has its own **program counter**, **Java virtual machine stack**, and **native method stack**.
 
-**总结：** **线程是进程划分成的更小的运行单位。线程和进程最大的不同在于基本上各进程是独立的，而各线程则不一定，因为同一进程中的线程极有可能会相互影响。线程执行开销小，但不利于资源的管理和保护；而进程正相反。**
+**Summary:** **Threads are smaller units of execution created from a process. The biggest difference between threads and processes is that processes are generally independent, whereas threads may not be, because threads within the same process can significantly affect each other. Thread execution has a low overhead but is not conducive to resource management and protection; the opposite is true for processes.**
 
-下面是该知识点的扩展内容！
+Now let's explore an extended content of this knowledge!
 
-下面来思考这样一个问题：为什么**程序计数器**、**虚拟机栈**和**本地方法栈**是线程私有的呢？为什么堆和方法区是线程共享的呢？
+Consider this question: why are the **program counter**, **Java virtual machine stack**, and **native method stack** thread-private? Why are the heap and method area thread-shared?
 
-#### 程序计数器为什么是私有的?
+#### Why is the program counter private?
 
-程序计数器主要有下面两个作用：
+The program counter mainly has two functions:
 
-1. 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制，如：顺序执行、选择、循环、异常处理。
-2. 在多线程的情况下，程序计数器用于记录当前线程执行的位置，从而当线程被切换回来的时候能够知道该线程上次运行到哪儿了。
+1. The bytecode interpreter uses the program counter to read instructions sequentially, thereby controlling the flow of code: sequential execution, selection, loop, and exception handling.
+1. In a multithreaded scenario, the program counter is used to record the position of the currently executing thread, so when the thread is switched back, it knows where the thread last executed.
 
-需要注意的是，如果执行的是 native 方法，那么程序计数器记录的是 undefined 地址，只有执行的是 Java 代码时程序计数器记录的才是下一条指令的地址。
+It's important to note that if a native method is executed, the program counter records an undefined address; only when executing Java code does the program counter record the address of the next instruction.
 
-所以，程序计数器私有主要是为了**线程切换后能恢复到正确的执行位置**。
+Therefore, the program counter is private primarily to **restore to the correct execution position after a thread switch**.
 
-#### 虚拟机栈和本地方法栈为什么是私有的?
+#### Why are the Java virtual machine stack and the native method stack private?
 
-- **虚拟机栈：** 每个 Java 方法在执行之前会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
-- **本地方法栈：** 和虚拟机栈所发挥的作用非常相似，区别是：**虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务。** 在 HotSpot 虚拟机中和 Java 虚拟机栈合二为一。
+- **Java Virtual Machine Stack:** Each Java method creates a frame before execution to store local variable tables, operand stacks, references from constant pools, etc. The process from method call to execution completion corresponds to the entry and exit of a stack frame in the Java virtual machine stack.
+- **Native Method Stack:** Functions similarly to the virtual machine stack, but the difference is: **The virtual machine stack serves Java method execution (i.e., bytecode), while the native method stack serves native methods used by the virtual machine.** In the HotSpot virtual machine, it merges with the Java virtual machine stack.
 
-所以，为了**保证线程中的局部变量不被别的线程访问到**，虚拟机栈和本地方法栈是线程私有的。
+Thus, to **ensure that local variables within a thread are not accessed by other threads**, both the virtual machine stack and native method stack are thread-private.
 
-#### 一句话简单了解堆和方法区
+#### A simple phrase to understand the heap and method area
 
-堆和方法区是所有线程共享的资源，其中堆是进程中最大的一块内存，主要用于存放新创建的对象 (几乎所有对象都在这里分配内存)，方法区主要用于存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。
+The heap and method area are resources shared by all threads, with the heap being the largest contiguous memory block in the process, mainly used for storing newly created objects (almost all objects are allocated memory here), while the method area is primarily used to store information about loaded classes, constants, static variables, and just-in-time compiled code.
 
-### 如何创建线程？
+### How to create threads?
 
-一般来说，创建线程有很多种方式，例如继承`Thread`类、实现`Runnable`接口、实现`Callable`接口、使用线程池、使用`CompletableFuture`类等等。
+Generally speaking, there are many ways to create threads, such as inheriting from the `Thread` class, implementing the `Runnable` interface, implementing the `Callable` interface, using thread pools, and using the `CompletableFuture` class, among others.
 
-不过，这些方式其实并没有真正创建出线程。准确点来说，这些都属于是在 Java 代码中使用多线程的方法。
+However, none of these methods truly create a thread. More accurately, they are all ways of using multithreading in Java.
 
-严格来说，Java 就只有一种方式可以创建线程，那就是通过`new Thread().start()`创建。不管是哪种方式，最终还是依赖于`new Thread().start()`。
+Strictly speaking, there is only one way in Java to create a thread, which is to call `new Thread().start()`. Regardless of the method, it ultimately depends on `new Thread().start()`.
 
-关于这个问题的详细分析可以查看这篇文章：[大家都说 Java 有三种创建线程的方式！并发编程中的惊天骗局！](https://mp.weixin.qq.com/s/NspUsyhEmKnJ-4OprRFp9g)。
+For a detailed analysis of this issue, you can refer to this article: [Everyone says that Java has three ways to create threads! The shocking deception in concurrent programming!](https://mp.weixin.qq.com/s/NspUsyhEmKnJ-4OprRFp9g).
 
-### ⭐️说说线程的生命周期和状态?
+### ⭐️Describe the lifecycle and state of threads?
 
-Java 线程在运行的生命周期中的指定时刻只可能处于下面 6 种不同状态的其中一个状态：
+Java threads can only be in one of the following six different states at a designated moment in their execution lifecycle:
 
-- NEW: 初始状态，线程被创建出来但没有被调用 `start()` 。
-- RUNNABLE: 运行状态，线程被调用了 `start()`等待运行的状态。
-- BLOCKED：阻塞状态，需要等待锁释放。
-- WAITING：等待状态，表示该线程需要等待其他线程做出一些特定动作（通知或中断）。
-- TIME_WAITING：超时等待状态，可以在指定的时间后自行返回而不是像 WAITING 那样一直等待。
-- TERMINATED：终止状态，表示该线程已经运行完毕。
+- NEW: Initial state, the thread has been created but has not been called `start()`.
+- RUNNABLE: Running state, the thread has been called `start()` and is waiting to run.
+- BLOCKED: Blocked state, needs to wait for the lock to be released.
+- WAITING: Waiting state, indicating that this thread needs to wait for another thread to perform a specific action (notification or interruption).
+- TIME_WAITING: Timeout waiting state, can return after a specified time instead of waiting indefinitely like WAITING.
+- TERMINATED: Termination state, indicating that the thread has finished running.
 
-线程在生命周期中并不是固定处于某一个状态而是随着代码的执行在不同状态之间切换。
+Thread states are not fixed at a single state during their lifecycle but switch between different states as the code executes.
 
-Java 线程状态变迁图(图源：[挑错 |《Java 并发编程的艺术》中关于线程状态的三处错误](https://mp.weixin.qq.com/s/UOrXql_LhOD8dhTq_EPI0w))：
+Java thread state transition diagram (Image source: [Corrections | Three Errors about Thread States in "The Art of Concurrent Programming"](https://mp.weixin.qq.com/s/UOrXql_LhOD8dhTq_EPI0w)):
 
-![Java 线程状态变迁图](https://oss.javaguide.cn/github/javaguide/java/concurrent/640.png)
+![Java Thread State Transition Diagram](https://oss.javaguide.cn/github/javaguide/java/concurrent/640.png)
 
-由上图可以看出：线程创建之后它将处于 **NEW（新建）** 状态，调用 `start()` 方法后开始运行，线程这时候处于 **READY（可运行）** 状态。可运行状态的线程获得了 CPU 时间片（timeslice）后就处于 **RUNNING（运行）** 状态。
+From the image, we see that after a thread is created, it enters the **NEW** state. After calling the `start()` method, it begins running and is in the **READY** state. Once a runnable thread gets a CPU time slice, it enters the **RUNNING** state.
 
-> 在操作系统层面，线程有 READY 和 RUNNING 状态；而在 JVM 层面，只能看到 RUNNABLE 状态（图源：[HowToDoInJava](https://howtodoinJava.com/ "HowToDoInJava")：[Java Thread Life Cycle and Thread States](https://howtodoinJava.com/Java/multi-threading/Java-thread-life-cycle-and-thread-states/ "Java Thread Life Cycle and Thread States")），所以 Java 系统一般将这两个状态统称为 **RUNNABLE（运行中）** 状态 。
+> At the operating system level, threads have READY and RUNNING states; at the JVM level, only the RUNNABLE state can be seen (Image source: [HowToDoInJava](https://howtodoinJava.com/ "HowToDoInJava")：[Java Thread Life Cycle and Thread States](https://howtodoinJava.com/Java/multi-threading/Java-thread-life-cycle-and-thread-states/ "Java Thread Life Cycle and Thread States")), so the Java system generally refers to these two states collectively as **RUNNABLE** state.
 >
-> **为什么 JVM 没有区分这两种状态呢？** （摘自：[Java 线程运行怎么有第六种状态？ - Dawell 的回答](https://www.zhihu.com/question/56494969/answer/154053599) ） 现在的时分（time-sharing）多任务（multi-task）操作系统架构通常都是用所谓的“时间分片（time quantum or time slice）”方式进行抢占式（preemptive）轮转调度（round-robin 式）。这个时间分片通常是很小的，一个线程一次最多只能在 CPU 上运行比如 10-20ms 的时间（此时处于 running 状态），也即大概只有 0.01 秒这一量级，时间片用后就要被切换下来放入调度队列的末尾等待再次调度。（也即回到 ready 状态）。线程切换的如此之快，区分这两种状态就没什么意义了。
+> **Why doesn’t the JVM distinguish these two states?** (Excerpt from: [Why does Java Threading have a sixth state? - Dawell's Answer](https://www.zhihu.com/question/56494969/answer/154053599)) Current time-sharing multi-tasking OS architectures typically employ time slice preemptive round-robin scheduling, allowing a thread to run on the CPU for a maximum of a short duration (e.g., 10-20ms, meaning about 0.01 seconds). After this time slice, the thread must return to the scheduling queue's end for re-scheduling (back to READY state). Because context switching occurs so rapidly, distinguishing these two states becomes meaningless.
 
 ![RUNNABLE-VS-RUNNING](https://oss.javaguide.cn/github/javaguide/java/RUNNABLE-VS-RUNNING.png)
 
-- 当线程执行 `wait()`方法之后，线程进入 **WAITING（等待）** 状态。进入等待状态的线程需要依靠其他线程的通知才能够返回到运行状态。
-- **TIMED_WAITING(超时等待)** 状态相当于在等待状态的基础上增加了超时限制，比如通过 `sleep（long millis）`方法或 `wait（long millis）`方法可以将线程置于 TIMED_WAITING 状态。当超时时间结束后，线程将会返回到 RUNNABLE 状态。
-- 当线程进入 `synchronized` 方法/块或者调用 `wait` 后（被 `notify`）重新进入 `synchronized` 方法/块，但是锁被其它线程占有，这个时候线程就会进入 **BLOCKED（阻塞）** 状态。
-- 线程在执行完了 `run()`方法之后将会进入到 **TERMINATED（终止）** 状态。
+- When a thread executes the `wait()` method, it enters the **WAITING** state. A thread in the waiting state requires notification from another thread to return to the RUNNABLE state.
+- The **TIMED_WAITING** state adds a timeout limit to the waiting state; for example, calls to `sleep(long millis)` or `wait(long millis)` can put the thread into the TIMED_WAITING state. After the timeout, the thread will return to RUNNABLE state.
+- When a thread enters `synchronized` methods/blocks or calls `wait` and then re-enters `synchronized` methods/blocks but the lock is occupied by other threads, it will enter the **BLOCKED** state.
+- After executing the `run()` method, the thread will enter the **TERMINATED** state.
 
-相关阅读：[线程的几种状态你真的了解么？](https://mp.weixin.qq.com/s/R5MrTsWvk9McFSQ7bS0W2w) 。
+Related reading: [Do you really understand the various states of a thread?](https://mp.weixin.qq.com/s/R5MrTsWvk9McFSQ7bS0W2w).
 
-### 什么是线程上下文切换?
+### What is thread context switching?
 
-线程在执行过程中会有自己的运行条件和状态（也称上下文），比如上文所说到过的程序计数器，栈信息等。当出现如下情况的时候，线程会从占用 CPU 状态中退出。
+During execution, threads will have their own execution conditions and states (also known as contexts), such as the program counter and stack information mentioned earlier. The thread will exit the CPU-occupied state under the following circumstances:
 
-- 主动让出 CPU，比如调用了 `sleep()`, `wait()` 等。
-- 时间片用完，因为操作系统要防止一个线程或者进程长时间占用 CPU 导致其他线程或者进程饿死。
-- 调用了阻塞类型的系统中断，比如请求 IO，线程被阻塞。
-- 被终止或结束运行
+- Proactively relinquishing CPU, for example, by calling `sleep()`, `wait()`, etc.
+- Time slice expiration, as the operating system must prevent a thread or process from monopolizing the CPU for too long, starving other threads or processes.
+- Triggering a blocking type of system interrupt, such as requesting IO, causing the thread to be blocked.
+- Termination or exit from execution.
 
-这其中前三种都会发生线程切换，线程切换意味着需要保存当前线程的上下文，留待线程下次占用 CPU 的时候恢复现场。并加载下一个将要占用 CPU 的线程上下文。这就是所谓的 **上下文切换**。
+The first three cases lead to a thread switch; context switching means saving the current thread's context so that it can be restored the next time the thread occupies the CPU while loading the context of the next thread to occupy the CPU. This is referred to as **context switching**.
 
-上下文切换是现代操作系统的基本功能，因其每次需要保存信息恢复信息，这将会占用 CPU，内存等系统资源进行处理，也就意味着效率会有一定损耗，如果频繁切换就会造成整体效率低下。
+Context switching is a basic function of modern operating systems, and since it requires saving and recovering information each time, it occupies CPU, memory, and other system resources, leading to some efficiency loss. Frequent switches can result in overall low efficiency.
 
-### Thread#sleep() 方法和 Object#wait() 方法对比
+### Comparison of Thread#sleep() method and Object#wait() method
 
-**共同点**：两者都可以暂停线程的执行。
+**Similarities:** Both can pause thread execution.
 
-**区别**：
+**Differences:**
 
-- **`sleep()` 方法没有释放锁，而 `wait()` 方法释放了锁** 。
-- `wait()` 通常被用于线程间交互/通信，`sleep()`通常被用于暂停执行。
-- `wait()` 方法被调用后，线程不会自动苏醒，需要别的线程调用同一个对象上的 `notify()`或者 `notifyAll()` 方法。`sleep()`方法执行完成后，线程会自动苏醒，或者也可以使用 `wait(long timeout)` 超时后线程会自动苏醒。
-- `sleep()` 是 `Thread` 类的静态本地方法，`wait()` 则是 `Object` 类的本地方法。为什么这样设计呢？下一个问题就会聊到。
+- **The `sleep()` method doesn't release locks, whereas the `wait()` method does.**
+- `wait()` is generally used for inter-thread communication, while `sleep()` is typically used to pause execution.
+- After calling the `wait()` method, the thread doesn't wake up automatically; another thread must call `notify()` or `notifyAll()` on the same object. The `sleep()` method, after its execution ends, will make the thread wake up automatically or it can also timeout using `wait(long timeout)`.
+- `sleep()` is a static native method of the `Thread` class, while `wait()` is a native method of the `Object` class. Why is this designed that way? The next question will address this.
 
-### 为什么 wait() 方法不定义在 Thread 中？
+### Why isn’t the wait() method defined in Thread?
 
-`wait()` 是让获得对象锁的线程实现等待，会自动释放当前线程占有的对象锁。每个对象（`Object`）都拥有对象锁，既然要释放当前线程占有的对象锁并让其进入 WAITING 状态，自然是要操作对应的对象（`Object`）而非当前的线程（`Thread`）。
+`wait()` allows a thread that has acquired an object lock to wait automatically, releasing the lock it currently holds. Each object (`Object`) possesses an object lock, meaning to release an object lock and enter the WAITING state, manipulation on the corresponding object (`Object`) rather than the current thread (`Thread`) is necessary.
 
-类似的问题：**为什么 `sleep()` 方法定义在 `Thread` 中？**
+Similar question: **Why is the `sleep()` method defined in `Thread`?**
 
-因为 `sleep()` 是让当前线程暂停执行，不涉及到对象类，也不需要获得对象锁。
+Because `sleep()` allows the current thread to pause execution without involving the object class and does not require acquiring an object lock.
 
-### 可以直接调用 Thread 类的 run 方法吗？
+### Can the run method of the Thread class be called directly?
 
-这是另一个非常经典的 Java 多线程面试问题，而且在面试中会经常被问到。很简单，但是很多人都会答不上来！
+This is another classic Java multithreading interview question that is often posed in interviews. It seems simple, but many people struggle to answer!
 
-new 一个 `Thread`，线程进入了新建状态。调用 `start()`方法，会启动一个线程并使线程进入了就绪状态，当分配到时间片后就可以开始运行了。 `start()` 会执行线程的相应准备工作，然后自动执行 `run()` 方法的内容，这是真正的多线程工作。 但是，直接执行 `run()` 方法，会把 `run()` 方法当成一个 main 线程下的普通方法去执行，并不会在某个线程中执行它，所以这并不是多线程工作。
+When you instantiate a `Thread`, the thread enters a new state. Calling `start()` will initiate a thread and place it into the ready state, where it can begin running once time is allocated. `start()` executes the necessary preparations and then automatically executes the content of the `run()` method; this constitutes real multithreaded work. However, calling `run()` directly treats it as a normal method executing in the main thread, not running in a separate thread, meaning this does not constitute multithreading work.
 
-**总结：调用 `start()` 方法方可启动线程并使线程进入就绪状态，直接执行 `run()` 方法的话不会以多线程的方式执行。**
+**Summary: It is only by calling the `start()` method that a thread is initiated and enters the ready state; directly executing `run()` will not execute it in a multithreaded manner.**
 
-## 多线程
+## Multithreading
 
-### 并发与并行的区别
+### The difference between concurrency and parallelism
 
-- **并发**：两个及两个以上的作业在同一 **时间段** 内执行。
-- **并行**：两个及两个以上的作业在同一 **时刻** 执行。
+- **Concurrency:** Two or more jobs are executed within the same **time period**.
+- **Parallelism:** Two or more jobs are executed at the same **instant**.
 
-最关键的点是：是否是 **同时** 执行。
+The key point is: whether the execution is **simultaneous**.
 
-### 同步和异步的区别
+### The difference between synchronous and asynchronous
 
-- **同步**：发出一个调用之后，在没有得到结果之前， 该调用就不可以返回，一直等待。
-- **异步**：调用在发出之后，不用等待返回结果，该调用直接返回。
+- **Synchronous:** After a call is made, it cannot return until the result is obtained, waiting continuously.
+- **Asynchronous:** After the call is made, it does not wait for the result to return, directly returning the call.
 
-### ⭐️为什么要使用多线程?
+### ⭐️Why use multithreading?
 
-先从总体上来说：
+Describing it overall:
 
-- **从计算机底层来说：** 线程可以比作是轻量级的进程，是程序执行的最小单位，线程间的切换和调度的成本远远小于进程。另外，多核 CPU 时代意味着多个线程可以同时运行，这减少了线程上下文切换的开销。
-- **从当代互联网发展趋势来说：** 现在的系统动不动就要求百万级甚至千万级的并发量，而多线程并发编程正是开发高并发系统的基础，利用好多线程机制可以大大提高系统整体的并发能力以及性能。
+- **From a computer's low-level perspective:** Threads can be compared to lightweight processes, being the smallest unit of program execution; the cost for switching and scheduling between threads is significantly lower than that for processes. Additionally, in the era of multi-core CPUs, multiple threads can run simultaneously, which reduces the overhead of thread context switching.
+- **From the perspective of contemporary internet development trends:** Current systems often require millions or even tens of millions of concurrent volumes, and multithreaded concurrent programming is fundamental to developing high-concurrency systems, leveraging multithreading mechanisms can significantly improve the overall concurrency capability and performance of the system.
 
-再深入到计算机底层来探讨：
+Digging deeper into the computer's low-level architecture:
 
-- **单核时代**：在单核时代多线程主要是为了提高单进程利用 CPU 和 IO 系统的效率。 假设只运行了一个 Java 进程的情况，当我们请求 IO 的时候，如果 Java 进程中只有一个线程，此线程被 IO 阻塞则整个进程被阻塞。CPU 和 IO 设备只有一个在运行，那么可以简单地说系统整体效率只有 50%。当使用多线程的时候，一个线程被 IO 阻塞，其他线程还可以继续使用 CPU。从而提高了 Java 进程利用系统资源的整体效率。
-- **多核时代**: 多核时代多线程主要是为了提高进程利用多核 CPU 的能力。举个例子：假如我们要计算一个复杂的任务，我们只用一个线程的话，不论系统有几个 CPU 核心，都只会有一个 CPU 核心被利用到。而创建多个线程，这些线程可以被映射到底层多个 CPU 核心上执行，在任务中的多个线程没有资源竞争的情况下，任务执行的效率会有显著性的提高，约等于（单核时执行时间/CPU 核心数）。
+- **Single-core era:** In the single-core era, multithreading primarily improves the efficiency of CPU and IO system usage within a single process. Suppose only one Java process runs; if there is only one thread in the process requesting IO, this thread will be blocked by IO, thereby blocking the entire process. CPU and IO resources run one at a time, leading to an overall system efficiency of around 50%. With multithreading, if one thread blocks due to IO, other threads can continue to utilize the CPU, enhancing overall efficiency.
+- **Multi-core era:** In the multi-core era, multithreading is mainly used to leverage the capabilities of multi-core CPUs. For instance, if we need to compute a complex task with a single thread, it will only utilize one CPU core, regardless of how many cores the system has. Creating multiple threads allows these threads to be mapped to multiple CPU cores effectively, resulting in a significant increase in task execution efficiency provided there is no resource competition among threads, roughly equating to (execution time in single core/number of CPU cores).
 
-### ⭐️单核 CPU 支持 Java 多线程吗？
+### ⭐️Does a single-core CPU support Java multithreading?
 
-单核 CPU 是支持 Java 多线程的。操作系统通过时间片轮转的方式，将 CPU 的时间分配给不同的线程。尽管单核 CPU 一次只能执行一个任务，但通过快速在多个线程之间切换，可以让用户感觉多个任务是同时进行的。
+A single-core CPU does support Java multithreading. The operating system allocates CPU time to different threads via time slice rotation. Although a single-core CPU can only execute one task at a time, rapid switching between multiple threads gives the impression to the user that several tasks are progressing simultaneously.
 
-这里顺带提一下 Java 使用的线程调度方式。
+Here’s a brief mention of the thread scheduling methods used in Java.
 
-操作系统主要通过两种线程调度方式来管理多线程的执行：
+Operating systems primarily manage multithreaded execution through two types of thread scheduling:
 
-- **抢占式调度（Preemptive Scheduling）**：操作系统决定何时暂停当前正在运行的线程，并切换到另一个线程执行。这种切换通常是由系统时钟中断（时间片轮转）或其他高优先级事件（如 I/O 操作完成）触发的。这种方式存在上下文切换开销，但公平性和 CPU 资源利用率较好，不易阻塞。
-- **协同式调度（Cooperative Scheduling）**：线程执行完毕后，主动通知系统切换到另一个线程。这种方式可以减少上下文切换带来的性能开销，但公平性较差，容易阻塞。
+- **Preemptive Scheduling:** The operating system decides when to pause the currently executing thread and switch to another thread. This switch is typically triggered by system clock interrupts (time-slice rotation) or other high-priority events (like the completion of I/O operations). This method incurs context-switching costs but offers better fairness and CPU resource utilization, avoiding blockage.
+- **Cooperative Scheduling:** The thread actively notifies the system to switch to another thread after execution completion. This method can reduce context-switching performance overhead but has poorer fairness and is prone to blockage.
 
-Java 使用的线程调度是抢占式的。也就是说，JVM 本身不负责线程的调度，而是将线程的调度委托给操作系统。操作系统通常会基于线程优先级和时间片来调度线程的执行，高优先级的线程通常获得 CPU 时间片的机会更多。
+Java employs preemptive scheduling. That is, the JVM doesn't manage thread scheduling itself, but delegates it to the operating system. The operating system typically schedules thread execution based on thread priority and time slice, with high-priority threads usually getting a greater opportunity for CPU time.
 
-### ⭐️单核 CPU 上运行多个线程效率一定会高吗？
+### ⭐️Will running multiple threads on a single-core CPU always be more efficient?
 
-单核 CPU 同时运行多个线程的效率是否会高，取决于线程的类型和任务的性质。一般来说，有两种类型的线程：
+The efficiency of simultaneously running multiple threads on a single-core CPU depends on the type of threads and the nature of the tasks. Generally, there are two types of threads:
 
-1. **CPU 密集型**：CPU 密集型的线程主要进行计算和逻辑处理，需要占用大量的 CPU 资源。
-2. **IO 密集型**：IO 密集型的线程主要进行输入输出操作，如读写文件、网络通信等，需要等待 IO 设备的响应，而不占用太多的 CPU 资源。
+1. **CPU-intensive:** These threads primarily engage in computation and logical processing, requiring a substantial amount of CPU resources.
+1. **I/O-intensive:** These threads primarily perform input/output operations, such as file reading/writing and network communication, requiring waiting for the I/O device's response without consuming much CPU resources.
 
-在单核 CPU 上，同一时刻只能有一个线程在运行，其他线程需要等待 CPU 的时间片分配。如果线程是 CPU 密集型的，那么多个线程同时运行会导致频繁的线程切换，增加了系统的开销，降低了效率。如果线程是 IO 密集型的，那么多个线程同时运行可以利用 CPU 在等待 IO 时的空闲时间，提高了效率。
+On a single-core CPU, only one thread can run at any given moment, and other threads must wait for the CPU time slice allocation. If the thread is CPU-intensive, running multiple threads will lead to frequent context switching, increasing the system overhead and reducing efficiency. However, if the thread is I/O-intensive, running multiple threads can utilize CPU during I/O waits, thereby improving efficiency.
 
-因此，对于单核 CPU 来说，如果任务是 CPU 密集型的，那么开很多线程会影响效率；如果任务是 IO 密集型的，那么开很多线程会提高效率。当然，这里的“很多”也要适度，不能超过系统能够承受的上限。
+Thus, for single-core CPUs, if tasks are CPU-intensive, then creating many threads may hinder efficiency; conversely, if tasks are I/O-intensive, then creating more threads may enhance efficiency. Of course, "many" should be appropriate and not exceed the system's tolerable limit.
 
-### 使用多线程可能带来什么问题?
+### What issues might arise from using multithreading?
 
-并发编程的目的就是为了能提高程序的执行效率进而提高程序的运行速度，但是并发编程并不总是能提高程序运行速度的，而且并发编程可能会遇到很多问题，比如：内存泄漏、死锁、线程不安全等等。
+The goal of concurrent programming is to enhance program execution efficiency and hence speed up the program, but concurrency may not always lead to improved speed. There are many potential issues arising from concurrent programming, such as: memory leaks, deadlocks, thread unsafeness, etc.
 
-### 如何理解线程安全和不安全？
+### How to understand thread safety and unsafety?
 
-线程安全和不安全是在多线程环境下对于同一份数据的访问是否能够保证其正确性和一致性的描述。
+Thread safety and unsafety refer to whether accessing the same data in a multithreaded environment can ensure its correctness and consistency.
 
-- 线程安全指的是在多线程环境下，对于同一份数据，不管有多少个线程同时访问，都能保证这份数据的正确性和一致性。
-- 线程不安全则表示在多线程环境下，对于同一份数据，多个线程同时访问时可能会导致数据混乱、错误或者丢失。
+- Thread safety means that in a multithreaded environment, no matter how many threads access the same data simultaneously, the correctness and consistency of this data can still be maintained.
+- Thread unsafety indicates that in a multithreaded environment, simultaneous access by multiple threads may lead to data chaos, errors, or loss.
 
-## ⭐️死锁
+## ⭐️Deadlock
 
-### 什么是线程死锁？
+### What is thread deadlock?
 
-线程死锁描述的是这样一种情况：多个线程同时被阻塞，它们中的一个或者全部都在等待某个资源被释放。由于线程被无限期地阻塞，因此程序不可能正常终止。
+Thread deadlock describes a situation where multiple threads are simultaneously blocked, each waiting for a resource to be freed. Since threads remain indefinitely blocked, the program cannot terminate normally.
 
-如下图所示，线程 A 持有资源 2，线程 B 持有资源 1，他们同时都想申请对方的资源，所以这两个线程就会互相等待而进入死锁状态。
+As shown in the image below, thread A holds resource 2, while thread B holds resource 1; they both simultaneously seek to acquire each other's resources, leading to mutual waiting and the creation of a deadlock state.
 
-![线程死锁示意图 ](https://oss.javaguide.cn/github/javaguide/java/2019-4%E6%AD%BB%E9%94%811.png)
+![Thread Deadlock Illustration](https://oss.javaguide.cn/github/javaguide/java/2019-4%E6%AD%BB%E9%94%811.png)
 
-下面通过一个例子来说明线程死锁,代码模拟了上图的死锁的情况 (代码来源于《并发编程之美》)：
+Here’s an example to illustrate thread deadlock, where the code simulates the deadlock scenario depicted above (code sourced from "Concurrent Programming in Practice"):
 
 ```java
 public class DeadLockDemo {
-    private static Object resource1 = new Object();//资源 1
-    private static Object resource2 = new Object();//资源 2
+    private static Object resource1 = new Object(); // Resource 1
+    private static Object resource2 = new Object(); // Resource 2
 
     public static void main(String[] args) {
         new Thread(() -> {
             synchronized (resource1) {
-                System.out.println(Thread.currentThread() + "get resource1");
+                System.out.println(Thread.currentThread() + " get resource1");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(Thread.currentThread() + "waiting get resource2");
+                System.out.println(Thread.currentThread() + " waiting get resource2");
                 synchronized (resource2) {
-                    System.out.println(Thread.currentThread() + "get resource2");
+                    System.out.println(Thread.currentThread() + " get resource2");
                 }
             }
-        }, "线程 1").start();
+        }, "Thread 1").start();
 
         new Thread(() -> {
             synchronized (resource2) {
-                System.out.println(Thread.currentThread() + "get resource2");
+                System.out.println(Thread.currentThread() + " get resource2");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(Thread.currentThread() + "waiting get resource1");
+                System.out.println(Thread.currentThread() + " waiting get resource1");
                 synchronized (resource1) {
-                    System.out.println(Thread.currentThread() + "get resource1");
+                    System.out.println(Thread.currentThread() + " get resource1");
                 }
             }
-        }, "线程 2").start();
+        }, "Thread 2").start();
     }
 }
 ```
@@ -317,102 +317,102 @@ public class DeadLockDemo {
 Output
 
 ```plain
-Thread[线程 1,5,main]get resource1
-Thread[线程 2,5,main]get resource2
-Thread[线程 1,5,main]waiting get resource2
-Thread[线程 2,5,main]waiting get resource1
+Thread[Thread 1,5,main] get resource1
+Thread[Thread 2,5,main] get resource2
+Thread[Thread 1,5,main] waiting get resource2
+Thread[Thread 2,5,main] waiting get resource1
 ```
 
-线程 A 通过 `synchronized (resource1)` 获得 `resource1` 的监视器锁，然后通过 `Thread.sleep(1000);` 让线程 A 休眠 1s，为的是让线程 B 得到执行然后获取到 resource2 的监视器锁。线程 A 和线程 B 休眠结束了都开始企图请求获取对方的资源，然后这两个线程就会陷入互相等待的状态，这也就产生了死锁。
+Thread A acquires the monitor lock on `resource1` via `synchronized (resource1)`, then sleeps for 1 second using `Thread.sleep(1000);` to allow thread B to execute and acquire the monitor lock on `resource2`. Upon waking, both threads attempt to acquire each other's resources, and they fall into a mutual wait state, resulting in a deadlock.
 
-上面的例子符合产生死锁的四个必要条件：
+The above example meets the four essential conditions for deadlock:
 
-1. **互斥条件**：该资源任意一个时刻只由一个线程占用。
-2. **请求与保持条件**：一个线程因请求资源而阻塞时，对已获得的资源保持不放。
-3. **不剥夺条件**：线程已获得的资源在未使用完之前不能被其他线程强行剥夺，只有自己使用完毕后才释放资源。
-4. **循环等待条件**：若干线程之间形成一种头尾相接的循环等待资源关系。
+1. **Mutual Exclusion Condition:** Each resource may only be occupied by one thread at any time.
+1. **Hold and Wait Condition:** A thread that is blocked waiting for a resource holds on to resources it has already acquired.
+1. **No Preemption Condition:** Resources acquired by a thread cannot be forcibly taken away; they can only be released by the thread holding them after completing their task.
+1. **Circular Wait Condition:** A circular wait condition exists where a set of threads forms a circular chain, each waiting for a resource held by another thread in the chain.
 
-### 如何检测死锁？
+### How to detect deadlock?
 
-- 使用`jmap`、`jstack`等命令查看 JVM 线程栈和堆内存的情况。如果有死锁，`jstack` 的输出中通常会有 `Found one Java-level deadlock:`的字样，后面会跟着死锁相关的线程信息。另外，实际项目中还可以搭配使用`top`、`df`、`free`等命令查看操作系统的基本情况，出现死锁可能会导致 CPU、内存等资源消耗过高。
-- 采用 VisualVM、JConsole 等工具进行排查。
+- Use commands like `jmap`, `jstack`, etc., to view the JVM’s thread stack and heap memory status. If deadlock exists, the output of `jstack` typically contains the phrase `Found one Java-level deadlock:`, followed by information about the threads involved in the deadlock. Additionally, tools like `top`, `df`, `free`, etc., can be used in practical projects to observe the basic situation of the operating system; a deadlock may lead to excessive consumption of CPU, memory, and other resources.
+- Utilize tools such as VisualVM and JConsole for troubleshooting.
 
-这里以 JConsole 工具为例进行演示。
+Here’s an example demonstration using JConsole.
 
-首先，我们要找到 JDK 的 bin 目录，找到 jconsole 并双击打开。
+First, navigate to the JDK's bin directory, find `jconsole`, and double-click to open it.
 
 ![jconsole](https://oss.javaguide.cn/github/javaguide/java/concurrent/jdk-home-bin-jconsole.png)
 
-对于 MAC 用户来说，可以通过 `/usr/libexec/java_home -V`查看 JDK 安装目录，找到后通过 `open . + 文件夹地址`打开即可。例如，我本地的某个 JDK 的路径是：
+For macOS users, you can check the JDK installation directory using `/usr/libexec/java_home -V`, then use `open . + folder address` to access it. For example, my local JDK path is:
 
 ```bash
- open . /Users/guide/Library/Java/JavaVirtualMachines/corretto-1.8.0_252/Contents/Home
+open . /Users/guide/Library/Java/JavaVirtualMachines/corretto-1.8.0_252/Contents/Home
 ```
 
-打开 jconsole 后，连接对应的程序，然后进入线程界面选择检测死锁即可！
+After opening `jconsole`, connect to the corresponding program, go to the thread interface, and select to detect deadlocks!
 
-![jconsole 检测死锁](https://oss.javaguide.cn/github/javaguide/java/concurrent/jconsole-check-deadlock.png)
+![jconsole Deadlock Detection](https://oss.javaguide.cn/github/javaguide/java/concurrent/jconsole-check-deadlock.png)
 
-![jconsole 检测到死锁](https://oss.javaguide.cn/github/javaguide/java/concurrent/jconsole-check-deadlock-done.png)
+![jconsole Deadlock Detected](https://oss.javaguide.cn/github/javaguide/java/concurrent/jconsole-check-deadlock-done.png)
 
-### 如何预防和避免线程死锁?
+### How to prevent and avoid thread deadlock?
 
-**如何预防死锁？** 破坏死锁的产生的必要条件即可：
+**How to prevent deadlock?** By breaking the necessary conditions for deadlock:
 
-1. **破坏请求与保持条件**：一次性申请所有的资源。
-2. **破坏不剥夺条件**：占用部分资源的线程进一步申请其他资源时，如果申请不到，可以主动释放它占有的资源。
-3. **破坏循环等待条件**：靠按序申请资源来预防。按某一顺序申请资源，释放资源则反序释放。破坏循环等待条件。
+1. **Break the Hold and Wait Condition:** Request all resources at once.
+1. **Break the No Preemption Condition:** A thread holding some resources should release them when it cannot request additional resources.
+1. **Break the Circular Wait Condition:** Prevent deadlock by acquiring resources in a specific order; request resources in a predetermined order and release in reverse order.
 
-**如何避免死锁？**
+**How to avoid deadlock?**
 
-避免死锁就是在资源分配时，借助于算法（比如银行家算法）对资源分配进行计算评估，使其进入安全状态。
+Avoiding deadlock involves calculating and evaluating resource allocation using algorithms (like the banker’s algorithm) to ensure a safe state.
 
-> **安全状态** 指的是系统能够按照某种线程推进顺序（P1、P2、P3……Pn）来为每个线程分配所需资源，直到满足每个线程对资源的最大需求，使每个线程都可顺利完成。称 `<P1、P2、P3.....Pn>` 序列为安全序列。
+> **Safe State** means that the system can allocate resources according to a certain sequence of thread advancement (P1, P2, P3……Pn) to satisfy each thread's maximum resource demand, ensuring every thread can complete smoothly. The sequence `<P1, P2, P3.....Pn>` is termed a safe sequence.
 
-我们对线程 2 的代码修改成下面这样就不会产生死锁了。
+We can modify the code for thread 2 as follows to avoid deadlock.
 
 ```java
 new Thread(() -> {
             synchronized (resource1) {
-                System.out.println(Thread.currentThread() + "get resource1");
+                System.out.println(Thread.currentThread() + " get resource1");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(Thread.currentThread() + "waiting get resource2");
+                System.out.println(Thread.currentThread() + " waiting get resource2");
                 synchronized (resource2) {
-                    System.out.println(Thread.currentThread() + "get resource2");
+                    System.out.println(Thread.currentThread() + " get resource2");
                 }
             }
-        }, "线程 2").start();
+        }, "Thread 2").start();
 ```
 
-输出：
+Output:
 
 ```plain
-Thread[线程 1,5,main]get resource1
-Thread[线程 1,5,main]waiting get resource2
-Thread[线程 1,5,main]get resource2
-Thread[线程 2,5,main]get resource1
-Thread[线程 2,5,main]waiting get resource2
-Thread[线程 2,5,main]get resource2
+Thread[Thread 1,5,main] get resource1
+Thread[Thread 1,5,main] waiting get resource2
+Thread[Thread 1,5,main] get resource2
+Thread[Thread 2,5,main] get resource1
+Thread[Thread 2,5,main] waiting get resource2
+Thread[Thread 2,5,main] get resource2
 
 Process finished with exit code 0
 ```
 
-我们分析一下上面的代码为什么避免了死锁的发生?
+We analyze why the code above avoids deadlock?
 
-线程 1 首先获得到 resource1 的监视器锁,这时候线程 2 就获取不到了。然后线程 1 再去获取 resource2 的监视器锁，可以获取到。然后线程 1 释放了对 resource1、resource2 的监视器锁的占用，线程 2 获取到就可以执行了。这样就破坏了破坏循环等待条件，因此避免了死锁。
+Thread 1 first acquires the monitor lock on resource1; at this point, thread 2 cannot acquire it. Thread 1 then attempts to acquire the monitor lock on resource2, which it successfully obtains, after which thread 1 releases its locks on resource1 and resource2. Thread 2 can now proceed to execute. Thus, the cycle of waiting is broken, and deadlock is avoided.
 
-## 虚拟线程
+## Virtual Threads
 
-虚拟线程在 Java 21 正式发布，这是一项重量级的更新。我写了一篇文章来总结虚拟线程常见的问题：[虚拟线程常见问题总结](./virtual-thread.md)，包含下面这些问题：
+Virtual threads were formally released in Java 21, representing a significant update. I wrote an article summarizing common questions about virtual threads: [Common Questions About Virtual Threads](./virtual-thread.md), which includes the following questions:
 
-1. 什么是虚拟线程？
-2. 虚拟线程和平台线程有什么关系？
-3. 虚拟线程有什么优点和缺点？
-4. 如何创建虚拟线程？
-5. 虚拟线程的底层原理是什么？
+1. What are virtual threads?
+1. How are virtual threads related to platform threads?
+1. What are the pros and cons of virtual threads?
+1. How to create virtual threads?
+1. What are the underlying principles of virtual threads?
 
 <!-- @include: @article-footer.snippet.md -->

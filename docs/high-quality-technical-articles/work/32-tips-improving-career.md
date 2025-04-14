@@ -1,72 +1,71 @@
 ---
-title: 32条总结教你提升职场经验
-category: 技术文章精选集
+title: 32 Insights to Help You Enhance Your Workplace Experience
+category: Selected Technical Articles
 tag:
-  - 工作
+  - Work
 ---
 
-> **推荐语**：阿里开发者的一篇职场经验的分享。
+> **Recommendation**: A shared experience from an Alibaba developer regarding workplace growth.
 >
-> **原文地址：** <https://mp.weixin.qq.com/s/6BkbGekSRTadm9j7XUL13g>
+> **Original Article Link:** <https://mp.weixin.qq.com/s/6BkbGekSRTadm9j7XUL13g>
 
-## 成长的捷径
+## Shortcuts to Growth
 
-- 入职伊始谦逊的态度是好的，但不要把“我是新人”作为心理安全线；
-- 写一篇技术博客大概需要两周左右，但可能是最快的成长方式；
-- 一定要读两本书：金字塔原理、高效能人士的七个习惯（这本书名字像成功学，实际讲的是如何塑造性格）；
-- 多问是什么、为什么，追本溯源把问题解决掉，试图绕过的问题永远会在下个路口等着你；
-- 不要沉迷于忙碌带来的虚假安全感中，目标的确定和追逐才是最真实的安全；
-- 不用过于计较一时的得失，在公平的环境中，吃亏是福不是鸡汤；
-- 思维和技能不要受限于前端、后端、测试等角色，把自己定位成业务域问题的终结者；
-- 好奇和热爱是成长最大的捷径，长期主义者会认同自己的工作价值，甚至要高于组织当下给的认同（KPI）。
+- A humble attitude at the beginning of your job is good, but don’t treat “I am a newcomer” as a psychological safety net.
+- It takes about two weeks to write a technical blog, but it might be the fastest way to grow.
+- Make sure to read two books: The Pyramid Principle and The 7 Habits of Highly Effective People (though it sounds like a book on success, it actually discusses how to shape character).
+- Ask “what” and “why” frequently; trace issues back to their roots to solve problems. The issues you try to bypass will always be waiting for you at the next turn.
+- Don't get trapped in a false sense of security from busyness; having clear goals and pursuing them is the only real safety.
+- Don’t get overly hung up on short-term gains and losses. In a fair environment, taking a loss can be a blessing, not a cliché.
+- Don't limit your thinking and skills to front-end, back-end, testing roles; position yourself as the problem-solver in the business domain.
+- Curiosity and passion are the biggest shortcuts to growth; long-term thinkers will recognize their work's value, even exceeding the acknowledgment (KPI) given by the organization.
 
-## 功夫在日常
+## Efforts in Daily Routine
 
-- 每行代码要代表自己当下的最高水平，你觉得无所谓的小细节，有可能就是在晋升场上伤害你的暗箭；
-- 双周报不是工作日志流水账，不要被时间推着走，最起码要知道下次双周报里会有什么（小目标驱动）；
-- 觉得日常都是琐碎工作、不技术、给师兄打杂等，可以尝试对手头事情做一下分类，想象成每个分类都是个小格子，这些格子连起来的终点就是自己的目标，这样每天不再是机械的做需求，而是有规划的填格子、为目标努力，甚至会给自己加需求，因为自己看清楚了要去哪里；
-- 日常的言行举止是能力的显微镜，大部分人可能意识不到，自己的强大和虚弱是那么的明显，不要无谓的试图掩盖，更不存在蒙混过关。
+- Every line of code should represent your highest current standard. The small details that you think are unimportant can potentially harm your promotion chances.
+- Bi-weekly reports should not be a mere log of tasks. Don’t let time push you along; at the very least, know what will be in your next bi-weekly report (driven by small goals).
+- If you feel that daily work is trivial, untechnical, or just assisting others, try categorizing your tasks. Imagine each category as a small box; the connection of these boxes leads to your ultimate goal. This makes your daily activities less mechanical and more planned, pushing you toward your goals. You may even find yourself adding tasks as you clarify where you want to go.
+- Daily behaviors serve as a microscope for abilities. Most people may not realize how obvious their strengths and weaknesses are. Don't attempt to cover them up unnecessarily, nor try to cheat your way through.
 
-> 最后一条大概意思就是有时候我们会在意自己在聚光灯下（述职、晋升、周报、汇报等）的表现，以为大家会根据这个评价自己。实际上日常是怎么完成业务需求、帮助身边同学、创造价值的，才是大家评价自己的依据，而且每个人是什么样的特质，合作过三次的伙伴就可以精准评价，在聚光灯下的表演只能骗自己。
+> The last point roughly means that sometimes we care too much about our performance under the spotlight (reviews, promotions, reports, etc.), thinking others will evaluate us based on this. In reality, how we fulfill business requirements, help our peers, and create value is what others use to assess us. Moreover, what qualities each person possesses can be accurately evaluated by partners you have worked with multiple times; performances under the spotlight only deceive oneself.
 
-## 学会被管理
+## Learning to be Managed
 
-> 上级、主管是泛指，开发对口的 PD 主管等也在范围内。
+> Superior, supervisor is a general reference, including the relevant PD managers in development.
 
-- 不要传播负面情绪，不要总是抱怨；
-- 对上级不卑不亢更容易获得尊重，但不要当众反驳对方观点，分歧私下沟通；
-- 好好做向上管理，尤其是对齐预期，沟通绩效出现 Surprise 双方其实都有责任，但倒霉的是自己；
-- 尽量站在主管角度想问题：
+- Don’t spread negative emotions; avoid constant complaining.
+- Being neither servile nor arrogant towards your superiors makes it easier to gain respect, but don’t publicly refute their views; resolve disagreements privately.
+- Manage upwards effectively, especially in aligning expectations. If surprises arise in performance discussions, both parties share the responsibility, but often it’s the individual who suffers.
+- Try to think from the supervisor's perspective:
+  - This understanding can clarify many decisions that previously seemed unreasonable.
+  - Don’t care about who executes or where credit is due; alleviating team worries and earning your supervisor’s trust is far more important.
+  - Do not interpret this principle as being excessively subservient; this is the most despicable.
 
-- - 这样能理解很多过去感觉匪夷所思的决策；
-  - 不要在意谁执行、功劳是谁的等，为团队分忧赢得主管信任的重要性远远高于这些；
-  - 不要把这个原则理解为唯上，这种最让人不齿。
+## Shifting Mindset
 
-## 思维转换
+- Defining problems is a high-level ability; establish the mental loop of discovering a problem -> defining the problem -> solving the problem -> eliminating the problem as early as possible.
+- Focus on value when defining tasks, results when executing tasks, and problems when discussing tasks.
+- If you can’t explain something clearly, it’s probably not because you are action-oriented, but rather because you haven’t thought it through, which becomes more obvious in promotional contexts.
+- When someone excels at solving a particular problem, over time, they may find it difficult to detach from that scenario (once a label is pinned on someone, it’s challenging to remove it).
 
-- 定义问题是个高阶能力，尽早形成 发现问题->定义问题->解决问题->消灭问题 的思维闭环；
-- 定事情价值导向，做事情结果导向，讲事情问题导向；
-- 讲不清楚，大概率不是因为自己是实干型，而是没想清楚，在晋升场更加明显；
-- 当一个人擅长解决某一场景的问题的时候，时间越久也许越离不开这个场景（被人贴上一个标签很难，撕掉一个标签更难）。
+## Managing Emotions
 
-## 要栓住情绪
+- Learn to control your emotions; no one takes an angry person seriously.
+- Stay rational, no matter how wronged or angry you feel; avoid becoming someone who needs to be coddled.
+- Only those who are sufficiently confident can openly admit their own issues. Often, we get angered simply because someone pointed out our deep-seated insecurities.
+- What hurts us most is not others' actions or our mistakes, but our responses to those mistakes.
 
-- 学会控制情绪，没人会认真听一个愤怒的人在说什么；
-- 再委屈、再愤怒也要保持理智，不要让自己成为需要被哄着的那种人；
-- 足够自信的人才会坦率的承认自己的问题，很多时候我们被激怒了，只是因为对方指出了自己藏在深处的自卑；
-- 伤害我们最深的既不是别人的所作所为，也不是自己犯的错误，而是我们对错误的回应。
+## Becoming a Leader
 
-## 成为 Leader
+> Managers have subordinates, while leaders have followers. You don’t need many managers, but anyone can be a leader.
 
-> Manager 有下属，Leader 有追随者，管理者不需要很多，但人人都可以是 Leader。
-
-- 让你信服、愿意追随的人不是职务上的 Manager，而是在帮助自己的那个人，自己想服众的话道理一样；
-- 不要轻易对人做负面评价，片面认知下的评价可能不准确，不经意的传播更是会给对方带来极大的困扰；
-- Leader 如果不认同公司的使命、愿景、价值观，会过的特别痛苦；
-- 困难时候不要否定自己的队友，多给及时、正向的反馈；
-- 船长最重要的事情不是造船，而是激发水手对大海的向往；
-- Leader 的天然职责是让团队活下去，唯一的途径是实现上级、老板、公司经营者的目标，越是艰难的时候越明显；
-- Leader 的重要职责是识别团队需要被做的事情，并坚定信念，使众人行，越是艰难的时候越要坚定；
-- Leader 应该让自己遇到的每个人都感觉自己很重要、被需要。
+- The person you trust and want to follow is not necessarily a positional manager but someone who helps you in your growth; a good leader shares the same rationale.
+- Avoid hastily making negative judgments about others; misinformed opinions can be inaccurate, and carelessly sharing them can upset others significantly.
+- If a leader does not resonate with the company’s mission, vision, and values, they will have a particularly difficult time.
+- In challenging times, do not deny your teammates; provide timely and positive feedback.
+- The most important thing for a captain is not to build the ship but to inspire sailors' longing for the sea.
+- A leader’s inherent duty is to ensure the team thrives, and the only way to achieve this is to meet the objectives set by superiors, bosses, and company owners, with this becoming even more evident during tough times.
+- A key responsibility of a leader is to identify what needs to be done within the team and steadfastly guide everyone to action, especially in challenging times.
+- A leader should make everyone they encounter feel important and needed.
 
 <!-- @include: @article-footer.snippet.md -->

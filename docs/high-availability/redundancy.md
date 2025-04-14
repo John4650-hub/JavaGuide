@@ -1,47 +1,45 @@
 ---
-title: 冗余设计详解
-category: 高可用
+title: Detailed Explanation of Redundant Design
+category: High Availability
 icon: cluster
 ---
 
-冗余设计是保证系统和数据高可用的最常的手段。
+Redundant design is the most common means to ensure high availability of systems and data.
 
-对于服务来说，冗余的思想就是相同的服务部署多份，如果正在使用的服务突然挂掉的话，系统可以很快切换到备份服务上，大大减少系统的不可用时间，提高系统的可用性。
+For services, the idea of redundancy is to deploy multiple instances of the same service. If the currently used service suddenly fails, the system can quickly switch to a backup service, significantly reducing downtime and improving system availability.
 
-对于数据来说，冗余的思想就是相同的数据备份多份，这样就可以很简单地提高数据的安全性。
+For data, the idea of redundancy is to have multiple backups of the same data, which can easily enhance data security.
 
-实际上，日常生活中就有非常多的冗余思想的应用。
+In fact, there are many applications of redundancy in daily life.
 
-拿我自己来说，我对于重要文件的保存方法就是冗余思想的应用。我日常所使用的重要文件都会同步一份在 GitHub 以及个人云盘上，这样就可以保证即使电脑硬盘损坏，我也可以通过 GitHub 或者个人云盘找回自己的重要文件。
+For example, my method of saving important files is an application of redundancy. I synchronize important files I use daily to both GitHub and my personal cloud storage, ensuring that even if my computer's hard drive fails, I can retrieve my important files from GitHub or my personal cloud.
 
-高可用集群（High Availability Cluster，简称 HA Cluster）、同城灾备、异地灾备、同城多活和异地多活是冗余思想在高可用系统设计中最典型的应用。
+High Availability Cluster (HA Cluster), local disaster recovery, remote disaster recovery, local active-active, and remote active-active are the most typical applications of redundancy in high availability system design.
 
-- **高可用集群** : 同一份服务部署两份或者多份，当正在使用的服务突然挂掉的话，可以切换到另外一台服务，从而保证服务的高可用。
-- **同城灾备**：一整个集群可以部署在同一个机房，而同城灾备中相同服务部署在同一个城市的不同机房中。并且，备用服务不处理请求。这样可以避免机房出现意外情况比如停电、火灾。
-- **异地灾备**：类似于同城灾备，不同的是，相同服务部署在异地（通常距离较远，甚至是在不同的城市或者国家）的不同机房中
-- **同城多活**：类似于同城灾备，但备用服务可以处理请求，这样可以充分利用系统资源，提高系统的并发。
-- **异地多活** : 将服务部署在异地的不同机房中，并且，它们可以同时对外提供服务。
+- **High Availability Cluster**: The same service is deployed in two or more instances. If the currently used service suddenly fails, it can switch to another service, ensuring high availability.
+- **Local Disaster Recovery**: An entire cluster can be deployed in the same data center, while in local disaster recovery, the same service is deployed in different data centers within the same city. Additionally, the backup service does not handle requests. This helps avoid unexpected situations in the data center, such as power outages or fires.
+- **Remote Disaster Recovery**: Similar to local disaster recovery, but the same service is deployed in different data centers in remote locations (usually far apart, even in different cities or countries).
+- **Local Active-Active**: Similar to local disaster recovery, but the backup service can handle requests, allowing for better utilization of system resources and increased concurrency.
+- **Remote Active-Active**: Services are deployed in different data centers in remote locations, and they can provide services simultaneously.
 
-高可用集群单纯是服务的冗余，并没有强调地域。同城灾备、异地灾备、同城多活和异地多活实现了地域上的冗余。
+High Availability Clusters focus solely on service redundancy without emphasizing geographic location. Local disaster recovery, remote disaster recovery, local active-active, and remote active-active achieve geographic redundancy.
 
-同城和异地的主要区别在于机房之间的距离。异地通常距离较远，甚至是在不同的城市或者国家。
+The main difference between local and remote is the distance between data centers. Remote locations are usually farther apart, even in different cities or countries.
 
-和传统的灾备设计相比，同城多活和异地多活最明显的改变在于“多活”，即所有站点都是同时在对外提供服务的。异地多活是为了应对突发状况比如火灾、地震等自然或者人为灾害。
+Compared to traditional disaster recovery design, the most significant change in local active-active and remote active-active is the "active-active" aspect, meaning all sites are simultaneously providing services. Remote active-active is designed to respond to emergencies such as fires, earthquakes, or other natural or man-made disasters.
 
-光做好冗余还不够，必须要配合上 **故障转移** 才可以！ 所谓故障转移，简单来说就是实现不可用服务快速且自动地切换到可用服务，整个过程不需要人为干涉。
+Simply having redundancy is not enough; it must be paired with **failover**! Failover, in simple terms, is the ability to quickly and automatically switch from an unavailable service to an available one without human intervention.
 
-举个例子：哨兵模式的 Redis 集群中，如果 Sentinel（哨兵） 检测到 master 节点出现故障的话， 它就会帮助我们实现故障转移，自动将某一台 slave 升级为 master，确保整个 Redis 系统的可用性。整个过程完全自动，不需要人工介入。我在[《Java 面试指北》](https://www.yuque.com/docs/share/f37fc804-bfe6-4b0d-b373-9c462188fec7)的「技术面试题篇」中的数据库部分详细介绍了 Redis 集群相关的知识点&面试题，感兴趣的小伙伴可以看看。
+For example, in a Redis cluster using Sentinel mode, if the Sentinel detects a failure in the master node, it will help us achieve failover by automatically promoting one of the slaves to master, ensuring the availability of the entire Redis system. The entire process is fully automated and requires no manual intervention. I have detailed the relevant knowledge and interview questions about Redis clusters in the database section of [“Java Interview Guide”](https://www.yuque.com/docs/share/f37fc804-bfe6-4b0d-b373-9c462188fec7), which interested readers can check out.
 
-再举个例子：Nginx 可以结合 Keepalived 来实现高可用。如果 Nginx 主服务器宕机的话，Keepalived 可以自动进行故障转移，备用 Nginx 主服务器升级为主服务。并且，这个切换对外是透明的，因为使用的虚拟 IP，虚拟 IP 不会改变。我在[《Java 面试指北》](https://www.yuque.com/docs/share/f37fc804-bfe6-4b0d-b373-9c462188fec7)的「技术面试题篇」中的「服务器」部分详细介绍了 Nginx 相关的知识点&面试题，感兴趣的小伙伴可以看看。
+Another example: Nginx can be combined with Keepalived to achieve high availability. If the primary Nginx server goes down, Keepalived can automatically perform failover, promoting the backup Nginx server to primary. Moreover, this switch is transparent to external users because a virtual IP is used, which does not change. I have detailed the relevant knowledge and interview questions about Nginx in the "Servers" section of [“Java Interview Guide”](https://www.yuque.com/docs/share/f37fc804-bfe6-4b0d-b373-9c462188fec7), which interested readers can check out.
 
-异地多活架构实施起来非常难，需要考虑的因素非常多。本人不才，实际项目中并没有实践过异地多活架构，我对其了解还停留在书本知识。
+Implementing a remote active-active architecture is very challenging, with many factors to consider. I have not personally practiced remote active-active architecture in actual projects, and my understanding remains at the theoretical level.
 
-如果你想要深入学习异地多活相关的知识，我这里推荐几篇我觉得还不错的文章：
+If you want to delve deeper into knowledge related to remote active-active, I recommend a few articles that I find quite good:
 
-- [搞懂异地多活，看这篇就够了- 水滴与银弹 - 2021](https://mp.weixin.qq.com/s/T6mMDdtTfBuIiEowCpqu6Q)
-- [四步构建异地多活](https://mp.weixin.qq.com/s/hMD-IS__4JE5_nQhYPYSTg)
-- [《从零开始学架构》— 28 | 业务高可用的保障：异地多活架构](http://gk.link/a/10pKZ)
+- [Understanding Remote Active-Active, This Article is Enough - Water Droplets and Silver Bullets - 2021](https://mp.weixin.qq.com/s/T6mMDdtTfBuIiEowCpqu6Q)
+- [Building Remote Active-Active in Four Steps](https://mp.weixin.qq.com/s/hMD-IS__4JE5_nQhYPYSTg)
+- [“Learning Architecture from Scratch” — 28 | Ensuring Business High Availability: Remote Active-Active Architecture](http://gk.link/a/10pKZ)
 
-不过，这些文章大多也都是在介绍概念知识。目前，网上还缺少真正介绍具体要如何去实践落地异地多活架构的资料。
-
-<!-- @include: @article-footer.snippet.md -->
+However, most of these articles mainly introduce conceptual knowledge. Currently, there is
